@@ -1,0 +1,32 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="CSReport/CSReportEditor/Codigo/CSReportEditor/cEditor.cs">
+    <Files>
+      <File FileName="CSReport/CSReportEditor/Codigo/CSReportEditor/cEditor.cs" Line="36" Column="3" />
+      <File FileName="CSReport/CSReportGlobals/Codigo/CSReportGlobals/cReportGlobals.cs" Line="477" Column="5" />
+      <File FileName="CSReport/CSReportDll/Codigo/CSReportDll/cReportCompiler.cs" Line="8" Column="1" />
+      <File FileName="CSDataBase/Codigo/CSDataBase/cConstants.cs" Line="1" Column="1" />
+      <File FileName="CSReport/CSReportDll/Codigo/CSReportDll/cReportAspect.cs" Line="29" Column="36" />
+      <File FileName="CSReport/CSReportDll/Codigo/CSReportDll/cReportImage.cs" Line="18" Column="28" />
+      <File FileName="CSKernel/Codigo/CSKernelClient/cUtil.cs" Line="278" Column="13" />
+      <File FileName="CSReport/CSReportEditor/Codigo/CSReportEditor/cMainEditor.cs" Line="232" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="CSDataBase" expanded="True" />
+          <Node name="CSKernelClient" expanded="True" />
+          <Node name="CSReportDll" expanded="True" />
+          <Node name="CSReportEditor" expanded="True">
+            <Node name="cEditor.cs" selected="True" />
+          </Node>
+          <Node name="CSReportGlobals" expanded="True" />
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

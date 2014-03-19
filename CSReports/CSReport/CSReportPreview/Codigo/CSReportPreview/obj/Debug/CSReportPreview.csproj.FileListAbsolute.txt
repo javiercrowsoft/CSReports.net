@@ -1,0 +1,17 @@
+C:\Javier\CSReports\CSReport\CSReportPreview\Codigo\CSReportPreview\bin\Debug\CSReportPreview.dll
+C:\Javier\CSReports\CSReport\CSReportPreview\Codigo\CSReportPreview\bin\Debug\CSReportPreview.pdb
+C:\Javier\CSReports\CSReport\CSReportPreview\Codigo\CSReportPreview\obj\Debug\ResolveAssemblyReference.cache
+C:\Javier\CSReports\CSReport\CSReportPreview\Codigo\CSReportPreview\obj\Debug\CSReportPreview.cReportPreview.resources
+C:\Javier\CSReports\CSReport\CSReportPreview\Codigo\CSReportPreview\obj\Debug\CSReportPreview.Properties.Resources.resources
+C:\Javier\CSReports\CSReport\CSReportPreview\Codigo\CSReportPreview\obj\Debug\GenerateResource.read.1.tlog
+C:\Javier\CSReports\CSReport\CSReportPreview\Codigo\CSReportPreview\obj\Debug\GenerateResource.write.1.tlog
+C:\Javier\CSReports\CSReport\CSReportPreview\Codigo\CSReportPreview\obj\Debug\CSReportPreview.dll
+C:\Javier\CSReports\CSReport\CSReportPreview\Codigo\CSReportPreview\obj\Debug\CSReportPreview.pdb
+Z:\Work\CrowSoft\c#\CSReports\CSReport\CSReportPreview\Codigo\CSReportPreview\bin\Debug\CSReportPreview.dll
+Z:\Work\CrowSoft\c#\CSReports\CSReport\CSReportPreview\Codigo\CSReportPreview\bin\Debug\CSReportPreview.pdb
+Z:\Work\CrowSoft\c#\CSReports\CSReport\CSReportPreview\Codigo\CSReportPreview\obj\Debug\CSReportPreview.cReportPreview.resources
+Z:\Work\CrowSoft\c#\CSReports\CSReport\CSReportPreview\Codigo\CSReportPreview\obj\Debug\CSReportPreview.Properties.Resources.resources
+Z:\Work\CrowSoft\c#\CSReports\CSReport\CSReportPreview\Codigo\CSReportPreview\obj\Debug\CSReportPreview.dll
+Z:\Work\CrowSoft\c#\CSReports\CSReport\CSReportPreview\Codigo\CSReportPreview\obj\Debug\CSReportPreview.pdb
+Z:\Work\CrowSoft\c#\CSReports\CSReport\CSReportPreview\Codigo\CSReportPreview\obj\Debug\CSReportPreview.csprojResolveAssemblyReference.cache
+Z:\Work\CrowSoft\c#\CSReports\CSReport\CSReportPreview\Codigo\CSReportPreview\obj\Debug\CSReportPreview.csproj.GenerateResource.Cache

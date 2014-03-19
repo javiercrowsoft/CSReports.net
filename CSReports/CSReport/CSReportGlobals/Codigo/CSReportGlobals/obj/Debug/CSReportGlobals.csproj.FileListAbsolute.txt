@@ -1,0 +1,14 @@
+C:\Javier\CSReports\CSReport\CSReportGlobals\Codigo\CSReportGlobals\bin\Debug\CSReportGlobals.dll
+C:\Javier\CSReports\CSReport\CSReportGlobals\Codigo\CSReportGlobals\bin\Debug\CSReportGlobals.pdb
+C:\Javier\CSReports\CSReport\CSReportGlobals\Codigo\CSReportGlobals\bin\Debug\CSKernelClient.dll
+C:\Javier\CSReports\CSReport\CSReportGlobals\Codigo\CSReportGlobals\bin\Debug\CSKernelClient.pdb
+C:\Javier\CSReports\CSReport\CSReportGlobals\Codigo\CSReportGlobals\obj\Debug\ResolveAssemblyReference.cache
+C:\Javier\CSReports\CSReport\CSReportGlobals\Codigo\CSReportGlobals\obj\Debug\CSReportGlobals.dll
+C:\Javier\CSReports\CSReport\CSReportGlobals\Codigo\CSReportGlobals\obj\Debug\CSReportGlobals.pdb
+Z:\Work\CrowSoft\c#\CSReports\CSReport\CSReportGlobals\Codigo\CSReportGlobals\bin\Debug\CSReportGlobals.dll
+Z:\Work\CrowSoft\c#\CSReports\CSReport\CSReportGlobals\Codigo\CSReportGlobals\bin\Debug\CSReportGlobals.pdb
+Z:\Work\CrowSoft\c#\CSReports\CSReport\CSReportGlobals\Codigo\CSReportGlobals\bin\Debug\CSKernelClient.dll
+Z:\Work\CrowSoft\c#\CSReports\CSReport\CSReportGlobals\Codigo\CSReportGlobals\bin\Debug\CSKernelClient.pdb
+Z:\Work\CrowSoft\c#\CSReports\CSReport\CSReportGlobals\Codigo\CSReportGlobals\obj\Debug\CSReportGlobals.dll
+Z:\Work\CrowSoft\c#\CSReports\CSReport\CSReportGlobals\Codigo\CSReportGlobals\obj\Debug\CSReportGlobals.pdb
+Z:\Work\CrowSoft\c#\CSReports\CSReport\CSReportGlobals\Codigo\CSReportGlobals\obj\Debug\CSReportGlobals.csprojResolveAssemblyReference.cache

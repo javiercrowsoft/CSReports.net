@@ -1,0 +1,63 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace CSReportDll
+{
+    public class cReportFormulaParameter
+    {
+
+        //Option Explicit
+
+        //--------------------------------------------------------------------------------
+        // cReportFormulaParameter
+        // 18-09-2001
+
+        //--------------------------------------------------------------------------------
+        // notas:
+
+        //--------------------------------------------------------------------------------
+        // api win32
+        // constantes
+        // estructuras
+        // funciones
+
+        //--------------------------------------------------------------------------------
+
+        // constantes
+        private const String C_MODULE = "cReportFormulaParameter";
+        // estructuras
+        // variables privadas
+        private String m_value = "";
+        // eventos
+        // propiedades publicas
+        public String getValue()
+        {
+            return m_value;
+        }
+
+        public void setValue(String rhs)
+        {
+            m_value = rhs;
+        }
+        // propiedades privadas
+        // funciones publicas
+        // funciones friend
+        // funciones privadas
+        // construccion - destruccion
+
+        ////////////////////////////////
+        //  Codigo estandar de errores
+        //  On Error GoTo ControlError
+        //
+        //  GoTo ExitProc
+        //ControlError:
+        //  MngError err,"", C_Module, ""
+        //  If Err.Number Then Resume ExitProc
+        //ExitProc:
+        //  On Error Resume Next
+
+    }
+
+}

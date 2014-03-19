@@ -1,0 +1,887 @@
+public class mPublic {
+
+//Option Explicit
+
+    //--------------------------------------------------------------------------------
+    // mPublic
+    // 15-09-2001
+
+    //--------------------------------------------------------------------------------
+    // notas:
+
+    //--------------------------------------------------------------------------------
+    // api win32
+    // constantes
+    private const String C_MODULE = "mPublic";
+
+    private const int HWND_TOPMOST = -1;
+    private const int HWND_NOTOPMOST = -2;
+    private const int SWP_NOACTIVATE = 0x10;
+    private const int SWP_SHOWWINDOW = 0x40;
+
+//*TODO:** enum is translated as a new class at the end of the file Public Enum SpecialFolderIDs
+
+    private const int NOERROR = 0;
+
+    // estructuras
+    // funciones
+*TODO: API Private Declare Function SetWindowPos Lib "user32" (ByVal hwnd As Long, ByVal hWndInsertAfter As Long, ByVal x As Long, ByVal y As Long, ByVal cx As Long, ByVal cy As Long, ByVal wFlags As Long) As Long
+*TODO: API Private Declare Function SHGetSpecialFolderLocation Lib "shell32" (ByVal hwndOwner As Long, ByVal nFolder As SpecialFolderIDs, ByRef pIdl As Long) As Long
+*TODO: API Private Declare Function SHGetPathFromIDListA Lib "shell32" (ByVal pIdl As Long, ByVal pszPath As String) As Long
+
+    //--------------------------------------------------------------------------------
+
+    // constantes
+    public const Date CSNOFECHA = G.getDateFromString("1/1/1900");
+    *TODO:** (the data type can't be found for the value [String])Public Const C_KEY_HEADER As String = "RH"
+    *TODO:** (the data type can't be found for the value [String])Public Const C_KEY_FOOTER As String = "RF"
+    *TODO:** (the data type can't be found for the value [String])Public Const C_KEY_DETAIL As String = "RD"
+    *TODO:** (the data type can't be found for the value [String])Public Const C_KEY_GROUPH As String = "GH"
+    *TODO:** (the data type can't be found for the value [String])Public Const C_KEY_GROUPF As String = "GF"
+
+    *TODO:** (the data type can't be found for the value [String])Public Const c_BTN_PRINT        As String = "PRINT"
+    *TODO:** (the data type can't be found for the value [String])Public Const c_BTN_PROPERTIES   As String = "PROPERTIES"
+    *TODO:** (the data type can't be found for the value [String])Public Const c_BTN_DB           As String = "DB"
+    *TODO:** (the data type can't be found for the value [String])Public Const c_BTN_SAVE         As String = "SAVE"
+    *TODO:** (the data type can't be found for the value [String])Public Const c_BTN_OPEN         As String = "OPEN"
+    *TODO:** (the data type can't be found for the value [String])Public Const c_BTN_TOOL         As String = "TOOL"
+    *TODO:** (the data type can't be found for the value [String])Public Const c_BTN_NEW          As String = "NEW"
+    *TODO:** (the data type can't be found for the value [String])Public Const c_BTN_PREV         As String = "PREV"
+
+    *TODO:** (the data type can't be found for the value [String])Public Const c_BTN_ALIGN_LEFT   As String = "ALIGN_LEFT"
+    *TODO:** (the data type can't be found for the value [String])Public Const c_BTN_ALIGN_CENTER As String = "ALIGN_CENTER"
+    *TODO:** (the data type can't be found for the value [String])Public Const c_BTN_ALIGN_RIGHT  As String = "ALIGN_RIGHT"
+
+    *TODO:** (the data type can't be found for the value [String])Public Const c_BTN_CTL_ALIGN_TOP        As String = "CTL_ALIGN_TOP"
+    *TODO:** (the data type can't be found for the value [String])Public Const c_BTN_CTL_ALIGN_BOTTOM     As String = "CTL_ALIGN_BOTTOM"
+    *TODO:** (the data type can't be found for the value [String])Public Const c_BTN_CTL_ALIGN_VERTICAL   As String = "CTL_ALIGN_VERTICAL"
+    *TODO:** (the data type can't be found for the value [String])Public Const c_BTN_CTL_ALIGN_HORIZONTAL As String = "CTL_ALIGN_HORIZONTAL"
+    *TODO:** (the data type can't be found for the value [String])Public Const c_BTN_CTL_ALIGN_LEFT       As String = "CTL_ALIGN_LEFT"
+    *TODO:** (the data type can't be found for the value [String])Public Const c_BTN_CTL_ALIGN_RIGHT      As String = "CTL_ALIGN_RIGHT"
+
+    *TODO:** (the data type can't be found for the value [String])Public Const c_BTN_CTL_WIDTH        As String = "CTL_WIDTH"
+    *TODO:** (the data type can't be found for the value [String])Public Const c_BTN_CTL_HEIGHT       As String = "CTL_HEIGHT"
+
+//*TODO:** enum is translated as a new class at the end of the file Public Enum csEAlignConst
+
+
+
+//*TODO:** enum is translated as a new class at the end of the file Public Enum csECtlAlignConst
+
+
+    *TODO:** (the data type can't be found for the value [String])Public Const c_BTN_FONT_BOLD    As String = "FONT_BOLD"
+    *TODO:** (the data type can't be found for the value [String])Public Const c_BTN_SEARCH       As String = "SEARCH"
+
+//*TODO:** enum is translated as a new class at the end of the file Public Enum csESectionLineTypes
+
+    *TODO:** (the data type can't be found for the value [String])Public Const C_Control_Name As String = "Control"
+
+    public const int C_HEIGHT_BAR_SECTION = 120;
+
+    public const int C_HEIGHT_NEW_SECTION = 350;
+
+//*TODO:** enum is translated as a new class at the end of the file Public Enum CSRptEditroMoveType
+
+//*TODO:** enum is translated as a new class at the end of the file Public Enum csRptEditCtrlType
+
+    private const int C_TOTINRECENTLIST = 7;
+    private const String C_KEYRECENTLIST = "Recent";
+
+    private const String C_CONFIG = "Interfaz";
+    private const String C_LEFTBARCOLOR = "LeftBarColor";
+    private const String C_HIDELEFTBAR = "HideLeftBar";
+    private const String C_BACKCOLOR = "BackColor";
+    private const String C_WORKFOLDER = "WorkFolder";
+
+    // estructuras
+//*TODO:** type is translated as a new class at the end of the file Public Type Rectangle
+    // variables privadas
+    // variables publicas
+    public static int gNextReport = 0;
+    private static fReporte m_fReporte;
+    private static fReporte m_fToolBoxOwner;
+    private static fReporte m_fCtrlBoxOwner;
+    private static fReporte m_fCtrlTreeBoxOwner;
+    // eventos
+    // propiedades publicas
+    public static int gBackColor = 0;
+    public static int gLeftBarColor = 0;
+    public static bool gHideLeftBar;
+    public static String gWorkFolder = "";
+    public static bool gbFirstOpen;
+
+    // propiedades privadas
+    // funciones publicas
+    // funciones privadas
+    // construccion - destruccion
+
+    public static fReporte getDocActive() {
+        return m_fReporte;
+    }
+
+    public static void setDocActive(fReporte f) { // TODO: Use of ByRef founded Public Sub SetDocActive(ByRef f As fReporte)
+        m_fReporte = f;
+        setMenu();
+    }
+
+    public static void setDocInacActive(fReporte f) { // TODO: Use of ByRef founded Public Sub SetDocInacActive(ByRef f As fReporte)
+        if (!m_fReporte(Is f)) { return; }
+        m_fReporte = null;
+        setMenu();
+        setEditAlignTextState(false);
+    }
+
+    public static void setStatus() {
+        try {
+
+            if (m_fReporte == null) {
+                fMain.lbStatus.Caption = "";
+            } 
+            else {
+                fMain.lbStatus.Caption = pGetStatus();
+            }
+
+            //*TODO:** goto found: GoTo ExitProc;
+        } catch (Exception ex) {
+
+            MngError(VBA.ex(), "SetStatus", C_MODULE, "");
+            //*TODO:** label found: ExitProc:;
+        }
+    }
+
+    public static void setEditFontBoldValue(int bBold) {
+        //*TODO:** can't found type for with block
+        //*With fMain.tbMain
+        __TYPE_NOT_FOUND w___TYPE_NOT_FOUND = fMain.tbMain;
+            w___TYPE_NOT_FOUND.Buttons.Item(c_BTN_FONT_BOLD).Value = (bBold == -1) ? tbrPressed : tbrUnpressed);
+            w___TYPE_NOT_FOUND.Refresh;
+        // {end with: w___TYPE_NOT_FOUND}
+        DoEvents;
+    }
+
+    public static void setEditAlignValue(AlignmentConstants align) {
+        //*TODO:** can't found type for with block
+        //*With fMain.tbMain.Buttons
+        __TYPE_NOT_FOUND w___TYPE_NOT_FOUND = fMain.tbMain.Buttons;
+
+            w___TYPE_NOT_FOUND.Item(c_BTN_ALIGN_CENTER).Value = tbrUnpressed;
+            w___TYPE_NOT_FOUND.Item(c_BTN_ALIGN_LEFT).Value = tbrUnpressed;
+            w___TYPE_NOT_FOUND.Item(c_BTN_ALIGN_RIGHT).Value = tbrUnpressed;
+
+            switch (align) {
+                case  AlignmentConstants.vbCenter:
+                    w___TYPE_NOT_FOUND.Item(c_BTN_ALIGN_CENTER).Value = tbrPressed;
+                    break;
+                case  AlignmentConstants.vbLeftJustify:
+                    w___TYPE_NOT_FOUND.Item(c_BTN_ALIGN_LEFT).Value = tbrPressed;
+                    break;
+                case  AlignmentConstants.vbRightJustify:
+                    w___TYPE_NOT_FOUND.Item(c_BTN_ALIGN_RIGHT).Value = tbrPressed;
+                    break;
+            }
+        // {end with: w___TYPE_NOT_FOUND}
+
+        fMain.tbMain.Refresh;
+        DoEvents;
+    }
+
+    public static void setEditAlignTextState(bool status) {
+        //*TODO:** can't found type for with block
+        //*With fMain.tbMain.Buttons
+        __TYPE_NOT_FOUND w___TYPE_NOT_FOUND = fMain.tbMain.Buttons;
+
+            w___TYPE_NOT_FOUND.Item(c_BTN_ALIGN_CENTER).Enabled = status;
+            w___TYPE_NOT_FOUND.Item(c_BTN_ALIGN_LEFT).Enabled = status;
+            w___TYPE_NOT_FOUND.Item(c_BTN_ALIGN_RIGHT).Enabled = status;
+
+            w___TYPE_NOT_FOUND.Item(c_BTN_FONT_BOLD).Enabled = status;
+        // {end with: w___TYPE_NOT_FOUND}
+    }
+
+    public static void setEditAlignCtlState(bool status) {
+        //*TODO:** can't found type for with block
+        //*With fMain.tbMain.Buttons
+        __TYPE_NOT_FOUND w___TYPE_NOT_FOUND = fMain.tbMain.Buttons;
+            w___TYPE_NOT_FOUND.Item(c_BTN_CTL_ALIGN_BOTTOM).Enabled = status;
+            w___TYPE_NOT_FOUND.Item(c_BTN_CTL_ALIGN_TOP).Enabled = status;
+
+            w___TYPE_NOT_FOUND.Item(c_BTN_CTL_ALIGN_VERTICAL).Enabled = status;
+            w___TYPE_NOT_FOUND.Item(c_BTN_CTL_ALIGN_HORIZONTAL).Enabled = status;
+            w___TYPE_NOT_FOUND.Item(c_BTN_CTL_ALIGN_LEFT).Enabled = status;
+            w___TYPE_NOT_FOUND.Item(c_BTN_CTL_ALIGN_RIGHT).Enabled = status;
+
+            w___TYPE_NOT_FOUND.Item(c_BTN_CTL_HEIGHT).Enabled = status;
+            w___TYPE_NOT_FOUND.Item(c_BTN_CTL_WIDTH).Enabled = status;
+        // {end with: w___TYPE_NOT_FOUND}
+    }
+
+    private static void setMenu() {
+        try {
+
+            if (m_fReporte == null) {
+                setMenuAux(false);
+                fMain.lbBar.Caption = "";
+                fMain.lbStatus.Caption = "";
+            } 
+            else {
+                setMenuAux(true);
+                fMain.mnuDataBaseSetDisconnected.Checked = m_fReporte.getReport().ReportDisconnected;
+                fMain.lbBar.Caption = m_fReporte.getReport().Name;
+                fMain.lbStatus.Caption = pGetStatus();
+            }
+
+            //*TODO:** goto found: GoTo ExitProc;
+        } catch (Exception ex) {
+
+            MngError(VBA.ex(), "SetMenu", C_MODULE, "");
+            //*TODO:** label found: ExitProc:;
+        }
+    }
+
+    private static String pGetStatus() {
+        String rtn = "";
+
+        if (m_fReporte.getBMoveNoMove()) {
+            rtn = "Mover bloqueado";
+
+        } 
+        else if (m_fReporte.getBMoveHorizontal()) {
+            rtn = "Mover solo en horizontal";
+
+        } 
+        else if (m_fReporte.getBMoveVertical()) {
+            rtn = "Mover solo en vertical";
+        }
+
+        return rtn;
+    }
+
+    public static void setMenuAux(bool enabled) {
+        //*TODO:** can't found type for with block
+        //*With fMain
+        __TYPE_NOT_FOUND w___TYPE_NOT_FOUND = fMain;
+            w___TYPE_NOT_FOUND.mnuEditAddControl.enabled = enabled;
+            w___TYPE_NOT_FOUND.mnuEditAddHeader.enabled = enabled;
+            w___TYPE_NOT_FOUND.mnuEditAddLabel.enabled = enabled;
+            w___TYPE_NOT_FOUND.mnuEditAddGroup.enabled = enabled;
+            w___TYPE_NOT_FOUND.mnuEditAddFooter.enabled = enabled;
+            w___TYPE_NOT_FOUND.mnuEditAddLine.enabled = enabled;
+            w___TYPE_NOT_FOUND.mnuEditAddSec.enabled = enabled;
+            w___TYPE_NOT_FOUND.mnuEditMove.enabled = enabled;
+            w___TYPE_NOT_FOUND.mnuDataBaseConnectConfig.enabled = enabled;
+            w___TYPE_NOT_FOUND.mnuReportPreview.enabled = enabled;
+            w___TYPE_NOT_FOUND.mnuReportPrint.enabled = enabled;
+            w___TYPE_NOT_FOUND.mnuFileSave.enabled = enabled;
+            w___TYPE_NOT_FOUND.mnuFileSaveAs.enabled = enabled;
+            w___TYPE_NOT_FOUND.mnuDataBaseSetDisconnected.enabled = enabled;
+            w___TYPE_NOT_FOUND.mnuEditKeyboardStepMove.enabled = enabled;
+            w___TYPE_NOT_FOUND.mnuEditSearch.enabled = enabled;
+            w___TYPE_NOT_FOUND.mnuDataBaseEditStrConnect.enabled = enabled;
+            w___TYPE_NOT_FOUND.mnuDataBaseSetToMainConnect.enabled = enabled;
+            w___TYPE_NOT_FOUND.mnuDataBaseEditEx.enabled = enabled;
+            w___TYPE_NOT_FOUND.mnuDataBaseSetParameters.enabled = enabled;
+            w___TYPE_NOT_FOUND.mnuDataBaseConnectsAuxCfg.enabled = enabled;
+            w___TYPE_NOT_FOUND.mnuViewGridMain.enabled = enabled;
+            w___TYPE_NOT_FOUND.mnuViewToolbar.enabled = enabled;
+            w___TYPE_NOT_FOUND.mnuViewControls.enabled = enabled;
+            w___TYPE_NOT_FOUND.mnuViewTreeViewCtrls.enabled = enabled;
+            w___TYPE_NOT_FOUND.mnuViewSumary.enabled = enabled;
+
+            w___TYPE_NOT_FOUND.tbMain.Buttons(c_BTN_PRINT).enabled = enabled;
+            w___TYPE_NOT_FOUND.tbMain.Buttons(c_BTN_PROPERTIES).enabled = enabled;
+            w___TYPE_NOT_FOUND.tbMain.Buttons(c_BTN_DB).enabled = enabled;
+            w___TYPE_NOT_FOUND.tbMain.Buttons(c_BTN_SAVE).enabled = enabled;
+            w___TYPE_NOT_FOUND.tbMain.Buttons(c_BTN_TOOL).enabled = enabled;
+            w___TYPE_NOT_FOUND.tbMain.Buttons(c_BTN_PREV).enabled = enabled;
+            w___TYPE_NOT_FOUND.tbMain.Buttons(c_BTN_SEARCH).enabled = enabled;
+        // {end with: w___TYPE_NOT_FOUND}
+    }
+
+    public static void alwaysOnTop(Form myfrm, bool setOnTop) { // TODO: Use of ByRef founded Public Sub AlwaysOnTop(ByRef myfrm As Form, ByRef SetOnTop As Boolean)
+        int lFlag = 0;
+
+        if (setOnTop) {
+            lFlag = HWND_TOPMOST;
+        } 
+        else {
+            lFlag = HWND_NOTOPMOST;
+        }
+
+        SetWindowPos(myfrm.hwnd, lFlag, myfrm.Left / Screen.TwipsPerPixelX, myfrm.Top / Screen.TwipsPerPixelY, myfrm.Width / Screen.TwipsPerPixelX, myfrm.Height / Screen.TwipsPerPixelY, SWP_NOACTIVATE || SWP_SHOWWINDOW);
+    }
+
+    public static void addToRecentList(String fileName) {
+        int i = 0;
+        int n = 0;
+        int j = 0;
+        bool found = null;
+
+        found = false;
+        n = fMain.mnuFileRecentList.Count - 1;
+
+        for (i = 1; i <= n; i++) {
+            if (fileName == fMain.mnuFileRecentList(i).Caption) {
+                j = i;
+                found = true;
+                break;
+            }
+        }
+
+        if (n < C_TOTINRECENTLIST && found == false) {
+            n = n + 1;
+            Load(fMain.mnuFileRecentList(n));
+            fMain.mnuFileRecentList(n).Visible = true;
+        }
+
+        if (!found) { j = n; }
+
+        for (i = j; i <= 2; i--) {
+            fMain.mnuFileRecentList(i).Caption = fMain.mnuFileRecentList(i - 1).Caption;
+        }
+
+        fMain.mnuFileSepRecentList.Visible = true;
+        fMain.mnuFileRecentList(1).Caption = fileName;
+    }
+
+    public static void loadRecentList() {
+        int i = 0;
+        String recent = "";
+
+        for (i = 1; i <= C_TOTINRECENTLIST; i++) {
+            recent = GetSetting(App.EXEName(), C_KEYRECENTLIST, CStr(i), "");
+            if (recent == "") { break; }
+            Load(fMain.mnuFileRecentList(i));
+            fMain.mnuFileRecentList(i).Visible = true;
+            fMain.mnuFileRecentList(i).Caption = recent;
+        }
+
+        if (fMain.mnuFileRecentList.Count > 1) {
+            fMain.mnuFileSepRecentList.Visible = true;
+        }
+    }
+
+    public static void saveRecentList() {
+        int i = 0;
+
+        for (i = 1; i <= fMain.mnuFileRecentList.Count - 1; i++) {
+            SaveSetting(App.EXEName(), C_KEYRECENTLIST, CStr(i), fMain.mnuFileRecentList(i).Caption);
+        }
+    }
+
+    public static Rectangle getRectFromPrinter(object oPrinter) { // TODO: Use of ByRef founded Public Function GetRectFromPrinter(ByRef oPrinter As Object) As Rectangle
+        Rectangle rtn = null;
+
+        rtn.height = oPrinter.Height;
+        rtn.width = oPrinter.Width;
+
+        return rtn;
+    }
+
+    public static void createStandarSections(CSReportDll2.cReport report, Rectangle rECT) { // TODO: Use of ByRef founded Public Sub CreateStandarSections(ByRef Report As CSReportDll2.cReport, ByRef RECT As Rectangle)
+        // With report;
+            report.Headers.Add(, null, C_KEY_HEADER);
+            report.Footers.Add(, null, C_KEY_FOOTER);
+            report.Details.Add(, null, C_KEY_DETAIL);
+
+            //*TODO:** can't found type for with block
+            //*With .Headers.Item(C_KEY_HEADER)
+            __TYPE_NOT_FOUND w___TYPE_NOT_FOUND = report.Headers.Item(C_KEY_HEADER);
+                w___TYPE_NOT_FOUND.Name = "Encabezado principal";
+                //*TODO:** can't found type for with block
+                //*With .Aspect
+                __TYPE_NOT_FOUND w___TYPE_NOT_FOUND = w___TYPE_NOT_FOUND.Aspect;
+                    w___TYPE_NOT_FOUND.Top = 0;
+                    w___TYPE_NOT_FOUND.Height = rECT.height * 0.25;
+                    w___TYPE_NOT_FOUND.Width = rECT.width;
+                // {end with: w___TYPE_NOT_FOUND}
+                //*TODO:** can't found type for with block
+                //*With .SectionLines.Item(1)
+                __TYPE_NOT_FOUND w___TYPE_NOT_FOUND = w___TYPE_NOT_FOUND.SectionLines.Item(1);
+                    w___TYPE_NOT_FOUND.SectionName = "Encabezado principal";
+                    //*TODO:** can't found type for with block
+                    //*With .Aspect
+                    __TYPE_NOT_FOUND w___TYPE_NOT_FOUND = w___TYPE_NOT_FOUND.Aspect;
+                        w___TYPE_NOT_FOUND.Top = 0;
+                        w___TYPE_NOT_FOUND.Height = rECT.height * 0.25;
+                        w___TYPE_NOT_FOUND.Width = rECT.width;
+                    // {end with: w___TYPE_NOT_FOUND}
+                // {end with: w___TYPE_NOT_FOUND}
+            // {end with: w___TYPE_NOT_FOUND}
+
+            //*TODO:** can't found type for with block
+            //*With .Details.Item(C_KEY_DETAIL)
+            __TYPE_NOT_FOUND w___TYPE_NOT_FOUND = report.Details.Item(C_KEY_DETAIL);
+                w___TYPE_NOT_FOUND.Name = "Detalle";
+                //*TODO:** can't found type for with block
+                //*With .Aspect
+                __TYPE_NOT_FOUND w___TYPE_NOT_FOUND = w___TYPE_NOT_FOUND.Aspect;
+                    w___TYPE_NOT_FOUND.Top = rECT.height * 0.25;
+                    //'Rect.Height * 0.5
+                    w___TYPE_NOT_FOUND.Height = C_HEIGHT_NEW_SECTION;
+                    w___TYPE_NOT_FOUND.Width = rECT.width;
+                // {end with: w___TYPE_NOT_FOUND}
+                //*TODO:** can't found type for with block
+                //*With .SectionLines.Item(1)
+                __TYPE_NOT_FOUND w___TYPE_NOT_FOUND = w___TYPE_NOT_FOUND.SectionLines.Item(1);
+                    w___TYPE_NOT_FOUND.SectionName = "Detalle";
+                    //*TODO:** can't found type for with block
+                    //*With .Aspect
+                    __TYPE_NOT_FOUND w___TYPE_NOT_FOUND = w___TYPE_NOT_FOUND.Aspect;
+                        w___TYPE_NOT_FOUND.Top = rECT.height * 0.25;
+                        //'Rect.Height * 0.5
+                        w___TYPE_NOT_FOUND.Height = C_HEIGHT_NEW_SECTION;
+                        w___TYPE_NOT_FOUND.Width = rECT.width;
+                    // {end with: w___TYPE_NOT_FOUND}
+                // {end with: w___TYPE_NOT_FOUND}
+            // {end with: w___TYPE_NOT_FOUND}
+
+            //*TODO:** can't found type for with block
+            //*With .Footers.Item(C_KEY_FOOTER)
+            __TYPE_NOT_FOUND w___TYPE_NOT_FOUND = report.Footers.Item(C_KEY_FOOTER);
+                w___TYPE_NOT_FOUND.Name = "Píe de página principal";
+                //*TODO:** can't found type for with block
+                //*With .Aspect
+                __TYPE_NOT_FOUND w___TYPE_NOT_FOUND = w___TYPE_NOT_FOUND.Aspect;
+                    w___TYPE_NOT_FOUND.Top = rECT.height * 0.75;
+                    w___TYPE_NOT_FOUND.Height = rECT.height - w___TYPE_NOT_FOUND.Top;
+                    w___TYPE_NOT_FOUND.Width = rECT.width;
+                // {end with: w___TYPE_NOT_FOUND}
+                //*TODO:** can't found type for with block
+                //*With .SectionLines.Item(1)
+                __TYPE_NOT_FOUND w___TYPE_NOT_FOUND = w___TYPE_NOT_FOUND.SectionLines.Item(1);
+                    w___TYPE_NOT_FOUND.SectionName = "Píe de página principal";
+                    //*TODO:** can't found type for with block
+                    //*With .Aspect
+                    __TYPE_NOT_FOUND w___TYPE_NOT_FOUND = w___TYPE_NOT_FOUND.Aspect;
+                        w___TYPE_NOT_FOUND.Top = rECT.height * 0.75;
+                        w___TYPE_NOT_FOUND.Height = rECT.height - w___TYPE_NOT_FOUND.Top;
+                        w___TYPE_NOT_FOUND.Width = rECT.width;
+                    // {end with: w___TYPE_NOT_FOUND}
+                // {end with: w___TYPE_NOT_FOUND}
+            // {end with: w___TYPE_NOT_FOUND}
+        // {end with: report}
+    }
+
+    public static bool showGroupProperties(CSReportDll2.cReportGroup group, object f) { // TODO: Use of ByRef founded Public Function ShowGroupProperties(ByRef Group As CSReportDll2.cReportGroup, ByRef f As Object) As Boolean
+        boolean _rtn = ;
+        try {
+
+            bool isNew = null;
+
+            f.ShowingProperties = true;
+
+            if (f.fGroup == null) { f.fGroup = new fReporte.getFGroup()(); }
+
+            if (group == null) { isNew = true; }
+
+            CSMaskEdit2.cMaskEdit txControl = null;
+
+            if (isNew) {
+                txControl = f.fGroup.TxName;
+                txControl.Text = "Grupo"+ f.Report.Groups.Count + 1;
+            } 
+            else {
+
+                // With group;
+                    txControl = f.fGroup.TxName;
+                    txControl.Text = group.Name;
+                    txControl = f.fGroup.TxDbField;
+                    txControl.Text = group.FieldName;
+
+                    if (group.OderType == CSReportDll2.csRptGrpOrderType.csRptGrpAsc) {
+                        f.fGroup.opAsc.Value = true;
+                    } 
+                    else {
+                        f.fGroup.opDesc.Value = true;
+                    }
+
+                    f.fGroup.chkPrintInNewPage.Value = group.PrintInNewPage ? vbChecked : vbUnchecked);
+                    f.fGroup.chkReprintGroup.Value = group.RePrintInNewPage ? vbChecked : vbUnchecked);
+                    f.fGroup.chkGrandTotal.Value = group.GrandTotalGroup ? vbChecked : vbUnchecked);
+
+                    switch (group.ComparisonType) {
+                        case  CSReportDll2.csRptGrpComparisonType.csRptGrpDate:
+                            f.fGroup.opDate.Value = true;
+                            break;
+                        case  CSReportDll2.csRptGrpComparisonType.csRptGrpNumber:
+                            f.fGroup.opNumber.Value = true;
+                            break;
+                        case  CSReportDll2.csRptGrpComparisonType.csRptGrpText:
+                            f.fGroup.opText.Value = true;
+                            break;
+                    }
+                // {end with: group}
+            }
+
+            f.fGroup.cNewWizard.show(vbModal);
+
+            if (f.fGroup == null) { //*TODO:** goto found: GoTo ExitProc; }
+            if (!f.fGroup.fColumns.getOk()) { //*TODO:** goto found: GoTo ExitProc; }
+
+            if (isNew) {
+                group = f.Report.Groups.Add();
+            }
+
+            // With group;
+
+                txControl = f.fGroup.TxName;
+                group.Name = txControl.Text;
+                txControl = f.fGroup.TxDbField;
+                group.FieldName = txControl.Text;
+
+                group.Indice = f.Report.Groups.Count;
+                group.OderType = f.fGroup.opAsc.Value ? CSReportDll2.csRptGrpOrderType.csRptGrpAsc : CSReportDll2.csRptGrpOrderType.csRptGrpDesc);
+
+                group.PrintInNewPage = f.fGroup.chkPrintInNewPage.Value == vbChecked;
+                group.RePrintInNewPage = f.fGroup.chkReprintGroup.Value == vbChecked;
+                group.GrandTotalGroup = f.fGroup.chkGrandTotal.Value == vbChecked;
+
+                if (f.fGroup.opDate.Value) {
+                    group.ComparisonType = CSReportDll2.csRptGrpComparisonType.csRptGrpDate;
+                } 
+                else if (f.fGroup.opNumber.Value) {
+                    group.ComparisonType = CSReportDll2.csRptGrpComparisonType.csRptGrpNumber;
+                } 
+                else if (f.fGroup.opText.Value) {
+                    group.ComparisonType = CSReportDll2.csRptGrpComparisonType.csRptGrpText;
+                }
+            // {end with: group}
+
+            f.ShowingProperties = false;
+
+            if (isNew) {
+                f.AddSection(CSReportDll2.csRptTypeSection.csRptTpGroupHeader);
+                f.AddSection(CSReportDll2.csRptTypeSection.csRptTpGroupFooter);
+            }
+
+            f.DataHasChanged = true;
+
+            _rtn = true;
+
+            //*TODO:** goto found: GoTo ExitProc;
+        } catch (Exception ex) {
+
+            MngError(VBA.ex(), "ShowGroupProperties", C_MODULE, "");
+            //*TODO:** label found: ExitProc:;
+        
+            if (!f.fGroup == null) {
+                Unload(f.fGroup);
+            }
+            f.fGroup = null;
+            f.ShowingProperties = false;
+        }
+        return _rtn;
+    }
+
+    public static bool moveGroup(CSReportDll2.cReportGroup group, object f) { // TODO: Use of ByRef founded Public Function MoveGroup(ByRef Group As CSReportDll2.cReportGroup, ByRef f As Object) As Boolean
+        boolean _rtn = ;
+
+        try {
+
+            String sIndex = "";
+            int nGroups = 0;
+
+            nGroups = f.Report.Groups.Count;
+
+            if (!GetInput(sIndex, "Indique el nuevo indice del grupo;;Valores posibles: 1 a "+ nGroups.toString())) { return _rtn; }
+
+            if (Val(sIndex) < 1 || Val(sIndex) > nGroups) {
+
+                MsgError("El indice no es valido");
+                return _rtn;
+            }
+
+            if (!f.Report.fReporte.moveGroup(group.Indice, Val(sIndex))) { return _rtn; }
+
+            f.DataHasChanged = true;
+
+            _rtn = true;
+
+            //*TODO:** goto found: GoTo ExitProc;
+        } catch (Exception ex) {
+
+            MngError(VBA.ex(), "MoveGroup", C_MODULE, "");
+            //*TODO:** label found: ExitProc:;
+        
+        }
+        return _rtn;
+    }
+
+    public static String getDataSourceStr(String dataSource) {
+        return "{"+ dataSource+ "}.";
+    }
+
+    public static bool showDbFields(String sField, int nFieldType, int nIndex, object f) { // TODO: Use of ByRef founded Public Function ShowDbFields(ByRef sField As String, ByRef nFieldType As Long, ByRef nIndex As Long, ByVal f As Object) As Boolean
+        boolean _rtn = ;
+        try {
+            fColumns fc = null;
+
+            fc = new fColumns();
+
+            fc.clearColumns();
+
+            CSReportDll2.cReportConnect connect = null;
+            fc.fillColumns(f.Report.connect.DataSource, f.Report.connect.Columns);
+            for (int _i = 0; _i < f.Report.ConnectsAux.size(); _i++) {
+                Connect = f.Report.ConnectsAux.getItem(_i);
+                fc.fillColumns(connect.DataSource, connect.Columns);
+            }
+
+            fc.setField(sField);
+            fc.Show(vbModal);
+
+            if (!fc.getOk()) { //*TODO:** goto found: GoTo ExitProc; }
+
+            sField = fc.getField();
+            nFieldType = fc.getFieldType();
+            nIndex = fc.getIndex();
+
+            _rtn = true;
+
+            //*TODO:** goto found: GoTo ExitProc;
+        } catch (Exception ex) {
+
+            MngError(VBA.ex(), "ShowDbFields", C_MODULE, "");
+            if (VBA.ex.Number) { /**TODO:** resume found: Resume(ExitProc)*/ }
+            //*TODO:** label found: ExitProc:;
+        
+            Unload(fc);
+        }
+        return _rtn;
+    }
+
+    public static void setParametersAux(CSConnect2.cConnect connect, CSReportDll2.cReportConnect rptConnect) { // TODO: Use of ByRef founded Public Sub SetParametersAux(ByRef Connect As CSConnect2.cConnect, ByRef RptConnect As CSReportDll2.cReportConnect)
+        rptConnect.Columns.fToolbox.clear();
+
+        CSConnect2.cColumnInfo colInfo = null;
+
+        for (int _i = 0; _i < connect.ColumnsInfo.size(); _i++) {
+            ColInfo = Connect.ColumnsInfo.getItem(_i);
+            //*TODO:** can't found type for with block
+            //*With rptConnect.Columns.Add()
+            __TYPE_NOT_FOUND w___TYPE_NOT_FOUND = rptConnect.Columns.Add();
+                w___TYPE_NOT_FOUND.Name = colInfo.Name;
+                w___TYPE_NOT_FOUND.Position = colInfo.Position;
+                w___TYPE_NOT_FOUND.TypeColumn = colInfo.TypeColumn;
+                w___TYPE_NOT_FOUND.Value = colInfo.Value;
+            // {end with: w___TYPE_NOT_FOUND}
+        }
+
+        rptConnect.Parameters.fToolbox.clear();
+
+        // With rptConnect;
+            rptConnect.DataSource = connect.DataSource;
+            rptConnect.strConnect = connect.strConnect;
+            rptConnect.DataSourceType = connect.DataSourceType;
+        // {end with: rptConnect}
+
+        CSConnect2.cParameter param = null;
+        for (int _i = 0; _i < connect.Parameters.size(); _i++) {
+            param = Connect.Parameters.getItem(_i);
+            //*TODO:** can't found type for with block
+            //*With rptConnect.Parameters.Add()
+            __TYPE_NOT_FOUND w___TYPE_NOT_FOUND = rptConnect.Parameters.Add();
+                w___TYPE_NOT_FOUND.Name = param.Name;
+                w___TYPE_NOT_FOUND.Position = param.Position;
+                w___TYPE_NOT_FOUND.TypeColumn = param.TypeColumn;
+                w___TYPE_NOT_FOUND.Value = param.Value;
+                w___TYPE_NOT_FOUND.DefaultValue = param.DefaultValue;
+                w___TYPE_NOT_FOUND.HasDefault = param.HasDefault;
+                w___TYPE_NOT_FOUND.IsNullable = param.IsNullable;
+                w___TYPE_NOT_FOUND.MaxLength = param.MaxLength;
+            // {end with: w___TYPE_NOT_FOUND}
+        }
+    }
+
+    public static bool isNumberField(int nType) {
+        boolean _rtn = ;
+        switch (nType) {
+            case  ADODB.DataTypeEnum.adDecimal:
+            case  ADODB.DataTypeEnum.adDouble:
+            case  ADODB.DataTypeEnum.adInteger:
+            case  ADODB.DataTypeEnum.adCurrency:
+            case  ADODB.DataTypeEnum.adBigInt:
+            case  ADODB.DataTypeEnum.adNumeric:
+            case  ADODB.DataTypeEnum.adSingle:
+            case  ADODB.DataTypeEnum.adSmallInt:
+            case  ADODB.DataTypeEnum.adTinyInt:
+            case  ADODB.DataTypeEnum.adUnsignedBigInt:
+            case  ADODB.DataTypeEnum.adUnsignedInt:
+            case  ADODB.DataTypeEnum.adUnsignedSmallInt:
+            case  ADODB.DataTypeEnum.adUnsignedTinyInt:
+            case  ADODB.DataTypeEnum.adVarNumeric:
+                _rtn = true;
+                break;
+        }
+        return _rtn;
+    }
+
+    public static fControls getCtrlBox(fReporte f) { // TODO: Use of ByRef founded Public Function GetCtrlBox(ByRef f As fReporte) As fControls
+        if (fControls == null) { fControls = new fControls(); }
+        if (!fControls.fToolbox.getLoaded()) { Load(fControls); }
+        m_fCtrlBoxOwner = f;
+        return fControls;
+    }
+
+    public static void clearCtrlBox(fReporte f) { // TODO: Use of ByRef founded Public Sub ClearCtrlBox(ByRef f As fReporte)
+        if (m_fCtrlBoxOwner(Is f)) {
+            if (fControls.fToolbox.getLoaded()) { fControls.fToolbox.clear(); }
+        }
+    }
+
+    public static void clearCtrlTreeBox(fReporte f) { // TODO: Use of ByRef founded Public Sub ClearCtrlTreeBox(ByRef f As fReporte)
+        if (m_fCtrlBoxOwner(Is f)) {
+            if (fTreeViewCtrls.fToolbox.getLoaded()) { fTreeViewCtrls.fToolbox.clear(); }
+        }
+    }
+
+    public static fTreeViewCtrls getCtrlTreeBox(fReporte f) { // TODO: Use of ByRef founded Public Function GetCtrlTreeBox(ByRef f As fReporte) As fTreeViewCtrls
+        if (fTreeViewCtrls == null) { fTreeViewCtrls = new fTreeViewCtrls(); }
+        if (!fTreeViewCtrls.fToolbox.getLoaded()) { Load(fTreeViewCtrls); }
+        m_fCtrlTreeBoxOwner = f;
+        return fTreeViewCtrls;
+    }
+
+    public static fToolbox getToolBox(fReporte f) { // TODO: Use of ByRef founded Public Function GetToolBox(ByRef f As fReporte) As fToolbox
+        if (fToolbox == null) { fToolbox = new fToolbox(); }
+        if (!fToolbox.fToolbox.getLoaded()) { Load(fToolbox); }
+        m_fToolBoxOwner = f;
+        return fToolbox;
+    }
+
+    public static void clearToolBox(fReporte f) { // TODO: Use of ByRef founded Public Sub ClearToolBox(ByRef f As fReporte)
+        if (m_fToolBoxOwner(Is f)) {
+            if (fToolbox.fToolbox.getLoaded()) { fToolbox.fToolbox.clear(); }
+        }
+    }
+
+    public static void saveToolOptions() {
+        SaveSetting(App.EXEName, C_CONFIG, C_BACKCOLOR, fToolsOptions.shBackColor.BackColor);
+        SaveSetting(App.EXEName, C_CONFIG, C_LEFTBARCOLOR, fToolsOptions.shLeftBarColor.BackColor);
+        SaveSetting(App.EXEName, C_CONFIG, C_HIDELEFTBAR, fToolsOptions.chkHideLeftBar.Value == vbChecked);
+        SaveSetting(App.EXEName, C_CONFIG, C_WORKFOLDER, fToolsOptions.txWorkFolder.Text);
+    }
+
+    public static void loadToolOptions() {
+        gBackColor = GetSetting(App.EXEName, C_CONFIG, C_BACKCOLOR, vbWindowFrame);
+        gLeftBarColor = GetSetting(App.EXEName, C_CONFIG, C_LEFTBARCOLOR, vbButtonFace);
+        gHideLeftBar = GetSetting(App.EXEName, C_CONFIG, C_HIDELEFTBAR, 0);
+        gWorkFolder = GetSetting(App.EXEName, C_CONFIG, C_WORKFOLDER, getEspecialFolders(SpecialFolderIDs.SFIDPERSONAL));
+    }
+
+    public static String getEspecialFolders(SpecialFolderIDs nFolder) {
+        String sPath = "";
+        String strPath = "";
+        int lngPos = 0;
+        int iDL = 0;
+
+        // Fill the item id list with the pointer of each folder item, rtns 0 on success
+        if (SHGetSpecialFolderLocation(0, nFolder, iDL) == NOERROR) {
+            sPath = String$(255, 0);
+            SHGetPathFromIDListA(iDL, sPath);
+
+            lngPos = sPath.indexOf(Chr(0));
+            if (lngPos > 0) {
+                strPath = sPath.Substring(0, lngPos - 1);
+            }
+        }
+
+        return strPath;
+    }
+
+}
+
+public class Rectangle {
+    public Long height;
+    public Long width;
+}
+
+
+public enum SpecialFolderIDs {
+    SFIDDESKTOP = 0x0,
+    SFIDPROGRAMS = 0x2,
+    SFIDPERSONAL = 0x5,
+    SFIDFAVORITES = 0x6,
+    SFIDSTARTUP = 0x7,
+    SFIDRECENT = 0x8,
+    SFIDSENDTO = 0x9,
+    SFIDSTARTMENU = 0xB,
+    SFIDDESKTOPDIRECTORY = 0x10,
+    SFIDNETHOOD = 0x13,
+    SFIDFONTS = 0x14,
+    SFIDTEMPLATES = 0x15,
+    SFIDCOMMON_STARTMENU = 0x16,
+    SFIDCOMMON_PROGRAMS = 0x17,
+    SFIDCOMMON_STARTUP = 0x18,
+    SFIDCOMMON_DESKTOPDIRECTORY = 0x19,
+    SFIDAPPDATA = 0x1A,
+    SFIDPRINTHOOD = 0x1B,
+    SFIDPROGRAMS_FILES = 0x26,
+    SFIDPROGRAMFILES = 0x10000,
+    SFIDCOMMONFILES = 0x10001
+}
+
+
+public enum csEAlignConst {
+    CSEALIGNTEXTLEFT = 1,
+    CSEALIGNTEXTRIGHT,
+    CSEALIGNTEXTCENTER,
+    CSEALIGNCTLLEFT,
+    CSEALIGNCTLHORIZONTAL,
+    CSEALIGNCTLRIGHT,
+    CSEALIGNCTLVERTICAL,
+    CSEALIGNCTLTOP,
+    CSEALIGNCTLBOTTOM,
+    CSEALIGNCTLWIDTH,
+    CSEALIGNCTLHEIGHT
+}
+
+
+public enum csECtlAlignConst {
+    CSECTLALIGNLEFT = csEAlignCtlLeft,
+    CSECTLALIGNHORIZONTAL = csEAlignCtlHorizontal,
+    CSECTLALIGNRIGHT = csEAlignCtlRight,
+    CSECTLALIGNVERTICAL = csEAlignCtlVertical,
+    CSECTLALIGNTOP = csEAlignCtlTop,
+    CSECTLALIGNBOTTOM = csEAlignCtlBottom,
+    CSECTLALIGNWIDTH = csEAlignCtlWidth,
+    CSECTLALIGNHEIGHT = csEAlignCtlHeight
+}
+
+
+public enum csESectionLineTypes {
+    C_KEY_SECLN_HEADER = 1000,
+    C_KEY_SECLN_DETAIL = 1001,
+    C_KEY_SECLN_FOOTER = 1002,
+    C_KEY_SECLN_GROUPH = 1003,
+    C_KEY_SECLN_GROUPF = 1004
+}
+
+
+public enum CSRptEditroMoveType {
+    CSRPTEDMOVTHORIZONTAL,
+    CSRPTEDMOVTVERTICAL,
+    CSRPTEDMOVTALL,
+    CSRPTEDMOVLEFT,
+    CSRPTEDMOVRIGHT,
+    CSRPTEDMOVUP,
+    CSRPTEDMOVDOWN,
+    CSRPTEDMOVLEFTDOWN,
+    CSRPTEDMOVLEFTUP,
+    CSRPTEDMOVRIGHTDOWN,
+    CSRPTEDMOVRIGHTUP,
+    CSRPTEDMOVTNONE
+}
+
+
+public enum csRptEditCtrlType {
+    CSRPTEDITNONE,
+    CSRPTEDITLABEL,
+    CSRPTEDITFIELD,
+    CSRPTEDITFORMULA,
+    CSRPTEDITIMAGE,
+    CSRPTEDITCHART
+}
+
+
+

@@ -1,0 +1,16 @@
+C:\Javier\CSReports\CSAssocFile\Codigo\CSAssocFile\bin\Debug\CSAssocFile.dll
+C:\Javier\CSReports\CSAssocFile\Codigo\CSAssocFile\bin\Debug\CSAssocFile.pdb
+C:\Javier\CSReports\CSAssocFile\Codigo\CSAssocFile\obj\Debug\ResolveAssemblyReference.cache
+C:\Javier\CSReports\CSAssocFile\Codigo\CSAssocFile\obj\Debug\CSAssocFile.fAsk.resources
+C:\Javier\CSReports\CSAssocFile\Codigo\CSAssocFile\obj\Debug\CSAssocFile.Properties.Resources.resources
+C:\Javier\CSReports\CSAssocFile\Codigo\CSAssocFile\obj\Debug\GenerateResource.read.1.tlog
+C:\Javier\CSReports\CSAssocFile\Codigo\CSAssocFile\obj\Debug\GenerateResource.write.1.tlog
+C:\Javier\CSReports\CSAssocFile\Codigo\CSAssocFile\obj\Debug\CSAssocFile.dll
+C:\Javier\CSReports\CSAssocFile\Codigo\CSAssocFile\obj\Debug\CSAssocFile.pdb
+Z:\Work\CrowSoft\c#\CSReports\CSAssocFile\Codigo\CSAssocFile\bin\Debug\CSAssocFile.dll
+Z:\Work\CrowSoft\c#\CSReports\CSAssocFile\Codigo\CSAssocFile\bin\Debug\CSAssocFile.pdb
+Z:\Work\CrowSoft\c#\CSReports\CSAssocFile\Codigo\CSAssocFile\obj\Debug\CSAssocFile.fAsk.resources
+Z:\Work\CrowSoft\c#\CSReports\CSAssocFile\Codigo\CSAssocFile\obj\Debug\CSAssocFile.Properties.Resources.resources
+Z:\Work\CrowSoft\c#\CSReports\CSAssocFile\Codigo\CSAssocFile\obj\Debug\CSAssocFile.dll
+Z:\Work\CrowSoft\c#\CSReports\CSAssocFile\Codigo\CSAssocFile\obj\Debug\CSAssocFile.pdb
+Z:\Work\CrowSoft\c#\CSReports\CSAssocFile\Codigo\CSAssocFile\obj\Debug\CSAssocFile.csproj.GenerateResource.Cache

@@ -1,0 +1,61 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace CSKernelClient
+{
+    public static class cWindow
+    {
+        private static String m_title;
+
+        public static void setTitle(String value) 
+        {
+            m_title = value;
+        }
+
+        public static void msgWarning(String msg, String title, String details)
+        {
+            pMsgAux(msg, CSMSGICONS.Exclamation, title, details);
+        }
+
+        public static void msgWarning(String msg, String title)
+        {
+            if (title == "@@@@@") { title = m_title; }
+            msgWarning(msg, title, "");
+        }
+
+        public static void msgWarning(String msg)
+        {
+            msgWarning(msg, "@@@@@", "");
+        }
+
+        public static bool ask(String msg, VbMsgBoxResult defaultButton) 
+        {
+            return ask(msg, defaultButton, "@@@@@");
+        }
+
+        public static bool ask(String msg, VbMsgBoxResult defaultButton, String Title) 
+        {
+            return false;
+        }
+
+        public static void msgInfo(String msg)
+        {
+            msgInfo(msg, "@@@@@");
+        }
+
+        public static void msgInfo(String msg, String title)
+        {
+        }
+
+        private static void pMsgAux(String msg, CSMSGICONS icon, String title, String details) 
+        {
+            fMsg fmsg = new fMsg();
+            fmsg.setIcon(icon);
+            fmsg.setMessage(msg);
+            fmsg.setTitle(title);
+            fmsg.ShowDialog();
+        }
+    }
+}

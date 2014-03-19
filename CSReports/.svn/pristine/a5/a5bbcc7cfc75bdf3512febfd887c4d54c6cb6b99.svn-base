@@ -1,0 +1,868 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Xml;
+using CSKernelClient;
+using CSChartServer;
+using System.IO;
+using System.Drawing;
+
+namespace CSReportDll
+{
+
+    public class cReportChart
+    {
+
+        private const String C_MODULE = "cReportChart";
+
+        private cReportChartSeries m_series = new cReportChartSeries();
+        private csRptChartLineStyle m_chartLineStyle;
+        private bool m_chartBarOutline;
+        private bool m_chartShowValues;
+        private csRptChartPieThickness m_pieThickness;
+        private csRptChartPieDiameter m_pieDiameter;
+        private csRptChartFormat m_imageFormat = csRptChartFormat.PNG;
+        private String m_copyright = "";
+        private String m_chartTitle = "";
+        private csRptChartType m_chartType;
+        private int m_top = 0;
+        private bool m_chartCreated;
+        private String m_groupFieldName = "";
+        private String m_groupValue = "";
+        private int m_groupFieldIndex = 0;
+        private bool m_sort;
+        private Image m_image;
+
+        public String getLastErrorDescription()
+        {
+            return cError.getLastErrorDescription();
+        }
+
+        public String getLastErrorInfoAdd()
+        {
+            return cError.getLastErrorInfoAdd();
+        }
+
+        public String getLastErrorModule()
+        {
+            return cError.getLastErrorModule();
+        }
+
+        public String getLastErrorNumber()
+        {
+            return cError.getLastErrorNumber();
+        }
+
+        public String getLastErrorLine()
+        {
+            return cError.getLastErrorLine();
+        }
+
+        public String getLastErrorFunction()
+        {
+            return cError.getLastErrorFunction();
+        }
+
+        public cReportChartSeries getSeries()
+        {
+            return m_series;
+        }
+
+        public void setSeries(cReportChartSeries rhs)
+        {
+            m_series = rhs;
+        }
+
+        public csRptChartLineStyle getGridLines()
+        {
+            return m_chartLineStyle;
+        }
+
+        public void setGridLines(csRptChartLineStyle value)
+        {
+            m_chartLineStyle = value;
+        }
+
+        public bool getOutlineBars()
+        {
+            return m_chartBarOutline;
+        }
+
+        public void setOutlineBars(bool value)
+        {
+            m_chartBarOutline = value;
+        }
+
+        public bool getShowValues()
+        {
+            return m_chartShowValues;
+        }
+
+        public void setShowValues(bool value)
+        {
+            m_chartShowValues = value;
+        }
+
+        public csRptChartPieThickness getThickness()
+        {
+            return m_pieThickness;
+        }
+
+        public void setThickness(csRptChartPieThickness value)
+        {
+            m_pieThickness = value;
+        }
+
+        public csRptChartPieDiameter getDiameter()
+        {
+            return m_pieDiameter;
+        }
+
+        public void setDiameter(csRptChartPieDiameter value)
+        {
+            m_pieDiameter = value;
+        }
+
+        public csRptChartFormat getFormat()
+        {
+            return m_imageFormat;
+        }
+
+        public void setFormat(csRptChartFormat value)
+        {
+            m_imageFormat = value;
+        }
+
+        public String getCopyRight()
+        {
+            return m_copyright;
+        }
+
+        public void setCopyRight(String value)
+        {
+            m_copyright = value;
+        }
+
+        public String getGroupFieldName()
+        {
+            return m_groupFieldName;
+        }
+
+        public void setGroupFieldName(String value)
+        {
+            m_groupFieldName = value;
+        }
+
+        public String getGroupValue()
+        {
+            return m_groupValue;
+        }
+
+        public void setGroupValue(String value)
+        {
+            m_groupValue = value;
+        }
+
+        public int getGroupFieldIndex()
+        {
+            return m_groupFieldIndex;
+        }
+
+        public void setGroupFieldIndex(int value)
+        {
+            m_groupFieldIndex = value;
+        }
+
+        public String getChartTitle()
+        {
+            return m_chartTitle;
+        }
+
+        public void setChartTitle(String rhs)
+        {
+            m_chartTitle = rhs;
+        }
+
+        public bool getSort()
+        {
+            return m_sort;
+        }
+
+        public void setSort(bool rhs)
+        {
+            m_sort = rhs;
+        }
+
+        public csRptChartType getChartType()
+        {
+            return m_chartType;
+        }
+
+        public void setChartType(csRptChartType rhs)
+        {
+            m_chartType = rhs;
+        }
+
+        public int getTop()
+        {
+            return m_top;
+        }
+
+        public void setTop(int rhs)
+        {
+            m_top = rhs;
+        }
+
+        public bool getChartCreated()
+        {
+            return m_chartCreated;
+        }
+
+        public void setChartCreated(bool rhs)
+        {
+            m_chartCreated = rhs;
+        }
+
+        public Image getImage()
+        {
+            return m_image;
+        }
+
+        public void setImage(Image rhs)
+        {
+            m_image = rhs;
+        }
+
+        public bool makeChartFromRs(object rs, String fileName)
+        {
+            object rows = null;
+            cError.setSilent(true);
+            rows = rs.getRows();
+            return make(rows, "###,###,##0.00", true, fileName);
+        }
+
+        public bool makeChartFromRsVariant(object rs, String fileName)
+        {
+            object rows = null;
+            cError.setSilent(true);
+            rows = rs.getRows();
+            return make(rows, "###,###,##0.00", true, fileName);
+        }
+
+        internal bool load(CSXml.cXml xDoc, XmlElement nodObj)
+        {
+            nodObj = xDoc.getNodeFromNode(nodObj, "Chart");
+
+            if (nodObj != null)
+            {
+                m_chartLineStyle = (csRptChartLineStyle)xDoc.getNodeProperty(nodObj, "LineStyle").getValueInt(eTypes.eInteger);
+                m_chartBarOutline = xDoc.getNodeProperty(nodObj, "BarOutline").getValueBool(eTypes.eBoolean);
+                m_chartShowValues = xDoc.getNodeProperty(nodObj, "ShowValues").getValueBool(eTypes.eBoolean);
+                m_pieThickness = (csRptChartPieThickness)xDoc.getNodeProperty(nodObj, "PieThickness").getValueInt(eTypes.eInteger);
+                m_pieDiameter = (csRptChartPieDiameter)xDoc.getNodeProperty(nodObj, "PieDiameter").getValueInt(eTypes.eInteger);
+                m_imageFormat = (csRptChartFormat)xDoc.getNodeProperty(nodObj, "ImageFormat").getValueInt(eTypes.eInteger);
+                m_copyright = xDoc.getNodeProperty(nodObj, "Copyright").getValueString(eTypes.eText);
+                m_chartTitle = xDoc.getNodeProperty(nodObj, "ChartTitle").getValueString(eTypes.eText);
+                m_chartType = (csRptChartType)xDoc.getNodeProperty(nodObj, "ChartType").getValueInt(eTypes.eInteger);
+                m_top = xDoc.getNodeProperty(nodObj, "Top").getValueInt(eTypes.eInteger);
+                m_groupValue = xDoc.getNodeProperty(nodObj, "GroupValue").getValueString(eTypes.eText);
+                m_groupFieldName = xDoc.getNodeProperty(nodObj, "GroupFieldName").getValueString(eTypes.eText);
+                m_groupFieldIndex = xDoc.getNodeProperty(nodObj, "GroupFieldIndex").getValueInt(eTypes.eInteger);
+                m_sort = xDoc.getNodeProperty(nodObj, "Sort").getValueBool(eTypes.eBoolean);
+
+                XmlElement nodObjAux = null;
+                XmlElement nodObjSerie = null;
+                int index = 0;
+
+                nodObj = xDoc.getNodeFromNode(nodObj, "Series");
+
+                if (xDoc.nodeHasChild(nodObj))
+                {
+                    nodObjSerie = xDoc.getNodeChild(nodObj);
+
+                    while (nodObjSerie != null)
+                    {
+                        index = index + 1;
+                        nodObjAux = nodObjSerie;
+                        if (!getSeries().add(null, "").load(xDoc, nodObjAux, index))
+                        {
+                            return false;
+                        }
+                        nodObjSerie = xDoc.getNextNode(nodObjSerie);
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        internal bool save(CSXml.cXml xDoc, XmlElement nodeFather)
+        {
+            CSXml.cXmlProperty xProperty = null;
+            XmlElement nodObj = null;
+
+            xProperty = new CSXml.cXmlProperty();
+
+            xProperty.setName("Chart");
+            nodObj = xDoc.addNodeToNode(nodeFather, xProperty);
+
+            xProperty.setName("LineStyle");
+            xProperty.setValue(eTypes.eInteger, m_chartLineStyle);
+            xDoc.addPropertyToNode(nodObj, xProperty);
+
+            xProperty.setName("BarOutline");
+            xProperty.setValue(eTypes.eBoolean, m_chartBarOutline);
+            xDoc.addPropertyToNode(nodObj, xProperty);
+
+            xProperty.setName("ShowValues");
+            xProperty.setValue(eTypes.eBoolean, m_chartShowValues);
+            xDoc.addPropertyToNode(nodObj, xProperty);
+
+            xProperty.setName("PieThickness");
+            xProperty.setValue(eTypes.eInteger, m_pieThickness);
+            xDoc.addPropertyToNode(nodObj, xProperty);
+
+            xProperty.setName("PieDiameter");
+            xProperty.setValue(eTypes.eInteger, m_pieDiameter);
+            xDoc.addPropertyToNode(nodObj, xProperty);
+
+            xProperty.setName("ImageFormat");
+            xProperty.setValue(eTypes.eInteger, m_imageFormat);
+            xDoc.addPropertyToNode(nodObj, xProperty);
+
+            xProperty.setName("Copyright");
+            xProperty.setValue(eTypes.eText, m_copyright);
+            xDoc.addPropertyToNode(nodObj, xProperty);
+
+            xProperty.setName("ChartTitle");
+            xProperty.setValue(eTypes.eText, m_chartTitle);
+            xDoc.addPropertyToNode(nodObj, xProperty);
+
+            xProperty.setName("ChartType");
+            xProperty.setValue(eTypes.eInteger, m_chartType);
+            xDoc.addPropertyToNode(nodObj, xProperty);
+
+            xProperty.setName("Top");
+            xProperty.setValue(eTypes.eInteger, m_top);
+            xDoc.addPropertyToNode(nodObj, xProperty);
+
+            xProperty.setName("GroupFieldName");
+            xProperty.setValue(eTypes.eText, m_groupFieldName);
+            xDoc.addPropertyToNode(nodObj, xProperty);
+
+            xProperty.setName("GroupFieldIndex");
+            xProperty.setValue(eTypes.eInteger, m_groupFieldIndex);
+            xDoc.addPropertyToNode(nodObj, xProperty);
+
+            xProperty.setName("GroupValue");
+            xProperty.setValue(eTypes.eText, m_groupValue);
+            xDoc.addPropertyToNode(nodObj, xProperty);
+
+            xProperty.setName("Sort");
+            xProperty.setValue(eTypes.eBoolean, m_sort);
+            xDoc.addPropertyToNode(nodObj, xProperty);
+
+            xProperty.setName("Series");
+            nodObj = xDoc.addNodeToNode(nodObj, xProperty);
+
+            cReportChartSerie serie = null;
+            int index = 0;
+
+            for (int _i = 0; _i < m_series.count(); _i++)
+            {
+                serie = m_series.item(_i);
+                index = index + 1;
+                serie.save(xDoc, nodObj, index);
+            }
+
+            return true;
+        }
+
+        public bool make(object rows, String strFormat, bool bIsForWeb, String fileName)
+        {
+            // we need to delete any previous work image
+            //
+            pDestroyImage();
+
+            if (rows == null)
+            {
+                return false;
+            }
+
+            cWebChart chart = new cWebChart();
+
+            chart.newChartType(m_chartType, m_chartTitle);
+
+            pFill(chart, rows, strFormat);
+
+            chart.setColorPrimary(m_series.item(0).getColor());
+            chart.setLabelPrimary(mAux.getRealName(m_series.item(0).getValueFieldName()));
+            if (m_series.count() > 1)
+            {
+                chart.setColorAlternate(m_series.item(1).getColor());
+                chart.setLabelAlternate(mAux.getRealName(m_series.item(1).getValueFieldName()));
+            }
+            chart.setGridLines(m_chartLineStyle);
+            chart.setOutlineBars(m_chartBarOutline);
+            chart.setShowValues(m_chartShowValues);
+            chart.setShowLegend((m_chartType == csRptChartType.BAR) ? false : m_chartShowValues);
+
+            chart.setThickness(m_pieThickness);
+            chart.setDiameter(m_pieDiameter);
+
+            if (!bIsForWeb)
+            {
+                fileName = cUtil.getValidPath(System.IO.Path.GetTempPath()) + "~ChartImage";
+            }
+
+            chart.setFormat(m_imageFormat);
+
+            // saveToFile
+            chart.setSaveTo(1);
+            chart.setFileName(fileName);
+
+            pKillFile(fileName);
+
+            chart.setCopyRight(m_copyright);
+            chart.renderWebChartImage();
+
+            if (!bIsForWeb)
+            {
+                loadChart(fileName);
+            }
+
+            m_chartCreated = true;
+            return true;
+
+            chart.Dispose();
+        }
+
+        private String pGetExt()
+        {
+            String _rtn = "";
+            switch (m_imageFormat)
+            {
+                case csRptChartFormat.BMP:
+                    _rtn = ".bmp";
+                    break;
+                case csRptChartFormat.JPEG:
+                    _rtn = ".jpg";
+                    break;
+                case csRptChartFormat.GIF:
+                    _rtn = ".gif";
+                    break;
+                case csRptChartFormat.PNG:
+                    _rtn = ".png";
+                    break;
+            }
+            return _rtn;
+        }
+
+        private void pKillFile(String fileName)
+        {
+            try { File.Delete(fileName); }
+            catch { }
+        }
+
+        private object loadChart(String fileName)
+        {
+            // we need to delete any previous work image
+            //
+            pDestroyImage();
+
+            if (fileName.Length > 0)
+            {
+                Image image = Image.FromFile(fileName);
+            }
+        }
+
+        private void pDestroyImage()
+        {
+            m_chartCreated = false;
+        }
+
+        private void pGetSerieValues(
+            object rows,
+            t_SerieValue[] v,
+            int valueIndex,
+            int labelIndex,
+            bool bOthers)
+        {
+            int i = 0;
+            int j = 0;
+            int q = 0;
+            double value = 0;
+            bool bFound = false;
+            bool bCompare = false;
+            int newTop = 0;
+
+            if (m_groupFieldIndex >= 0)
+            {
+                // TODO: we need the rows dimension. remeber rows is a matrix (cols by rows)
+                for (j = 0; j <= rows.Length; j++)
+                {
+                    if (cGlobals.valVariant(rows(m_groupFieldIndex, j)) == m_groupValue)
+                    {
+                        newTop++;
+                    }
+                }
+
+                if (newTop > 0) { newTop--; }
+
+                if (v.Length > newTop)
+                {
+                    pRedimPreserve(ref v, newTop);
+                }
+            }
+
+            if (m_sort)
+            {
+
+                if (m_groupFieldIndex >= 0)
+                {
+                    // TODO: we need the rows dimension. remeber rows is a matrix (cols by rows)
+                    for (j = 0; j <= rows.Length; j++)
+                    {
+
+                        if (cGlobals.valVariant(rows(m_groupFieldIndex, j)) == m_groupValue)
+                        {
+                            v[0].value = cGlobals.valVariant(rows(valueIndex, j));
+                            v[0].label = cGlobals.valVariant(rows(labelIndex, j));
+                            v[0].idx = j;
+                            break;
+                        }
+                    }
+
+                }
+                else
+                {
+                    v[0].value = cGlobals.valVariant(rows(valueIndex, 0));
+                    v[0].label = cGlobals.valVariant(rows(labelIndex, 0));
+                    v[0].idx = 0;
+                }
+                // TODO: we need the rows dimension. remeber rows is a matrix (cols by rows)
+                for (j = 1; j <= rows.Length; j++)
+                {
+
+                    if (m_groupFieldIndex >= 0)
+                    {
+                        bCompare = cGlobals.valVariant(rows(m_groupFieldIndex, j)) == m_groupValue;
+                    }
+                    else
+                    {
+                        bCompare = true;
+                    }
+
+                    if (bCompare)
+                    {
+                        value = cGlobals.val(cGlobals.valVariant(rows(valueIndex, j)));
+
+                        if (value > v[0].value)
+                        {
+                            v[0].value = value;
+                            v[0].label = cGlobals.valVariant(rows(labelIndex, j));
+                            v[0].idx = j;
+                        }
+                    }
+                }
+
+                for (i = 1; i <= v.Length; i++)
+                {
+
+                    v[i].idx = -1;
+                    // TODO: we need the rows dimension. remeber rows is a matrix (cols by rows)
+                    for (j = 1; j <= rows.Length; j++)
+                    {
+
+                        if (m_groupFieldIndex >= 0)
+                        {
+                            bCompare = cGlobals.valVariant(rows(m_groupFieldIndex, j)) == m_groupValue;
+                        }
+                        else
+                        {
+                            bCompare = true;
+                        }
+
+                        if (bCompare)
+                        {
+                            value = cGlobals.val(cGlobals.valVariant(rows(valueIndex, j)));
+
+                            if ((value > v[i].value || v[i].idx == -1)
+                                && value <= v[i - 1].value && j != v[i - 1].idx)
+                            {
+
+                                bFound = false;
+                                for (q = 0; q <= i; q++)
+                                {
+                                    if (j == v[q].idx)
+                                    {
+                                        bFound = true;
+                                        break;
+                                    }
+                                }
+
+                                if (!bFound)
+                                {
+                                    v[i].value = value;
+                                    v[i].label = cGlobals.valVariant(rows(labelIndex, j));
+                                    v[i].idx = j;
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+            else
+            {
+                i = 0;
+                // TODO: we need the rows dimension. remeber rows is a matrix (cols by rows)
+                for (j = 0; j <= rows.Length; j++)
+                {
+                    if (m_groupFieldIndex >= 0)
+                    {
+                        if (cGlobals.valVariant(rows(m_groupFieldIndex, j)) == m_groupValue)
+                        {
+                            if (pGetSerieValuesAux(rows, v, valueIndex, labelIndex, i, j, false)) { break; }
+                        }
+                    }
+                    else
+                    {
+                        if (pGetSerieValuesAux(rows, v, valueIndex, labelIndex, i, j, false)) { break; }
+                    }
+                }
+
+                if (bOthers)
+                {
+                    // TODO: we need the rows dimension. remeber rows is a matrix (cols by rows)
+                    if (rows.Length > v.Length)
+                    {
+                        int n = 0;
+                        int k = 0;
+                        bool bHaveToRedim = null;
+                        bHaveToRedim = true;
+                        n = v.Length + 1;
+                        // TODO: we need the rows dimension. remeber rows is a matrix (cols by rows)
+                        for (j = 0; j <= rows.Length; j++)
+                        {
+                            if (m_groupFieldIndex >= 0)
+                            {
+                                if (cGlobals.valVariant(rows(m_groupFieldIndex, j)) == m_groupValue)
+                                {
+                                    if (k >= n)
+                                    {
+                                        if (bHaveToRedim)
+                                        {
+                                            pRedimPreserve(ref v, n);
+                                            bHaveToRedim = false;
+                                        }
+                                        pGetSerieValuesAux(rows, v, valueIndex, labelIndex, v.Length, j, true);
+                                    }
+                                    else
+                                    {
+                                        k = k + 1;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                if (bHaveToRedim)
+                                {
+                                    pRedimPreserve(ref v, n);
+                                    bHaveToRedim = false;
+                                }
+                                pGetSerieValuesAux(rows, v, valueIndex, labelIndex, v.Length, j, true);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private bool pGetSerieValuesAux(
+            object rows,
+            t_SerieValue[] v,
+            int valueIndex,
+            int labelIndex,
+            int i,
+            int j,
+            bool bAdd)
+        {
+            if (bAdd)
+            {
+                v[i].value = v[i].value + cGlobals.valVariant(rows(valueIndex, j));
+            }
+            else
+            {
+                v[i].value = cGlobals.valVariant(rows(valueIndex, j));
+            }
+            v[i].label = cGlobals.valVariant(rows(labelIndex, j));
+            v[i].idx = j;
+            i = i + 1;
+            return i > v.Length;
+        }
+
+        private void pFill(cWebChart chart, object rows, String strFormat) 
+        {
+            int i = 0;
+            t_SerieValue[] values = null;
+            cReportChartSerie serie = null;
+            int idxSerie = 0;
+
+            if (m_top == 0) { m_top = 50; }
+
+            // TODO: we need the rows dimension. remeber rows is a matrix (cols by rows)
+            if (rows.Length < 0) { return; }
+
+            // TODO: we need the rows dimension. remeber rows is a matrix (cols by rows)
+            if (rows.Length < m_top) {
+                // TODO: we need the rows dimension. remeber rows is a matrix (cols by rows)
+                pRedim(ref values, rows.Length);
+            } 
+            else {
+                pRedim(ref values, m_top - 1);
+            }
+
+            for (int _i = 0; _i < m_series.count(); _i++) {
+                serie = m_series.item(_i);
+
+                // At the time we only support two series
+                //
+                idxSerie = idxSerie + 1;
+                if (idxSerie > 2) { return; }
+
+                pGetSerieValues(rows, 
+                                values, 
+                                serie.getValueIndex(), 
+                                serie.getLabelIndex(), 
+                                m_chartType == csRptChartType.PIE);
+
+                for (i = 0; i <= values.Length; i++) {
+
+                    if (values[i].idx != -1) {
+                        if (idxSerie == 1) {
+                            cWebChartItem w_add = chart.webChartItems.item(chart.webChartItems.add(null));
+                            w_add.setPrimaryValue(values[i].value);
+                            w_add.setPrimaryLabel(mAux.cGlobals.format(values[i].label, strFormat));
+                            w_add.setPieLabel(mAux.cGlobals.format(values[i].label, strFormat));
+                            w_add.setAlternateValue(0));
+                        } 
+                        else if (idxSerie == 2) {
+                            cWebChartItem w_item = chart.webChartItems.item(i);
+                            w_item.setAlternateValue(values[i].value);
+                            w_item.setPieLabel(mAux.cGlobals.format(values[i].label, strFormat));
+                            w_item.setAltLabel(mAux.cGlobals.format(values[i].label, strFormat));
+                        }
+                    }
+                }
+
+                if ((values.Length > m_top - 1) && m_chartType == csRptChartType.PIE) {
+
+                    cWebChartItem w_item = chart.webChartItems.item(chart.webChartItems.count()-1);
+                    w_item.setPrimaryLabel("Otros");
+                    w_item.setPieLabel("Otros");
+                }
+
+            }
+
+            if (chart.webChartItems.count()) {
+                chart.webChartItems.item(0).setExplode(true);
+            }
+        }
+
+        public static void pRedimPreserve(ref t_SerieValue[] vSeries, int size)
+        {
+            if (size == 0)
+            {
+                vSeries = null;
+            }
+            else
+            {
+                if (vSeries == null)
+                {
+                    vSeries = new t_SerieValue[size];
+                }
+                else if (vSeries.Length == 0)
+                {
+                    vSeries = new t_SerieValue[size];
+                }
+                else
+                {
+                    t_SerieValue[] newArray = new t_SerieValue[size];
+                    Array.Copy(vSeries, newArray, vSeries.Length);
+                    vSeries = newArray;
+                }
+            }
+        }
+
+        public static void pRedim(ref t_SerieValue[] vSeries, int size)
+        {
+            if (size == 0)
+            {
+                vSeries = null;
+            }
+            else
+            {
+                vSeries = new t_SerieValue[size];
+            }
+        }
+
+    }
+
+    private class t_SerieValue
+    {
+        public String label;
+        public Double value;
+        public long idx;
+    }
+
+
+    public enum csRptChartLineStyle
+    {
+        NONE,
+        HORIZONTAL,
+        NUMBERED,
+        BOTH
+    }
+
+
+    public enum csRptChartPieThickness
+    {
+        NONE = 0,
+        WAFER = 2,
+        THIN = 4,
+        MEDIUM = 8,
+        THICK = 16,
+        THICKEST = 32
+    }
+
+
+    public enum csRptChartPieDiameter
+    {
+        SMALLEST = 50,
+        SMALLER = 100,
+        SMALL = 150,
+        MEDIUM = 200,
+        LARGE = 250,
+        LARGER = 350,
+        LARGEST = 450
+    }
+
+
+    public enum csRptChartFormat
+    {
+        GIF,
+        JPEG,
+        PNG,
+        BMP
+    }
+
+
+    public enum csRptChartType
+    {
+        PIE,
+        BAR
+    }
+
+}

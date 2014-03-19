@@ -1,0 +1,9 @@
+C:\Javier\CSReports\CSReport\CSConnect\Codigo\CSConnect\bin\Debug\CSConnect.dll
+C:\Javier\CSReports\CSReport\CSConnect\Codigo\CSConnect\bin\Debug\CSConnect.pdb
+C:\Javier\CSReports\CSReport\CSConnect\Codigo\CSConnect\obj\Debug\ResolveAssemblyReference.cache
+C:\Javier\CSReports\CSReport\CSConnect\Codigo\CSConnect\obj\Debug\CSConnect.dll
+C:\Javier\CSReports\CSReport\CSConnect\Codigo\CSConnect\obj\Debug\CSConnect.pdb
+Z:\Work\CrowSoft\c#\CSReports\CSReport\CSConnect\Codigo\CSConnect\bin\Debug\CSConnect.dll
+Z:\Work\CrowSoft\c#\CSReports\CSReport\CSConnect\Codigo\CSConnect\bin\Debug\CSConnect.pdb
+Z:\Work\CrowSoft\c#\CSReports\CSReport\CSConnect\Codigo\CSConnect\obj\Debug\CSConnect.dll
+Z:\Work\CrowSoft\c#\CSReports\CSReport\CSConnect\Codigo\CSConnect\obj\Debug\CSConnect.pdb

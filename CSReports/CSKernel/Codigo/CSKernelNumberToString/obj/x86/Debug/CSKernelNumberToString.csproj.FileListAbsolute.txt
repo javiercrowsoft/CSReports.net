@@ -1,0 +1,5 @@
+C:\Javier\CSReports\CSKernel\Codigo\CSKernelNumberToString\bin\Debug\CSKernelNumberToString.dll
+C:\Javier\CSReports\CSKernel\Codigo\CSKernelNumberToString\bin\Debug\CSKernelNumberToString.pdb
+C:\Javier\CSReports\CSKernel\Codigo\CSKernelNumberToString\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Javier\CSReports\CSKernel\Codigo\CSKernelNumberToString\obj\x86\Debug\CSKernelNumberToString.dll
+C:\Javier\CSReports\CSKernel\Codigo\CSKernelNumberToString\obj\x86\Debug\CSKernelNumberToString.pdb

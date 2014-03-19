@@ -1,0 +1,35 @@
+﻿using System;
+
+
+namespace CSKernelClient
+{
+
+
+    public static class cError
+    {
+
+        public static void mngError(Exception ex,
+                             string function,
+                             string module,
+                             string infoAdd)
+        {
+            mngError(ex, function, module, infoAdd, "", eErrorLevel.eErrorWarning, eErrorType.eErrorVba, null);
+        }
+        public static void mngError(Exception ex,
+                             string function,
+                             string module,
+                             string infoAdd,
+                             string title,
+                             eErrorLevel level,
+                             eErrorType varType,
+                             object connection)
+        {
+            // TODO: implement function
+            fErrors f = new fErrors();
+            f.setErrorIcon();
+            f.setDetails(ex.Message);
+            f.ShowDialog();
+        }
+
+    }
+}

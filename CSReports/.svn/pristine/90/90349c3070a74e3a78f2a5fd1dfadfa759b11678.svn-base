@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E448F39C-75BC-42FC-8E4A-9110D60EECE4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CSReportPaint</RootNamespace>
+    <AssemblyName>CSReportPaint</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="cGlobals.cs" />
+    <Compile Include="cReportPaint.cs" />
+    <Compile Include="cReportPaintError.cs" />
+    <Compile Include="cReportPaintObject.cs" />
+    <Compile Include="cReportPaintObjects.cs" />
+    <Compile Include="cReportPrint.cs" />
+    <Compile Include="fPreview.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fPreview.Designer.cs">
+      <DependentUpon>fPreview.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReportPaintException.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\CSKernel\Codigo\CSKernelClient\CSKernelClient.csproj">
+      <Project>{B3932376-5FEA-4C07-9709-663989C7ECF2}</Project>
+      <Name>CSKernelClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CSIReportPrint\Codigo\CSIReportPrint\CSIReportPrint.csproj">
+      <Project>{33EB467A-CDEF-426E-AFA3-0E2CA9E2E8AA}</Project>
+      <Name>CSIReportPrint</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CSReportDll\Codigo\CSReportDll\CSReportDll.csproj">
+      <Project>{9A3F2CA3-2093-47AF-9B48-2CE6B1636245}</Project>
+      <Name>CSReportDll</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CSReportPreview\Codigo\CSReportPreview\CSReportPreview.csproj">
+      <Project>{EC467EFD-5B68-485A-910E-E2F19699E072}</Project>
+      <Name>CSReportPreview</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="fPreview.resx">
+      <DependentUpon>fPreview.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

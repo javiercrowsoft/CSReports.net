@@ -1,0 +1,60 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+
+namespace CSReportEditor
+{
+    public partial class fMain : Form
+    {
+        public fMain()
+        {
+            InitializeComponent();
+
+            // it is the first thing we need to do
+            //
+            CSKernelClient.cUtil.setSepDecimal();
+
+            cEditor editor = new cEditor(this, pnEditor, pnRule, pnReport);
+        }
+
+        public cEditor getReportCopySource()
+        {
+            return null;
+        }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TabPage tab = new TabPage();
+            Panel pnEditor = new Panel();
+            PictureBox pnRule = new PictureBox();
+            PictureBox pnReport = new PictureBox();
+            pnEditor.Controls.Add(pnRule);
+            pnEditor.Controls.Add(pnReport);
+            tab.Controls.Add(pnEditor);
+            pnEditor.Dock = DockStyle.Fill;
+            tabReports.TabPages.Add(tab);
+            tab.Text = "New Report";
+            cEditor editor = new cEditor(this, pnEditor, pnRule, pnReport);
+        }
+
+        private void tsbNew_Click(object sender, EventArgs e)
+        {
+            newToolStripMenuItem_Click(sender, e);
+        }
+
+        private void fMain_KeyUp(object sender, KeyEventArgs e)
+        {
+            
+        }
+
+        private void fMain_MouseUp(object sender, MouseEventArgs e)
+        {
+            
+        }
+    }
+}

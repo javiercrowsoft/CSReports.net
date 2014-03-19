@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9A3F2CA3-2093-47AF-9B48-2CE6B1636245}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CSReportDll</RootNamespace>
+    <AssemblyName>CSReportDll</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="cColumnInfo.cs" />
+    <Compile Include="cColumnsInfo.cs" />
+    <Compile Include="cImage.cs" />
+    <Compile Include="cIReportGroupSections.cs" />
+    <Compile Include="cIReportScriptType.cs" />
+    <Compile Include="cParameter.cs" />
+    <Compile Include="cParameters.cs" />
+    <Compile Include="cPrintAPI.cs" />
+    <Compile Include="cPrinter.cs" />
+    <Compile Include="cReportAspect.cs" />
+    <Compile Include="cReportChart.cs" />
+    <Compile Include="cReportChartSerie.cs" />
+    <Compile Include="cReportChartSeries.cs" />
+    <Compile Include="cReportCompiler.cs" />
+    <Compile Include="cReportCompilerGlobals.cs" />
+    <Compile Include="cReportCompilerVar.cs" />
+    <Compile Include="cReportConnect.cs" />
+    <Compile Include="cReportConnectsAux.cs" />
+    <Compile Include="cReportControl.cs" />
+    <Compile Include="cReportControls.cs" />
+    <Compile Include="cReportControls2.cs" />
+    <Compile Include="cReportError.cs" />
+    <Compile Include="cReportField.cs" />
+    <Compile Include="cReportFont.cs" />
+    <Compile Include="cReportFormula.cs" />
+    <Compile Include="cReportFormulaInt.cs" />
+    <Compile Include="cReportFormulaParameters.cs" />
+    <Compile Include="cReportFormulas.cs" />
+    <Compile Include="cReportFormulasInt.cs" />
+    <Compile Include="cReportFormulaType.cs" />
+    <Compile Include="cReportFormulaTypes.cs" />
+    <Compile Include="cReportGroup.cs" />
+    <Compile Include="cReportGroups.cs" />
+    <Compile Include="cReportImage.cs" />
+    <Compile Include="cReportLabel.cs" />
+    <Compile Include="cReportFormulaParameter.cs" />
+    <Compile Include="cReportLaunchInfo.cs" />
+    <Compile Include="cReportLine.cs" />
+    <Compile Include="cReportPage.cs" />
+    <Compile Include="cReportPageField.cs" />
+    <Compile Include="cReportPageFields.cs" />
+    <Compile Include="cReportPageInfo.cs" />
+    <Compile Include="cReportPages.cs" />
+    <Compile Include="cReportPageID.cs" />
+    <Compile Include="cReportPageSettings.cs" />
+    <Compile Include="cReportPaperInfo.cs" />
+    <Compile Include="cReportScriptEngine.cs" />
+    <Compile Include="cReportSection.cs" />
+    <Compile Include="cReportSectionLine.cs" />
+    <Compile Include="cReportSectionLines.cs" />
+    <Compile Include="cReportSections.cs" />
+    <Compile Include="cReportVariable.cs" />
+    <Compile Include="cReportVariables.cs" />
+    <Compile Include="cStuctTime.cs" />
+    <Compile Include="FindAccessFileEventArgs.cs" />
+    <Compile Include="ProgressEventArgs.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rectangle.cs" />
+    <Compile Include="ReportArgumentMissingException.cs" />
+    <Compile Include="ReportException.cs" />
+    <Compile Include="ReportLaunchInfoNoDefined.cs" />
+    <Compile Include="ReportNotDefinedFunctionException.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="cReport.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\CSChart\Codigo\CSChartServer\CSChartServer.csproj">
+      <Project>{6D39EA9F-6588-42E6-A1AD-20065E5F494E}</Project>
+      <Name>CSChartServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\CSDataBase\Codigo\CSDataBase\CSDataBase.csproj">
+      <Project>{A02FE16D-0B24-467E-BA97-6E1C1213AD46}</Project>
+      <Name>CSDataBase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\CSKernel\Codigo\CSKernelClient\CSKernelClient.csproj">
+      <Project>{B3932376-5FEA-4C07-9709-663989C7ECF2}</Project>
+      <Name>CSKernelClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\CSKernel\Codigo\CSKernelFile\CSKernelFile\CSKernelFile.csproj">
+      <Project>{0B54F3BA-C9D6-4758-8CB7-1CE9CC3A30C4}</Project>
+      <Name>CSKernelFile</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\CSKernel\Codigo\CSKernelNumberToString\CSKernelNumberToString.csproj">
+      <Project>{C01398D1-387A-4586-9224-EA1096D9B5F9}</Project>
+      <Name>CSKernelNumberToString</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\CSXml\Codigo\CSXML\CSXML.csproj">
+      <Project>{3C4B821A-34FD-4383-A9BC-8964E13DABCF}</Project>
+      <Name>CSXML</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CSIReportPrint\Codigo\CSIReportPrint\CSIReportPrint.csproj">
+      <Project>{33EB467A-CDEF-426E-AFA3-0E2CA9E2E8AA}</Project>
+      <Name>CSIReportPrint</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CSReportGlobals\Codigo\CSReportGlobals\CSReportGlobals.csproj">
+      <Project>{6018C911-1404-462B-9FA7-31904D56813A}</Project>
+      <Name>CSReportGlobals</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
