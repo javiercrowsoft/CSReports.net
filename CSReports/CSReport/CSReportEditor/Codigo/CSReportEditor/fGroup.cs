@@ -109,6 +109,36 @@ namespace CSReportEditor
             return m_ok;
         }
 
+		public string getDbField ()
+		{
+			throw new NotImplementedException ();
+		}
+
+		public int getFieldType ()
+		{
+			throw new NotImplementedException ();
+		}
+
+		public int getIndex ()
+		{
+			throw new NotImplementedException ();
+		}
+
+		public void setDbField (string sField)
+		{
+			throw new NotImplementedException ();
+		}
+
+		public void setFieldType (int nFieldType)
+		{
+			throw new NotImplementedException ();
+		}
+
+		public void setIndex (int nIndex)
+		{
+			throw new NotImplementedException ();
+		}
+
         private void cmdOk_Click(object sender, EventArgs e)
         {
             m_ok = true;

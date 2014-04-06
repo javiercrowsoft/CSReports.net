@@ -179,6 +179,11 @@ namespace CSReportDll
             return true;
         }
 
+		public cReportConnect add(cReportConnect c) 
+		{
+			return add (c, null);
+		}
+
         public cReportConnect add(cReportConnect c, String key)
         {
             try

@@ -1,0 +1,10 @@
+/Users/javier/Work/CrowSoft/c#/CSReports.net/CSReports/CSDataBase/Codigo/CSDataBase/obj/Debug/.NETFramework,Version=v4.0.AssemblyAttribute.cs
+/Users/javier/Work/CrowSoft/c#/CSReports.net/CSReports/CSDataBase/Codigo/CSDataBase/obj/Debug/CSDataBase.fCancelQuery.resources
+/Users/javier/Work/CrowSoft/c#/CSReports.net/CSReports/CSDataBase/Codigo/CSDataBase/bin/Debug/CSDataBase.dll.mdb
+/Users/javier/Work/CrowSoft/c#/CSReports.net/CSReports/CSDataBase/Codigo/CSDataBase/bin/Debug/CSDataBase.dll
+/Users/javier/Work/CrowSoft/c#/CSReports.net/CSReports/CSDataBase/Codigo/CSDataBase/obj/Debug/CSDataBase.dll
+/Users/javier/Work/CrowSoft/c#/CSReports.net/CSReports/CSDataBase/Codigo/CSDataBase/obj/Debug/CSDataBase.dll.mdb
+/Users/javier/Work/CrowSoft/c#/CSReports.net/CSReports/CSDataBase/Codigo/CSDataBase/bin/Debug/CSKernelClient.dll
+/Users/javier/Work/CrowSoft/c#/CSReports.net/CSReports/CSDataBase/Codigo/CSDataBase/bin/Debug/CSKernelClient.dll.mdb
+/Users/javier/Work/CrowSoft/c#/CSReports.net/CSReports/CSDataBase/Codigo/CSDataBase/bin/Debug/CSOAPI.dll
+/Users/javier/Work/CrowSoft/c#/CSReports.net/CSReports/CSDataBase/Codigo/CSDataBase/bin/Debug/CSOAPI.dll.mdb

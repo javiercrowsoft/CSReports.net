@@ -52,4 +52,10 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\CSReportGlobals\Codigo\CSReportGlobals\CSReportGlobals.csproj">
+      <Project>{6018C911-1404-462B-9FA7-31904D56813A}</Project>
+      <Name>CSReportGlobals</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

@@ -233,7 +233,13 @@ namespace CSReportPaint
             return sKey.Substring(0, C_KEY_PAINT_SEC.Length) == C_KEY_PAINT_SEC;
         }
 
-        public bool pointIsInObject(float x, float y, ref String sKey, ref csRptPaintRegionType regionType)
+		public bool pointIsInObject(float x, float y, ref String sKey)
+		{
+			csRptPaintRegionType regionType = csRptPaintRegionType.CRPTPNTRGNTYPEBODY;
+			return pointIsInObject(x, y, ref sKey, ref regionType);
+		}
+        
+		public bool pointIsInObject(float x, float y, ref String sKey, ref csRptPaintRegionType regionType)
         { // TODO: Use of ByRef founded Public Function PointIsInObject(ByVal x As Single, ByVal y As Single, ByRef sKey As String, Optional ByRef RegionType As csRptPaintRegionType = 0) As Boolean
             if (pointIsInObjectAux(m_paintSections, x, y, ref sKey, ref regionType))
             {
@@ -865,7 +871,7 @@ namespace CSReportPaint
             return true;
         }
 
-        public void moveObjToXY(String sKey, int x, int y, Graphics graph)
+		public void moveObjToXY(String sKey, float x, float y, Graphics graph)
         {
             if (sKey.Substring(0, 1) == C_KEY_PAINT_OBJ)
             {
@@ -879,7 +885,7 @@ namespace CSReportPaint
             }
         }
 
-        public void moveObjToXYEx(String sKey, int x, int y, Graphics graph, bool clear)
+		public void moveObjToXYEx(String sKey, float x, float y, Graphics graph, bool clear)
         {
             if (clear)
             {
@@ -909,7 +915,7 @@ namespace CSReportPaint
             if (m_y2Ex < m_y2 && m_y2 > 0) { m_y2Ex = m_y2; }
         }
 
-        public void moveVertical(String sKey, int y, Graphics graph)
+		public void moveVertical(String sKey, float y, Graphics graph)
         {
             if (sKey.Substring(0, 1) == C_KEY_PAINT_OBJ)
             {
@@ -923,7 +929,7 @@ namespace CSReportPaint
             }
         }
 
-        public void moveHorizontal(String sKey, int x, Graphics graph)
+		public void moveHorizontal(String sKey, float x, Graphics graph)
         {
             if (sKey.Substring(0, 1) == C_KEY_PAINT_OBJ)
             {

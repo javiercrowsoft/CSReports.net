@@ -1,0 +1,7 @@
+/Users/javier/Work/CrowSoft/c#/CSReports.net/CSReports/CSAssocFile/Codigo/CSAssocFile/obj/Debug/.NETFramework,Version=v4.0.AssemblyAttribute.cs
+/Users/javier/Work/CrowSoft/c#/CSReports.net/CSReports/CSAssocFile/Codigo/CSAssocFile/obj/Debug/CSAssocFile.fAsk.resources
+/Users/javier/Work/CrowSoft/c#/CSReports.net/CSReports/CSAssocFile/Codigo/CSAssocFile/obj/Debug/CSAssocFile.Properties.Resources.resources
+/Users/javier/Work/CrowSoft/c#/CSReports.net/CSReports/CSAssocFile/Codigo/CSAssocFile/bin/Debug/CSAssocFile.dll.mdb
+/Users/javier/Work/CrowSoft/c#/CSReports.net/CSReports/CSAssocFile/Codigo/CSAssocFile/bin/Debug/CSAssocFile.dll
+/Users/javier/Work/CrowSoft/c#/CSReports.net/CSReports/CSAssocFile/Codigo/CSAssocFile/obj/Debug/CSAssocFile.dll
+/Users/javier/Work/CrowSoft/c#/CSReports.net/CSReports/CSAssocFile/Codigo/CSAssocFile/obj/Debug/CSAssocFile.dll.mdb

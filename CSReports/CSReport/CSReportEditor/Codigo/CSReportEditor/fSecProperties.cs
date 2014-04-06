@@ -15,5 +15,10 @@ namespace CSReportEditor
         {
             InitializeComponent();
         }
+
+		public string getFormulaName ()
+		{
+			throw new NotImplementedException ();
+		}
     }
 }

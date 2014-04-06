@@ -15,5 +15,10 @@ namespace CSReportEditor
         {
             InitializeComponent();
         }
+
+		public void addConnect (string str, string str2)
+		{
+			throw new NotImplementedException ();
+		}
     }
 }

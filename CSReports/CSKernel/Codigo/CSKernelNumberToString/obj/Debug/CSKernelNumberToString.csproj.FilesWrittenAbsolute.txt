@@ -1,0 +1,3 @@
+/Users/javier/Work/CrowSoft/c#/CSReports.net/CSReports/CSKernel/Codigo/CSKernelNumberToString/obj/Debug/.NETFramework,Version=v4.0.AssemblyAttribute.cs
+/Users/javier/Work/CrowSoft/c#/CSReports.net/CSReports/CSKernel/Codigo/CSKernelNumberToString/bin/Debug/CSKernelNumberToString.dll
+/Users/javier/Work/CrowSoft/c#/CSReports.net/CSReports/CSKernel/Codigo/CSKernelNumberToString/obj/Debug/CSKernelNumberToString.dll

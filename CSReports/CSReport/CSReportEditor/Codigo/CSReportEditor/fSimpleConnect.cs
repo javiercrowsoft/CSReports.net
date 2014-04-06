@@ -15,5 +15,50 @@ namespace CSReportEditor
         {
             InitializeComponent();
         }
+
+		public void setServer (string str)
+		{
+			throw new NotImplementedException ();
+		}
+
+		public void setDataBase (string str)
+		{
+			throw new NotImplementedException ();
+		}
+
+		public void setUser (string str)
+		{
+			throw new NotImplementedException ();
+		}
+
+		public void setPassword (string str)
+		{
+			throw new NotImplementedException ();
+		}
+
+		public string getUser ()
+		{
+			throw new NotImplementedException ();
+		}
+
+		public void setConnectTypeToNT ()
+		{
+			throw new NotImplementedException ();
+		}
+
+		public void setConnectTypeToSQL ()
+		{
+			throw new NotImplementedException ();
+		}
+
+		public bool getOk ()
+		{
+			throw new NotImplementedException ();
+		}
+
+		public string getStrConnect ()
+		{
+			throw new NotImplementedException ();
+		}
     }
 }

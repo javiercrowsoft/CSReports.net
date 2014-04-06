@@ -570,7 +570,7 @@ namespace CSReportGlobals
         csEZoomWidth = -3
     }
 
-    enum csEAlignConst
+	public enum csEAlignConst
     {
         csEAlignTextLeft = 1,
         csEAlignTextRight,
@@ -587,7 +587,7 @@ namespace CSReportGlobals
         csEAlignCtlHeight
     }
 
-    enum csECtlAlignConst
+	public enum csECtlAlignConst
     {
         csECtlAlignLeft = csEAlignConst.csEAlignCtlLeft,
         csECtlAlignHorizontal = csEAlignConst.csEAlignCtlHorizontal,

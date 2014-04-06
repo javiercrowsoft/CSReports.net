@@ -186,5 +186,10 @@ namespace CSReportEditor
         {
             // TODO: implement
         }
+
+		public void setsbPnlCtrl (string msg)
+		{
+			throw new NotImplementedException ();
+		}
     }
 }

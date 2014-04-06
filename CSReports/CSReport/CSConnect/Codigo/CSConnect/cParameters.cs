@@ -7,5 +7,9 @@ namespace CSConnect
 {
     public class cParameters
     {
+		public CSConnect.cParameter add ()
+		{
+			throw new NotImplementedException ();
+		}
     }
 }

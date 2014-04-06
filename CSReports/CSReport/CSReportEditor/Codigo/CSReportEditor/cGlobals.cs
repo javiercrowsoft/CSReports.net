@@ -60,6 +60,9 @@ namespace CSReportEditor
 
         public const String C_GROUP_LABEL = "Group";
 
+		// TODO: refactor
+		public const int ShiftMask = 1;
+
         public static void setStatus()
         { 
         
@@ -70,9 +73,38 @@ namespace CSReportEditor
             return false;
         }
 
+		public static bool showDbFields (string sField, int nFieldType, int nIndex, cEditor editor)
+		{
+			throw new NotImplementedException ();
+		}
+
+		public static void setEditAlignTextState (object length)
+		{
+			throw new NotImplementedException ();
+		}
+
+		public static void setEditAlignCtlState (bool b)
+		{
+			throw new NotImplementedException ();
+		}
+
+		public static void setEditFontBoldValue (int bBold)
+		{
+			throw new NotImplementedException ();
+		}
+
+		public static void setEditAlignValue (int align)
+		{
+			throw new NotImplementedException ();
+		}
+
+		public static void setParametersAux (CSConnect.cConnect connect, object connect2)
+		{
+			throw new NotImplementedException ();
+		}
     }
 
-    public enum CSRptEditorMoveType {
+    public enum csRptEditorMoveType {
         CSRPTEDMOVTHORIZONTAL,
         CSRPTEDMOVTVERTICAL,
         CSRPTEDMOVTALL,
@@ -95,14 +127,4 @@ namespace CSReportEditor
         CSRPTEDITIMAGE,
         CSRPTEDITCHART
     }
-
-    public enum csESectionLineTypes
-    {
-        C_KEY_SECLN_HEADER = 1000,
-        C_KEY_SECLN_DETAIL = 1001,
-        C_KEY_SECLN_FOOTER = 1002,
-        C_KEY_SECLN_GROUPH = 1003,
-        C_KEY_SECLN_GROUPF = 1004
-    }
-
 }

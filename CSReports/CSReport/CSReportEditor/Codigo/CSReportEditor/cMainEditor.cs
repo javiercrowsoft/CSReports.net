@@ -14,7 +14,7 @@ namespace CSReportEditor
 		
 	    private const int NOERROR = 0;
 
-		public const DateTime CSNOFECHA = DateTime.ParseExact("01/01/1900", "dd/mm/yyyy", CultureInfo.InvariantCulture);
+		public DateTime CSNOFECHA = DateTime.ParseExact("01/01/1900", "dd/mm/yyyy", CultureInfo.InvariantCulture);
 		public const string C_KEY_HEADER = "RH";
 		public const string C_KEY_FOOTER = "RF";
 		public const string C_KEY_DETAIL = "RD";
@@ -172,8 +172,8 @@ namespace CSReportEditor
 	}
 
 	public class Rectangle {
-	    public Long height;
-	    public Long width;
+		public long height;
+		public long width;
 	}
 
 
@@ -216,28 +216,6 @@ namespace CSReportEditor
 	    CSEALIGNCTLHEIGHT
 	}
 
-
-	public enum csECtlAlignConst {
-	    CSECTLALIGNLEFT = csEAlignCtlLeft,
-	    CSECTLALIGNHORIZONTAL = csEAlignCtlHorizontal,
-	    CSECTLALIGNRIGHT = csEAlignCtlRight,
-	    CSECTLALIGNVERTICAL = csEAlignCtlVertical,
-	    CSECTLALIGNTOP = csEAlignCtlTop,
-	    CSECTLALIGNBOTTOM = csEAlignCtlBottom,
-	    CSECTLALIGNWIDTH = csEAlignCtlWidth,
-	    CSECTLALIGNHEIGHT = csEAlignCtlHeight
-	}
-
-
-	public enum csESectionLineTypes {
-	    C_KEY_SECLN_HEADER = 1000,
-	    C_KEY_SECLN_DETAIL = 1001,
-	    C_KEY_SECLN_FOOTER = 1002,
-	    C_KEY_SECLN_GROUPH = 1003,
-	    C_KEY_SECLN_GROUPF = 1004
-	}
-
-
 	public enum CSRptEditroMoveType {
 	    CSRPTEDMOVTHORIZONTAL,
 	    CSRPTEDMOVTVERTICAL,
@@ -251,16 +229,6 @@ namespace CSReportEditor
 	    CSRPTEDMOVRIGHTDOWN,
 	    CSRPTEDMOVRIGHTUP,
 	    CSRPTEDMOVTNONE
-	}
-
-
-	public enum csRptEditCtrlType {
-	    CSRPTEDITNONE,
-	    CSRPTEDITLABEL,
-	    CSRPTEDITFIELD,
-	    CSRPTEDITFORMULA,
-	    CSRPTEDITIMAGE,
-	    CSRPTEDITCHART
 	}
 
 }
