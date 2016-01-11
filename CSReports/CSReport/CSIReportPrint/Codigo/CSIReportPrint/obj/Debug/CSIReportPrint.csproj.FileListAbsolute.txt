@@ -1,9 +1,0 @@
-C:\Javier\CSReports\CSReport\CSIReportPrint\Codigo\CSIReportPrint\bin\Debug\CSIReportPrint.dll
-C:\Javier\CSReports\CSReport\CSIReportPrint\Codigo\CSIReportPrint\bin\Debug\CSIReportPrint.pdb
-C:\Javier\CSReports\CSReport\CSIReportPrint\Codigo\CSIReportPrint\obj\Debug\ResolveAssemblyReference.cache
-C:\Javier\CSReports\CSReport\CSIReportPrint\Codigo\CSIReportPrint\obj\Debug\CSIReportPrint.dll
-C:\Javier\CSReports\CSReport\CSIReportPrint\Codigo\CSIReportPrint\obj\Debug\CSIReportPrint.pdb
-Z:\Work\CrowSoft\c#\CSReports\CSReport\CSIReportPrint\Codigo\CSIReportPrint\bin\Debug\CSIReportPrint.dll
-Z:\Work\CrowSoft\c#\CSReports\CSReport\CSIReportPrint\Codigo\CSIReportPrint\bin\Debug\CSIReportPrint.pdb
-Z:\Work\CrowSoft\c#\CSReports\CSReport\CSIReportPrint\Codigo\CSIReportPrint\obj\Debug\CSIReportPrint.dll
-Z:\Work\CrowSoft\c#\CSReports\CSReport\CSIReportPrint\Codigo\CSIReportPrint\obj\Debug\CSIReportPrint.pdb

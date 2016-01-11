@@ -1,3 +1,0 @@
-Z:\Work\CrowSoft\c#\CSReports\CSKernel\Codigo\CSKernelNumberToString\bin\Debug\CSKernelNumberToString.dll
-Z:\Work\CrowSoft\c#\CSReports\CSKernel\Codigo\CSKernelNumberToString\obj\Debug\CSKernelNumberToString.dll
-Z:\Work\CrowSoft\c#\CSReports\CSKernel\Codigo\CSKernelNumberToString\obj\Debug\CSKernelNumberToString.csprojResolveAssemblyReference.cache
