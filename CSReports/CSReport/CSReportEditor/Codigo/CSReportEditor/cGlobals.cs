@@ -102,6 +102,21 @@ namespace CSReportEditor
 		{
 			throw new NotImplementedException ();
 		}
+
+		public static object getToolBox (cEditor cEditor)
+		{
+			throw new NotImplementedException ();
+		}
+
+		public static void showGroupProperties (object o, cEditor cEditor)
+		{
+			throw new NotImplementedException ();
+		}
+
+		public static void setDocActive (cEditor cEditor)
+		{
+			throw new NotImplementedException ();
+		}
     }
 
     public enum csRptEditorMoveType {

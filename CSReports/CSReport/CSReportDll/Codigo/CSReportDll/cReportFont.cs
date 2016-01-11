@@ -54,7 +54,7 @@ namespace CSReportDll
             return m_underline;
         }
 
-        public void setUnderLine(bool rhs)
+		public void setUnderline(bool rhs)
         {
             m_underline = rhs;
         }

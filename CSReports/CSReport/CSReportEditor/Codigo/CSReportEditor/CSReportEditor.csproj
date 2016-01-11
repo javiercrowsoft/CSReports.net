@@ -247,6 +247,10 @@
       <Project>{E448F39C-75BC-42FC-8E4A-9110D60EECE4}</Project>
       <Name>CSReportPaint</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\CSIReportPrint\Codigo\CSIReportPrint\CSIReportPrint.csproj">
+      <Project>{33EB467A-CDEF-426E-AFA3-0E2CA9E2E8AA}</Project>
+      <Name>CSIReportPrint</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

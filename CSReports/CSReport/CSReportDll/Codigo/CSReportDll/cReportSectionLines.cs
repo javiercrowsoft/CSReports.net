@@ -50,6 +50,10 @@ namespace CSReportDll
             return m_copyColl;
         }
 
+		public cReportSectionLine add()
+		{
+			return add (null, "", -1);
+		}
         public cReportSectionLine add(cReportSectionLine c, String key, int index)
         {
             try

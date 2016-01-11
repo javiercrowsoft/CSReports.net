@@ -13,6 +13,11 @@ namespace CSReportEditor
     {
         static fMain instance;
 
+		public object cmDialog {
+			get;
+			set;
+		}
+
         public fMain()
         {
             InitializeComponent();

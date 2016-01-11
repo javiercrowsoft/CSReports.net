@@ -12,7 +12,7 @@ using CSReportExport;
 
 namespace CSReportPaint
 {
-    class cReportPrint : cIReportPrint, IDisposable
+	public class cReportPrint : cIReportPrint, IDisposable
     {
 
         private const String C_MODULE = "cReportPrint";
@@ -232,7 +232,7 @@ namespace CSReportPaint
             w_font.setName(ctrlFont.getName());
             w_font.setSize(ctrlFont.getSize());
             w_font.setStrike(ctrlFont.getStrike());
-            w_font.setUnderLine(ctrlFont.getUnderline());
+			w_font.setUnderline(ctrlFont.getUnderline());
 
             m_paint.refreshObject(paintObj.getKey(), m_rpwPrint.getGraph());
         }
@@ -836,10 +836,8 @@ namespace CSReportPaint
 
             csRptGetLineResult rslt;
             csRptNewPageResult rsltNewPage;
-            csRptEndPageResult rsltEndPage;
             float top = 0;
             float topSection = 0;
-            float topSectionLn = 0;
             float heightSection = 0;
             int secLnIndex = 0;
             float[] offsetTop = null;
@@ -954,7 +952,6 @@ namespace CSReportPaint
                     {
                         heightSection = 0;
                         topSection = 0;
-                        topSectionLn = 0;
                         secLnIndex = 0;
 
                         //---------------------------------------------------------------------------------
@@ -1395,7 +1392,7 @@ namespace CSReportPaint
                     w_font.setName(rptFont.getName());
                     w_font.setSize(rptFont.getSize() * m_scaleFont);
                     w_font.setStrike(rptFont.getStrike());
-                    w_font.setUnderLine(rptFont.getUnderline());
+					w_font.setUnderline(rptFont.getUnderline());
 
                     w_add.setText(field.getValue());
                     w_add.setImage(field.getImage());

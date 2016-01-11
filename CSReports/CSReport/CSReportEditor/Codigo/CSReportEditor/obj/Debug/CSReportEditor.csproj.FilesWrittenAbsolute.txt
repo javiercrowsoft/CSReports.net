@@ -22,10 +22,10 @@
 /Users/javier/Work/CrowSoft/c#/CSReports.net/CSReports/CSReport/CSReportEditor/Codigo/CSReportEditor/bin/Debug/CSReportGlobals.dll.mdb
 /Users/javier/Work/CrowSoft/c#/CSReports.net/CSReports/CSReport/CSReportEditor/Codigo/CSReportEditor/bin/Debug/CSReportPaint.dll
 /Users/javier/Work/CrowSoft/c#/CSReports.net/CSReports/CSReport/CSReportEditor/Codigo/CSReportEditor/bin/Debug/CSReportPaint.dll.mdb
-/Users/javier/Work/CrowSoft/c#/CSReports.net/CSReports/CSReport/CSReportEditor/Codigo/CSReportEditor/bin/Debug/CSOAPI.dll
-/Users/javier/Work/CrowSoft/c#/CSReports.net/CSReports/CSReport/CSReportEditor/Codigo/CSReportEditor/bin/Debug/CSOAPI.dll.mdb
 /Users/javier/Work/CrowSoft/c#/CSReports.net/CSReports/CSReport/CSReportEditor/Codigo/CSReportEditor/bin/Debug/CSIReportPrint.dll
 /Users/javier/Work/CrowSoft/c#/CSReports.net/CSReports/CSReport/CSReportEditor/Codigo/CSReportEditor/bin/Debug/CSIReportPrint.dll.mdb
+/Users/javier/Work/CrowSoft/c#/CSReports.net/CSReports/CSReport/CSReportEditor/Codigo/CSReportEditor/bin/Debug/CSOAPI.dll
+/Users/javier/Work/CrowSoft/c#/CSReports.net/CSReports/CSReport/CSReportEditor/Codigo/CSReportEditor/bin/Debug/CSOAPI.dll.mdb
 /Users/javier/Work/CrowSoft/c#/CSReports.net/CSReports/CSReport/CSReportEditor/Codigo/CSReportEditor/bin/Debug/CSXML.dll
 /Users/javier/Work/CrowSoft/c#/CSReports.net/CSReports/CSReport/CSReportEditor/Codigo/CSReportEditor/bin/Debug/CSXML.dll.mdb
 /Users/javier/Work/CrowSoft/c#/CSReports.net/CSReports/CSReport/CSReportEditor/Codigo/CSReportEditor/bin/Debug/CSChartServer.dll

@@ -127,6 +127,11 @@ namespace CSReportDll
             this.BaseClear();
         }
 
+		public cReportChartSerie add()
+		{
+			return add(null, "");
+		}
+
         public cReportChartSerie add(cReportChartSerie c, String key)
         {
             try

@@ -164,6 +164,11 @@ namespace CSReportDll
             return m_collByLeft;
         }
 
+		public cReportControl add()
+		{
+			return add(null, "");
+		}
+
         public cReportControl add(cReportControl c, String key)
         {
             try

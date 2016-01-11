@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using CSReportDll;
+using CSReportGlobals;
 
 namespace CSReportPaint
 {
@@ -17,7 +18,7 @@ namespace CSReportPaint
         private String m_text = "";
         private csRptPaintObjType m_paintType;
         private String m_tag = "";
-        private csRptPaintRptType m_rptType;
+        private csRptTypeSection m_rptType;
         private String m_rptKeySec = "";
         private Image m_image = null;
         private int m_indexField = 0;
@@ -78,12 +79,12 @@ namespace CSReportPaint
             m_paintType = rhs;
         }
 
-        public csRptPaintRptType getRptType()
+        public csRptTypeSection getRptType()
         {
             return m_rptType;
         }
 
-        public void setRptType(csRptPaintRptType rhs)
+        public void setRptType(csRptTypeSection rhs)
         {
             m_rptType = rhs;
         }

@@ -57,6 +57,10 @@ namespace CSReportDll
             }
         }
 
+		public cReportSection add()
+		{
+			return add(null, "");
+		}
         public cReportSection add(cReportSection c, String key)
         {
             return add(c, key, -1);
