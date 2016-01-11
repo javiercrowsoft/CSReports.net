@@ -31,7 +31,6 @@
 /Users/javier/Work/CrowSoft/c#/CSReports.net/CSReports/CSReport/CSReportEditor/Codigo/CSReportEditor/bin/Debug/CSChartServer.dll
 /Users/javier/Work/CrowSoft/c#/CSReports.net/CSReports/CSReport/CSReportEditor/Codigo/CSReportEditor/bin/Debug/CSChartServer.dll.mdb
 /Users/javier/Work/CrowSoft/c#/CSReports.net/CSReports/CSReport/CSReportEditor/Codigo/CSReportEditor/bin/Debug/CSKernelNumberToString.dll
-/Users/javier/Work/CrowSoft/c#/CSReports.net/CSReports/CSReport/CSReportEditor/Codigo/CSReportEditor/bin/Debug/CSKernelNumberToString.dll.mdb
 /Users/javier/Work/CrowSoft/c#/CSReports.net/CSReports/CSReport/CSReportEditor/Codigo/CSReportEditor/bin/Debug/CSReportPreview.dll
 /Users/javier/Work/CrowSoft/c#/CSReports.net/CSReports/CSReport/CSReportEditor/Codigo/CSReportEditor/bin/Debug/CSReportPreview.dll.mdb
 /Users/javier/Work/CrowSoft/c#/CSReports.net/CSReports/CSReport/CSReportEditor/Codigo/CSReportEditor/bin/Debug/CSReportExport.dll
