@@ -1866,7 +1866,7 @@ namespace CSReportEditor
                     + "]Activa[" + ((bool) hasFormulaValue).ToString() 
                     + "]Field:[" + fieldName + "]";
             }
-            m_m_fmain.setsbPnlCtrl(msg);
+            m_fmain.setsbPnlCtrl(msg);
         }
 
         private void m_picReport_MouseUp(MouseButtons button, int shift, float x, float y) {
@@ -2401,12 +2401,12 @@ namespace CSReportEditor
             } 
             else if (m_copyControlsFromOtherReport) {
 
-                if (m_m_fmain.getReportCopySource() == null) { return false; }
+                if (m_fmain.getReportCopySource() == null) { return false; }
 
                 originalLeft = left;
                 originalTop = top;
 
-                cEditor editor = m_m_fmain.getReportCopySource();
+                cEditor editor = m_fmain.getReportCopySource();
                 String keyPaint = editor.getVCopyKeys(editor.getVCopyKeysCount());
 				String keyCtrl = editor.getPaint().getPaintObjects().item(keyPaint).getTag();
 				movedCtrl = editor.getReport().getControls().item(keyCtrl);
@@ -3115,7 +3115,7 @@ namespace CSReportEditor
 
                 pValidateSectionAspect();
 
-                if (!m_report.save(m_m_fmain.cmDialog, isNew))
+                if (!m_report.save(m_fmain.cmDialog, isNew))
                 reLoadReport();
                 return true;
 
@@ -3180,7 +3180,7 @@ namespace CSReportEditor
                     //
                     //       in the original function there was a goto to
                     //       a 'done' label 
-                    if (!m_report.load(m_m_fmain.cmDialog)) {
+                    if (!m_report.load(m_fmain.cmDialog)) {
 
                         if (m_report.getName() == "")  
                             return false;
@@ -3275,14 +3275,14 @@ namespace CSReportEditor
             int nFieldType = 0;
             String sField = "";
 
-            sField = m_fProperties.TxDbField.Text;
+            sField = m_fProperties.txDbField.Text;
             nFieldType = m_fProperties.getFieldType();
             nIndex = m_fProperties.getIndex();
 
             cancel = !cGlobals.showDbFields(sField, nFieldType, nIndex, this);
             if (cancel) { return; }
 
-            m_fProperties.TxDbField.Text = sField;
+            m_fProperties.txDbField.Text = sField;
             m_fProperties.setFieldType(nFieldType);
             m_fProperties.setIndex(nIndex);
             m_fProperties.txText.Text = sField;
@@ -3374,7 +3374,7 @@ namespace CSReportEditor
 
                 m_fSecProperties.chkFormulaHide.Value = sec.HasFormulaHide ? vbChecked : vbUnchecked;
                 m_fSecProperties.setFormulaHide(sec.getFormulaHide().getText);
-                if (sec.GetType() == cReportSection) { m_fSecProperties.TxName.Text = sec.Name; }
+                if (sec.GetType() == cReportSection) { m_fSecProperties.txName.Text = sec.Name; }
 
                 if (sec.GetType() == cReportSectionLine) {
                     m_fSecProperties.LbControl.Caption = secLnName;
@@ -3389,7 +3389,7 @@ namespace CSReportEditor
                 if (m_fSecProperties.getOk()) {
                     if (m_fSecProperties.getSetFormulaHideChanged()) { sec.setHasFormulaHide(m_fSecProperties.chkFormulaHide.Value == vbChecked); }
                     if (m_fSecProperties.getFormulaHideChanged()) { sec.FormulaHide.setText(m_fSecProperties.getFormulaHide()); }
-                    if (sec.GetType() == cReportSection) { sec.setName(m_fSecProperties.TxName.Text); }
+                    if (sec.GetType() == cReportSection) { sec.setName(m_fSecProperties.txName.Text); }
                 }
 
             } catch (Exception ex) {
@@ -3584,7 +3584,7 @@ namespace CSReportEditor
 
                     m_fProperties.txChartTop.Text = rptCtrl.getChart().getTop();
 
-                    m_fProperties.TxDbFieldGroupValue.Text = rptCtrl.getChart().getGroupFieldName();
+                    m_fProperties.txDbFieldGroupValue.Text = rptCtrl.getChart().getGroupFieldName();
                     m_fProperties.setChartGroupIndex(rptCtrl.getChart().getGroupFieldIndex());
                     m_fProperties.txChartGroupValue.Text = rptCtrl.getChart().getGroupValue();
 
@@ -3607,8 +3607,8 @@ namespace CSReportEditor
                     m_fProperties.txText.Text = rptCtrl.getChart().getChartTitle();
 
                     if (rptCtrl.getChart().getSeries().count()) {
-                        m_fProperties.TxDbFieldLbl1.Text = rptCtrl.getChart().getSeries(1).getLabelFieldName();
-                        m_fProperties.TxDbFieldVal1.Text = rptCtrl.getChart().getSeries(1).getValueFieldName();
+                        m_fProperties.txDbFieldLbl1.Text = rptCtrl.getChart().getSeries(1).getLabelFieldName();
+                        m_fProperties.txDbFieldVal1.Text = rptCtrl.getChart().getSeries(1).getValueFieldName();
 
                         m_fProperties.setChartIndex(0, rptCtrl.getChart().getSeries(1).getLabelIndex());
                         m_fProperties.setChartIndex(1, rptCtrl.getChart().getSeries(1).tetValueIndex());
@@ -3616,8 +3616,8 @@ namespace CSReportEditor
                         cUtil.listSetListIndexForId(m_fProperties.cbColorSerie1, rptCtrl.getChart().getSeries(1).getColor());
 
                         if (rptCtrl.getChart().getSeries().count() > 1) {
-                            m_fProperties.TxDbFieldLbl2.Text = rptCtrl.getChart().getSeries(2).getLabelFieldName();
-                            m_fProperties.TxDbFieldVal2.Text = rptCtrl.getChart().getSeries(2).getValueFieldName();
+                            m_fProperties.txDbFieldLbl2.Text = rptCtrl.getChart().getSeries(2).getLabelFieldName();
+                            m_fProperties.txDbFieldVal2.Text = rptCtrl.getChart().getSeries(2).getValueFieldName();
 
                             // Decidi no implementarlo ya que no lo encontre util
                             //
@@ -3636,7 +3636,7 @@ namespace CSReportEditor
                     m_fProperties.txText.Enabled = false;
                     cReportField w_field = rptCtrl.getField();
                     m_fProperties.txText.Text = w_field.getName();
-                    m_fProperties.TxDbField.Text = w_field.getName();
+                    m_fProperties.txDbField.Text = w_field.getName();
                     m_fProperties.setFieldType(w_field.fColumns.getFieldType());
                     m_fProperties.setIndex(w_field.fColumns.getIndex());
                 } 
@@ -3645,7 +3645,7 @@ namespace CSReportEditor
                     m_fProperties.txText.Enabled = true;
                 }
 
-                m_fProperties.TxName.Text = rptCtrl.getName();
+                m_fProperties.txName.Text = rptCtrl.getName();
                 m_fProperties.LbControl.Caption = rptCtrl.getName();
                 m_fProperties.chkFormulaHide.Value = rptCtrl.getHasFormulaHide() ? vbChecked : vbUnchecked;
                 m_fProperties.chkFormulaValue.Value = rptCtrl.getHasFormulaValue() ? vbChecked : vbUnchecked;
@@ -3656,13 +3656,13 @@ namespace CSReportEditor
                 m_fProperties.txTag.Text = rptCtrl.getTag();
                 m_fProperties.setFormulaHide(rptCtrl.getFormulaHide().getText());
                 m_fProperties.setFormulaValue(rptCtrl.getFormulaValue().getText());
-                m_fProperties.txIdxGroup.csValue = rptCtrl.getFormulaValue().getIdxGroup();
+                m_fProperties.txIdxGroup.Text = rptCtrl.getFormulaValue().getIdxGroup();
                 m_fProperties.opBeforePrint.Value = rptCtrl.getFormulaValue().getWhenEval() == csRptWhenEval.CSRPTEVALPRE;
                 m_fProperties.opAfterPrint.Value = rptCtrl.getFormulaValue().getWhenEval() == csRptWhenEval.CSRPTEVALPOST;
 
                 w_aspect = rptCtrl.getAspect();
                 m_fProperties.chkCanGrow.Value = w_aspect.getCanGrow() ? vbChecked : vbUnchecked;
-                m_fProperties.TxFormat.Text = w_aspect.getFormat();
+                m_fProperties.txFormat.Text = w_aspect.getFormat();
                 m_fProperties.txSymbol.Text = w_aspect.getfFormat().getSymbol();
                 m_fProperties.setIsAccounting(w_aspect.getfFormat().getIsAccounting());
                 m_fProperties.chkWordWrap.Value = w_aspect.getWordWrap() ? vbChecked : vbUnchecked;
@@ -3679,8 +3679,8 @@ namespace CSReportEditor
 
                 w_font = w_aspect.getFont();
                 m_fProperties.txFont.Text = w_font.getName();
-                m_fProperties.TxForeColor.Text = w_font.getForeColor();
-                m_fProperties.TxFontSize.Text = w_font.getSize();
+                m_fProperties.txForeColor.Text = w_font.getForeColor();
+                m_fProperties.txFontSize.Text = w_font.getSize();
                 m_fProperties.chkFontBold.Value = w_font.getBold() ? vbChecked : vbUnchecked;
                 m_fProperties.chkFontItalic.Value = w_font.getItalic() ? vbChecked : vbUnchecked;
                 m_fProperties.chkFontUnderline.Value = w_font.getUnderline() ? vbChecked : vbUnchecked;
@@ -3691,7 +3691,7 @@ namespace CSReportEditor
                 m_fProperties.txTop.Text = w_aspect.getTop();
                 m_fProperties.txWidth.Text = w_aspect.getWidth();
                 m_fProperties.txHeight.Text = w_aspect.getHeight();
-                m_fProperties.TxBackColor.Text = w_aspect.getBackColor();
+                m_fProperties.txBackColor.Text = w_aspect.getBackColor();
                 m_fProperties.chkTransparent.Value = w_aspect.getTransparent() ? vbChecked : vbUnchecked;
 
                 bMultiSelect = m_vSelectedKeys.Length > 1;
@@ -3708,14 +3708,14 @@ namespace CSReportEditor
                     rptCtrl = m_report.getControls().item(paintObject.getTag());
 
                     if (!bMultiSelect) {
-                        if (rptCtrl.getName() != m_fProperties.TxName.Text) {
+                        if (rptCtrl.getName() != m_fProperties.txName.Text) {
                             if (rptCtrl.getName() != "") {
                                 if (cWindow.ask("You have changed the name of this control.;;Do you want to update all references to this control in all formulas of this report?", VbMsgBoxResult.vbYes)) {
-                                    pUpdateFormulas(rptCtrl.getName(), m_fProperties.TxName.Text);
+                                    pUpdateFormulas(rptCtrl.getName(), m_fProperties.txName.Text);
                                 }
                             }
                         }
-                        rptCtrl.setName(m_fProperties.TxName.Text);
+                        rptCtrl.setName(m_fProperties.txName.Text);
                     }
 
                     if (m_fProperties.getTextChanged()) { rptCtrl.getLabel().setText(m_fProperties.txText.Text); }
@@ -3724,7 +3724,7 @@ namespace CSReportEditor
                     if (m_fProperties.getSetFormulaValueChanged()) { rptCtrl.setHasFormulaValue(m_fProperties.chkFormulaValue.Value == vbChecked); }
                     if (m_fProperties.getFormulaHideChanged()) { rptCtrl.getFormulaHide().setText(m_fProperties.getFormulaHide()); }
                     if (m_fProperties.getFormulaValueChanged()) { rptCtrl.getFormulaValue().setText(m_fProperties.getFormulaValue()); }
-                    if (m_fProperties.getIdxGroupChanged()) { rptCtrl.getFormulaValue().setIdxGroup(m_fProperties.txIdxGroup.csValue); }
+                    if (m_fProperties.getIdxGroupChanged()) { rptCtrl.getFormulaValue().setIdxGroup(m_fProperties.txIdxGroup.Text); }
                     if (m_fProperties.getWhenEvalChanged()) { rptCtrl.getFormulaValue().setWhenEval(m_fProperties.opAfterPrint.Value ? csRptWhenEval.CSRPTEVALPOST : csRptWhenEval.CSRPTEVALPRE); }
 
                     if (m_fProperties.getExportColIdxChanged()) { rptCtrl.setExportColIdx(m_fProperties.txExportColIdx.Text); }
@@ -3736,7 +3736,7 @@ namespace CSReportEditor
                         if (m_fProperties.getDbFieldChanged()) {
                             w_field.setFieldType(m_fProperties.getFieldType());
                             w_field.setIndex(m_fProperties.getIndex());
-                            w_field.setName(m_fProperties.TxDbField.Text);
+                            w_field.setName(m_fProperties.txDbField.Text);
                         }
                     }
 
@@ -3784,7 +3784,7 @@ namespace CSReportEditor
                         }
 
                         if (m_fProperties.getChartTopChanged()) {
-                            rptCtrl.getChart().setTop(m_fProperties.txChartTop.csValue);
+                            rptCtrl.getChart().setTop(m_fProperties.txChartTop.Text);
                         }
 
                         if (m_fProperties.getChartSortChanged()) {
@@ -3792,20 +3792,20 @@ namespace CSReportEditor
                         }
 
                         if (m_fProperties.getChartGroupValueChanged()) {
-                            rptCtrl.getChart().setGroupValue(m_fProperties.txChartGroupValue.csValue);
+                            rptCtrl.getChart().setGroupValue(m_fProperties.txChartGroupValue.Text);
                         }
 
                         if (m_fProperties.getChartFieldGroupChanged()) {
-                            rptCtrl.getChart().setGroupFieldName(m_fProperties.TxDbFieldGroupValue.Text);
+                            rptCtrl.getChart().setGroupFieldName(m_fProperties.tx_dbFieldGroupValue.Text);
                             rptCtrl.getChart().setGroupFieldIndex(m_fProperties.getChartGroupIndex());
                         }
 
                         if (m_fProperties.getChartFieldLbl1Changed()) {
-                            rptCtrl.getChart().getSeries(1).LabelFieldName = m_fProperties.TxDbFieldLbl1.Text;
+                            rptCtrl.getChart().getSeries(1).LabelFieldName = m_fProperties.txDbFieldLbl1.Text;
                             rptCtrl.getChart().getSeries(1).LabelIndex = m_fProperties.getChartIndex(0);
                         }
                         if (m_fProperties.getChartFieldVal1Changed()) {
-                            rptCtrl.getChart().getSeries(1).ValueFieldName = m_fProperties.TxDbFieldVal1.Text;
+                            rptCtrl.getChart().getSeries(1).ValueFieldName = m_fProperties.txDbFieldVal1.Text;
                             rptCtrl.getChart().getSeries(1).ValueIndex = m_fProperties.getChartIndex(1);
                         }
 
@@ -3817,18 +3817,18 @@ namespace CSReportEditor
                             if (rptCtrl.getChart().getSeries().count() < 2) { rptCtrl.getChart().getSeries().add(null); }
                         }
 
-                        if (m_fProperties.TxDbFieldLbl2.Text == "" || m_fProperties.TxDbFieldVal2.Text == "") {
+                        if (m_fProperties.txDbFieldLbl2.Text == "" || m_fProperties.txDbFieldVal2.Text == "") {
                             if (rptCtrl.getChart().getSeries().count() > 1) { rptCtrl.getChart().getSeries().remove(2); }
                         }
 
                         if (rptCtrl.getChart().getSeries().count() > 1) {
 
                             if (m_fProperties.getChartFieldLbl2Changed()) {
-                                rptCtrl.getChart().getSeries(2).LabelFieldName = m_fProperties.TxDbFieldLbl2.Text;
+                                rptCtrl.getChart().getSeries(2).LabelFieldName = m_fProperties.txDbFieldLbl2.Text;
                                 rptCtrl.getChart().getSeries(2).LabelIndex = m_fProperties.getChartIndex(2);
                             }
                             if (m_fProperties.getChartFieldVal2Changed()) {
-                                rptCtrl.getChart().getSeries(2).ValueFieldName = m_fProperties.TxDbFieldVal2.Text;
+                                rptCtrl.getChart().getSeries(2).ValueFieldName = m_fProperties.txDbFieldVal2.Text;
                                 rptCtrl.getChart().getSeries(2).ValueIndex = m_fProperties.getChartIndex(3);
                             }
 
@@ -3845,10 +3845,10 @@ namespace CSReportEditor
                     if (m_fProperties.getTopChanged()) { w_aspect.setTop(Double.parseDouble(m_fProperties.txTop.Text)); }
                     if (m_fProperties.getWidthChanged()) { w_aspect.setWidth(Double.parseDouble(m_fProperties.txWidth.Text)); }
                     if (m_fProperties.getHeightChanged()) { w_aspect.setHeight(Double.parseDouble(m_fProperties.txHeight.Text)); }
-                    if (m_fProperties.getBackColorChanged()) { w_aspect.setBackColor(Long.parseLong(m_fProperties.TxBackColor.Text)); }
+                    if (m_fProperties.getBackColorChanged()) { w_aspect.setBackColor(Long.parseLong(m_fProperties.txBackColor.Text)); }
                     if (m_fProperties.getTransparentChanged()) { w_aspect.setTransparent(m_fProperties.chkTransparent.Value == vbChecked); }
                     if (m_fProperties.getAlignChanged()) { w_aspect.setAlign(ListID(m_fProperties.cbAlign)); }
-                    if (m_fProperties.getFormatChanged()) { w_aspect.setFormat(m_fProperties.TxFormat.Text); }
+                    if (m_fProperties.getFormatChanged()) { w_aspect.setFormat(m_fProperties.txFormat.Text); }
                     if (m_fProperties.getSymbolChanged()) {
                         w_aspect.setSymbol(m_fProperties.txSymbol.Text);
                         w_aspect.setIsAccounting(m_fProperties.getIsAccounting());
@@ -3865,8 +3865,8 @@ namespace CSReportEditor
 
                     w_font = w_aspect.getFont();
                     if (m_fProperties.getFontChanged()) { w_font.setName(m_fProperties.txFont.Text); }
-                    if (m_fProperties.getForeColorChanged()) { w_font.setForeColor(Long.parseLong(m_fProperties.TxForeColor.Text)); }
-                    if (m_fProperties.getFontSizeChanged()) { w_font.setSize(Double.parseDouble(m_fProperties.TxFontSize.Text)); }
+                    if (m_fProperties.getForeColorChanged()) { w_font.setForeColor(Long.parseLong(m_fProperties.txForeColor.Text)); }
+                    if (m_fProperties.getFontSizeChanged()) { w_font.setSize(Double.parseDouble(m_fProperties.txFontSize.Text)); }
                     if (m_fProperties.getBoldChanged()) { w_font.setBold(m_fProperties.chkFontBold.Value == vbChecked); }
                     if (m_fProperties.getItalicChanged()) { w_font.setItalic(m_fProperties.chkFontItalic.Value == vbChecked); }
                     if (m_fProperties.getUnderlineChanged()) { w_font.setUnderLine(m_fProperties.chkFontUnderline.Value == vbChecked); }
@@ -3885,10 +3885,10 @@ namespace CSReportEditor
                     if (m_fProperties.getTopChanged()) { w_aspect.setTop(Double.parseDouble(m_fProperties.txTop.Text)); }
                     if (m_fProperties.getWidthChanged()) { w_aspect.setWidth(Double.parseDouble(m_fProperties.txWidth.Text)); }
                     if (m_fProperties.getHeightChanged()) { w_aspect.setHeight(Double.parseDouble(m_fProperties.txHeight.Text)); }
-                    if (m_fProperties.getBackColorChanged()) { w_aspect.setBackColor(Long.parseLong(m_fProperties.TxBackColor.Text)); }
+                    if (m_fProperties.getBackColorChanged()) { w_aspect.setBackColor(Long.parseLong(m_fProperties.txBackColor.Text)); }
                     if (m_fProperties.getTransparentChanged()) { w_aspect.setTransparent(m_fProperties.chkTransparent.Value == vbChecked); }
                     if (m_fProperties.getAlignChanged()) { w_aspect.setAlign(ListID(m_fProperties.cbAlign)); }
-                    if (m_fProperties.getFormatChanged()) { w_aspect.setFormat(m_fProperties.TxFormat.Text); }
+                    if (m_fProperties.getFormatChanged()) { w_aspect.setFormat(m_fProperties.txFormat.Text); }
                     if (m_fProperties.getSymbolChanged()) { w_aspect.setSymbol(m_fProperties.txSymbol.Text); }
                     if (m_fProperties.getWordWrapChanged()) { w_aspect.setWordWrap(m_fProperties.chkWordWrap.Value == vbChecked); }
 
@@ -3910,8 +3910,8 @@ namespace CSReportEditor
 
                     w_font = w_aspect.getFont();
                     if (m_fProperties.getFontChanged()) { w_font.setName(m_fProperties.txFont.Text); }
-                    if (m_fProperties.getForeColorChanged()) { w_font.setForeColor(Long.parseLong(m_fProperties.TxForeColor.Text)); }
-                    if (m_fProperties.getFontSizeChanged()) { w_font.setSize(Double.parseDouble(m_fProperties.TxFontSize.Text)); }
+                    if (m_fProperties.getForeColorChanged()) { w_font.setForeColor(Long.parseLong(m_fProperties.txForeColor.Text)); }
+                    if (m_fProperties.getFontSizeChanged()) { w_font.setSize(Double.parseDouble(m_fProperties.txFontSize.Text)); }
                     if (m_fProperties.getBoldChanged()) { w_font.setBold(m_fProperties.chkFontBold.Value == vbChecked); }
                     if (m_fProperties.getItalicChanged()) { w_font.setItalic(m_fProperties.chkFontItalic.Value == vbChecked); }
                     if (m_fProperties.getUnderlineChanged()) { w_font.setUnderLine(m_fProperties.chkFontUnderline.Value == vbChecked); }
@@ -4008,7 +4008,7 @@ namespace CSReportEditor
                     m_vCopyKeys[i] = m_vSelectedKeys[i];
                 }
 
-				m_m_fmain.setReportCopySource(this);
+				m_fmain.setReportCopySource(this);
 
             } catch (Exception ex) {
                 cError.mngError(ex, "Copy", C_MODULE, "");
@@ -4022,7 +4022,7 @@ namespace CSReportEditor
 
                 if (m_vCopyKeys.Length == 0) {
 
-					if (m_m_fmain.getReportCopySource() == null) { return; }
+					if (m_fmain.getReportCopySource() == null) { return; }
 
                     m_copyControlsFromOtherReport = true;
 

@@ -167,7 +167,9 @@ namespace CSReportEditor
 	        }
 	    }
 
-
+        private static string pGetStatus() {
+            return "";
+        }
 
 	}
 

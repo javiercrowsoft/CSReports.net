@@ -159,8 +159,7 @@
             this.mnHelp});
             this.mnMain.Location = new System.Drawing.Point(0, 0);
             this.mnMain.Name = "mnMain";
-            this.mnMain.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
-            this.mnMain.Size = new System.Drawing.Size(909, 28);
+            this.mnMain.Size = new System.Drawing.Size(682, 24);
             this.mnMain.TabIndex = 0;
             this.mnMain.Text = "menuStrip1";
             // 
@@ -182,13 +181,13 @@
             this.openRecentToolStripMenuItem,
             this.mnuExit});
             this.mnFile.Name = "mnFile";
-            this.mnFile.Size = new System.Drawing.Size(44, 24);
+            this.mnFile.Size = new System.Drawing.Size(37, 20);
             this.mnFile.Text = "File";
             // 
             // mnuNewReport
             // 
             this.mnuNewReport.Name = "mnuNewReport";
-            this.mnuNewReport.Size = new System.Drawing.Size(209, 24);
+            this.mnuNewReport.Size = new System.Drawing.Size(180, 22);
             this.mnuNewReport.Text = "New";
             this.mnuNewReport.Click += new System.EventHandler(this.mnuNewReport_Click);
             // 
@@ -196,79 +195,79 @@
             // 
             this.mnuOpenReport.Name = "mnuOpenReport";
             this.mnuOpenReport.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.mnuOpenReport.Size = new System.Drawing.Size(209, 24);
+            this.mnuOpenReport.Size = new System.Drawing.Size(180, 22);
             this.mnuOpenReport.Text = "Open";
             // 
             // mnuFileRecentList
             // 
             this.mnuFileRecentList.Name = "mnuFileRecentList";
-            this.mnuFileRecentList.Size = new System.Drawing.Size(209, 24);
+            this.mnuFileRecentList.Size = new System.Drawing.Size(180, 22);
             this.mnuFileRecentList.Text = "Open Recent Files ...";
             // 
             // mnuSaveReport
             // 
             this.mnuSaveReport.Name = "mnuSaveReport";
             this.mnuSaveReport.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.mnuSaveReport.Size = new System.Drawing.Size(209, 24);
+            this.mnuSaveReport.Size = new System.Drawing.Size(180, 22);
             this.mnuSaveReport.Text = "Save";
             // 
             // mnuReportSaveAs
             // 
             this.mnuReportSaveAs.Name = "mnuReportSaveAs";
-            this.mnuReportSaveAs.Size = new System.Drawing.Size(209, 24);
+            this.mnuReportSaveAs.Size = new System.Drawing.Size(180, 22);
             this.mnuReportSaveAs.Text = "Save As";
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(206, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(177, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(209, 24);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.exitToolStripMenuItem.Text = "Page Setup";
             // 
             // printerSettingsToolStripMenuItem
             // 
             this.printerSettingsToolStripMenuItem.Name = "printerSettingsToolStripMenuItem";
-            this.printerSettingsToolStripMenuItem.Size = new System.Drawing.Size(209, 24);
+            this.printerSettingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.printerSettingsToolStripMenuItem.Text = "Printer Settings";
             // 
             // toolStripSeparator8
             // 
             this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(206, 6);
+            this.toolStripSeparator8.Size = new System.Drawing.Size(177, 6);
             // 
             // mnuPreviewReport
             // 
             this.mnuPreviewReport.Name = "mnuPreviewReport";
-            this.mnuPreviewReport.Size = new System.Drawing.Size(209, 24);
+            this.mnuPreviewReport.Size = new System.Drawing.Size(180, 22);
             this.mnuPreviewReport.Text = "Preview";
             // 
             // toolStripSeparator9
             // 
             this.toolStripSeparator9.Name = "toolStripSeparator9";
-            this.toolStripSeparator9.Size = new System.Drawing.Size(206, 6);
+            this.toolStripSeparator9.Size = new System.Drawing.Size(177, 6);
             // 
             // mnuPrintReport
             // 
             this.mnuPrintReport.Name = "mnuPrintReport";
             this.mnuPrintReport.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.mnuPrintReport.Size = new System.Drawing.Size(209, 24);
+            this.mnuPrintReport.Size = new System.Drawing.Size(180, 22);
             this.mnuPrintReport.Text = "Print";
             // 
             // openRecentToolStripMenuItem
             // 
             this.openRecentToolStripMenuItem.Name = "openRecentToolStripMenuItem";
-            this.openRecentToolStripMenuItem.Size = new System.Drawing.Size(209, 24);
+            this.openRecentToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.openRecentToolStripMenuItem.Text = "Open Recent";
             // 
             // mnuExit
             // 
             this.mnuExit.Name = "mnuExit";
             this.mnuExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
-            this.mnuExit.Size = new System.Drawing.Size(209, 24);
+            this.mnuExit.Size = new System.Drawing.Size(180, 22);
             this.mnuExit.Text = "Exit";
             // 
             // mnEdit
@@ -285,46 +284,46 @@
             this.toolStripSeparator12,
             this.mnuEditMove});
             this.mnEdit.Name = "mnEdit";
-            this.mnEdit.Size = new System.Drawing.Size(47, 24);
+            this.mnEdit.Size = new System.Drawing.Size(39, 20);
             this.mnEdit.Text = "Edit";
             // 
             // copyToolStripMenuItem
             // 
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
             this.copyToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(171, 24);
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.copyToolStripMenuItem.Text = "Copy";
             // 
             // cutToolStripMenuItem
             // 
             this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
             this.cutToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.cutToolStripMenuItem.Size = new System.Drawing.Size(171, 24);
+            this.cutToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.cutToolStripMenuItem.Text = "Cut";
             // 
             // pasteToolStripMenuItem
             // 
             this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
             this.pasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(171, 24);
+            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.pasteToolStripMenuItem.Text = "Paste";
             // 
             // toolStripSeparator10
             // 
             this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(168, 6);
+            this.toolStripSeparator10.Size = new System.Drawing.Size(146, 6);
             // 
             // mnuEditSearch
             // 
             this.mnuEditSearch.Name = "mnuEditSearch";
             this.mnuEditSearch.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
-            this.mnuEditSearch.Size = new System.Drawing.Size(171, 24);
+            this.mnuEditSearch.Size = new System.Drawing.Size(149, 22);
             this.mnuEditSearch.Text = "Search";
             // 
             // toolStripSeparator11
             // 
             this.toolStripSeparator11.Name = "toolStripSeparator11";
-            this.toolStripSeparator11.Size = new System.Drawing.Size(168, 6);
+            this.toolStripSeparator11.Size = new System.Drawing.Size(146, 6);
             // 
             // mnuEditAddSec
             // 
@@ -333,25 +332,25 @@
             this.mnuEditAddGroup,
             this.mnuEditAddFooter});
             this.mnuEditAddSec.Name = "mnuEditAddSec";
-            this.mnuEditAddSec.Size = new System.Drawing.Size(171, 24);
+            this.mnuEditAddSec.Size = new System.Drawing.Size(149, 22);
             this.mnuEditAddSec.Text = "Sections";
             // 
             // mnuEditAddHeader
             // 
             this.mnuEditAddHeader.Name = "mnuEditAddHeader";
-            this.mnuEditAddHeader.Size = new System.Drawing.Size(159, 24);
+            this.mnuEditAddHeader.Size = new System.Drawing.Size(137, 22);
             this.mnuEditAddHeader.Text = "Add Header";
             // 
             // mnuEditAddGroup
             // 
             this.mnuEditAddGroup.Name = "mnuEditAddGroup";
-            this.mnuEditAddGroup.Size = new System.Drawing.Size(159, 24);
+            this.mnuEditAddGroup.Size = new System.Drawing.Size(137, 22);
             this.mnuEditAddGroup.Text = "Add Group";
             // 
             // mnuEditAddFooter
             // 
             this.mnuEditAddFooter.Name = "mnuEditAddFooter";
-            this.mnuEditAddFooter.Size = new System.Drawing.Size(159, 24);
+            this.mnuEditAddFooter.Size = new System.Drawing.Size(137, 22);
             this.mnuEditAddFooter.Text = "Add Footer";
             // 
             // controlsToolStripMenuItem
@@ -363,43 +362,43 @@
             this.imageToolStripMenuItem,
             this.chartToolStripMenuItem});
             this.controlsToolStripMenuItem.Name = "controlsToolStripMenuItem";
-            this.controlsToolStripMenuItem.Size = new System.Drawing.Size(171, 24);
+            this.controlsToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.controlsToolStripMenuItem.Text = "Controls";
             // 
             // mnuEditAddLabel
             // 
             this.mnuEditAddLabel.Name = "mnuEditAddLabel";
-            this.mnuEditAddLabel.Size = new System.Drawing.Size(177, 24);
+            this.mnuEditAddLabel.Size = new System.Drawing.Size(150, 22);
             this.mnuEditAddLabel.Text = "Label";
             // 
             // mnuEditAddLine
             // 
             this.mnuEditAddLine.Name = "mnuEditAddLine";
-            this.mnuEditAddLine.Size = new System.Drawing.Size(177, 24);
+            this.mnuEditAddLine.Size = new System.Drawing.Size(150, 22);
             this.mnuEditAddLine.Text = "Line";
             // 
             // mnuEditAddControl
             // 
             this.mnuEditAddControl.Name = "mnuEditAddControl";
-            this.mnuEditAddControl.Size = new System.Drawing.Size(177, 24);
+            this.mnuEditAddControl.Size = new System.Drawing.Size(150, 22);
             this.mnuEditAddControl.Text = "Database Field";
             // 
             // imageToolStripMenuItem
             // 
             this.imageToolStripMenuItem.Name = "imageToolStripMenuItem";
-            this.imageToolStripMenuItem.Size = new System.Drawing.Size(177, 24);
+            this.imageToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.imageToolStripMenuItem.Text = "Image";
             // 
             // chartToolStripMenuItem
             // 
             this.chartToolStripMenuItem.Name = "chartToolStripMenuItem";
-            this.chartToolStripMenuItem.Size = new System.Drawing.Size(177, 24);
+            this.chartToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.chartToolStripMenuItem.Text = "Chart";
             // 
             // toolStripSeparator12
             // 
             this.toolStripSeparator12.Name = "toolStripSeparator12";
-            this.toolStripSeparator12.Size = new System.Drawing.Size(168, 6);
+            this.toolStripSeparator12.Size = new System.Drawing.Size(146, 6);
             // 
             // mnuEditMove
             // 
@@ -411,42 +410,42 @@
             this.toolStripSeparator13,
             this.sizeOfMoveStepWithKeyboardToolStripMenuItem});
             this.mnuEditMove.Name = "mnuEditMove";
-            this.mnuEditMove.Size = new System.Drawing.Size(171, 24);
+            this.mnuEditMove.Size = new System.Drawing.Size(149, 22);
             this.mnuEditMove.Text = "Move";
             // 
             // horizontalToolStripMenuItem
             // 
             this.horizontalToolStripMenuItem.Name = "horizontalToolStripMenuItem";
-            this.horizontalToolStripMenuItem.Size = new System.Drawing.Size(298, 24);
+            this.horizontalToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
             this.horizontalToolStripMenuItem.Text = "Horizontal";
             // 
             // verticalToolStripMenuItem
             // 
             this.verticalToolStripMenuItem.Name = "verticalToolStripMenuItem";
-            this.verticalToolStripMenuItem.Size = new System.Drawing.Size(298, 24);
+            this.verticalToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
             this.verticalToolStripMenuItem.Text = "Vertical";
             // 
             // lockToolStripMenuItem
             // 
             this.lockToolStripMenuItem.Name = "lockToolStripMenuItem";
-            this.lockToolStripMenuItem.Size = new System.Drawing.Size(298, 24);
+            this.lockToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
             this.lockToolStripMenuItem.Text = "Lock";
             // 
             // allDirectionsToolStripMenuItem
             // 
             this.allDirectionsToolStripMenuItem.Name = "allDirectionsToolStripMenuItem";
-            this.allDirectionsToolStripMenuItem.Size = new System.Drawing.Size(298, 24);
+            this.allDirectionsToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
             this.allDirectionsToolStripMenuItem.Text = "All Directions";
             // 
             // toolStripSeparator13
             // 
             this.toolStripSeparator13.Name = "toolStripSeparator13";
-            this.toolStripSeparator13.Size = new System.Drawing.Size(295, 6);
+            this.toolStripSeparator13.Size = new System.Drawing.Size(243, 6);
             // 
             // sizeOfMoveStepWithKeyboardToolStripMenuItem
             // 
             this.sizeOfMoveStepWithKeyboardToolStripMenuItem.Name = "sizeOfMoveStepWithKeyboardToolStripMenuItem";
-            this.sizeOfMoveStepWithKeyboardToolStripMenuItem.Size = new System.Drawing.Size(298, 24);
+            this.sizeOfMoveStepWithKeyboardToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
             this.sizeOfMoveStepWithKeyboardToolStripMenuItem.Text = "Size of Move Step with Keyboard";
             // 
             // mnView
@@ -458,30 +457,30 @@
             this.mnuViewTreeViewCtrls,
             this.viewGridToolStripMenuItem});
             this.mnView.Name = "mnView";
-            this.mnView.Size = new System.Drawing.Size(53, 24);
+            this.mnView.Size = new System.Drawing.Size(44, 20);
             this.mnView.Text = "View";
             // 
             // mnuViewToolbar
             // 
             this.mnuViewToolbar.Name = "mnuViewToolbar";
-            this.mnuViewToolbar.Size = new System.Drawing.Size(160, 24);
+            this.mnuViewToolbar.Size = new System.Drawing.Size(140, 22);
             this.mnuViewToolbar.Text = "Toolbox";
             // 
             // mnuViewControls
             // 
             this.mnuViewControls.Name = "mnuViewControls";
-            this.mnuViewControls.Size = new System.Drawing.Size(160, 24);
+            this.mnuViewControls.Size = new System.Drawing.Size(140, 22);
             this.mnuViewControls.Text = "Control Grid";
             // 
             // toolStripSeparator14
             // 
             this.toolStripSeparator14.Name = "toolStripSeparator14";
-            this.toolStripSeparator14.Size = new System.Drawing.Size(157, 6);
+            this.toolStripSeparator14.Size = new System.Drawing.Size(137, 6);
             // 
             // mnuViewTreeViewCtrls
             // 
             this.mnuViewTreeViewCtrls.Name = "mnuViewTreeViewCtrls";
-            this.mnuViewTreeViewCtrls.Size = new System.Drawing.Size(160, 24);
+            this.mnuViewTreeViewCtrls.Size = new System.Drawing.Size(140, 22);
             this.mnuViewTreeViewCtrls.Text = "Control Tree";
             // 
             // viewGridToolStripMenuItem
@@ -491,25 +490,25 @@
             this.linesToolStripMenuItem,
             this.mnuViewGridMain});
             this.viewGridToolStripMenuItem.Name = "viewGridToolStripMenuItem";
-            this.viewGridToolStripMenuItem.Size = new System.Drawing.Size(160, 24);
+            this.viewGridToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.viewGridToolStripMenuItem.Text = "View Grid";
             // 
             // pointsToolStripMenuItem
             // 
             this.pointsToolStripMenuItem.Name = "pointsToolStripMenuItem";
-            this.pointsToolStripMenuItem.Size = new System.Drawing.Size(142, 24);
+            this.pointsToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.pointsToolStripMenuItem.Text = "Points";
             // 
             // linesToolStripMenuItem
             // 
             this.linesToolStripMenuItem.Name = "linesToolStripMenuItem";
-            this.linesToolStripMenuItem.Size = new System.Drawing.Size(142, 24);
+            this.linesToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.linesToolStripMenuItem.Text = "Lines";
             // 
             // mnuViewGridMain
             // 
             this.mnuViewGridMain.Name = "mnuViewGridMain";
-            this.mnuViewGridMain.Size = new System.Drawing.Size(142, 24);
+            this.mnuViewGridMain.Size = new System.Drawing.Size(124, 22);
             this.mnuViewGridMain.Text = "Hide Grid";
             // 
             // mnDatabase
@@ -524,41 +523,41 @@
             this.manualSettingsToolStripMenuItem,
             this.mnuDataBaseSetToMainConnect});
             this.mnDatabase.Name = "mnDatabase";
-            this.mnDatabase.Size = new System.Drawing.Size(84, 24);
+            this.mnDatabase.Size = new System.Drawing.Size(67, 20);
             this.mnDatabase.Text = "Database";
             // 
             // connectionSettingsToolStripMenuItem
             // 
             this.connectionSettingsToolStripMenuItem.Name = "connectionSettingsToolStripMenuItem";
-            this.connectionSettingsToolStripMenuItem.Size = new System.Drawing.Size(393, 24);
+            this.connectionSettingsToolStripMenuItem.Size = new System.Drawing.Size(328, 22);
             this.connectionSettingsToolStripMenuItem.Text = "Connection Settings";
             // 
             // viewParametersToolStripMenuItem
             // 
             this.viewParametersToolStripMenuItem.Name = "viewParametersToolStripMenuItem";
-            this.viewParametersToolStripMenuItem.Size = new System.Drawing.Size(393, 24);
+            this.viewParametersToolStripMenuItem.Size = new System.Drawing.Size(328, 22);
             this.viewParametersToolStripMenuItem.Text = "View Parameters";
             // 
             // toolStripSeparator15
             // 
             this.toolStripSeparator15.Name = "toolStripSeparator15";
-            this.toolStripSeparator15.Size = new System.Drawing.Size(390, 6);
+            this.toolStripSeparator15.Size = new System.Drawing.Size(325, 6);
             // 
             // mnuDataBaseConnectsAuxCfg
             // 
             this.mnuDataBaseConnectsAuxCfg.Name = "mnuDataBaseConnectsAuxCfg";
-            this.mnuDataBaseConnectsAuxCfg.Size = new System.Drawing.Size(393, 24);
+            this.mnuDataBaseConnectsAuxCfg.Size = new System.Drawing.Size(328, 22);
             this.mnuDataBaseConnectsAuxCfg.Text = "Additional Connections";
             // 
             // toolStripSeparator16
             // 
             this.toolStripSeparator16.Name = "toolStripSeparator16";
-            this.toolStripSeparator16.Size = new System.Drawing.Size(390, 6);
+            this.toolStripSeparator16.Size = new System.Drawing.Size(325, 6);
             // 
             // mnuDataBaseSetDisconnected
             // 
             this.mnuDataBaseSetDisconnected.Name = "mnuDataBaseSetDisconnected";
-            this.mnuDataBaseSetDisconnected.Size = new System.Drawing.Size(393, 24);
+            this.mnuDataBaseSetDisconnected.Size = new System.Drawing.Size(328, 22);
             this.mnuDataBaseSetDisconnected.Text = "Not a Database Report";
             // 
             // manualSettingsToolStripMenuItem
@@ -568,31 +567,31 @@
             this.mnuDataBaseConnectConfig,
             this.mnuDataBaseEditEx});
             this.manualSettingsToolStripMenuItem.Name = "manualSettingsToolStripMenuItem";
-            this.manualSettingsToolStripMenuItem.Size = new System.Drawing.Size(393, 24);
+            this.manualSettingsToolStripMenuItem.Size = new System.Drawing.Size(328, 22);
             this.manualSettingsToolStripMenuItem.Text = "Manual Settings";
             // 
             // mnuDataBaseEditStrConnect
             // 
             this.mnuDataBaseEditStrConnect.Name = "mnuDataBaseEditStrConnect";
-            this.mnuDataBaseEditStrConnect.Size = new System.Drawing.Size(228, 24);
+            this.mnuDataBaseEditStrConnect.Size = new System.Drawing.Size(195, 22);
             this.mnuDataBaseEditStrConnect.Text = "SQL Server Connection";
             // 
             // mnuDataBaseConnectConfig
             // 
             this.mnuDataBaseConnectConfig.Name = "mnuDataBaseConnectConfig";
-            this.mnuDataBaseConnectConfig.Size = new System.Drawing.Size(228, 24);
+            this.mnuDataBaseConnectConfig.Size = new System.Drawing.Size(195, 22);
             this.mnuDataBaseConnectConfig.Text = "Connection String";
             // 
             // mnuDataBaseEditEx
             // 
             this.mnuDataBaseEditEx.Name = "mnuDataBaseEditEx";
-            this.mnuDataBaseEditEx.Size = new System.Drawing.Size(228, 24);
+            this.mnuDataBaseEditEx.Size = new System.Drawing.Size(195, 22);
             this.mnuDataBaseEditEx.Text = "Data Source";
             // 
             // mnuDataBaseSetToMainConnect
             // 
             this.mnuDataBaseSetToMainConnect.Name = "mnuDataBaseSetToMainConnect";
-            this.mnuDataBaseSetToMainConnect.Size = new System.Drawing.Size(393, 24);
+            this.mnuDataBaseSetToMainConnect.Size = new System.Drawing.Size(328, 22);
             this.mnuDataBaseSetToMainConnect.Text = "Apply Main Connection to Addional Conections";
             // 
             // mnTool
@@ -600,13 +599,13 @@
             this.mnTool.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.optionsToolStripMenuItem});
             this.mnTool.Name = "mnTool";
-            this.mnTool.Size = new System.Drawing.Size(57, 24);
+            this.mnTool.Size = new System.Drawing.Size(48, 20);
             this.mnTool.Text = "Tools";
             // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(130, 24);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.optionsToolStripMenuItem.Text = "Options";
             // 
             // mnHelp
@@ -614,13 +613,13 @@
             this.mnHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aboutToolStripMenuItem});
             this.mnHelp.Name = "mnHelp";
-            this.mnHelp.Size = new System.Drawing.Size(53, 24);
+            this.mnHelp.Size = new System.Drawing.Size(44, 20);
             this.mnHelp.Text = "Help";
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(119, 24);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "About";
             // 
             // tbMain
@@ -646,9 +645,9 @@
             this.toolStripButton12,
             this.toolStripSeparator6,
             this.toolStripButton13});
-            this.tbMain.Location = new System.Drawing.Point(0, 28);
+            this.tbMain.Location = new System.Drawing.Point(0, 24);
             this.tbMain.Name = "tbMain";
-            this.tbMain.Size = new System.Drawing.Size(909, 25);
+            this.tbMain.Size = new System.Drawing.Size(682, 25);
             this.tbMain.TabIndex = 1;
             this.tbMain.Text = "toolStrip1";
             // 
@@ -811,18 +810,16 @@
             // 
             // sbMain
             // 
-            this.sbMain.Location = new System.Drawing.Point(0, 387);
+            this.sbMain.Location = new System.Drawing.Point(0, 310);
             this.sbMain.Name = "sbMain";
-            this.sbMain.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
-            this.sbMain.Size = new System.Drawing.Size(909, 22);
+            this.sbMain.Size = new System.Drawing.Size(682, 22);
             this.sbMain.TabIndex = 3;
             this.sbMain.Text = "statusStrip1";
             // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 53);
-            this.splitContainer1.Margin = new System.Windows.Forms.Padding(4);
+            this.splitContainer1.Location = new System.Drawing.Point(0, 49);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -832,9 +829,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.tabReports);
-            this.splitContainer1.Size = new System.Drawing.Size(909, 334);
-            this.splitContainer1.SplitterDistance = 302;
-            this.splitContainer1.SplitterWidth = 5;
+            this.splitContainer1.Size = new System.Drawing.Size(682, 261);
+            this.splitContainer1.SplitterDistance = 226;
             this.splitContainer1.TabIndex = 4;
             // 
             // panel1
@@ -842,9 +838,8 @@
             this.panel1.Controls.Add(this.tabControl2);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(302, 334);
+            this.panel1.Size = new System.Drawing.Size(226, 261);
             this.panel1.TabIndex = 0;
             // 
             // tabControl2
@@ -854,20 +849,18 @@
             this.tabControl2.Controls.Add(this.tabPage5);
             this.tabControl2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl2.Location = new System.Drawing.Point(0, 0);
-            this.tabControl2.Margin = new System.Windows.Forms.Padding(4);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(302, 334);
+            this.tabControl2.Size = new System.Drawing.Size(226, 261);
             this.tabControl2.TabIndex = 0;
             // 
             // tabPage3
             // 
             this.tabPage3.Controls.Add(this.listView2);
-            this.tabPage3.Location = new System.Drawing.Point(4, 25);
-            this.tabPage3.Margin = new System.Windows.Forms.Padding(4);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage3.Size = new System.Drawing.Size(294, 305);
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage3.Size = new System.Drawing.Size(218, 235);
             this.tabPage3.TabIndex = 0;
             this.tabPage3.Text = "Controls";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -875,21 +868,19 @@
             // listView2
             // 
             this.listView2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listView2.Location = new System.Drawing.Point(4, 4);
-            this.listView2.Margin = new System.Windows.Forms.Padding(4);
+            this.listView2.Location = new System.Drawing.Point(3, 3);
             this.listView2.Name = "listView2";
-            this.listView2.Size = new System.Drawing.Size(286, 297);
+            this.listView2.Size = new System.Drawing.Size(212, 229);
             this.listView2.TabIndex = 0;
             this.listView2.UseCompatibleStateImageBehavior = false;
             // 
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.listView1);
-            this.tabPage4.Location = new System.Drawing.Point(4, 25);
-            this.tabPage4.Margin = new System.Windows.Forms.Padding(4);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage4.Size = new System.Drawing.Size(294, 305);
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage4.Size = new System.Drawing.Size(218, 245);
             this.tabPage4.TabIndex = 1;
             this.tabPage4.Text = "Database";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -897,20 +888,18 @@
             // listView1
             // 
             this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listView1.Location = new System.Drawing.Point(4, 4);
-            this.listView1.Margin = new System.Windows.Forms.Padding(4);
+            this.listView1.Location = new System.Drawing.Point(3, 3);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(286, 297);
+            this.listView1.Size = new System.Drawing.Size(216, 244);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             // 
             // tabPage5
             // 
             this.tabPage5.Controls.Add(this.treeView1);
-            this.tabPage5.Location = new System.Drawing.Point(4, 25);
-            this.tabPage5.Margin = new System.Windows.Forms.Padding(4);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(294, 305);
+            this.tabPage5.Size = new System.Drawing.Size(218, 245);
             this.tabPage5.TabIndex = 2;
             this.tabPage5.Text = "Report";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -919,9 +908,8 @@
             // 
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView1.Location = new System.Drawing.Point(0, 0);
-            this.treeView1.Margin = new System.Windows.Forms.Padding(4);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(294, 305);
+            this.treeView1.Size = new System.Drawing.Size(222, 251);
             this.treeView1.TabIndex = 0;
             // 
             // tabReports
@@ -929,19 +917,17 @@
             this.tabReports.Controls.Add(this.tabPage1);
             this.tabReports.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabReports.Location = new System.Drawing.Point(0, 0);
-            this.tabReports.Margin = new System.Windows.Forms.Padding(4);
             this.tabReports.Name = "tabReports";
             this.tabReports.SelectedIndex = 0;
-            this.tabReports.Size = new System.Drawing.Size(602, 334);
+            this.tabReports.Size = new System.Drawing.Size(452, 261);
             this.tabReports.TabIndex = 0;
             // 
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.pnEditor);
-            this.tabPage1.Location = new System.Drawing.Point(4, 25);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(4);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(594, 305);
+            this.tabPage1.Size = new System.Drawing.Size(444, 235);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "New Report";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -955,40 +941,37 @@
             this.pnEditor.Location = new System.Drawing.Point(0, 0);
             this.pnEditor.Margin = new System.Windows.Forms.Padding(0);
             this.pnEditor.Name = "pnEditor";
-            this.pnEditor.Size = new System.Drawing.Size(594, 305);
+            this.pnEditor.Size = new System.Drawing.Size(444, 235);
             this.pnEditor.TabIndex = 1;
             // 
             // pnRule
             // 
             this.pnRule.BackColor = System.Drawing.Color.PeachPuff;
-            this.pnRule.Location = new System.Drawing.Point(4, 4);
-            this.pnRule.Margin = new System.Windows.Forms.Padding(4);
+            this.pnRule.Location = new System.Drawing.Point(3, 3);
             this.pnRule.Name = "pnRule";
-            this.pnRule.Size = new System.Drawing.Size(133, 62);
+            this.pnRule.Size = new System.Drawing.Size(100, 50);
             this.pnRule.TabIndex = 1;
             this.pnRule.TabStop = false;
             // 
             // pnReport
             // 
             this.pnReport.BackColor = System.Drawing.Color.Beige;
-            this.pnReport.Location = new System.Drawing.Point(180, 4);
-            this.pnReport.Margin = new System.Windows.Forms.Padding(4);
+            this.pnReport.Location = new System.Drawing.Point(135, 3);
             this.pnReport.Name = "pnReport";
-            this.pnReport.Size = new System.Drawing.Size(133, 62);
+            this.pnReport.Size = new System.Drawing.Size(100, 50);
             this.pnReport.TabIndex = 0;
             this.pnReport.TabStop = false;
             // 
             // fMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(909, 409);
+            this.ClientSize = new System.Drawing.Size(682, 332);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.sbMain);
             this.Controls.Add(this.tbMain);
             this.Controls.Add(this.mnMain);
             this.MainMenuStrip = this.mnMain;
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "fMain";
             this.Text = "CrowSoft Report Editor";
             this.mnMain.ResumeLayout(false);
