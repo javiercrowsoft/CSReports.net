@@ -5,8 +5,6 @@ using System.IO;
 
 namespace CSKernelClient
 {
-
-
     public static class cUtil
     {
         private const String C_MODULE = "cUtil";
@@ -218,40 +216,140 @@ namespace CSKernelClient
         }
 
         //--------------------------------------------------------------------------------------------------------------------
-        /*
-        public void listAdd(Object list, String value, Object id) { // TODO: Use of ByRef founded Public Sub ListAdd(ByRef List As Object, ByVal Value As String, Optional ByVal Id As Variant)
-            if (!IsMissing(id)) {
-                mUtil.listAdd_(list, value, id);
-            } 
-            else {
-                mUtil.listAdd_(list, value);
+        public static void listAdd(ComboBox list, String value)
+        {
+            listAdd_(list, value);
+        }
+        public static void listAdd(ComboBox list, String value, int id)
+        {
+            listAdd_(list, value, id);
+        }
+        public static long listID(ComboBox list)
+        {
+            return listID_(list);
+        }
+        public static long listItemData(ComboBox list, int index)
+        {
+            return listItemData_(list, index);
+        }
+        public static void listSetListIndex(ComboBox list, int idx)
+        {
+            listSetListIndex_(list, idx);
+        }
+        public static void listSetListIndexForId(ComboBox list, int id)
+        {
+            listSetListIndexForId_(list, id);
+        }
+        public static void listSetListIndexForText(ComboBox list, String text)
+        {
+            listSetListIndexForText_(list, text);
+        }
+        public static void listChangeTextForSelected(ComboBox list, String value)
+        {
+            listChangeTextForSelected_(list, value);
+        }
+        public static void listChangeText(ComboBox list, int idx, String value)
+        {
+            listChangeText_(list, idx, value);
+        }
+        public static int listGetIndexFromItemData(ComboBox list, int valueItemData)
+        {
+            return listGetIndexFromItemData_(list, valueItemData);
+        }
+
+        private static void listAdd_(ComboBox list, String value)
+        {
+            list.Items.Add(value);
+        }
+        private static void listAdd_(ComboBox list, String value, int id)
+        {
+            list.Items.Add(new ListValueWithId(value, id));
+        }
+        private static long listID_(ComboBox list)
+        {
+            if (list.SelectedIndex == -1) { return 0; }
+            return ((ListValueWithId)list.SelectedItem).Id;
+        }
+        private static long listItemData_(ComboBox list, int index)
+        {
+            long _rtn = 0;
+            
+            if (index < list.Items.Count)
+            {
+                if (index == -1)
+                {
+                    _rtn = listID_(list);
+                }
+                else
+                {
+                    _rtn = ((ListValueWithId)list.Items[index]).Id;
+                }
+            }
+            return _rtn;
+        }
+        private static void listSetListIndex_(ComboBox list, int idx)
+        {
+            if (list.Items.Count < 1) { return; }
+            if (list.Items.Count > idx) { list.SelectedIndex = idx; }
+        }
+        private static void listSetListIndexForId_(ComboBox list, int id)
+        {
+            int i = 0;
+            for (i = 0; i < list.Items.Count; i++)
+            {
+                if (((ListValueWithId)list.Items[i]).Id == id)
+                {
+                    list.SelectedIndex = i;
+                    break;
+                }
             }
         }
-        public int listID(Object list) {
-            return mUtil.listID_(list);
+        private static void listSetListIndexForText_(ComboBox list, String text)
+        {
+            int i = 0;
+            for (i = 0; i <= list.Items.Count; i++)
+            {
+                if (list.Items[i].ToString() == text)
+                {
+                    list.SelectedIndex = i;
+                    break;
+                }
+            }
         }
-        public Object listItemData(Object list, int index) {
-            return mUtil.listItemData_(list, index);
+        private static void listChangeTextForSelected_(ComboBox list, String value)
+        {
+            listChangeText_(list, list.SelectedIndex, value);
         }
-        public void listSetListIndex(Object list, int idx) { // TODO: Use of ByRef founded Public Sub ListSetListIndex(ByRef List As Object, Optional ByVal idx As Integer = 0)
-            mUtil.listSetListIndex_(list, idx);
+        private static void listChangeText_(ComboBox list, int idx, String value)
+        {
+            if (idx < list.Items.Count && idx > -1)
+            {
+                object item = list.Items[idx];
+                if (item is ListValueWithId)
+                {
+                    ((ListValueWithId)item).Text = value;
+                }
+                else
+                {
+                    list.Items[idx] = value;
+                }
+            }
         }
-        public void listSetListIndexForId(Object list, int id) { // TODO: Use of ByRef founded Public Sub ListSetListIndexForId(ByRef List As Object, ByVal Id As Long)
-            mUtil.listSetListIndexForId_(list, id);
+        private static int listGetIndexFromItemData_(ComboBox list, int valueItemData)
+        {
+            for (int i = 0; i < list.Items.Count; i++)
+            {
+
+                if (list.Items[i] is ListValueWithId && ((ListValueWithId)list.Items[i]).Id == valueItemData)
+                {
+                    return i;
+                }
+            }
+
+            return -1;
         }
-        public void listSetListIndexForText(Object list, String text) { // TODO: Use of ByRef founded Public Sub ListSetListIndexForText(ByRef List As Object, ByVal Text As String)
-            mUtil.listSetListIndexForText_(list, text);
-        }
-        public void listChangeTextForSelected(Object list, String value) { // TODO: Use of ByRef founded Public Sub ListChangeTextForSelected(ByRef List As Object, ByVal Value As String)
-            mUtil.listChangeTextForSelected_(list, value);
-        }
-        public void listChangeText(Object list, int idx, String value) { // TODO: Use of ByRef founded Public Sub ListChangeText(ByRef List As Object, ByVal idx As Long, ByVal Value As String)
-            mUtil.listChangeText_(list, idx, value);
-        }
-        public int listGetIndexFromItemData(Object list, int valueItemData) {
-            return mUtil.listGetIndexFromItemData_(list, valueItemData);
-        }
-         
+
+        /* 
         //--------------------------------------------------------------------------------------------------------------------
         public void setNodeForId(Object tree, int id) { // TODO: Use of ByRef founded Public Sub SetNodeForId(ByRef Tree As Object, ByVal Id As Long)
             mUtil.setNodeForId_(tree, id);
@@ -332,6 +430,38 @@ namespace CSKernelClient
             else
             {
                 return 0;
+            }
+        }
+    }
+
+    public class ListValueWithId {
+        private string value;
+        private int id;
+
+        public ListValueWithId(string value, int id) 
+        {
+            this.value = value;
+            this.id = id;
+        }
+
+        public override string ToString()
+        {
+            return value;
+        }
+
+        public int Id 
+        {
+            get
+            {
+                return id;
+            }
+        }
+
+        public string Text
+        {
+            set
+            {
+                Text = value;
             }
         }
     }

@@ -9,7 +9,7 @@ using CSReportGlobals;
 namespace CSReportDll
 {
 
-    public class cReportSection : IDisposable
+    public class cReportSection : IDisposable, cIReportSection
     {
 
         private const String C_NODERPTSECTIONLINES = "RptSectionLines";

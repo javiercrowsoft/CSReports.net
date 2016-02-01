@@ -46,6 +46,7 @@
     <Compile Include="cImage.cs" />
     <Compile Include="cIReportGroupSections.cs" />
     <Compile Include="cIReportScriptType.cs" />
+    <Compile Include="cIReportSection.cs" />
     <Compile Include="cParameter.cs" />
     <Compile Include="cParameters.cs" />
     <Compile Include="cPrintAPI.cs" />

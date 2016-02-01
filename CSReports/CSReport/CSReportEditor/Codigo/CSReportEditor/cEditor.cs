@@ -1234,7 +1234,7 @@ namespace CSReportEditor
                             bool isGroup = false;
                             bool isSecLn = false;
 
-                            pGetSection(isGroup, isSecLn);
+                            pGetSection(out isGroup, out isSecLn);
 
                             if (isSecLn) { noDelete = true; }
 
@@ -2060,14 +2060,14 @@ namespace CSReportEditor
 
                 // first we check it is not a section line
                 //
-                sec = pGetSection(false, isSecLn, secLn, false, isGroupHeader, isGroupFooter);
+                sec = pGetSection(out isSecLn, out secLn, false, out isGroupHeader, out isGroupFooter);
                 if (!isSecLn) {
 
                     // check it is not the last section line in this section
                     //
                     if (bDelSectionLine) {
 
-                        sec = pGetSection(false, isSecLn, secLn, true, isGroupHeader, isGroupFooter);
+                        sec = pGetSection(out isSecLn, out secLn, true, out isGroupHeader, out isGroupFooter);
                     }
 					if (!pCanDeleteSection(out secs, sec, po.getTag())) { return; }
                 }
@@ -2507,7 +2507,7 @@ namespace CSReportEditor
             toFont.setName(fromFont.getName());
             toFont.setSize(fromFont.getSize());
             toFont.setStrike(fromFont.getStrike());
-            toFont.setUnderLine(fromFont.getUnderLine());
+            toFont.setUnderline(fromFont.getUnderLine());
         }
          */
 
@@ -2746,7 +2746,7 @@ namespace CSReportEditor
 			cReportAspect aspect = null;
             bool isGroup = false;
 
-			sec = pGetSection(isGroup, false, null, false, false, false);
+			sec = pGetSection(out isGroup);
 
             if (sec == null) { return; }
 
@@ -3293,14 +3293,14 @@ namespace CSReportEditor
             cReportGroup group = null;
             bool isGroup = false;
 
-            sec = pGetSection(isGroup);
+            sec = pGetSection(out isGroup);
 
             if (sec == null) { return; }
 
             if (!isGroup) { return; }
 
             for (int _i = 0; _i < m_report.getGroups().count(); _i++) {
-                Group = m_report.Groups.item(_i);
+                group = m_report.getGroups().item(_i);
                 if (group.getHeader().getKey() == sec.getKey()) { break; }
                 if (group.getFooter().getKey() == sec.getKey()) { break; }
             }
@@ -3315,21 +3315,21 @@ namespace CSReportEditor
             cReportGroup group = null;
             bool isGroup = false;
 
-            sec = pGetSection(isGroup);
+            sec = pGetSection(out isGroup);
 
             if (sec == null) { return; }
 
             if (!isGroup) { return; }
 
             for (int _i = 0; _i < m_report.getGroups().count(); _i++) {
-                Group = m_report.Groups.item(_i);
+                group = m_report.getGroups().item(_i);
                 if (group.getHeader().getKey() == sec.getKey()) { break; }
                 if (group.getFooter().getKey() == sec.getKey()) { break; }
             }
 
             cGlobals.moveGroup(group, this);
 
-            G.redim(m_vSelectedKeys, 0);
+            G.redim(ref m_vSelectedKeys, 0);
             refreshReport();
         }
 
@@ -3337,7 +3337,7 @@ namespace CSReportEditor
             cReportSection sec = null;
             bool isGroup = false;
 
-            sec = pGetSection(isGroup);
+            sec = pGetSection(out isGroup);
 
             if (sec == null) { return; }
 
@@ -3351,7 +3351,7 @@ namespace CSReportEditor
             cReportSectionLine secLn = null;
             bool isSecLn = false;
 
-            sec = pGetSection(false, isSecLn, secLn, true, false, false);
+            sec = pGetSection(out isSecLn, out secLn, true);
 
             if (sec == null) { return; }
             if (secLn == null) { return; }
@@ -3362,7 +3362,12 @@ namespace CSReportEditor
             refreshAll();
         }
 
-        private void pShowSecProperties(Object sec, String secLnName) { 
+        private void pShowSecProperties(cIReportSection sec)
+        {
+            pShowSecProperties(sec, "");
+        }
+
+        private void pShowSecProperties(cIReportSection sec, String secLnName) { 
             try {
 
                 m_showingProperties = true;
@@ -3372,22 +3377,22 @@ namespace CSReportEditor
                     // TODO: set event handler for ShowEditFormula, UnloadForm
                 }
 
-                m_fSecProperties.chkFormulaHide.Value = sec.HasFormulaHide ? vbChecked : vbUnchecked;
+                m_fSecProperties.chkFormulaHide.Checked = sec.getHasFormulaHide();
                 m_fSecProperties.setFormulaHide(sec.getFormulaHide().getText);
                 if (sec.GetType() == cReportSection) { m_fSecProperties.txName.Text = sec.Name; }
 
                 if (sec.GetType() == cReportSectionLine) {
-                    m_fSecProperties.LbControl.Caption = secLnName;
+                    m_fSecProperties.lbControl.Caption = secLnName;
                     m_fSecProperties.lbSecLn.Caption = "Line properties:";
                 } 
                 else {
-                    m_fSecProperties.LbControl.Caption = sec.getName();
+                    m_fSecProperties.lbControl.Caption = sec.getName();
                 }
 
                 m_fSecProperties.Show(vbModal);
 
                 if (m_fSecProperties.getOk()) {
-                    if (m_fSecProperties.getSetFormulaHideChanged()) { sec.setHasFormulaHide(m_fSecProperties.chkFormulaHide.Value == vbChecked); }
+                    if (m_fSecProperties.getSetFormulaHideChanged()) { sec.setHasFormulaHide(m_fSecProperties.chkFormulaHide.Checked); }
                     if (m_fSecProperties.getFormulaHideChanged()) { sec.FormulaHide.setText(m_fSecProperties.getFormulaHide()); }
                     if (sec.GetType() == cReportSection) { sec.setName(m_fSecProperties.txName.Text); }
                 }
@@ -3407,28 +3412,64 @@ namespace CSReportEditor
         // remember that the last section line don't have a separator 
         // but share it with the section.
         //
-		private cReportSection pGetSection(
-			bool isGroup, 
-			bool isSecLn) 
-		{
-			return pGetSection(isGroup, isSecLn, null, false, false, false);
-		}
         private cReportSection pGetSection(
-            bool isGroup, 
-            bool isSecLn, 
-			cReportSectionLine secLn,
-            bool returnSecLn, 
-            bool isGroupHeader, 
-            bool isGroupFooter) 
+            out bool isGroup)
+        {
+            bool isSecLn;
+            bool isGroupHeader;
+            bool isGroupFooter;
+            cReportSectionLine secLn;
+            return pGetSection(out isGroup, out isSecLn, out secLn, false, out isGroupHeader, out isGroupFooter);
+        }
+
+		private cReportSection pGetSection(
+			out bool isGroup, 
+			out bool isSecLn) 
+		{
+            bool isGroupHeader;
+            bool isGroupFooter;
+            cReportSectionLine secLn;
+            return pGetSection(out isGroup, out isSecLn, out secLn, false, out isGroupHeader, out isGroupFooter);
+		}
+
+        private cReportSection pGetSection(
+            out bool isSecLn,
+            out cReportSectionLine secLn,
+            bool returnSecLn)
+        {
+            bool isGroupHeader;
+            bool isGroupFooter;
+
+            pGetSection(out isSecLn, out secLn, returnSecLn, out isGroupHeader, out isGroupFooter);
+        }
+
+        private cReportSection pGetSection(
+            out bool isSecLn,
+            out cReportSectionLine secLn,
+            bool returnSecLn,
+            out bool isGroupHeader,
+            out bool isGroupFooter)
+        { 
+            bool isGroup;
+            return pGetSection(out isGroup, out isSecLn, out secLn, returnSecLn, out isGroupHeader, out isGroupFooter);
+        }
+
+        private cReportSection pGetSection(
+            out bool isGroup, 
+            out bool isSecLn, 
+			out cReportSectionLine secLn,
+            bool returnSecLn,
+            out bool isGroupHeader,
+            out bool isGroupFooter) 
         {
 
             cReportSection sec = null;
 
             isGroup = false;
-            isGroupFooter = false;
-            isGroupHeader = false;
             isSecLn = false;
             secLn = null;
+            isGroupFooter = false;
+            isGroupHeader = false;
 
 			if (m_keyFocus == "") { return null; }
 
@@ -3576,57 +3617,38 @@ namespace CSReportEditor
                 } 
                 else {
 
-                    cUtil.listSetListIndexForId(m_fProperties.cbType, rptCtrl.getChart().getChartType());
-                    cUtil.listSetListIndexForId(m_fProperties.cbFormatType, rptCtrl.getChart().getFormat());
-                    cUtil.listSetListIndexForId(m_fProperties.cbChartSize, rptCtrl.getChart().getDiameter());
-                    cUtil.listSetListIndexForId(m_fProperties.cbChartThickness, rptCtrl.getChart().getThickness());
-                    cUtil.listSetListIndexForId(m_fProperties.cbLinesType, rptCtrl.getChart().getGridLines());
+                    cUtil.listSetListIndexForId(m_fProperties.cbType, (int)rptCtrl.getChart().getChartType());
+                    cUtil.listSetListIndexForId(m_fProperties.cbFormatType, (int)rptCtrl.getChart().getFormat());
+                    cUtil.listSetListIndexForId(m_fProperties.cbChartSize, (int)rptCtrl.getChart().getDiameter());
+                    cUtil.listSetListIndexForId(m_fProperties.cbChartThickness, (int)rptCtrl.getChart().getThickness());
+                    cUtil.listSetListIndexForId(m_fProperties.cbLinesType, (int)rptCtrl.getChart().getGridLines());
 
-                    m_fProperties.txChartTop.Text = rptCtrl.getChart().getTop();
-
+                    m_fProperties.txChartTop.Text = rptCtrl.getChart().getTop().ToString();
                     m_fProperties.txDbFieldGroupValue.Text = rptCtrl.getChart().getGroupFieldName();
                     m_fProperties.setChartGroupIndex(rptCtrl.getChart().getGroupFieldIndex());
                     m_fProperties.txChartGroupValue.Text = rptCtrl.getChart().getGroupValue();
-
-                    if (rptCtrl.getChart().getOutlineBars()) {
-                        m_fProperties.opLinesYes.Value = true;
-                    } 
-                    else {
-                        m_fProperties.opLinesNo.Value = true;
-                    }
-
-                    if (rptCtrl.getChart().getShowValues()) {
-                        m_fProperties.opValuesYes.Value = true;
-                    } 
-                    else {
-                        m_fProperties.opValuesNo.Value = true;
-                    }
-
-                    m_fProperties.chkSort.Value = rptCtrl.getChart().getSort() ? vbChecked : vbUnchecked;
-
+                    m_fProperties.chkShowOutlines.Checked = rptCtrl.getChart().getOutlineBars();
+                    m_fProperties.chkShowBarValues.Checked = rptCtrl.getChart().getShowValues();
+                    m_fProperties.chkSort.Checked = rptCtrl.getChart().getSort();
                     m_fProperties.txText.Text = rptCtrl.getChart().getChartTitle();
 
-                    if (rptCtrl.getChart().getSeries().count()) {
-                        m_fProperties.txDbFieldLbl1.Text = rptCtrl.getChart().getSeries(1).getLabelFieldName();
-                        m_fProperties.txDbFieldVal1.Text = rptCtrl.getChart().getSeries(1).getValueFieldName();
+                    if (rptCtrl.getChart().getSeries().count() > 0) {
+                        m_fProperties.txDbFieldLbl1.Text = rptCtrl.getChart().getSeries().item(1).getLabelFieldName();
+                        m_fProperties.txDbFieldVal1.Text = rptCtrl.getChart().getSeries().item(1).getValueFieldName();
 
-                        m_fProperties.setChartIndex(0, rptCtrl.getChart().getSeries(1).getLabelIndex());
-                        m_fProperties.setChartIndex(1, rptCtrl.getChart().getSeries(1).tetValueIndex());
+                        m_fProperties.setChartIndex(0, rptCtrl.getChart().getSeries().item(1).getLabelIndex());
+                        m_fProperties.setChartIndex(1, rptCtrl.getChart().getSeries().item(1).getValueIndex());
 
-                        cUtil.listSetListIndexForId(m_fProperties.cbColorSerie1, rptCtrl.getChart().getSeries(1).getColor());
+                        cUtil.listSetListIndexForId(m_fProperties.cbColorSerie1, (int)rptCtrl.getChart().getSeries().item(1).getColor());
 
                         if (rptCtrl.getChart().getSeries().count() > 1) {
-                            m_fProperties.txDbFieldLbl2.Text = rptCtrl.getChart().getSeries(2).getLabelFieldName();
-                            m_fProperties.txDbFieldVal2.Text = rptCtrl.getChart().getSeries(2).getValueFieldName();
+                            m_fProperties.txDbFieldLbl2.Text = rptCtrl.getChart().getSeries().item(2).getLabelFieldName();
+                            m_fProperties.txDbFieldVal2.Text = rptCtrl.getChart().getSeries().item(2).getValueFieldName();
 
-                            // Decidi no implementarlo ya que no lo encontre util
-                            //
-                            //m_fProperties.ChartFieldType(2) =
-                            //m_fProperties.ChartFieldType(3) =
-                            m_fProperties.setChartIndex(2, rptCtrl.getChart().getSeries(2).getLabelIndex());
-                            m_fProperties.setChartIndex(3, rptCtrl.getChart().getSeries(2).getValueIndex());
+                            m_fProperties.setChartIndex(2, rptCtrl.getChart().getSeries().item(2).getLabelIndex());
+                            m_fProperties.setChartIndex(3, rptCtrl.getChart().getSeries().item(2).getValueIndex());
 
-                            cUtil.listSetListIndexForId(m_fProperties.cbColorSerie2, rptCtrl.getChart().getSeries(2).getColor());
+                            cUtil.listSetListIndexForId(m_fProperties.cbColorSerie2, (int)rptCtrl.getChart().getSeries().item(2).getColor());
                         }
                     }
                 }
@@ -3646,59 +3668,59 @@ namespace CSReportEditor
                 }
 
                 m_fProperties.txName.Text = rptCtrl.getName();
-                m_fProperties.LbControl.Caption = rptCtrl.getName();
-                m_fProperties.chkFormulaHide.Value = rptCtrl.getHasFormulaHide() ? vbChecked : vbUnchecked;
-                m_fProperties.chkFormulaValue.Value = rptCtrl.getHasFormulaValue() ? vbChecked : vbUnchecked;
+                m_fProperties.lbControl.Text = rptCtrl.getName();
+                m_fProperties.chkFormulaHide.Checked = rptCtrl.getHasFormulaHide();
+                m_fProperties.chkFormulaValue.Checked = rptCtrl.getHasFormulaValue();
 
-                m_fProperties.txExportColIdx.Text = rptCtrl.getExportColIdx();
-                m_fProperties.chkIsFreeCtrl = rptCtrl.getIsFreeCtrl() ? vbChecked : vbUnchecked;
+                m_fProperties.txExportColIdx.Text = rptCtrl.getExportColIdx().ToString();
+                m_fProperties.chkIsFreeCtrl.Checked = rptCtrl.getIsFreeCtrl();
 
                 m_fProperties.txTag.Text = rptCtrl.getTag();
                 m_fProperties.setFormulaHide(rptCtrl.getFormulaHide().getText());
                 m_fProperties.setFormulaValue(rptCtrl.getFormulaValue().getText());
-                m_fProperties.txIdxGroup.Text = rptCtrl.getFormulaValue().getIdxGroup();
-                m_fProperties.opBeforePrint.Value = rptCtrl.getFormulaValue().getWhenEval() == csRptWhenEval.CSRPTEVALPRE;
-                m_fProperties.opAfterPrint.Value = rptCtrl.getFormulaValue().getWhenEval() == csRptWhenEval.CSRPTEVALPOST;
+                m_fProperties.txIdxGroup.Text = rptCtrl.getFormulaValue().getIdxGroup().ToString();
+                m_fProperties.opBeforePrint.Checked = rptCtrl.getFormulaValue().getWhenEval() == csRptWhenEval.CSRPTEVALPRE;
+                m_fProperties.opAfterPrint.Checked = rptCtrl.getFormulaValue().getWhenEval() == csRptWhenEval.CSRPTEVALPOST;
 
-                w_aspect = rptCtrl.getAspect();
-                m_fProperties.chkCanGrow.Value = w_aspect.getCanGrow() ? vbChecked : vbUnchecked;
+                w_aspect = rptCtrl.getLabel().getAspect();
+                m_fProperties.chkCanGrow.Checked = w_aspect.getCanGrow();
                 m_fProperties.txFormat.Text = w_aspect.getFormat();
-                m_fProperties.txSymbol.Text = w_aspect.getfFormat().getSymbol();
-                m_fProperties.setIsAccounting(w_aspect.getfFormat().getIsAccounting());
-                m_fProperties.chkWordWrap.Value = w_aspect.getWordWrap() ? vbChecked : vbUnchecked;
+                m_fProperties.txSymbol.Text = w_aspect.getSymbol();
+                m_fProperties.setIsAccounting(w_aspect.getIsAccounting());
+                m_fProperties.chkWordWrap.Checked = w_aspect.getWordWrap();
 
-                cUtil.listSetListIndexForId(m_fProperties.cbAlign, w_aspect.getAlign());
+                cUtil.listSetListIndexForId(m_fProperties.cbAlign, (int)w_aspect.getAlign());
 
-                m_fProperties.txBorderColor.Text = w_aspect.getBorderColor();
-                m_fProperties.txBorder3D.Text = w_aspect.getBorderColor3d();
-                m_fProperties.txBorderShadow.Text = w_aspect.getBorderColor3dShadow();
-                m_fProperties.chkBorderRounded.Value = w_aspect.getBorderRounded() ? vbChecked : vbUnchecked;
-                m_fProperties.txBorderWidth.Text = w_aspect.getBorderWidth();
+                m_fProperties.txBorderColor.Text = w_aspect.getBorderColor().ToString();
+                m_fProperties.txBorder3D.Text = w_aspect.getBorderColor3d().ToString();
+                m_fProperties.txBorderShadow.Text = w_aspect.getBorderColor3dShadow().ToString();
+                m_fProperties.chkBorderRounded.Checked = w_aspect.getBorderRounded();
+                m_fProperties.txBorderWidth.Text = w_aspect.getBorderWidth().ToString();
 
-                cUtil.listSetListIndexForId(m_fProperties.cbBorderType, w_aspect.getBorderType());
+                cUtil.listSetListIndexForId(m_fProperties.cbBorderType, (int)w_aspect.getBorderType());
 
                 w_font = w_aspect.getFont();
                 m_fProperties.txFont.Text = w_font.getName();
-                m_fProperties.txForeColor.Text = w_font.getForeColor();
-                m_fProperties.txFontSize.Text = w_font.getSize();
-                m_fProperties.chkFontBold.Value = w_font.getBold() ? vbChecked : vbUnchecked;
-                m_fProperties.chkFontItalic.Value = w_font.getItalic() ? vbChecked : vbUnchecked;
-                m_fProperties.chkFontUnderline.Value = w_font.getUnderline() ? vbChecked : vbUnchecked;
-                m_fProperties.chkFontStrike.Value = w_font.getStrike() ? vbChecked : vbUnchecked;
+                m_fProperties.txForeColor.Text = w_font.getForeColor().ToString();
+                m_fProperties.txFontSize.Text = w_font.getSize().ToString();
+                m_fProperties.chkFontBold.Checked = w_font.getBold();
+                m_fProperties.chkFontItalic.Checked = w_font.getItalic();
+                m_fProperties.chkFontUnderline.Checked = w_font.getUnderline();
+                m_fProperties.chkFontStrike.Checked = w_font.getStrike();
 
                 w_aspect = paintObject.getAspect();
-                m_fProperties.txLeft.Text = w_aspect.getLeft();
-                m_fProperties.txTop.Text = w_aspect.getTop();
-                m_fProperties.txWidth.Text = w_aspect.getWidth();
-                m_fProperties.txHeight.Text = w_aspect.getHeight();
-                m_fProperties.txBackColor.Text = w_aspect.getBackColor();
-                m_fProperties.chkTransparent.Value = w_aspect.getTransparent() ? vbChecked : vbUnchecked;
+                m_fProperties.txLeft.Text = w_aspect.getLeft().ToString();
+                m_fProperties.txTop.Text = w_aspect.getTop().ToString();
+                m_fProperties.txWidth.Text = w_aspect.getWidth().ToString();
+                m_fProperties.txHeight.Text = w_aspect.getHeight().ToString();
+                m_fProperties.txBackColor.Text = w_aspect.getBackColor().ToString();
+                m_fProperties.chkTransparent.Checked = w_aspect.getTransparent();
 
                 bMultiSelect = m_vSelectedKeys.Length > 1;
 
                 m_fProperties.resetChangedFlags();
 
-                m_fProperties.Show(vbModal);
+                m_fProperties.ShowDialog();
 
                 if (!m_fProperties.getOk()) { return; }
 
@@ -3720,15 +3742,15 @@ namespace CSReportEditor
 
                     if (m_fProperties.getTextChanged()) { rptCtrl.getLabel().setText(m_fProperties.txText.Text); }
                     if (m_fProperties.getTagChanged()) { rptCtrl.setTag(m_fProperties.txTag.Text); }
-                    if (m_fProperties.getSetFormulaHideChanged()) { rptCtrl.setHasFormulaHide(m_fProperties.chkFormulaHide.Value == vbChecked); }
-                    if (m_fProperties.getSetFormulaValueChanged()) { rptCtrl.setHasFormulaValue(m_fProperties.chkFormulaValue.Value == vbChecked); }
+                    if (m_fProperties.getSetFormulaHideChanged()) { rptCtrl.setHasFormulaHide(m_fProperties.chkFormulaHide.Checked); }
+                    if (m_fProperties.getSetFormulaValueChanged()) { rptCtrl.setHasFormulaValue(m_fProperties.chkFormulaValue.Checked); }
                     if (m_fProperties.getFormulaHideChanged()) { rptCtrl.getFormulaHide().setText(m_fProperties.getFormulaHide()); }
                     if (m_fProperties.getFormulaValueChanged()) { rptCtrl.getFormulaValue().setText(m_fProperties.getFormulaValue()); }
-                    if (m_fProperties.getIdxGroupChanged()) { rptCtrl.getFormulaValue().setIdxGroup(m_fProperties.txIdxGroup.Text); }
-                    if (m_fProperties.getWhenEvalChanged()) { rptCtrl.getFormulaValue().setWhenEval(m_fProperties.opAfterPrint.Value ? csRptWhenEval.CSRPTEVALPOST : csRptWhenEval.CSRPTEVALPRE); }
+                    if (m_fProperties.getIdxGroupChanged()) { rptCtrl.getFormulaValue().setIdxGroup((int)cReportGlobals.val(m_fProperties.txIdxGroup.Text)); }
+                    if (m_fProperties.getWhenEvalChanged()) { rptCtrl.getFormulaValue().setWhenEval(m_fProperties.opAfterPrint.Checked ? csRptWhenEval.CSRPTEVALPOST : csRptWhenEval.CSRPTEVALPRE); }
 
-                    if (m_fProperties.getExportColIdxChanged()) { rptCtrl.setExportColIdx(m_fProperties.txExportColIdx.Text); }
-                    if (m_fProperties.getIsFreeCtrlChanged()) { rptCtrl.setIsFreeCtrl(m_fProperties.chkIsFreeCtrl.Value == vbChecked); }
+                    if (m_fProperties.getExportColIdxChanged()) { rptCtrl.setExportColIdx((int)cReportGlobals.val(m_fProperties.txExportColIdx.Text)); }
+                    if (m_fProperties.getIsFreeCtrlChanged()) { rptCtrl.setIsFreeCtrl(m_fProperties.chkIsFreeCtrl.Checked); }
 
                     if (rptCtrl.getControlType() == csRptControlType.CSRPTCTFIELD || rptCtrl.getControlType() == csRptControlType.CSRPTCTDBIMAGE) {
 
@@ -3741,35 +3763,31 @@ namespace CSReportEditor
                     }
 
                     if (m_fProperties.getPictureChanged()) {
-                        image = rptCtrl.image;
-                        __TYPE_NOT_FOUND w___TYPE_NOT_FOUND = m_fProperties.picImage;
-                        int width = 0;
-                        int height = 0;
-
-                        width = w___TYPE_NOT_FOUND.ScaleX(w___TYPE_NOT_FOUND.Picture.width, vbHimetric, vbTwips);
-                        height = w___TYPE_NOT_FOUND.ScaleY(w___TYPE_NOT_FOUND.Picture.height, vbHimetric, vbTwips);
-
-                        image.setHImage(m_paint.copyBitmap(w___TYPE_NOT_FOUND.hDC, width, height, image.getHImage()));
+                        image = rptCtrl.getImage();
+                        PictureBox picImage = m_fProperties.picImage;
+                        image.setImage((Image)picImage.Image.Clone());
                     }
 
                     if (rptCtrl.getControlType() == csRptControlType.CSRPTCTCHART) {
 
-                        if (rptCtrl.getChart().getSeries().count() < 1) { rptCtrl.getChart().getSeries().add(null); }
+                        if (rptCtrl.getChart().getSeries().count() < 1) { 
+                            rptCtrl.getChart().getSeries().add(); 
+                        }
 
                         if (m_fProperties.getChartTypeChanged()) {
-                            rptCtrl.getChart().setChartType(ListID(m_fProperties.cbType));
+                            rptCtrl.getChart().setChartType((csRptChartType)cUtil.listID(m_fProperties.cbType));
                         }
                         if (m_fProperties.getChartFormatTypeChanged()) {
-                            rptCtrl.getChart().setFormat(ListID(m_fProperties.cbFormatType));
+                            rptCtrl.getChart().setFormat((csRptChartFormat)cUtil.ListID(m_fProperties.cbFormatType));
                         }
                         if (m_fProperties.getChartSizeChanged()) {
-                            rptCtrl.getChart().setDiameter(ListID(m_fProperties.cbChartSize));
+                            rptCtrl.getChart().setDiameter((csRptChartPieDiameter)cUtil.ListID(m_fProperties.cbChartSize));
                         }
                         if (m_fProperties.getChartThicknessChanged()) {
-                            rptCtrl.getChart().setThickness(ListID(m_fProperties.cbChartThickness));
+                            rptCtrl.getChart().setThickness((csRptChartPieThickness)cUtil.ListID(m_fProperties.cbChartThickness));
                         }
                         if (m_fProperties.getChartLinesTypeChanged()) {
-                            rptCtrl.getChart().setGridLines(ListID(m_fProperties.cbLinesType));
+                            rptCtrl.getChart().setGridLines((csRptChartLineStyle)cUtil.ListID(m_fProperties.cbLinesType));
                         }
 
                         if (m_fProperties.getChartShowLinesChanged()) {
@@ -3788,7 +3806,7 @@ namespace CSReportEditor
                         }
 
                         if (m_fProperties.getChartSortChanged()) {
-                            rptCtrl.getChart().setSort(m_fProperties.chkSort.Value == vbChecked);
+                            rptCtrl.getChart().setSort(m_fProperties.chkSort.Checked);
                         }
 
                         if (m_fProperties.getChartGroupValueChanged()) {
@@ -3801,16 +3819,16 @@ namespace CSReportEditor
                         }
 
                         if (m_fProperties.getChartFieldLbl1Changed()) {
-                            rptCtrl.getChart().getSeries(1).LabelFieldName = m_fProperties.txDbFieldLbl1.Text;
-                            rptCtrl.getChart().getSeries(1).LabelIndex = m_fProperties.getChartIndex(0);
+                            rptCtrl.getChart().getSeries().item(1).LabelFieldName = m_fProperties.txDbFieldLbl1.Text;
+                            rptCtrl.getChart().getSeries().item(1).LabelIndex = m_fProperties.getChartIndex(0);
                         }
                         if (m_fProperties.getChartFieldVal1Changed()) {
-                            rptCtrl.getChart().getSeries(1).ValueFieldName = m_fProperties.txDbFieldVal1.Text;
-                            rptCtrl.getChart().getSeries(1).ValueIndex = m_fProperties.getChartIndex(1);
+                            rptCtrl.getChart().getSeries().item(1).ValueFieldName = m_fProperties.txDbFieldVal1.Text;
+                            rptCtrl.getChart().getSeries().item(1).ValueIndex = m_fProperties.getChartIndex(1);
                         }
 
                         if (m_fProperties.getChartColorSerie1Changed()) {
-                            rptCtrl.getChart().getSeries(1).Color = ListID(m_fProperties.cbColorSerie1);
+                            rptCtrl.getChart().getSeries().item(1).Color = ListID(m_fProperties.cbColorSerie1);
                         }
 
                         if (m_fProperties.getChartFieldLbl2Changed() || m_fProperties.getChartFieldVal2Changed()) {
@@ -3841,36 +3859,36 @@ namespace CSReportEditor
                     if (m_fProperties.getTextChanged()) { paintObject.setText(m_fProperties.txText.Text); }
 
                     w_aspect = rptCtrl.getLabel().getAspect();
-                    if (m_fProperties.getLeftChanged()) { w_aspect.setLeft(Double.parseDouble(m_fProperties.txLeft.Text)); }
-                    if (m_fProperties.getTopChanged()) { w_aspect.setTop(Double.parseDouble(m_fProperties.txTop.Text)); }
-                    if (m_fProperties.getWidthChanged()) { w_aspect.setWidth(Double.parseDouble(m_fProperties.txWidth.Text)); }
-                    if (m_fProperties.getHeightChanged()) { w_aspect.setHeight(Double.parseDouble(m_fProperties.txHeight.Text)); }
-                    if (m_fProperties.getBackColorChanged()) { w_aspect.setBackColor(Long.parseLong(m_fProperties.txBackColor.Text)); }
-                    if (m_fProperties.getTransparentChanged()) { w_aspect.setTransparent(m_fProperties.chkTransparent.Value == vbChecked); }
+                    if (m_fProperties.getLeftChanged()) { w_aspect.setLeft((float)cReportGlobals.val(m_fProperties.txLeft.Text)); }
+                    if (m_fProperties.getTopChanged()) { w_aspect.setTop((float)cReportGlobals.val(m_fProperties.txTop.Text)); }
+                    if (m_fProperties.getWidthChanged()) { w_aspect.setWidth((float)cReportGlobals.val(m_fProperties.txWidth.Text)); }
+                    if (m_fProperties.getHeightChanged()) { w_aspect.setHeight((float)cReportGlobals.val(m_fProperties.txHeight.Text)); }
+                    if (m_fProperties.getBackColorChanged()) { w_aspect.setBackColor((int)cReportGlobals.val(m_fProperties.txBackColor.Text)); }
+                    if (m_fProperties.getTransparentChanged()) { w_aspect.setTransparent(m_fProperties.chkTransparent.Checked); }
                     if (m_fProperties.getAlignChanged()) { w_aspect.setAlign(ListID(m_fProperties.cbAlign)); }
                     if (m_fProperties.getFormatChanged()) { w_aspect.setFormat(m_fProperties.txFormat.Text); }
                     if (m_fProperties.getSymbolChanged()) {
                         w_aspect.setSymbol(m_fProperties.txSymbol.Text);
                         w_aspect.setIsAccounting(m_fProperties.getIsAccounting());
                     }
-                    if (m_fProperties.getWordWrapChanged()) { w_aspect.setWordWrap(m_fProperties.chkWordWrap.Value == vbChecked); }
-                    if (m_fProperties.getCanGrowChanged()) { w_aspect.setCanGrow(m_fProperties.chkCanGrow.Value == vbChecked); }
+                    if (m_fProperties.getWordWrapChanged()) { w_aspect.setWordWrap(m_fProperties.chkWordWrap.Checked); }
+                    if (m_fProperties.getCanGrowChanged()) { w_aspect.setCanGrow(m_fProperties.chkCanGrow.Checked); }
 
-                    if (m_fProperties.getBorderColorChanged()) { w_aspect.setBorderColor(Long.parseLong(m_fProperties.txBorderColor.Text)); }
-                    if (m_fProperties.getBorder3DChanged()) { w_aspect.setBorderColor3d(Long.parseLong(m_fProperties.txBorder3D.Text)); }
-                    if (m_fProperties.getBorder3DShadowChanged()) { w_aspect.setBorderColor3dShadow(Long.parseLong(m_fProperties.txBorderShadow.Text)); }
-                    if (m_fProperties.getBorderRoundedChanged()) { w_aspect.setBorderRounded(m_fProperties.chkBorderRounded.Value == vbChecked); }
-                    if (m_fProperties.getBorderWidthChanged()) { w_aspect.setBorderWidth(Long.parseLong(m_fProperties.txBorderWidth.Text)); }
-                    if (m_fProperties.getBorderTypeChanged()) { w_aspect.setBorderType(ListID(m_fProperties.cbBorderType)); }
+                    if (m_fProperties.getBorderColorChanged()) { w_aspect.setBorderColor((int)cReportGlobals.val(m_fProperties.txBorderColor.Text)); }
+                    if (m_fProperties.getBorder3DChanged()) { w_aspect.setBorderColor3d((int)cReportGlobals.val(m_fProperties.txBorder3D.Text)); }
+                    if (m_fProperties.getBorder3DShadowChanged()) { w_aspect.setBorderColor3dShadow((int)cReportGlobals.val(m_fProperties.txBorderShadow.Text)); }
+                    if (m_fProperties.getBorderRoundedChanged()) { w_aspect.setBorderRounded(m_fProperties.chkBorderRounded.Checked); }
+                    if (m_fProperties.getBorderWidthChanged()) { w_aspect.setBorderWidth((int)cReportGlobals.val(m_fProperties.txBorderWidth.Text)); }
+                    if (m_fProperties.getBorderTypeChanged()) { w_aspect.setBorderType((csReportBorderType)cUtil.ListID(m_fProperties.cbBorderType)); }
 
                     w_font = w_aspect.getFont();
                     if (m_fProperties.getFontChanged()) { w_font.setName(m_fProperties.txFont.Text); }
-                    if (m_fProperties.getForeColorChanged()) { w_font.setForeColor(Long.parseLong(m_fProperties.txForeColor.Text)); }
-                    if (m_fProperties.getFontSizeChanged()) { w_font.setSize(Double.parseDouble(m_fProperties.txFontSize.Text)); }
-                    if (m_fProperties.getBoldChanged()) { w_font.setBold(m_fProperties.chkFontBold.Value == vbChecked); }
-                    if (m_fProperties.getItalicChanged()) { w_font.setItalic(m_fProperties.chkFontItalic.Value == vbChecked); }
-                    if (m_fProperties.getUnderlineChanged()) { w_font.setUnderLine(m_fProperties.chkFontUnderline.Value == vbChecked); }
-                    if (m_fProperties.getStrikeChanged()) { w_font.setStrike(m_fProperties.chkFontStrike.Value == vbChecked); }
+                    if (m_fProperties.getForeColorChanged()) { w_font.setForeColor((int)cReportGlobals.val(m_fProperties.txForeColor.Text)); }
+                    if (m_fProperties.getFontSizeChanged()) { w_font.setSize((float)cReportGlobals.val(m_fProperties.txFontSize.Text)); }
+                    if (m_fProperties.getBoldChanged()) { w_font.setBold(m_fProperties.chkFontBold.Checked); }
+                    if (m_fProperties.getItalicChanged()) { w_font.setItalic(m_fProperties.chkFontItalic.Checked); }
+                    if (m_fProperties.getUnderlineChanged()) { w_font.setUnderline(m_fProperties.chkFontUnderline.Checked); }
+                    if (m_fProperties.getStrikeChanged()) { w_font.setStrike(m_fProperties.chkFontStrike.Checked); }
 
                     if (m_fProperties.getPictureChanged()) {
                         paintObject.setHImage(rptCtrl.getImage().getHImage());
@@ -3881,16 +3899,16 @@ namespace CSReportEditor
                     //////////////////////////////////////////////////////////'
 
                     w_aspect = paintObject.getAspect();
-                    if (m_fProperties.getLeftChanged()) { w_aspect.setLeft(Double.parseDouble(m_fProperties.txLeft.Text)); }
-                    if (m_fProperties.getTopChanged()) { w_aspect.setTop(Double.parseDouble(m_fProperties.txTop.Text)); }
-                    if (m_fProperties.getWidthChanged()) { w_aspect.setWidth(Double.parseDouble(m_fProperties.txWidth.Text)); }
-                    if (m_fProperties.getHeightChanged()) { w_aspect.setHeight(Double.parseDouble(m_fProperties.txHeight.Text)); }
-                    if (m_fProperties.getBackColorChanged()) { w_aspect.setBackColor(Long.parseLong(m_fProperties.txBackColor.Text)); }
-                    if (m_fProperties.getTransparentChanged()) { w_aspect.setTransparent(m_fProperties.chkTransparent.Value == vbChecked); }
+                    if (m_fProperties.getLeftChanged()) { w_aspect.setLeft((float)cReportGlobals.val(m_fProperties.txLeft.Text)); }
+                    if (m_fProperties.getTopChanged()) { w_aspect.setTop((float)cReportGlobals.val(m_fProperties.txTop.Text)); }
+                    if (m_fProperties.getWidthChanged()) { w_aspect.setWidth((float)cReportGlobals.val(m_fProperties.txWidth.Text)); }
+                    if (m_fProperties.getHeightChanged()) { w_aspect.setHeight((float)cReportGlobals.val(m_fProperties.txHeight.Text)); }
+                    if (m_fProperties.getBackColorChanged()) { w_aspect.setBackColor((int)cReportGlobals.val(m_fProperties.txBackColor.Text)); }
+                    if (m_fProperties.getTransparentChanged()) { w_aspect.setTransparent(m_fProperties.chkTransparent.Checked); }
                     if (m_fProperties.getAlignChanged()) { w_aspect.setAlign(ListID(m_fProperties.cbAlign)); }
                     if (m_fProperties.getFormatChanged()) { w_aspect.setFormat(m_fProperties.txFormat.Text); }
                     if (m_fProperties.getSymbolChanged()) { w_aspect.setSymbol(m_fProperties.txSymbol.Text); }
-                    if (m_fProperties.getWordWrapChanged()) { w_aspect.setWordWrap(m_fProperties.chkWordWrap.Value == vbChecked); }
+                    if (m_fProperties.getWordWrapChanged()) { w_aspect.setWordWrap(m_fProperties.chkWordWrap.Checked); }
 
                     if (m_fProperties.getBorderTypeChanged()) { w_aspect.setBorderType(ListID(m_fProperties.cbBorderType)); }
 
@@ -3901,21 +3919,21 @@ namespace CSReportEditor
                         w_aspect.setBorderType(CSRPTBSFIXED);
                     } 
                     else {
-                        if (m_fProperties.getBorderColorChanged()) { w_aspect.setBorderColor(Long.parseLong(m_fProperties.txBorderColor.Text)); }
-                        if (m_fProperties.getBorder3DChanged()) { w_aspect.setBorderColor3d(Long.parseLong(m_fProperties.txBorder3D.Text)); }
-                        if (m_fProperties.getBorder3DShadowChanged()) { w_aspect.setBorderColor3dShadow(Long.parseLong(m_fProperties.txBorderShadow.Text)); }
-                        if (m_fProperties.getBorderRoundedChanged()) { w_aspect.setBorderRounded(m_fProperties.chkBorderRounded.Value == vbChecked); }
-                        if (m_fProperties.getBorderWidthChanged()) { w_aspect.setBorderWidth(Long.parseLong(m_fProperties.txBorderWidth.Text)); }
+                        if (m_fProperties.getBorderColorChanged()) { w_aspect.setBorderColor((int)cReportGlobals.val(m_fProperties.txBorderColor.Text)); }
+                        if (m_fProperties.getBorder3DChanged()) { w_aspect.setBorderColor3d((int)cReportGlobals.val(m_fProperties.txBorder3D.Text)); }
+                        if (m_fProperties.getBorder3DShadowChanged()) { w_aspect.setBorderColor3dShadow((int)cReportGlobals.val(m_fProperties.txBorderShadow.Text)); }
+                        if (m_fProperties.getBorderRoundedChanged()) { w_aspect.setBorderRounded(m_fProperties.chkBorderRounded.Checked); }
+                        if (m_fProperties.getBorderWidthChanged()) { w_aspect.setBorderWidth((int)cReportGlobals.val(m_fProperties.txBorderWidth.Text)); }
                     }
 
                     w_font = w_aspect.getFont();
                     if (m_fProperties.getFontChanged()) { w_font.setName(m_fProperties.txFont.Text); }
-                    if (m_fProperties.getForeColorChanged()) { w_font.setForeColor(Long.parseLong(m_fProperties.txForeColor.Text)); }
-                    if (m_fProperties.getFontSizeChanged()) { w_font.setSize(Double.parseDouble(m_fProperties.txFontSize.Text)); }
-                    if (m_fProperties.getBoldChanged()) { w_font.setBold(m_fProperties.chkFontBold.Value == vbChecked); }
-                    if (m_fProperties.getItalicChanged()) { w_font.setItalic(m_fProperties.chkFontItalic.Value == vbChecked); }
-                    if (m_fProperties.getUnderlineChanged()) { w_font.setUnderLine(m_fProperties.chkFontUnderline.Value == vbChecked); }
-                    if (m_fProperties.getStrikeChanged()) { w_font.setStrike(m_fProperties.chkFontStrike.Value == vbChecked); }
+                    if (m_fProperties.getForeColorChanged()) { w_font.setForeColor((int)cReportGlobals.val(m_fProperties.txForeColor.Text)); }
+                    if (m_fProperties.getFontSizeChanged()) { w_font.setSize((float)cReportGlobals.val(m_fProperties.txFontSize.Text)); }
+                    if (m_fProperties.getBoldChanged()) { w_font.setBold(m_fProperties.chkFontBold.Checked); }
+                    if (m_fProperties.getItalicChanged()) { w_font.setItalic(m_fProperties.chkFontItalic.Checked); }
+                    if (m_fProperties.getUnderlineChanged()) { w_font.setUnderline(m_fProperties.chkFontUnderline.Checked); }
+                    if (m_fProperties.getStrikeChanged()) { w_font.setStrike(m_fProperties.chkFontStrike.Checked); }
                 }
 
                 m_dataHasChanged = true;
@@ -3945,7 +3963,6 @@ namespace CSReportEditor
         }
 
         public void showToolBox() {
-            DoEvents;
 
             m_fToolBox = cGlobals.getToolBox(this);
 
@@ -4841,7 +4858,7 @@ namespace CSReportEditor
                 w_font.setSize(ctrlAspect.getFont().getSize());
                 w_font.setBold(ctrlAspect.getFont().getBold());
                 w_font.setItalic(ctrlAspect.getFont().getItalic());
-                w_font.setUnderLine(ctrlAspect.getFont().getUnderline());
+                w_font.setUnderline(ctrlAspect.getFont().getUnderline());
                 w_font.setStrike(ctrlAspect.getFont().getStrike());
 
                 paintObj.setText(rptCtrl.getLabel().getText());
@@ -5059,8 +5076,6 @@ namespace CSReportEditor
             int recordCount, 
             out bool cancel) 
         { 
-            Application.DoEvents;
-
             if (m_cancelPrinting) {
                 if (Ask("Confirm you want to cancel the execution of this report?", vbNo)) {
                     cancel = true;

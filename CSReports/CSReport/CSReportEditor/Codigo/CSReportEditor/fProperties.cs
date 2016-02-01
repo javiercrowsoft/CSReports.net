@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using CSKernelClient;
 
 namespace CSReportEditor
 {
@@ -24,7 +25,13 @@ namespace CSReportEditor
 
         private bool m_isAccounting;
 
-        private cMouse m_mouse;
+        private cMouseWait m_mouse;
+
+        private const int C_LABEL = 0;
+        private const int C_FORMULA = 1;
+        private const int C_FIELD = 2;
+        private const int C_IMAGE = 3;
+        private const int C_CHART = 5;
 
         private bool m_textChanged;
         private bool m_tagChanged;
@@ -83,8 +90,8 @@ namespace CSReportEditor
         private bool m_isFreeCtrlChanged;
         private bool m_exportColIdxChanged;
 
-        private int[] m_chartIndex = 0;
-        private int[] m_chartFieldType = 0;
+        private int[] m_chartIndex;
+        private int[] m_chartFieldType;
 
         private int m_chartGroupIndex = 0;
         private int m_chartGroupFieldType = 0;
@@ -737,305 +744,350 @@ namespace CSReportEditor
 
         //------------------------------------------------------------------------------------------------------------------
 
-  private void cb_align_Click(object sender, EventArgs e) {
-    m_alignChanged = true;
-  }
+        private void cb_align_Click(object sender, EventArgs e)
+        {
+            m_alignChanged = true;
+        }
 
-  private void cb_borderType_Click(object sender, EventArgs e) {
-    m_borderTypeChanged = true;
-  }
+        private void cb_borderType_Click(object sender, EventArgs e)
+        {
+            m_borderTypeChanged = true;
+        }
 
-  private void chk_borderRounded_Click(object sender, EventArgs e) {
-    m_borderRoundedChanged = true;
-  }
+        private void chk_borderRounded_Click(object sender, EventArgs e)
+        {
+            m_borderRoundedChanged = true;
+        }
 
-  private void chk_formulaHide_Click(object sender, EventArgs e) {
-    m_setFormulaHideChanged = true;
-  }
+        private void chk_formulaHide_Click(object sender, EventArgs e)
+        {
+            m_setFormulaHideChanged = true;
+        }
 
-  private void chk_formulaValue_Click(object sender, EventArgs e) {
-    m_setFormulaValueChanged = true;
-  }
+        private void chk_formulaValue_Click(object sender, EventArgs e)
+        {
+            m_setFormulaValueChanged = true;
+        }
 
-  private void cmd_formulaHide_Click(object sender, EventArgs e) {
-    bool cancel = false;
-    m_formulaName = "Ocultar";
-    showFormula(m_formulaHide, out cancel);
-    if (!cancel) {
-      m_formulaHideChanged = true;
-      lb_formulaHide.Text = m_formulaHide;
-    }
-  }
+        private void cmd_formulaHide_Click(object sender, EventArgs e)
+        {
+            bool cancel = false;
+            m_formulaName = "Ocultar";
+            showFormula(m_formulaHide, out cancel);
+            if (!cancel)
+            {
+                m_formulaHideChanged = true;
+                lb_formulaHide.Text = m_formulaHide;
+            }
+        }
 
-  private void cmd_formulaValue_Click(object sender, EventArgs e) {
-    bool cancel = false;
-    m_formulaName = "Valor";
-    showFormula(m_formulaValue, out cancel);
-    if (!cancel) {
-      m_formulaValueChanged = true;
-      lbFormulaValue.Text = m_formulaValue;
-    }
-  }
+        private void cmd_formulaValue_Click(object sender, EventArgs e)
+        {
+            bool cancel = false;
+            m_formulaName = "Valor";
+            showFormula(m_formulaValue, out cancel);
+            if (!cancel)
+            {
+                m_formulaValueChanged = true;
+                lbFormulaValue.Text = m_formulaValue;
+            }
+        }
 
-  private void showFormula(String formula, out bool cancel) {
-    Iterator listeners = m_listeners.iterator();
-    while(listeners.hasNext()) {
-        ((fPropertiesEventI)listeners.next()).showEditFormula(formula, cancel);
-    };
-  }
+        private void showFormula(String formula, out bool cancel)
+        {
+            //TODO: fix me
+            cancel = false;
+            /*
+          Iterator listeners = m_listeners.iterator();
+          while(listeners.hasNext()) {
+              ((fPropertiesEventI)listeners.next()).showEditFormula(formula, cancel);
+          };*/
+        }
 
-  private void opAfterPrint_Click(object sender, EventArgs e) {
-    m_whenEvalChanged = true;
-  }
+        private void op_afterPrint_Click(object sender, EventArgs e)
+        {
+            m_whenEvalChanged = true;
+        }
 
-  private void opBeforePrint_Click(object sender, EventArgs e) {
-    m_whenEvalChanged = true;
-  }
+        private void op_beforePrint_Click(object sender, EventArgs e)
+        {
+            m_whenEvalChanged = true;
+        }
 
-  private void tx_Border3D_LostFocus() {
-    try {
-      shBorder3D.cReportAspect.setBackColor(txBorder3D.csValue);
-}
-}
+        private void tx_border3D_LostFocus(object sender, EventArgs e)
+        {
+            try
+            {
+                shBorder3D.BackColor = Color.FromArgb(Int32.Parse(txBorder3D.Text));
+            }
+            catch (Exception ignore) { }
+        }
 
-  private void tx_Border3D_ButtonClick(bool cancel) {
-    try {
+        private void cmd_border3D_click(object sender, EventArgs e)
+        {
+            try
+            {
+                // TODO: fix me
+                /*
+                __TYPE_NOT_FOUND w___TYPE_NOT_FOUND = CommDialog;
+                w___TYPE_NOT_FOUND.CancelError = true;
+                w___TYPE_NOT_FOUND.Color = txBorder3D.csValue;
+                w___TYPE_NOT_FOUND.Flags = cdlCCRGBInit;
+                VBA.ex.clear();
+                w___TYPE_NOT_FOUND.ShowColor;
+                if (VBA.ex.Number != 0) { return; }
+                txBorder3D.cReportPaintObject.setText(w___TYPE_NOT_FOUND.Color);
+                shBorder3D.cReportAspect.setBackColor(txBorder3D.csValue);
+                 */
+            }
+            catch (Exception ignore) { }
+        }
 
-      cancel = true;
+        private void tx_borderColor_LostFocus(object sender, EventArgs e)
+        {
+            try
+            {
+                shBorderColor.BackColor = Color.FromArgb(Int32.Parse(txBorderColor.Text));
+            }
+            catch (Exception ignore) { }
+        }
 
-      //*TODO:** can't found type for with block
-      //*With CommDialog
-      __TYPE_NOT_FOUND w___TYPE_NOT_FOUND = CommDialog;
-      w___TYPE_NOT_FOUND.CancelError = true;
-      w___TYPE_NOT_FOUND.Color = txBorder3D.csValue;
-      w___TYPE_NOT_FOUND.Flags = cdlCCRGBInit;
-      VBA.ex.clear();
-      w___TYPE_NOT_FOUND.ShowColor;
-      if (VBA.ex.Number != 0) { return; }
-      txBorder3D.cReportPaintObject.setText(w___TYPE_NOT_FOUND.Color);
+        private void cmd_borderColor_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // TODO: fix me
+                /*
+                __TYPE_NOT_FOUND w___TYPE_NOT_FOUND = CommDialog;
+                w___TYPE_NOT_FOUND.CancelError = true;
+                w___TYPE_NOT_FOUND.Color = txBorderColor.csValue;
+                w___TYPE_NOT_FOUND.Flags = cdlCCRGBInit;
+                VBA.ex.clear();
+                w___TYPE_NOT_FOUND.ShowColor;
+                if (VBA.ex.Number != 0) { return; }
+                txBorderColor.cReportPaintObject.setText(w___TYPE_NOT_FOUND.Color);
+                shBorderColor.cReportAspect.setBackColor(txBorderColor.csValue);
+                 */
+            }
+            catch (Exception ignore) { }
+        }
 
-      shBorder3D.cReportAspect.setBackColor(txBorder3D.csValue);
-}
-}
+        private void tx_borderShadow_LostFocus(object sender, EventArgs e)
+        {
+            try
+            {
+                shBorderShadow.BackColor = Color.FromArgb(Int32.Parse(txBorderShadow.Text));
+            }
+            catch (Exception ignore) { }
+        }
 
-  private void tx_BorderColor_LostFocus() {
-    try {
-      shBorderColor.cReportAspect.setBackColor(txBorderColor.csValue);
-}
-}
+        private void cmd_borderShadow_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // TODO: fix me
+                /*
+                __TYPE_NOT_FOUND w___TYPE_NOT_FOUND = CommDialog;
+                w___TYPE_NOT_FOUND.CancelError = true;
+                w___TYPE_NOT_FOUND.Color = txBorderShadow.csValue;
+                w___TYPE_NOT_FOUND.Flags = cdlCCRGBInit;
+                VBA.ex.clear();
+                w___TYPE_NOT_FOUND.ShowColor;
+                if (VBA.ex.Number != 0) { return; }
+                txBorderShadow.cReportPaintObject.setText(w___TYPE_NOT_FOUND.Color);
+                shBorderShadow.cReportAspect.setBackColor(txBorderShadow.csValue);
+                 */
+            }
+            catch (Exception ignore) { }
+        }
 
-  private void tx_BorderColor_ButtonClick(bool cancel) {
-    try {
+        private void tx_BorderWidth_TextChanged(object sender, EventArgs e)
+        {
+            m_borderWidthChanged = true;
+        }
 
-      cancel = true;
+        private void tx_ChartGroupValue_TextChanged(object sender, EventArgs e)
+        {
+            m_chartGroupValueChanged = true;
+        }
 
-      //*TODO:** can't found type for with block
-      //*With CommDialog
-      __TYPE_NOT_FOUND w___TYPE_NOT_FOUND = CommDialog;
-      w___TYPE_NOT_FOUND.CancelError = true;
-      w___TYPE_NOT_FOUND.Color = txBorderColor.csValue;
-      w___TYPE_NOT_FOUND.Flags = cdlCCRGBInit;
-      VBA.ex.clear();
-      w___TYPE_NOT_FOUND.ShowColor;
-      if (VBA.ex.Number != 0) { return; }
-      txBorderColor.cReportPaintObject.setText(w___TYPE_NOT_FOUND.Color);
+        private void tx_ChartTop_TextChanged(object sender, EventArgs e)
+        {
+            m_chartTopChanged = true;
+        }
 
-      shBorderColor.cReportAspect.setBackColor(txBorderColor.csValue);
-}
-}
+        private void cmd_dbField_Click(object sender, EventArgs e)
+        {
+            /* TODO: fix me
+            bool cancel = false;
+            Iterator listeners = m_listeners.iterator();
+            while(listeners.hasNext()) {
+                ((fPropertiesEventI)listeners.next()).showHelpDbField(cancel);
+            };
+            if (!cancel) {
+              m_dbFieldChanged = true;
+            }
+             * */
+        }
 
-  private void tx_BorderShadow_LostFocus() {
-    try {
-      shBorderShadow.cReportAspect.setBackColor(txBorderShadow.csValue);
-}
-}
+        private void cmd_dbFieldGroupValue_Click(object sender, EventArgs e)
+        {
+            /* TODO: fix me
+            bool cancel = false;
+            Iterator listeners = m_listeners.iterator();
+            while(listeners.hasNext()) {
+                ((fPropertiesEventI)listeners.next()).showHelpChartGroupField(cancel);
+            };
+            if (!cancel) {
+              m_chartFieldGroupChanged = true;
+            }
+             * */
+        }
 
-  private void tx_BorderShadow_ButtonClick(bool cancel) {
-    try {
+        private void cmd_dbFieldLbl1_Click(object sender, EventArgs e)
+        {
+            /* TODO: fix me
+            bool cancel = false;
+            Iterator listeners = m_listeners.iterator();
+            while(listeners.hasNext()) {
+                ((fPropertiesEventI)listeners.next()).showHelpChartField(cancel, TxDbFieldLbl1, 2);
+            };
+            if (!cancel) {
+              m_chartFieldLbl1Changed = true;
+            }
+             * */
+        }
 
-      cancel = true;
+        private void cmd_dbFieldLbl2_Click(object sender, EventArgs e)
+        {
+            /* TODO: fix me
+            bool cancel = false;
+            Iterator listeners = m_listeners.iterator();
+            while(listeners.hasNext()) {
+                ((fPropertiesEventI)listeners.next()).showHelpChartField(cancel, TxDbFieldLbl2, 3);
+            };
+            if (!cancel) {
+              m_chartFieldLbl2Changed = true;
+            }
+             * */
+        }
 
-      //*TODO:** can't found type for with block
-      //*With CommDialog
-      __TYPE_NOT_FOUND w___TYPE_NOT_FOUND = CommDialog;
-      w___TYPE_NOT_FOUND.CancelError = true;
-      w___TYPE_NOT_FOUND.Color = txBorderShadow.csValue;
-      w___TYPE_NOT_FOUND.Flags = cdlCCRGBInit;
-      VBA.ex.clear();
-      w___TYPE_NOT_FOUND.ShowColor;
-      if (VBA.ex.Number != 0) { return; }
-      txBorderShadow.cReportPaintObject.setText(w___TYPE_NOT_FOUND.Color);
+        private void cmd_dbFieldVal1_Click(object sender, EventArgs e)
+        {
+            /* TODO: fix me
+            bool cancel = false;
+            Iterator listeners = m_listeners.iterator();
+            while(listeners.hasNext()) {
+                ((fPropertiesEventI)listeners.next()).showHelpChartField(cancel, TxDbFieldVal1, 0);
+            };
+            if (!cancel) {
+              m_chartFieldVal1Changed = true;
+            }
+             * */
+        }
 
-      shBorderShadow.cReportAspect.setBackColor(txBorderShadow.csValue);
-}
-}
+        private void cmd_dbFieldVal2_Click(object sender, EventArgs e)
+        {
+            /* TODO: fix me
+            bool cancel = false;
+            Iterator listeners = m_listeners.iterator();
+            while(listeners.hasNext()) {
+                ((fPropertiesEventI)listeners.next()).showHelpChartField(cancel, TxDbFieldVal2, 1);
+            };
+            if (!cancel) {
+              m_chartFieldVal2Changed = true;
+            }
+             * */
+        }
 
-  private void tx_BorderWidth_TextChanged(object sender, EventArgs e) {
-    m_borderWidthChanged = true;
-  }
+        private void cmd_foreColor_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                /* TODO: fix me
+                __TYPE_NOT_FOUND w___TYPE_NOT_FOUND = CommDialog;
+                w___TYPE_NOT_FOUND.CancelError = true;
+                w___TYPE_NOT_FOUND.Color = TxForeColor.csValue;
+                w___TYPE_NOT_FOUND.Flags = cdlCCRGBInit;
+                VBA.ex.clear();
+                w___TYPE_NOT_FOUND.ShowColor;
+                if (VBA.ex.Number != 0) { return; }
+                TxForeColor.cReportPaintObject.setText(w___TYPE_NOT_FOUND.Color);
 
-  private void tx_ChartGroupValue_TextChanged(object sender, EventArgs e) {
-    m_chartGroupValueChanged = true;
-  }
+                shForeColor.cReportAspect.setBackColor(TxForeColor.csValue);
+                 * */
+            }
+            catch (Exception ignore) { }
+        }
 
-  private void tx_ChartTop_TextChanged(object sender, EventArgs e) {
-    m_chartTopChanged = true;
-  }
+        private void tx_foreColor_LostFocus(object sender, EventArgs e)
+        {
+            try
+            {
+                shForeColor.BackColor = Color.FromArgb(Int32.Parse(tx_foreColor.Text));
+            }
+            catch (Exception ignore) { }
+        }
 
-  private synchronized void txDbField_ButtonClick(bool cancel) { // TODO: Use of ByRef founded Private Sub TxDbField_ButtonClick(ByRef Cancel As Boolean)
-    cancel = true;
-    bool cancel2 = null;
-    Iterator listeners = m_listeners.iterator();
-    while(listeners.hasNext()) {
-        ((fPropertiesEventI)listeners.next()).showHelpDbField(cancel2);
-    };
-    if (!cancel2) {
-      m_dbFieldChanged = true;
-    }
-  }
+        private void cmd_backColor_Click(object sender, EventArgs e)
+        { // TODO: Use of ByRef founded Private Sub TxBackColor_Click(ByRef Cancel As Boolean)
+            try
+            {
+                /* TODO: fix me
+                __TYPE_NOT_FOUND w___TYPE_NOT_FOUND = CommDialog;
+                w___TYPE_NOT_FOUND.CancelError = true;
+                w___TYPE_NOT_FOUND.Color = TxBackColor.csValue;
+                VBA.ex.clear();
+                w___TYPE_NOT_FOUND.ShowColor;
+                if (VBA.ex.Number != 0) { return; }
+                TxBackColor.cReportPaintObject.setText(w___TYPE_NOT_FOUND.Color);
+                shBackColor.BackColor = Color.FromArgb(Int32.Parse(tx_backColor.Text));
+                 * */
+            }
+            catch (Exception ignore) { }
+        }
 
-  private synchronized void txDbFieldGroupValue_ButtonClick(bool cancel) {
-    cancel = true;
-    bool cancel2 = null;
-    Iterator listeners = m_listeners.iterator();
-    while(listeners.hasNext()) {
-        ((fPropertiesEventI)listeners.next()).showHelpChartGroupField(cancel2);
-    };
-    if (!cancel2) {
-      m_chartFieldGroupChanged = true;
-    }
-  }
+        private void tx_backColor_LostFocus(object sender, EventArgs e)
+        {
+            try
+            {
+                shBackColor.BackColor = Color.FromArgb(Int32.Parse(tx_backColor.Text));
+            }
+            catch (Exception ignore) { }
+        }
 
-  private synchronized void txDbFieldLbl1_ButtonClick(bool cancel) {
-    cancel = true;
-    bool cancel2 = null;
-    Iterator listeners = m_listeners.iterator();
-    while(listeners.hasNext()) {
-        ((fPropertiesEventI)listeners.next()).showHelpChartField(cancel2, TxDbFieldLbl1, 2);
-    };
-    if (!cancel2) {
-      m_chartFieldLbl1Changed = true;
-    }
-  }
+        private void cmd_font_Click(object sender, EventArgs e)
+        { // TODO: Use of ByRef founded Private Sub TxFont_Click(ByRef Cancel As Boolean)
+            try
+            {
 
-  private synchronized void txDbFieldLbl2_ButtonClick(bool cancel) {
-    cancel = true;
-    bool cancel2 = null;
-    Iterator listeners = m_listeners.iterator();
-    while(listeners.hasNext()) {
-        ((fPropertiesEventI)listeners.next()).showHelpChartField(cancel2, TxDbFieldLbl2, 3);
-    };
-    if (!cancel2) {
-      m_chartFieldLbl2Changed = true;
-    }
-  }
+                /* TODO: fix me
+                __TYPE_NOT_FOUND w___TYPE_NOT_FOUND = CommDialog;
+                w___TYPE_NOT_FOUND.CancelError = true;
+                w___TYPE_NOT_FOUND.Flags = cdlCFBoth || cdlCFEffects;
+                w___TYPE_NOT_FOUND.FontName = txFont.cReportPaintObject.getText();
+                w___TYPE_NOT_FOUND.FontBold = chkFontBold.cColumnInfo.getValue() == vbChecked;
+                w___TYPE_NOT_FOUND.FontItalic = chkFontItalic.cColumnInfo.getValue() == vbChecked;
+                w___TYPE_NOT_FOUND.FontUnderline = chkFontUnderline.cColumnInfo.getValue() == vbChecked;
+                w___TYPE_NOT_FOUND.FontStrikethru = chkFontStrike.cColumnInfo.getValue() == vbChecked;
+                w___TYPE_NOT_FOUND.FontSize = TxFontSize.csValue;
+                w___TYPE_NOT_FOUND.Color = TxForeColor.csValue;
+                VBA.ex.clear();
+                w___TYPE_NOT_FOUND.ShowFont;
 
-  private synchronized void txDbFieldVal1_ButtonClick(bool cancel) { // TODO: Use of ByRef founded Private Sub TxDbFieldVal1_ButtonClick(ByRef Cancel As Boolean)
-    cancel = true;
-    bool cancel2 = null;
-    Iterator listeners = m_listeners.iterator();
-    while(listeners.hasNext()) {
-        ((fPropertiesEventI)listeners.next()).showHelpChartField(cancel2, TxDbFieldVal1, 0);
-    };
-    if (!cancel2) {
-      m_chartFieldVal1Changed = true;
-    }
-  }
+                if (VBA.ex.Number != 0) { return; }
 
-  private synchronized void txDbFieldVal2_ButtonClick(bool cancel) { // TODO: Use of ByRef founded Private Sub TxDbFieldVal2_ButtonClick(ByRef Cancel As Boolean)
-    cancel = true;
-    bool cancel2 = null;
-    Iterator listeners = m_listeners.iterator();
-    while(listeners.hasNext()) {
-        ((fPropertiesEventI)listeners.next()).showHelpChartField(cancel2, TxDbFieldVal2, 1);
-    };
-    if (!cancel2) {
-      m_chartFieldVal2Changed = true;
-    }
-  }
-
-  private void tx_ForeColor_ButtonClick(bool cancel) { // TODO: Use of ByRef founded Private Sub TxForeColor_ButtonClick(ByRef Cancel As Boolean)
-    try {
-
-      cancel = true;
-
-      //*TODO:** can't found type for with block
-      //*With CommDialog
-      __TYPE_NOT_FOUND w___TYPE_NOT_FOUND = CommDialog;
-      w___TYPE_NOT_FOUND.CancelError = true;
-      w___TYPE_NOT_FOUND.Color = TxForeColor.csValue;
-      w___TYPE_NOT_FOUND.Flags = cdlCCRGBInit;
-      VBA.ex.clear();
-      w___TYPE_NOT_FOUND.ShowColor;
-      if (VBA.ex.Number != 0) { return; }
-      TxForeColor.cReportPaintObject.setText(w___TYPE_NOT_FOUND.Color);
-
-      shForeColor.cReportAspect.setBackColor(TxForeColor.csValue);
-}
-}
-
-  private void tx_ForeColor_LostFocus() {
-    try {
-      shForeColor.cReportAspect.setBackColor(TxForeColor.csValue);
-}
-}
-
-  private void tx_BackColor_ButtonClick(bool cancel) { // TODO: Use of ByRef founded Private Sub TxBackColor_ButtonClick(ByRef Cancel As Boolean)
-    try {
-
-      cancel = true;
-      //*TODO:** can't found type for with block
-      //*With CommDialog
-      __TYPE_NOT_FOUND w___TYPE_NOT_FOUND = CommDialog;
-      w___TYPE_NOT_FOUND.CancelError = true;
-      w___TYPE_NOT_FOUND.Color = TxBackColor.csValue;
-      VBA.ex.clear();
-      w___TYPE_NOT_FOUND.ShowColor;
-      if (VBA.ex.Number != 0) { return; }
-      TxBackColor.cReportPaintObject.setText(w___TYPE_NOT_FOUND.Color);
-
-      shBackColor.cReportAspect.setBackColor(TxBackColor.csValue);
-}
-}
-
-  private void tx_BackColor_LostFocus() {
-    try {
-      shBackColor.cReportAspect.setBackColor(TxBackColor.csValue);
-}
-}
-
-  private void tx_Font_ButtonClick(bool cancel) { // TODO: Use of ByRef founded Private Sub TxFont_ButtonClick(ByRef Cancel As Boolean)
-    try {
-
-      cancel = true;
-      //*TODO:** can't found type for with block
-      //*With CommDialog
-      __TYPE_NOT_FOUND w___TYPE_NOT_FOUND = CommDialog;
-      w___TYPE_NOT_FOUND.CancelError = true;
-      w___TYPE_NOT_FOUND.Flags = cdlCFBoth || cdlCFEffects;
-      w___TYPE_NOT_FOUND.FontName = txFont.cReportPaintObject.getText();
-      w___TYPE_NOT_FOUND.FontBold = chkFontBold.cColumnInfo.getValue() == vbChecked;
-      w___TYPE_NOT_FOUND.FontItalic = chkFontItalic.cColumnInfo.getValue() == vbChecked;
-      w___TYPE_NOT_FOUND.FontUnderline = chkFontUnderline.cColumnInfo.getValue() == vbChecked;
-      w___TYPE_NOT_FOUND.FontStrikethru = chkFontStrike.cColumnInfo.getValue() == vbChecked;
-      w___TYPE_NOT_FOUND.FontSize = TxFontSize.csValue;
-      w___TYPE_NOT_FOUND.Color = TxForeColor.csValue;
-      VBA.ex.clear();
-      w___TYPE_NOT_FOUND.ShowFont;
-
-      if (VBA.ex.Number != 0) { return; }
-
-      txFont.cReportPaintObject.setText(w___TYPE_NOT_FOUND.FontName);
-      chkFontBold.cColumnInfo.setValue(w___TYPE_NOT_FOUND.FontBold ? vbChecked : vbUnchecked));
-      chkFontItalic.cColumnInfo.setValue(w___TYPE_NOT_FOUND.FontItalic ? vbChecked : vbUnchecked));
-      chkFontUnderline.cColumnInfo.setValue(w___TYPE_NOT_FOUND.FontUnderline ? vbChecked : vbUnchecked));
-      chkFontStrike.cColumnInfo.setValue(w___TYPE_NOT_FOUND.FontStrikethru ? vbChecked : vbUnchecked));
-      TxFontSize.cReportPaintObject.setText(w___TYPE_NOT_FOUND.FontSize);
-      TxForeColor.cReportPaintObject.setText(w___TYPE_NOT_FOUND.Color);
-
-
-}
-}
+                txFont.cReportPaintObject.setText(w___TYPE_NOT_FOUND.FontName);
+                chkFontBold.cColumnInfo.setValue(w___TYPE_NOT_FOUND.FontBold ? vbChecked : vbUnchecked));
+                chkFontItalic.cColumnInfo.setValue(w___TYPE_NOT_FOUND.FontItalic ? vbChecked : vbUnchecked));
+                chkFontUnderline.cColumnInfo.setValue(w___TYPE_NOT_FOUND.FontUnderline ? vbChecked : vbUnchecked));
+                chkFontStrike.cColumnInfo.setValue(w___TYPE_NOT_FOUND.FontStrikethru ? vbChecked : vbUnchecked));
+                TxFontSize.cReportPaintObject.setText(w___TYPE_NOT_FOUND.FontSize);
+                TxForeColor.cReportPaintObject.setText(w___TYPE_NOT_FOUND.Color);
+                 * */
+            }
+            catch (Exception ignore) { }
+        }
 
         //------------------------------------------------------------------------------------------------------------------
 
@@ -1108,17 +1160,17 @@ namespace CSReportEditor
 
         public void hideTabField()
         {
-            tabMain.TabVisible(C_FIELD) = false;
+            tab_main.TabPages.RemoveAt(C_FIELD);
         }
 
         public void hideTabImage()
         {
-            tabMain.TabVisible(C_IMAGE) = false;
+            tab_main.TabPages.RemoveAt(C_IMAGE);
         }
 
         public void hideTabChart()
         {
-            tabMain.TabVisible(C_CHART) = false;
+            tab_main.TabPages.RemoveAt(C_CHART);
         }
 
         //------------------------------------------------------------------------------------------------------------------
@@ -1127,7 +1179,7 @@ namespace CSReportEditor
 
         //------------------------------------------------------------------------------------------------------------------
 
-
+        /*
 		public string getFormulaName ()
 		{
 			throw new NotImplementedException ();
@@ -1152,12 +1204,12 @@ namespace CSReportEditor
 		{
 			throw new NotImplementedException ();
 		}
-
+        */
 		public string getDbFieldGroupValue ()
 		{
 			throw new NotImplementedException ();
 		}
-
+        /*
 		public int getChartGroupFieldType ()
 		{
 			throw new NotImplementedException ();
@@ -1167,12 +1219,12 @@ namespace CSReportEditor
 		{
 			throw new NotImplementedException ();
 		}
-
+        */
 		public void setDbFieldGroupValue (string sField)
 		{
 			throw new NotImplementedException ();
 		}
-
+        /*
 		public void setChartGroupFieldType (int nFieldType)
 		{
 			throw new NotImplementedException ();
@@ -1182,6 +1234,7 @@ namespace CSReportEditor
 		{
 			throw new NotImplementedException ();
 		}
+        */
 
         //------------------------------------------------------------------------------------------------------------------
 
@@ -1355,6 +1408,13 @@ namespace CSReportEditor
             get
             {
                 return tx_text;
+            }
+        }
+        public System.Windows.Forms.Label lbControl
+        {
+            get
+            {
+                return lb_control;
             }
         }
         public System.Windows.Forms.TextBox txName
@@ -1692,114 +1752,6 @@ namespace CSReportEditor
             {
                 return tx_dbFieldGroupValue;
             }
-        }        
-        /*
-        public System.Windows.Forms.TextBox txDbField
-        {
-            get
-            {
-                return tx_dbField;
-            }
         }
-
-        public System.Windows.Forms.TextBox txDbFieldGroupValue
-        {
-            get
-            {
-                return tx_dbFieldGroupValue;
-            }
-        }
-
-        public System.Windows.Forms.TextBox txChartTop
-        {
-            get 
-            {
-                return tx_chartTop;
-            }
-        }
-
-        public System.Windows.Forms.TextBox txChartGroupValue
-        {
-            get
-            {
-                return tx_chartGroupValue;
-            }
-        }        
-         
-        private System.Windows.Forms.TextBox tx_exportColIdx;
-        private System.Windows.Forms.CheckBox chk_isFreeCtrl;
-        private System.Windows.Forms.CheckBox chk_wordWrap;
-        private System.Windows.Forms.CheckBox chk_canGrow;
-        private System.Windows.Forms.TextBox tx_width;
-        private System.Windows.Forms.TextBox tx_height;
-        private System.Windows.Forms.TextBox tx_top;
-        private System.Windows.Forms.TextBox tx_left;
-        private System.Windows.Forms.TextBox tx_symbol;
-        private System.Windows.Forms.TextBox tx_format;
-        private System.Windows.Forms.CheckBox chk_transparent;
-        private System.Windows.Forms.Label sh_backColor;
-        private System.Windows.Forms.TextBox tx_backColor;
-        private System.Windows.Forms.CheckBox chk_fontStrike;
-        private System.Windows.Forms.CheckBox chk_fontItalic;
-        private System.Windows.Forms.Label sh_foreColor;
-        private System.Windows.Forms.TextBox tx_foreColor;
-        private System.Windows.Forms.CheckBox chk_fontUnderline;
-        private System.Windows.Forms.CheckBox chk_fontBold;
-        private System.Windows.Forms.ComboBox cb_align;
-        private System.Windows.Forms.TextBox tx_fontSize;
-        private System.Windows.Forms.TextBox tx_font;
-        private System.Windows.Forms.TextBox tx_tag;
-        private System.Windows.Forms.TextBox tx_text;
-        private System.Windows.Forms.TextBox tx_name;
-        private System.Windows.Forms.Button cmd_apply;
-        private System.Windows.Forms.Button cmd_cancel;
-        private System.Windows.Forms.RadioButton op_afterPrint;
-        private System.Windows.Forms.RadioButton op_beforePrint;
-        private System.Windows.Forms.TextBox tx_idxGroup;
-        private System.Windows.Forms.Label lb_formulaValue;
-        private System.Windows.Forms.CheckBox chk_formulaValue;
-        private System.Windows.Forms.Button cmd_formulaValue;
-        private System.Windows.Forms.Label lb_formulaHide;
-        private System.Windows.Forms.CheckBox chk_formulaHide;
-        private System.Windows.Forms.Button cmd_formulaHide;
-        private System.Windows.Forms.Button cmd_dbField;
-        private System.Windows.Forms.TextBox tx_dbField;
-        private System.Windows.Forms.PictureBox pic_image;
-        private System.Windows.Forms.Button cmd_imageFile;
-        private System.Windows.Forms.TextBox tx_imageFile;
-        private System.Windows.Forms.CheckBox chk_borderRounded;
-        private System.Windows.Forms.TextBox tx_borderWidth;
-        private System.Windows.Forms.Label sh_borderShadow;
-        private System.Windows.Forms.TextBox tx_borderShadow;
-        private System.Windows.Forms.Label sh_border3D;
-        private System.Windows.Forms.TextBox tx_border3D;
-        private System.Windows.Forms.Label sh_borderColor;
-        private System.Windows.Forms.TextBox tx_borderColor;
-        private System.Windows.Forms.ComboBox cb_borderType;
-        private System.Windows.Forms.ComboBox cb_chartThickness;
-        private System.Windows.Forms.ComboBox cb_chartSize;
-        private System.Windows.Forms.ComboBox cb_linesType;
-        private System.Windows.Forms.ComboBox cb_formatType;
-        private System.Windows.Forms.ComboBox cb_type;
-        private System.Windows.Forms.CheckBox chk_sort;
-        private System.Windows.Forms.CheckBox chk_showOutlines;
-        private System.Windows.Forms.CheckBox chk_showBarValues;
-        private System.Windows.Forms.TextBox tx_chartTop;
-        private System.Windows.Forms.ComboBox cb_colorSerie2;
-        private System.Windows.Forms.Button cmd_dbFieldLbl2;
-        private System.Windows.Forms.TextBox tx_dbFieldLbl2;
-        private System.Windows.Forms.Button cmd_dbFieldVal2;
-        private System.Windows.Forms.TextBox tx_dbFieldVal2;
-        private System.Windows.Forms.ComboBox cb_colorSerie1;
-        private System.Windows.Forms.Button cmd_dbFieldLbl1;
-        private System.Windows.Forms.TextBox tx_dbFieldLbl1;
-        private System.Windows.Forms.Button cmd_dbFieldVal1;
-        private System.Windows.Forms.TextBox tx_dbFieldVal1;
-        private System.Windows.Forms.TextBox tx_chartGroupValue;
-        private System.Windows.Forms.Button cmd_dbFieldGroupValue;
-        private System.Windows.Forms.TextBox tx_dbFieldGroupValue;         
-         
-         */
-
     }
 }

@@ -117,6 +117,12 @@ namespace CSReportEditor
 		{
 			throw new NotImplementedException ();
 		}
+
+        public static void moveGroup(cReportGroup group, cEditor editor)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 
     public enum csRptEditorMoveType {

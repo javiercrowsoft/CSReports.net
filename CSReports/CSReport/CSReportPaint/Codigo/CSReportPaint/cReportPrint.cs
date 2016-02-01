@@ -1694,8 +1694,6 @@ namespace CSReportPaint
                 try {
                     cMouseWait mouse = new cMouseWait();
 
-                    DoEvents;
-
                     CSReportExport.cReportWord expWord = null;
                     expWord = new CSReportExport.cReportWord();
 
