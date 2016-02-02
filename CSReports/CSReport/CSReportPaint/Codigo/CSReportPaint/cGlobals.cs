@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
+using CSReportDll;
+using CSReportGlobals;
 
 namespace CSReportPaint
 {
-    static class cGlobals
+    public static class cGlobals
     {
         private static int m_nextKey = 1000;
 
@@ -56,6 +58,11 @@ namespace CSReportPaint
             if (bottom < top) bottom = top;
 
             return new RectangleF(left, top, right, bottom);
+        }
+
+        public static RectangleF getRectFromPaperSize(cReportPaperInfo cReportPaperInfo, csReportPaperType csReportPaperType, int p)
+        {
+            throw new NotImplementedException();
         }
     }
 

@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.lb_control = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tab_main = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -114,7 +114,6 @@
             this.label42 = new System.Windows.Forms.Label();
             this.tx_dbField = new System.Windows.Forms.TextBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.pic_image = new System.Windows.Forms.PictureBox();
             this.cmd_imageFile = new System.Windows.Forms.Button();
             this.label43 = new System.Windows.Forms.Label();
             this.tx_imageFile = new System.Windows.Forms.TextBox();
@@ -177,9 +176,9 @@
             this.cb_type = new System.Windows.Forms.ComboBox();
             this.cmd_apply = new System.Windows.Forms.Button();
             this.cmd_cancel = new System.Windows.Forms.Button();
-            this.lb_control = new System.Windows.Forms.Label();
+            this.pic_image = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tab_main.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -188,11 +187,12 @@
             this.groupBox1.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.tabPage4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pic_image)).BeginInit();
             this.tabPage5.SuspendLayout();
             this.tabPage6.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_image)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -201,19 +201,20 @@
             this.panel1.Controls.Add(this.lb_control);
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Controls.Add(this.label1);
-            this.panel1.Location = new System.Drawing.Point(-3, -1);
+            this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(455, 70);
             this.panel1.TabIndex = 0;
             // 
-            // pictureBox1
+            // lb_control
             // 
-            this.pictureBox1.Image = global::CSReportEditor.Properties.Resources.config_page;
-            this.pictureBox1.Location = new System.Drawing.Point(24, 18);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(46, 39);
-            this.pictureBox1.TabIndex = 1;
-            this.pictureBox1.TabStop = false;
+            this.lb_control.AutoSize = true;
+            this.lb_control.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_control.Location = new System.Drawing.Point(266, 19);
+            this.lb_control.Name = "lb_control";
+            this.lb_control.Size = new System.Drawing.Size(154, 25);
+            this.lb_control.TabIndex = 2;
+            this.lb_control.Text = "lbControlName";
             // 
             // label1
             // 
@@ -1046,14 +1047,6 @@
             this.tabPage4.Text = "Image";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
-            // pic_image
-            // 
-            this.pic_image.Location = new System.Drawing.Point(77, 58);
-            this.pic_image.Name = "pic_image";
-            this.pic_image.Size = new System.Drawing.Size(100, 50);
-            this.pic_image.TabIndex = 8;
-            this.pic_image.TabStop = false;
-            // 
             // cmd_imageFile
             // 
             this.cmd_imageFile.Location = new System.Drawing.Point(359, 14);
@@ -1641,15 +1634,22 @@
             this.cmd_cancel.Text = "Cancel";
             this.cmd_cancel.UseVisualStyleBackColor = true;
             // 
-            // lb_control
+            // pic_image
             // 
-            this.lb_control.AutoSize = true;
-            this.lb_control.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lb_control.Location = new System.Drawing.Point(266, 19);
-            this.lb_control.Name = "lb_control";
-            this.lb_control.Size = new System.Drawing.Size(154, 25);
-            this.lb_control.TabIndex = 2;
-            this.lb_control.Text = "lbControlName";
+            this.pic_image.Location = new System.Drawing.Point(77, 58);
+            this.pic_image.Name = "pic_image";
+            this.pic_image.Size = new System.Drawing.Size(100, 50);
+            this.pic_image.TabIndex = 8;
+            this.pic_image.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::CSReportEditor.Properties.Resources.config_page;
+            this.pictureBox1.Location = new System.Drawing.Point(24, 18);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(46, 39);
+            this.pictureBox1.TabIndex = 1;
+            this.pictureBox1.TabStop = false;
             // 
             // fProperties
             // 
@@ -1665,7 +1665,6 @@
             this.Text = "fProperties";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tab_main.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
@@ -1679,7 +1678,6 @@
             this.tabPage3.PerformLayout();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pic_image)).EndInit();
             this.tabPage5.ResumeLayout(false);
             this.tabPage5.PerformLayout();
             this.tabPage6.ResumeLayout(false);
@@ -1688,6 +1686,8 @@
             this.groupBox5.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_image)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }

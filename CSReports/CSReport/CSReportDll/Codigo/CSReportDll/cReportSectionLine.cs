@@ -93,6 +93,15 @@ namespace CSReportDll
             m_aspect = rhs;
         }
 
+        public string getName() 
+        {
+            return "SL: " + m_index.ToString();
+        }
+
+        public void setName(string name) { 
+            // shouldn't be called :P
+        }
+
         public int getIndex()
         {
             return m_index;
@@ -103,12 +112,12 @@ namespace CSReportDll
             m_index = rhs;
         }
 
-        public int getrealIndex()
+        public int getRealIndex()
         {
             return m_realIndex;
         }
 
-        public void setrealIndex(int rhs)
+        public void setRealIndex(int rhs)
         {
             m_realIndex = rhs;
         }

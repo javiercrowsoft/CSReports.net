@@ -78,6 +78,12 @@
     <Compile Include="fFormula.Designer.cs">
       <DependentUpon>fFormula.cs</DependentUpon>
     </Compile>
+    <Compile Include="fFormulaReplace.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fFormulaReplace.Designer.cs">
+      <DependentUpon>fFormulaReplace.cs</DependentUpon>
+    </Compile>
     <Compile Include="fGroup.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -137,6 +143,9 @@
     <EmbeddedResource Include="fFormula.resx">
       <DependentUpon>fFormula.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="fFormulaReplace.resx">
+      <DependentUpon>fFormulaReplace.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="fGroup.resx">
       <DependentUpon>fGroup.cs</DependentUpon>
     </EmbeddedResource>
@@ -148,6 +157,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="fProperties.resx">
       <DependentUpon>fProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fSecProperties.resx">
+      <DependentUpon>fSecProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="fSimpleConnect.resx">
       <DependentUpon>fSimpleConnect.cs</DependentUpon>

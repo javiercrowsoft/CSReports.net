@@ -26,5 +26,10 @@ namespace CSReportEditor
 		{
 			throw new NotImplementedException ();
 		}
+
+        internal static bool getLoaded()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

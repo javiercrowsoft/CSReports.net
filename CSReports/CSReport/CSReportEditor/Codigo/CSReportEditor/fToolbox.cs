@@ -15,5 +15,30 @@ namespace CSReportEditor
         {
             InitializeComponent();
         }
+
+        internal void addLbFormula(string controlName)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void addFormula(string name, string controlName, string formulaName)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void addField(string name, int fieldType, int position)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal void addLabels(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static bool getLoaded()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

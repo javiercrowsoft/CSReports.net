@@ -26,7 +26,7 @@ namespace CSReportEditor
             //
             CSKernelClient.cUtil.setSepDecimal();
 
-            cEditor editor = new cEditor(this, pnEditor, pnRule, pnReport);
+            cEditor editor = new cEditor(this, pnEditor, pnRule, pnReport, tbpEditor);
         }
 
         public cEditor getReportCopySource()
@@ -46,7 +46,7 @@ namespace CSReportEditor
             pnEditor.Dock = DockStyle.Fill;
             tabReports.TabPages.Add(tab);
             tab.Text = "New Report";
-            cEditor editor = new cEditor(this, pnEditor, pnRule, pnReport);
+            cEditor editor = new cEditor(this, pnEditor, pnRule, pnReport, tab);
         }
 
         private void tsbNew_Click(object sender, EventArgs e)
@@ -196,5 +196,20 @@ namespace CSReportEditor
 		{
 			throw new NotImplementedException ();
 		}
+
+        internal void setReportCopySource(cEditor cEditor)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal CSReportGlobals.csReportPaperType getPaperSize()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal int getOrientation()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

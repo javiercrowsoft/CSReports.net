@@ -78,42 +78,42 @@ namespace CSReportEditor
 			throw new NotImplementedException ();
 		}
 
-		public static void setEditAlignTextState (object length)
+		public static void setEditAlignTextState(object length)
 		{
 			throw new NotImplementedException ();
 		}
 
-		public static void setEditAlignCtlState (bool b)
+		public static void setEditAlignCtlState(bool b)
 		{
 			throw new NotImplementedException ();
 		}
 
-		public static void setEditFontBoldValue (int bBold)
+		public static void setEditFontBoldValue(int bBold)
 		{
 			throw new NotImplementedException ();
 		}
 
-		public static void setEditAlignValue (int align)
+		public static void setEditAlignValue(int align)
 		{
 			throw new NotImplementedException ();
 		}
 
-		public static void setParametersAux (CSConnect.cConnect connect, object connect2)
+		public static void setParametersAux(CSConnect.cConnect connect, object connect2)
 		{
 			throw new NotImplementedException ();
 		}
 
-		public static object getToolBox (cEditor cEditor)
+		public static fToolbox getToolBox(cEditor cEditor)
 		{
 			throw new NotImplementedException ();
 		}
 
-		public static void showGroupProperties (object o, cEditor cEditor)
+		public static void showGroupProperties(object o, cEditor editor)
 		{
 			throw new NotImplementedException ();
 		}
 
-		public static void setDocActive (cEditor cEditor)
+		public static void setDocActive (cEditor editor)
 		{
 			throw new NotImplementedException ();
 		}
@@ -123,6 +123,45 @@ namespace CSReportEditor
             throw new NotImplementedException();
         }
 
+        public static string getDataSourceStr(string dataSource)
+        {
+            return "{" + dataSource + "}.";
+        }
+
+        internal static void clearToolBox(cEditor editor)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static fControls getCtrlBox(cEditor editor)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static void setDocInacActive(cEditor editor)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static void createStandarSections(cReport report, Rectangle tr)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static void clearCtrlBox(cEditor editor)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static fTreeViewCtrls getCtrlTreeBox(cEditor editor)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static void clearCtrlTreeBox(cEditor editor)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public enum csRptEditorMoveType {

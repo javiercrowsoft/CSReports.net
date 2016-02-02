@@ -126,7 +126,7 @@
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.tabReports = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tbpEditor = new System.Windows.Forms.TabPage();
             this.pnEditor = new System.Windows.Forms.Panel();
             this.pnRule = new System.Windows.Forms.PictureBox();
             this.pnReport = new System.Windows.Forms.PictureBox();
@@ -142,7 +142,7 @@
             this.tabPage4.SuspendLayout();
             this.tabPage5.SuspendLayout();
             this.tabReports.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            this.tbpEditor.SuspendLayout();
             this.pnEditor.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pnRule)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pnReport)).BeginInit();
@@ -859,7 +859,7 @@
             this.tabPage3.Controls.Add(this.listView2);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage3.Size = new System.Drawing.Size(218, 235);
             this.tabPage3.TabIndex = 0;
             this.tabPage3.Text = "Controls";
@@ -879,8 +879,8 @@
             this.tabPage4.Controls.Add(this.listView1);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
-            this.tabPage4.Size = new System.Drawing.Size(218, 245);
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(218, 235);
             this.tabPage4.TabIndex = 1;
             this.tabPage4.Text = "Database";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -890,7 +890,7 @@
             this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listView1.Location = new System.Drawing.Point(3, 3);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(216, 244);
+            this.listView1.Size = new System.Drawing.Size(212, 229);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             // 
@@ -899,7 +899,7 @@
             this.tabPage5.Controls.Add(this.treeView1);
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(218, 245);
+            this.tabPage5.Size = new System.Drawing.Size(218, 235);
             this.tabPage5.TabIndex = 2;
             this.tabPage5.Text = "Report";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -909,12 +909,12 @@
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView1.Location = new System.Drawing.Point(0, 0);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(222, 251);
+            this.treeView1.Size = new System.Drawing.Size(218, 235);
             this.treeView1.TabIndex = 0;
             // 
             // tabReports
             // 
-            this.tabReports.Controls.Add(this.tabPage1);
+            this.tabReports.Controls.Add(this.tbpEditor);
             this.tabReports.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabReports.Location = new System.Drawing.Point(0, 0);
             this.tabReports.Name = "tabReports";
@@ -922,15 +922,15 @@
             this.tabReports.Size = new System.Drawing.Size(452, 261);
             this.tabReports.TabIndex = 0;
             // 
-            // tabPage1
+            // tbpEditor
             // 
-            this.tabPage1.Controls.Add(this.pnEditor);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(444, 235);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "New Report";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.tbpEditor.Controls.Add(this.pnEditor);
+            this.tbpEditor.Location = new System.Drawing.Point(4, 22);
+            this.tbpEditor.Name = "tbpEditor";
+            this.tbpEditor.Size = new System.Drawing.Size(444, 235);
+            this.tbpEditor.TabIndex = 0;
+            this.tbpEditor.Text = "New Report";
+            this.tbpEditor.UseVisualStyleBackColor = true;
             // 
             // pnEditor
             // 
@@ -988,7 +988,7 @@
             this.tabPage4.ResumeLayout(false);
             this.tabPage5.ResumeLayout(false);
             this.tabReports.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
+            this.tbpEditor.ResumeLayout(false);
             this.pnEditor.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pnRule)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pnReport)).EndInit();
@@ -1096,7 +1096,7 @@
         private System.Windows.Forms.TabPage tabPage5;
         private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.TabControl tabReports;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tbpEditor;
         private System.Windows.Forms.Panel pnEditor;
         private System.Windows.Forms.PictureBox pnRule;
         private System.Windows.Forms.PictureBox pnReport;

@@ -1299,7 +1299,7 @@ namespace CSReportPaint
             RectangleF tR;
 
             cPrinter w_printer = m_report.getLaunchInfo().getPrinter();
-            tR = getRectFromPaperSize(w_printer.getPaperInfo(), w_printer.getPaperInfo().getPaperSize(), w_printer.getPaperInfo().getOrientation());
+            tR = cGlobals.getRectFromPaperSize(w_printer.getPaperInfo(), w_printer.getPaperInfo().getPaperSize(), w_printer.getPaperInfo().getOrientation());
 
             m_realWidth = (int)tR.Width;
             m_realHeight = (int)tR.Height;
@@ -1319,11 +1319,6 @@ namespace CSReportPaint
                     }
                 }
             }
-        }
-
-        private RectangleF getRectFromPaperSize(cReportPaperInfo cReportPaperInfo, csReportPaperType csReportPaperType, int p)
-        {
-            throw new NotImplementedException();
         }
 
         private void createPaintObjects(CSReportDll.cReportPageFields fields, int offset)
@@ -1439,7 +1434,7 @@ namespace CSReportPaint
 
                 //*TODO:** goto found: GoTo ExitProc;
             } catch (Exception ex) {
-                MngError(VBA.ex, "m_rpwPrint_BodyDblClick", C_MODULE, "");
+                cError.mngError(ex, "m_rpwPrint_BodyDblClick", C_MODULE, "");
                 if (VBA.ex.Number) { /**TODO:** resume found: Resume(ExitProc)* / }
                 //*TODO:** label found: ExitProc:;
         
@@ -1490,7 +1485,7 @@ namespace CSReportPaint
 
                 //*TODO:** goto found: GoTo ExitProc;
             } catch (Exception ex) {
-                MngError(VBA.ex, "m_rpwPrint_BodyMouseDown", C_MODULE, "");
+                cError.mngError(ex, "m_rpwPrint_BodyMouseDown", C_MODULE, "");
                 if (VBA.ex.Number) { /**TODO:** resume found: Resume(ExitProc)* / }
                 //*TODO:** label found: ExitProc:;
         
@@ -1533,7 +1528,7 @@ namespace CSReportPaint
 
                 //*TODO:** goto found: GoTo ExitProc;
             } catch (Exception ex) {
-                MngError(VBA.ex, "m_rpwPrint_BodyMouseMove", C_MODULE, "");
+                cError.mngError(ex, "m_rpwPrint_BodyMouseMove", C_MODULE, "");
                 if (VBA.ex.Number) { /**TODO:** resume found: Resume(ExitProc)* / }
                 //*TODO:** label found: ExitProc:;
         

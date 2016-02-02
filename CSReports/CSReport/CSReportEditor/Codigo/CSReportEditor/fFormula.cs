@@ -61,5 +61,10 @@ namespace CSReportEditor
 		{
 			throw new NotImplementedException ();
 		}
+
+        internal static void addLabel()
+        {
+            throw new NotImplementedException();
+        }        
     }
 }

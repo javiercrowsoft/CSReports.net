@@ -5,6 +5,7 @@ using CSKernelClient;
 using System.Collections.Generic;
 using CSReportDll;
 using CSMaskEdit;
+using System.Drawing;
 
 namespace CSReportEditor
 {
@@ -15,32 +16,6 @@ namespace CSReportEditor
 	    private const int NOERROR = 0;
 
 		public DateTime CSNOFECHA = DateTime.ParseExact("01/01/1900", "dd/mm/yyyy", CultureInfo.InvariantCulture);
-		public const string C_KEY_HEADER = "RH";
-		public const string C_KEY_FOOTER = "RF";
-		public const string C_KEY_DETAIL = "RD";
-		public const string C_KEY_GROUPH = "GH";
-		public const string C_KEY_GROUPF = "GF";
-
-		public const string c_BTN_PRINT = "PRINT";
-		public const string c_BTN_PROPERTIES = "PROPERTIES";
-		public const string c_BTN_DB = "DB";
-		public const string c_BTN_SAVE = "SAVE";
-		public const string c_BTN_OPEN = "OPEN";
-		public const string c_BTN_TOOL = "TOOL";
-		public const string c_BTN_NEW = "NEW";
-		public const string c_BTN_PREV = "PREV";
-
-		public const string c_BTN_CTL_ALIGN_TOP = "CTL_ALIGN_TOP";
-		public const string c_BTN_CTL_ALIGN_BOTTOM = "CTL_ALIGN_BOTTOM";
-		public const string c_BTN_CTL_ALIGN_VERTICAL = "CTL_ALIGN_VERTICAL";
-		public const string c_BTN_CTL_ALIGN_HORIZONTAL = "CTL_ALIGN_HORIZONTAL";
-		public const string c_BTN_CTL_ALIGN_LEFT = "CTL_ALIGN_LEFT";
-		public const string c_BTN_CTL_ALIGN_RIGHT = "CTL_ALIGN_RIGHT";
-
-		public const string c_BTN_CTL_WIDTH = "CTL_WIDTH";
-		public const string c_BTN_CTL_HEIGHT = "CTL_HEIGHT";
-
-		public const string C_Control_Name = "Control";
 
 	    public const int C_HEIGHT_BAR_SECTION = 120;
 	    public const int C_HEIGHT_NEW_SECTION = 350;
@@ -176,6 +151,11 @@ namespace CSReportEditor
 	public class Rectangle {
 		public long height;
 		public long width;
+
+        public Rectangle(RectangleF rect) {
+            height = (long)rect.Height;
+            width = (long)rect.Width;
+        }
 	}
 
 
@@ -216,21 +196,6 @@ namespace CSReportEditor
 	    CSEALIGNCTLBOTTOM,
 	    CSEALIGNCTLWIDTH,
 	    CSEALIGNCTLHEIGHT
-	}
-
-	public enum CSRptEditroMoveType {
-	    CSRPTEDMOVTHORIZONTAL,
-	    CSRPTEDMOVTVERTICAL,
-	    CSRPTEDMOVTALL,
-	    CSRPTEDMOVLEFT,
-	    CSRPTEDMOVRIGHT,
-	    CSRPTEDMOVUP,
-	    CSRPTEDMOVDOWN,
-	    CSRPTEDMOVLEFTDOWN,
-	    CSRPTEDMOVLEFTUP,
-	    CSRPTEDMOVRIGHTDOWN,
-	    CSRPTEDMOVRIGHTUP,
-	    CSRPTEDMOVTNONE
 	}
 
 }

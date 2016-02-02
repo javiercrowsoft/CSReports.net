@@ -197,7 +197,7 @@ namespace CSReportDll
             int i = 0;
             for (i = 1; i <= this.count(); i++)
             {
-                item(i).setrealIndex(i);
+                item(i).setRealIndex(i);
             }
         }
 
