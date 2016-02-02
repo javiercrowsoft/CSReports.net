@@ -69,7 +69,7 @@
             this.cmdDetails.Name = "cmdDetails";
             this.cmdDetails.Size = new System.Drawing.Size(96, 29);
             this.cmdDetails.TabIndex = 3;
-            this.cmdDetails.Text = "Detalles";
+            this.cmdDetails.Text = "Details";
             this.cmdDetails.UseVisualStyleBackColor = true;
             this.cmdDetails.Click += new System.EventHandler(this.cmdDetails_Click);
             // 
@@ -85,7 +85,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(527, 214);
+            this.ClientSize = new System.Drawing.Size(527, 104);
             this.Controls.Add(this.txError);
             this.Controls.Add(this.cmdDetails);
             this.Controls.Add(this.cmdOk);

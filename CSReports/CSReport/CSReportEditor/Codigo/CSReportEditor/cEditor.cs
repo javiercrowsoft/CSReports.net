@@ -3118,7 +3118,7 @@ namespace CSReportEditor
 
                 pValidateSectionAspect();
 
-                if (!m_report.save(m_fmain.cmDialog, isNew))
+                if (!m_report.save(m_fmain.saveFileDialog, isNew))
                 reLoadReport();
                 return true;
 
@@ -3161,6 +3161,11 @@ namespace CSReportEditor
 			cGlobals.setDocActive(this);
         }
 
+        public bool openDocument()
+        {
+            return openDocument("");
+        }
+
         public bool openDocument(String fileName) {
             cMouseWait mouse = new cMouseWait();
             try {
@@ -3183,7 +3188,7 @@ namespace CSReportEditor
                     //
                     //       in the original function there was a goto to
                     //       a 'done' label 
-                    if (!m_report.load(m_fmain.cmDialog)) {
+                    if (!m_report.load(m_fmain.openFileDialog)) {
 
                         if (m_report.getName() == "")  
                             return false;

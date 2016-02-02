@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using CSKernelClient;
 
 namespace CSReportEditor
 {
@@ -13,10 +14,7 @@ namespace CSReportEditor
     {
         static fMain instance;
 
-		public object cmDialog {
-			get;
-			set;
-		}
+        private const String C_MODULE = "fMain";
 
         public fMain()
         {
@@ -34,19 +32,26 @@ namespace CSReportEditor
             return null;
         }
 
-        private void mnuNewReport_Click(object sender, EventArgs e)
+        private cEditor createEditor() 
         {
             TabPage tab = new TabPage();
             Panel pnEditor = new Panel();
             PictureBox pnRule = new PictureBox();
             PictureBox pnReport = new PictureBox();
+
             pnEditor.Controls.Add(pnRule);
             pnEditor.Controls.Add(pnReport);
             tab.Controls.Add(pnEditor);
             pnEditor.Dock = DockStyle.Fill;
             tabReports.TabPages.Add(tab);
             tab.Text = "New Report";
-            cEditor editor = new cEditor(this, pnEditor, pnRule, pnReport, tab);
+
+            return new cEditor(this, pnEditor, pnRule, pnReport, tab);
+        }
+
+        private void mnuNewReport_Click(object sender, EventArgs e)
+        {
+            createEditor();
         }
 
         private void tsbNew_Click(object sender, EventArgs e)
@@ -210,6 +215,46 @@ namespace CSReportEditor
         internal int getOrientation()
         {
             throw new NotImplementedException();
+        }
+
+        private void mnuOpenReport_Click(object sender, EventArgs e)
+        {
+            try {
+                
+                cEditor editor = createEditor();
+
+                editor.init();
+                /*
+                if(editor.openDocument()) {
+                    addToRecentList(editor.getFileName());
+                    saveRecentList();
+                }*/
+
+            } catch (Exception ex) {
+                cError.mngError(ex, "mnuOpenReport_Click", C_MODULE, "");
+            }
+        }
+
+        //------------------------------------------------------------------------------------------------------------------
+
+        // expose controls
+
+        //------------------------------------------------------------------------------------------------------------------
+
+        public OpenFileDialog openFileDialog 
+        {
+            get
+            {
+                return openFileDlg;
+            }
+        }
+
+        public SaveFileDialog saveFileDialog
+        {
+            get
+            {
+                return saveFielDlg;
+            }            
         }
     }
 }

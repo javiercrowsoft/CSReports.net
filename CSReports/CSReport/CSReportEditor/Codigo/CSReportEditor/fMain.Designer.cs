@@ -130,6 +130,8 @@
             this.pnEditor = new System.Windows.Forms.Panel();
             this.pnRule = new System.Windows.Forms.PictureBox();
             this.pnReport = new System.Windows.Forms.PictureBox();
+            this.openFileDlg = new System.Windows.Forms.OpenFileDialog();
+            this.saveFielDlg = new System.Windows.Forms.SaveFileDialog();
             this.mnMain.SuspendLayout();
             this.tbMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -197,6 +199,7 @@
             this.mnuOpenReport.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
             this.mnuOpenReport.Size = new System.Drawing.Size(180, 22);
             this.mnuOpenReport.Text = "Open";
+            this.mnuOpenReport.Click += new System.EventHandler(this.mnuOpenReport_Click);
             // 
             // mnuFileRecentList
             // 
@@ -1101,6 +1104,8 @@
         private System.Windows.Forms.PictureBox pnRule;
         private System.Windows.Forms.PictureBox pnReport;
         private System.Windows.Forms.ToolStripMenuItem mnuFileRecentList;
+        private System.Windows.Forms.OpenFileDialog openFileDlg;
+        private System.Windows.Forms.SaveFileDialog saveFielDlg;
 
     }
 }

@@ -180,7 +180,7 @@ namespace CSReportDll
 
         public int count()
         {
-            return this.count();
+            return m_coll.Count;
         }
 
         public cReportSection item(String key)

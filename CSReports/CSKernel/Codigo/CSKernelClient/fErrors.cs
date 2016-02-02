@@ -26,11 +26,13 @@ namespace CSKernelClient
         {
             if (cmdDetails.Text == "Details")
             {
+                cmdDetails.Text = "Hide";
                 this.Height = 242;
             }
             else 
             {
-                this.Height = 150;
+                cmdDetails.Text = "Details";
+                this.Height = 130;
             }
         }
 
@@ -41,18 +43,18 @@ namespace CSKernelClient
 
         public void setErrorIcon() 
         {
-            picIcon.Image = new Bitmap(System.Reflection.Assembly.GetEntryAssembly().GetManifestResourceStream("Status-dialog-error-icon.png"));
-
+            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            picIcon.Image = new Bitmap(assembly.GetManifestResourceStream(assembly.GetName().Name + ".Resources.error.png"));
         }
         public void setErrorInfo()
         {
-            picIcon.Image = new Bitmap(System.Reflection.Assembly.GetEntryAssembly().GetManifestResourceStream("Status-dialog-information-icon.png"));
-
+            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            picIcon.Image = new Bitmap(assembly.GetManifestResourceStream(assembly.GetName().Name + ".Resources.information.png"));
         }
         public void setErrorWarning()
         {
-            picIcon.Image = new Bitmap(System.Reflection.Assembly.GetEntryAssembly().GetManifestResourceStream("Warning-icon.png"));
-
+            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            picIcon.Image = new Bitmap(assembly.GetManifestResourceStream(assembly.GetName().Name + ".Resources.warning.png"));
         }
     }
 }
