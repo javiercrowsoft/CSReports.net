@@ -222,47 +222,47 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\CSAssocFile\Codigo\CSAssocFile\CSAssocFile.csproj">
+    <ProjectReference Include="..\..\..\..\CSAssocFile\Codigo\CSAssocFile\CSAssocFile.csproj">
       <Project>{BB7F45EB-BC34-413F-8327-7FE8453ABAE7}</Project>
       <Name>CSAssocFile</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\CSDataBase\Codigo\CSDataBase\CSDataBase.csproj">
+    <ProjectReference Include="..\..\..\..\CSDataBase\Codigo\CSDataBase\CSDataBase.csproj">
       <Project>{A02FE16D-0B24-467E-BA97-6E1C1213AD46}</Project>
       <Name>CSDataBase</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\CSKernel\Codigo\CSKernelClient\CSKernelClient.csproj">
+    <ProjectReference Include="..\..\..\..\CSKernel\Codigo\CSKernelClient\CSKernelClient.csproj">
       <Project>{B3932376-5FEA-4C07-9709-663989C7ECF2}</Project>
       <Name>CSKernelClient</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\CSKernel\Codigo\CSKernelFile\CSKernelFile\CSKernelFile.csproj">
+    <ProjectReference Include="..\..\..\..\CSKernel\Codigo\CSKernelFile\CSKernelFile\CSKernelFile.csproj">
       <Project>{0B54F3BA-C9D6-4758-8CB7-1CE9CC3A30C4}</Project>
       <Name>CSKernelFile</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\CSMaskEdit\Codigo\CSMaskEdit\CSMaskEdit.csproj">
+    <ProjectReference Include="..\..\..\..\CSMaskEdit\Codigo\CSMaskEdit\CSMaskEdit.csproj">
       <Project>{884FAF69-53D3-4969-BE13-DF0ECFD2EFA9}</Project>
       <Name>CSMaskEdit</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\CSOAPI\Codigo\CSOAPI\CSOAPI.csproj">
+    <ProjectReference Include="..\..\..\..\CSOAPI\Codigo\CSOAPI\CSOAPI.csproj">
       <Project>{27D1E082-1492-438B-BBE5-A63D1F380C5F}</Project>
       <Name>CSOAPI</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\CSConnect\Codigo\CSConnect\CSConnect.csproj">
+    <ProjectReference Include="..\..\..\CSConnect\Codigo\CSConnect\CSConnect.csproj">
       <Project>{7510477C-4A64-4074-B93B-811F49E7E8F2}</Project>
       <Name>CSConnect</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\CSIReportPrint\Codigo\CSIReportPrint\CSIReportPrint.csproj">
+    <ProjectReference Include="..\..\..\CSIReportPrint\Codigo\CSIReportPrint\CSIReportPrint.csproj">
       <Project>{33EB467A-CDEF-426E-AFA3-0E2CA9E2E8AA}</Project>
       <Name>CSIReportPrint</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\CSReportDll\Codigo\CSReportDll\CSReportDll.csproj">
+    <ProjectReference Include="..\..\..\CSReportDll\Codigo\CSReportDll\CSReportDll.csproj">
       <Project>{9A3F2CA3-2093-47AF-9B48-2CE6B1636245}</Project>
       <Name>CSReportDll</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\CSReportGlobals\Codigo\CSReportGlobals\CSReportGlobals.csproj">
+    <ProjectReference Include="..\..\..\CSReportGlobals\Codigo\CSReportGlobals\CSReportGlobals.csproj">
       <Project>{6018C911-1404-462B-9FA7-31904D56813A}</Project>
       <Name>CSReportGlobals</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\CSReportPaint\Codigo\CSReportPaint\CSReportPaint.csproj">
+    <ProjectReference Include="..\..\..\CSReportPaint\Codigo\CSReportPaint\CSReportPaint.csproj">
       <Project>{E448F39C-75BC-42FC-8E4A-9110D60EECE4}</Project>
       <Name>CSReportPaint</Name>
     </ProjectReference>
