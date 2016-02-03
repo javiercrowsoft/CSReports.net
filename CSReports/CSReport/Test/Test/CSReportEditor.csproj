@@ -1,0 +1,323 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{273C5ECF-DB2A-4E01-A4B3-C73B8D37374E}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CSReportEditor</RootNamespace>
+    <AssemblyName>Test</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="cEditor.cs" />
+    <Compile Include="cGlobals.cs" />
+    <Compile Include="cMainEditor.cs" />
+    <Compile Include="fConnectsAux.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fConnectsAux.Designer.cs">
+      <DependentUpon>fConnectsAux.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fControls.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fControls.Designer.cs">
+      <DependentUpon>fControls.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fFormula.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fFormula.Designer.cs">
+      <DependentUpon>fFormula.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fFormulaReplace.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fFormulaReplace.Designer.cs">
+      <DependentUpon>fFormulaReplace.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fGroup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fGroup.Designer.cs">
+      <DependentUpon>fGroup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fMain.Designer.cs">
+      <DependentUpon>fMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fProgress.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fProgress.Designer.cs">
+      <DependentUpon>fProgress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fProperties.Designer.cs">
+      <DependentUpon>fProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fSearch.Designer.cs">
+      <DependentUpon>fSearch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fSecProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fSecProperties.Designer.cs">
+      <DependentUpon>fSecProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fSimpleConnect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fSimpleConnect.Designer.cs">
+      <DependentUpon>fSimpleConnect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fToolbox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fToolbox.Designer.cs">
+      <DependentUpon>fToolbox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="fTreeViewCtrls.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fTreeViewCtrls.Designer.cs">
+      <DependentUpon>fTreeViewCtrls.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="fFormula.resx">
+      <DependentUpon>fFormula.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fFormulaReplace.resx">
+      <DependentUpon>fFormulaReplace.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fGroup.resx">
+      <DependentUpon>fGroup.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fMain.resx">
+      <DependentUpon>fMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fProgress.resx">
+      <DependentUpon>fProgress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fProperties.resx">
+      <DependentUpon>fProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fSecProperties.resx">
+      <DependentUpon>fSecProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fSimpleConnect.resx">
+      <DependentUpon>fSimpleConnect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\CSAssocFile\Codigo\CSAssocFile\CSAssocFile.csproj">
+      <Project>{BB7F45EB-BC34-413F-8327-7FE8453ABAE7}</Project>
+      <Name>CSAssocFile</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CSDataBase\Codigo\CSDataBase\CSDataBase.csproj">
+      <Project>{A02FE16D-0B24-467E-BA97-6E1C1213AD46}</Project>
+      <Name>CSDataBase</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CSKernel\Codigo\CSKernelClient\CSKernelClient.csproj">
+      <Project>{B3932376-5FEA-4C07-9709-663989C7ECF2}</Project>
+      <Name>CSKernelClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CSKernel\Codigo\CSKernelFile\CSKernelFile\CSKernelFile.csproj">
+      <Project>{0B54F3BA-C9D6-4758-8CB7-1CE9CC3A30C4}</Project>
+      <Name>CSKernelFile</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CSMaskEdit\Codigo\CSMaskEdit\CSMaskEdit.csproj">
+      <Project>{884FAF69-53D3-4969-BE13-DF0ECFD2EFA9}</Project>
+      <Name>CSMaskEdit</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CSOAPI\Codigo\CSOAPI\CSOAPI.csproj">
+      <Project>{27D1E082-1492-438B-BBE5-A63D1F380C5F}</Project>
+      <Name>CSOAPI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CSConnect\Codigo\CSConnect\CSConnect.csproj">
+      <Project>{7510477C-4A64-4074-B93B-811F49E7E8F2}</Project>
+      <Name>CSConnect</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CSIReportPrint\Codigo\CSIReportPrint\CSIReportPrint.csproj">
+      <Project>{33EB467A-CDEF-426E-AFA3-0E2CA9E2E8AA}</Project>
+      <Name>CSIReportPrint</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CSReportDll\Codigo\CSReportDll\CSReportDll.csproj">
+      <Project>{9A3F2CA3-2093-47AF-9B48-2CE6B1636245}</Project>
+      <Name>CSReportDll</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CSReportGlobals\Codigo\CSReportGlobals\CSReportGlobals.csproj">
+      <Project>{6018C911-1404-462B-9FA7-31904D56813A}</Project>
+      <Name>CSReportGlobals</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\CSReportPaint\Codigo\CSReportPaint\CSReportPaint.csproj">
+      <Project>{E448F39C-75BC-42FC-8E4A-9110D60EECE4}</Project>
+      <Name>CSReportPaint</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\application_side_boxes.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\config_page.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\database_gear.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\disk.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\disk_multiple.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\find.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder_page.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lightning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\page.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\printer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\text_align_center.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\text_align_left.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\text_align_right.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\text_bold.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\wrench.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
