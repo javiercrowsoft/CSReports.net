@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="cGlobals.cs" />
+    <Compile Include="cGraphics.cs" />
     <Compile Include="cReportPaint.cs" />
     <Compile Include="cReportPaintError.cs" />
     <Compile Include="cReportPaintObject.cs" />

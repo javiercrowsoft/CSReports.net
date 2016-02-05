@@ -244,6 +244,11 @@ namespace CSReportEditor
             }
         }
 
+        private void tsbOpen_Click(object sender, EventArgs e)
+        {
+            mnuOpenReport_Click(sender, e);
+        }
+
         //------------------------------------------------------------------------------------------------------------------
 
         // expose controls

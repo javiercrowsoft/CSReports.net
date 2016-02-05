@@ -19,8 +19,7 @@ namespace CSReportEditor
         private PictureBox m_picReport = null;
         private TabPage m_editorTab = null;
         private String m_reportFullPath = "";
-		private Graphics m_graphic;
-		private String m_name;
+		private String m_name = "";
 
         public cEditor(fMain fmain, Panel editor, PictureBox rule, PictureBox report, TabPage editorTab) {
             m_fmain = fmain;
@@ -567,7 +566,7 @@ namespace CSReportEditor
 
             m_keyFocus = sKey;
             m_keyObj = sKey;
-			m_paint.setFocus(m_keyFocus, m_graphic, true);
+            m_paint.setFocus(m_keyFocus, m_picReport.CreateGraphics(), true);
         }
 
 		private void pSelectSection(String secKey) 
@@ -657,7 +656,7 @@ namespace CSReportEditor
 
             m_keyFocus = sKey;
             m_keyObj = sKey;
-			m_paint.setFocus(m_keyFocus, m_graphic, true);
+            m_paint.setFocus(m_keyFocus, m_picReport.CreateGraphics(), true);
         }
 
         private cReportSectionLine pGetSecLnFromKey(
@@ -1198,7 +1197,7 @@ namespace CSReportEditor
 
                     m_keyFocus = sKey;
                     m_keyObj = sKey;
-					m_paint.setFocus(m_keyFocus, m_graphic, bClearSelected);
+                    m_paint.setFocus(m_keyFocus, m_picReport.CreateGraphics(), bClearSelected);
 
                 } 
                 else if (button == MouseButtons.Right) {
@@ -1213,7 +1212,7 @@ namespace CSReportEditor
                         bClearSelected = pSetSelectForRightBttn();
 
                         m_keyFocus = sKey;
-						m_paint.setFocus(m_keyFocus, m_graphic, bClearSelected);
+                        m_paint.setFocus(m_keyFocus, m_picReport.CreateGraphics(), bClearSelected);
 
                         CSReportPaint.cReportPaintObject po = m_paint.getPaintObject(sKey);
 
@@ -1524,7 +1523,7 @@ namespace CSReportEditor
 				G.redim(ref m_vSelectedKeys, 0);
             }
 
-			m_paint.removeFromSelected(sKey, m_graphic);
+            m_paint.removeFromSelected(sKey, m_picReport.CreateGraphics());
         }
 
         private bool pClearSelected(MouseButtons button, bool ctrlKey, float x, float y) {
@@ -1570,22 +1569,22 @@ namespace CSReportEditor
                 if (m_bMoveHorizontal) {
                     m_paint.moveObjToXYEx(m_keyMoving, 
                                             x - m_offX + offsetLeft, 
-                                            firstTop - offSet2 + offsetTop, 
-											m_graphic, 
+                                            firstTop - offSet2 + offsetTop,
+                                            m_picReport.CreateGraphics(), 
                                             clear);
                 } 
                 else if (m_bMoveVertical) {
                     m_paint.moveObjToXYEx(m_keyMoving, 
                                             firstLeft + offsetLeft, 
-                                            y - m_offY + offsetTop, 
-											m_graphic, 
+                                            y - m_offY + offsetTop,
+                                            m_picReport.CreateGraphics(), 
                                             clear);
                 } 
                 else {
                     m_paint.moveObjToXYEx(m_keyMoving, 
                                             x - m_offX + offsetLeft, 
-                                            y - m_offY + offsetTop, 
-						                    m_graphic, 
+                                            y - m_offY + offsetTop,
+                                            m_picReport.CreateGraphics(), 
                                             clear);
                 }
 
@@ -1617,10 +1616,10 @@ namespace CSReportEditor
                             pShowMoveAll(x, y);
                             break;
                         case csRptEditorMoveType.CSRPTEDMOVTHORIZONTAL:
-							m_paint.moveHorizontal(m_keyMoving, x, m_graphic);
+                            m_paint.moveHorizontal(m_keyMoving, x, m_picReport.CreateGraphics());
                             break;
                         case csRptEditorMoveType.CSRPTEDMOVTVERTICAL:
-							m_paint.moveVertical(m_keyMoving, y, m_graphic);
+                            m_paint.moveVertical(m_keyMoving, y, m_picReport.CreateGraphics());
                             break;
                     }
 
@@ -1630,28 +1629,28 @@ namespace CSReportEditor
                 else if (m_keySizing != "") {
                     switch (m_moveType) {
                         case csRptEditorMoveType.CSRPTEDMOVDOWN:
-                            m_paint.resize(m_graphic, m_keySizing, cGlobals.C_NO_CHANGE, cGlobals.C_NO_CHANGE, cGlobals.C_NO_CHANGE, y);
+                            m_paint.resize(m_picReport.CreateGraphics(), m_keySizing, cGlobals.C_NO_CHANGE, cGlobals.C_NO_CHANGE, cGlobals.C_NO_CHANGE, y);
                             break;
                         case csRptEditorMoveType.CSRPTEDMOVLEFT:
-                            m_paint.resize(m_graphic, m_keySizing, x, cGlobals.C_NO_CHANGE, cGlobals.C_NO_CHANGE, cGlobals.C_NO_CHANGE);
+                            m_paint.resize(m_picReport.CreateGraphics(), m_keySizing, x, cGlobals.C_NO_CHANGE, cGlobals.C_NO_CHANGE, cGlobals.C_NO_CHANGE);
                             break;
                         case csRptEditorMoveType.CSRPTEDMOVRIGHT:
-                            m_paint.resize(m_graphic, m_keySizing, cGlobals.C_NO_CHANGE, cGlobals.C_NO_CHANGE, x, cGlobals.C_NO_CHANGE);
+                            m_paint.resize(m_picReport.CreateGraphics(), m_keySizing, cGlobals.C_NO_CHANGE, cGlobals.C_NO_CHANGE, x, cGlobals.C_NO_CHANGE);
                             break;
                         case csRptEditorMoveType.CSRPTEDMOVUP:
-                            m_paint.resize(m_graphic, m_keySizing, cGlobals.C_NO_CHANGE, y, cGlobals.C_NO_CHANGE, cGlobals.C_NO_CHANGE);
+                            m_paint.resize(m_picReport.CreateGraphics(), m_keySizing, cGlobals.C_NO_CHANGE, y, cGlobals.C_NO_CHANGE, cGlobals.C_NO_CHANGE);
                             break;
                         case csRptEditorMoveType.CSRPTEDMOVLEFTDOWN:
-                            m_paint.resize(m_graphic, m_keySizing, x, cGlobals.C_NO_CHANGE, cGlobals.C_NO_CHANGE, y);
+                            m_paint.resize(m_picReport.CreateGraphics(), m_keySizing, x, cGlobals.C_NO_CHANGE, cGlobals.C_NO_CHANGE, y);
                             break;
                         case csRptEditorMoveType.CSRPTEDMOVLEFTUP:
-                            m_paint.resize(m_graphic, m_keySizing, x, y, cGlobals.C_NO_CHANGE, cGlobals.C_NO_CHANGE);
+                            m_paint.resize(m_picReport.CreateGraphics(), m_keySizing, x, y, cGlobals.C_NO_CHANGE, cGlobals.C_NO_CHANGE);
                             break;
                         case csRptEditorMoveType.CSRPTEDMOVRIGHTDOWN:
-                            m_paint.resize(m_graphic, m_keySizing, cGlobals.C_NO_CHANGE, cGlobals.C_NO_CHANGE, x, y);
+                            m_paint.resize(m_picReport.CreateGraphics(), m_keySizing, cGlobals.C_NO_CHANGE, cGlobals.C_NO_CHANGE, x, y);
                             break;
                         case csRptEditorMoveType.CSRPTEDMOVRIGHTUP:
-                            m_paint.resize(m_graphic, m_keySizing, cGlobals.C_NO_CHANGE, y, x, cGlobals.C_NO_CHANGE);
+                            m_paint.resize(m_picReport.CreateGraphics(), m_keySizing, cGlobals.C_NO_CHANGE, y, x, cGlobals.C_NO_CHANGE);
                             break;
                     }
                     m_moving = true;
@@ -1910,13 +1909,13 @@ namespace CSReportEditor
         }
 
         private void m_picReport_Paint() {
-			m_paint.paintPicture(m_graphic);
+            m_paint.paintPicture(m_picReport.CreateGraphics(), true);
         }
 
         private void m_picRule_Paint() {
             CSReportPaint.cReportPaintObjects ps = m_paint.getPaintSections();
             for (int i = 0; i < ps.count(); i++) {
-				m_paint.drawRule(ps.getNextKeyForZOrder(i), m_graphic);
+                m_paint.drawRule(ps.getNextKeyForZOrder(i), m_picReport.CreateGraphics());
             }
         }
 
@@ -2703,7 +2702,7 @@ namespace CSReportEditor
             //
             moveControl(paintObj.getKey());
 
-			m_paint.drawObject(paintObj.getKey(), m_graphic);
+            m_paint.drawObject(paintObj.getKey(), m_picReport.CreateGraphics());
         }
         
         public void addGroup() {
@@ -3134,7 +3133,7 @@ namespace CSReportEditor
             } 
             else {
 
-				m_paint.createPicture(m_graphic);
+                m_paint.createPicture(m_picReport.CreateGraphics());
                 refreshRule();
 
             }
@@ -3160,24 +3159,10 @@ namespace CSReportEditor
 
                     pSetInitDir();
 
-                    // TODO: the original version of this function
-                    //       made a very dirty use of the return of m_report.load
-                    //
-                    //       the code creates a new document when m_report.load(...)
-                    //       return false and m_report.getName != ""
-                    //
-                    //       when m_report.load is translated we will
-                    //       need to rewrite this function
-                    //
-                    //       in the original function there was a goto to
-                    //       a 'done' label 
                     if (!m_report.load(m_fmain.openFileDialog)) {
 
                         if (m_report.getName() == "")  
                             return false;
-
-                        // here the original function has a goto
-                        // 'goto done'
                     }
 
                 } 
@@ -3188,23 +3173,7 @@ namespace CSReportEditor
                     }
                 }
 
-                reLoadReport();
-
-                // here the original function has a 'done' label
-                // 
-                /*
-                 * 
-                Done:
-                   With m_fmain.cmDialog
-                        Dim FileEx As CSKernelFile.cFileEx
-                        Set FileEx = New CSKernelFile.cFileEx
-                        .InitDir = FileEx.FileGetPath(.FileName)
-                   End With
-
-                 * I don't know wath this code is suposed to do
-                 * but it is clear that is very dirty so we
-                 * will need to rewrite all this lines
-                 */ 
+                reLoadReport(); 
 
                 Application.DoEvents();
 
@@ -4901,7 +4870,7 @@ namespace CSReportEditor
 
         private void refreshNextNameCtrl(String nameCtrl) {
             int x = 0;
-            if (nameCtrl.Substring(1, cGlobals.C_CONTROL_NAME.Length).ToUpper() == cGlobals.C_CONTROL_NAME.ToUpper()) {
+            if (nameCtrl.Length >= cGlobals.C_CONTROL_NAME.Length && nameCtrl.Substring(0, cGlobals.C_CONTROL_NAME.Length).ToUpper() == cGlobals.C_CONTROL_NAME.ToUpper()) {
                 x = (int)cReportGlobals.val(nameCtrl.Substring(cGlobals.C_CONTROL_NAME.Length + 1));
                 if (x > m_nextNameCtrl) {
                     m_nextNameCtrl = x + 1;

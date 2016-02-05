@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using CSKernelClient;
 using CSReportDll;
 using CSReportGlobals;
@@ -56,7 +57,7 @@ namespace CSReportPaint
         private float m_scaleX = 0;
         private float m_scaleY = 0;
 
-        private Graphics m_graph;
+        private Bitmap m_bitmap;
 
         public cReportPaint() 
         {
@@ -1085,7 +1086,7 @@ namespace CSReportPaint
             }
 
             m_keyFocus = sKey;
-            paintPicture(graph);
+            paintPicture(graph, true);
         }
 
         public void removeFromSelected(String sKey, Graphics graph)
@@ -1116,7 +1117,8 @@ namespace CSReportPaint
             }
 
             if (m_keyFocus == sKey) { m_keyFocus = ""; }
-            paintPicture(graph);
+            
+            paintPicture(graph, true);
         }
 
         private bool pAllreadySelected(String sKey)
@@ -1173,7 +1175,7 @@ namespace CSReportPaint
         {
             if (m_x1 > 0 || m_x2 > 0 || m_y1 > 0 || m_y2 > 0)
             {
-                paintPictureMove(graph, cGlobals.newRectangle(m_x1, m_y1, m_x2, m_y2));
+                paintPictureMove(graph, cGlobals.newRectangleF(m_x1, m_y1, m_x2, m_y2));
             }
 
             m_x1 = left;
@@ -1252,9 +1254,11 @@ namespace CSReportPaint
             // y2 no puede ser menor a Top
             if (m_y2 < paintObjAsp.getTop() - paintObjAsp.getOffset() + C_MIN_HEIGHT) { m_y2 = paintObjAsp.getTop() - paintObjAsp.getOffset() + C_MIN_HEIGHT; }
 
-            paintPicture(graph);
+            paintPicture(graph, false);
 
             printLine(graph, false, m_x1, m_y1, m_x2, m_y2, (int)csColors.C_COLOR_WHITE, 0, true, (int)csColors.C_COLOR_BLACK, false);
+
+            graph.Dispose();
         }
 
         public void createPicture(Graphics graph)
@@ -1301,7 +1305,32 @@ namespace CSReportPaint
             }
 
             paintPicture(graph);
-            */ 
+            */
+            if (m_bitmap != null)
+            {
+                m_bitmap.Dispose();
+            }
+
+            m_bitmap = new Bitmap((int)graph.VisibleClipBounds.Width, (int)graph.VisibleClipBounds.Height + 56); // TODO check why 56 ???
+
+            Graphics bitmapGraphic = Graphics.FromImage(m_bitmap);
+
+            Rectangle rect = cGlobals.newRectangle(0, 0, (int)graph.VisibleClipBounds.Width, (int)graph.VisibleClipBounds.Height + 56); // TODO check why 56 ???
+            Brush brush = new SolidBrush(Color.FromArgb(color));
+            graph.FillRectangle(brush, rect);
+            brush.Dispose();
+
+            for (int i = 0; i < getPaintObjects().count(); i++)
+            {
+                drawObject(getPaintObjects().getNextKeyForZOrder(i), bitmapGraphic);
+            }
+
+            for (int i = 0; i < getPaintSections().count(); i++)
+            {
+                drawSection(getPaintSections().getNextKeyForZOrder(i), bitmapGraphic);
+            }
+            
+            paintPicture(graph, true);
         }
 
         //--------------------------------------------------------------------------------------------------
@@ -1350,7 +1379,7 @@ namespace CSReportPaint
             } 
             else {
 
-                tR = mAux.newRectangle(x1, y1, x2, y2);
+                tR = cGlobals.newRectangle(x1, y1, x2, y2);
                 mAux.rectTwipsToPixel(tR, m_scaleX, m_scaleY);
 
                 if (y2 != y1 && x1 != x2) {
@@ -1375,6 +1404,52 @@ namespace CSReportPaint
 
             DeleteObject(hRPen);
              */
+
+            Pen pen;
+
+            pen = new Pen(Color.FromArgb(colorOut), width);
+
+            if (dash)
+            {
+                pen.DashStyle = DashStyle.Dot;
+            }
+
+            if (rounded)
+            {
+                y1 = y1 * m_scaleY;
+                y2 = y2 * m_scaleY;
+                x1 = x1 * m_scaleX;
+                x2 = x2 * m_scaleX;
+
+                cGraphics extGraph = new cGraphics(graph);
+                extGraph.DrawRoundRectangle(pen, x1, y1, x2, y2, 20f);
+            }
+            else
+            {
+                Rectangle rect = cGlobals.newRectangle(Convert.ToInt32(x1), Convert.ToInt32(y1), Convert.ToInt32(x2), Convert.ToInt32(y2));
+
+                if (y2 != y1 && x1 != x2)
+                {
+                    graph.DrawRectangle(pen, rect);
+
+                    if (filled)
+                    {
+                        rect.Inflate(-1, -1);
+                        Brush brush = new SolidBrush(Color.FromArgb(colorInside));
+                        graph.FillRectangle(brush, rect);
+                        brush.Dispose();
+                    }
+                }
+                else
+                {
+                    if (rect.Height == 0 || rect.Bottom == rect.Top) { rect.Height = 1; }
+                    if (rect.Width == 0 || rect.Left == rect.Right) { rect.Width = 1; }
+                    
+                    graph.DrawRectangle(pen, rect);
+                }
+            }
+
+            pen.Dispose();
         }
 
         private void printText(Graphics graph, String sText, CSReportDll.cReportAspect aspect, Image image)
@@ -1476,7 +1551,7 @@ namespace CSReportPaint
 
             // With aspect;
                 //'.Height)
-                tR = mAux.newRectangle(x, y, x + aspect.getWidth() - margenX, y + stringHeight);
+                tR = cGlobals.newRectangle(x, y, x + aspect.getWidth() - margenX, y + stringHeight);
                 mAux.rectTwipsToPixel(tR, m_scaleX, m_scaleY);
                 //    If .WordWrap Then
                 //      Flags = DT_WORDBREAK Or DT_WORD_ELLIPSIS Or DT_LEFT Or DT_NOPREFIX Or DT_EDITCONTROL
@@ -1530,7 +1605,7 @@ namespace CSReportPaint
             if (x1 - iSize < 0) { x1 = iSize; }
             if (y1 - iSize < 0) { y1 = iSize; }
 
-            tR = mAux.newRectangle(x1 - iSize, y1 - iSize - 10, x1, y1);
+            tR = cGlobals.newRectangle(x1 - iSize, y1 - iSize - 10, x1, y1);
             mAux.rectTwipsToPixel(tR, m_scaleX, m_scaleY);
             if (bCircle)
             {
@@ -1541,7 +1616,7 @@ namespace CSReportPaint
                 FillRect(hDC, tR, hBrush);
             }
 
-            tR = mAux.newRectangle(x1 - iSize, y2, x1, y2 + iSize);
+            tR = cGlobals.newRectangle(x1 - iSize, y2, x1, y2 + iSize);
             mAux.rectTwipsToPixel(tR, m_scaleX, m_scaleY);
             if (bCircle)
             {
@@ -1552,7 +1627,7 @@ namespace CSReportPaint
                 FillRect(hDC, tR, hBrush);
             }
 
-            tR = mAux.newRectangle(x2, y1 - iSize - 10, x2 + iSize, y1);
+            tR = cGlobals.newRectangle(x2, y1 - iSize - 10, x2 + iSize, y1);
             mAux.rectTwipsToPixel(tR, m_scaleX, m_scaleY);
             if (bCircle)
             {
@@ -1563,7 +1638,7 @@ namespace CSReportPaint
                 FillRect(hDC, tR, hBrush);
             }
 
-            tR = mAux.newRectangle(x2, y2, x2 + iSize, y2 + iSize);
+            tR = cGlobals.newRectangle(x2, y2, x2 + iSize, y2 + iSize);
             mAux.rectTwipsToPixel(tR, m_scaleX, m_scaleY);
             if (bCircle)
             {
@@ -1576,7 +1651,7 @@ namespace CSReportPaint
 
             x = x1 + (x2 - x1) / 2;
             x = x - iSize / 2;
-            tR = mAux.newRectangle(x, y2, x + iSize, y2 + iSize);
+            tR = cGlobals.newRectangle(x, y2, x + iSize, y2 + iSize);
             mAux.rectTwipsToPixel(tR, m_scaleX, m_scaleY);
             if (bCircle)
             {
@@ -1587,7 +1662,7 @@ namespace CSReportPaint
                 FillRect(hDC, tR, hBrush);
             }
 
-            tR = mAux.newRectangle(x, y1 - iSize - 10, x + iSize, y1);
+            tR = cGlobals.newRectangle(x, y1 - iSize - 10, x + iSize, y1);
             mAux.rectTwipsToPixel(tR, m_scaleX, m_scaleY);
             if (bCircle)
             {
@@ -1600,7 +1675,7 @@ namespace CSReportPaint
 
             y = y1 + (y2 - y1) / 2;
             y = y - iSize / 2;
-            tR = mAux.newRectangle(x1 - iSize, y, x1, y + iSize);
+            tR = cGlobals.newRectangle(x1 - iSize, y, x1, y + iSize);
             mAux.rectTwipsToPixel(tR, m_scaleX, m_scaleY);
             if (bCircle)
             {
@@ -1611,7 +1686,7 @@ namespace CSReportPaint
                 FillRect(hDC, tR, hBrush);
             }
 
-            tR = mAux.newRectangle(x2, y, x2 + iSize, y + iSize);
+            tR = cGlobals.newRectangle(x2, y, x2 + iSize, y + iSize);
             mAux.rectTwipsToPixel(tR, m_scaleX, m_scaleY);
             if (bCircle)
             {
@@ -1634,7 +1709,7 @@ namespace CSReportPaint
             */
         }
 
-        public void paintPicture(Graphics graph)
+        public void paintPicture(Graphics graph, bool disposeGraphicObject)
         {
             /*
             RECT tR = null;
@@ -1664,9 +1739,29 @@ namespace CSReportPaint
 
             for (i = 1; i <= m_vSelectedKeys.Length; i++)
             {
-                setFocusAux(m_vSelectedKeys[i], graph.hDC);
+                setFocusAux(m_vSelectedKeys[i], graph);
             }
             */
+
+            Rectangle rect = cGlobals.newRectangle(0, 0, (int)graph.VisibleClipBounds.Width, (int)graph.VisibleClipBounds.Height);
+            if (m_zoom == 100)
+            {
+                //BitBlt(graph.hDC, 0, 0, tR.right, tR.bottom, m_hMemDC, 0, 0, vbSrcCopy);
+                graph.DrawImage(m_bitmap, rect, rect, GraphicsUnit.Pixel);
+            }
+            else
+            {
+
+            }
+            for (int i = 0; i < m_vSelectedKeys.Length; i++)
+            {
+                setFocusAux(m_vSelectedKeys[i], graph);
+            }
+
+            if (disposeGraphicObject)
+            {
+                graph.Dispose();
+            }
         }
 
         public void beginMove()
@@ -1675,10 +1770,12 @@ namespace CSReportPaint
 
             m_beginMoveDone = true;
 
+            Graphics graphic = Graphics.FromImage(m_bitmap);
             for (int i = 0; i < m_vSelectedKeys.Length; i++)
             {
-                setFocusAux(m_vSelectedKeys[i], m_graph);
+                setFocusAux(m_vSelectedKeys[i], graphic);
             }
+            graphic.Dispose();
         }
 
         private void paintPictureMove(Graphics graph, RectangleF tR)
@@ -1720,7 +1817,7 @@ namespace CSReportPaint
             SelectObject(hMemDC, hBmp);
 
             hBrush = CreateSolidBrush(mAux.translateColor(vbWhite));
-            FillRect(hMemDC, mAux.newRectangle(0, 0, 10, 10), hBrush);
+            FillRect(hMemDC, cGlobals.newRectangle(0, 0, 10, 10), hBrush);
 
             switch (typeGrid)
             {
@@ -1790,7 +1887,7 @@ namespace CSReportPaint
             if (oPaintObj == null) { return; }
 
             CSReportDll.cReportAspect w_aspect = oPaintObj.getAspect();
-            RectangleF tR = cGlobals.newRectangle(w_aspect.getLeft(), w_aspect.getTop(), w_aspect.getLeft() + w_aspect.getWidth(), w_aspect.getTop() + w_aspect.getHeight());
+            RectangleF tR = cGlobals.newRectangleF(w_aspect.getLeft(), w_aspect.getTop(), w_aspect.getLeft() + w_aspect.getWidth(), w_aspect.getTop() + w_aspect.getHeight());
 
             if (tR.Right > graph.ClipBounds.Width) { tR.Width = cGlobals.setRectangleWidth(graph.ClipBounds.Width - tR.Left); }
             if (tR.Bottom > graph.ClipBounds.Height) { tR.Height = cGlobals.setRectangleHeight(graph.ClipBounds.Height - tR.Top); }
@@ -1869,3 +1966,41 @@ namespace CSReportPaint
     }
 
 }
+
+
+/*
+
+http://stackoverflow.com/questions/7507602/best-practice-for-onpaint-invalidate-clipping-and-regions
+ 
+Since a lot of people are viewing this question I will go ahead and answer it to the best of my current knowledge.
+
+The Graphics class supplied with PaintEventArgs is always hard-clipped by the invalidation request. This is usually done by the operating system, but it can be done by your code.
+
+You can't reset this clip or escape from these clip bounds, but you shouldn't need to. When painting, you generally shouldn't care about how it's being clipped unless you desperately need to maximize performance.
+
+The graphics class uses a stack of containers to apply clipping and transformations. You can extend this stack yourself by using Graphics.BeginContainer and Graphics.EndContainer. Each time you begin a container, any changes you make to the Transform or the Clip are temporary and they are applied after any previous Transform or Clip which was configured before the BeginContainer. So essentially, when you get an OnPaint event it has already been clipped and you are in a new container so you can't see the clip (your Clip region or ClipRect will show as being infinite) and you can't break out of those clip bounds.
+
+When the state of your visual objects change (for example, on mouse or keyboard events or reacting to data changes), it's normally fine to simply call Invalidate() which will repaint the entire control. Windows will call OnPaint during moments of low CPU usage. Each call to Invalidate() usually will not always correspond to an OnPaint event. Invalidate could be called multiple times before the next paint. So if 10 properties in your data model change all at once, you can safely call Invalidate 10 times on each property change and you'll likely only trigger a single OnPaint event.
+
+I've noticed you should be careful with using Update() and Refresh(). These force a synchronous OnPaint immediately. They're useful for drawing during a single threaded operation (updating a progress bar perhaps), but using them at the wrong times could lead to excessive and unnecessary painting.
+
+If you want to use clip rectangles to improve performance while repainting a scene, you need not keep track of an aggregated clip area yourself. Windows will do this for you. Just invalidate a rectangle or a region that requires invalidation and paint as normal. For example, if an object that you are painting is moved, each time you want to invalidate it's old bounds and it's new bounds, so that you repaint the background where it originally was in addition to painting it in its new location. You must also take into account pen stroke sizes, etc.
+
+And as Hans Passant mentioned, always use 32bppPArgb as the bitmap format for high resolution images. Here's a code snippet on how to load an image as "high performance":
+
+public static Bitmap GetHighPerformanceBitmap(Image original)
+{
+    Bitmap bitmap;
+
+    bitmap = new Bitmap(original.Width, original.Height, PixelFormat.Format32bppPArgb);
+    bitmap.SetResolution(original.HorizontalResolution, original.VerticalResolution);
+
+    using (Graphics g = Graphics.FromImage(bitmap))
+    {
+        g.DrawImage(original, new Rectangle(new Point(0, 0), bitmap.Size), new Rectangle(new Point(0, 0), bitmap.Size), GraphicsUnit.Pixel);
+    }
+
+    return bitmap;
+}
+ 
+ */

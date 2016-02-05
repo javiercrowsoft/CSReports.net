@@ -152,7 +152,7 @@ namespace CSReportDll
                         w_item.getControls().setSectionLine(null);
                         w_item.getControls().setCopyColl(null);
                     }
-                    m_coll.Remove(index);
+                    m_coll.Remove(m_keys[index]);
                     m_keys.RemoveAt(index);
                 }
 

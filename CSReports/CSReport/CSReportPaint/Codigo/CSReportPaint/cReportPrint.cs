@@ -1754,7 +1754,7 @@ namespace CSReportPaint
             }
             else
             {
-                m_paint.paintPicture(graph as Graphics);
+                m_paint.paintPicture(graph as Graphics, true);
             }
             return true;
         }

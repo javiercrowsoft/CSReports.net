@@ -83,6 +83,8 @@ namespace CSXml
                 m_name = file.getName();
                 m_path = file.getPath();
 
+                file.close();
+
                 file = null;
 
                 return openXml();

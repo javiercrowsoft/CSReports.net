@@ -5,6 +5,7 @@ using System.Text;
 using CSKernelClient;
 using CSReportDll;
 using CSReportGlobals;
+using System.Windows.Forms;
 
 namespace CSReportEditor
 {
@@ -115,7 +116,7 @@ namespace CSReportEditor
 
 		public static void setDocActive (cEditor editor)
 		{
-			throw new NotImplementedException ();
+            MessageBox.Show("Implement this: public static void setDocActive (cEditor editor)");
 		}
 
         public static void moveGroup(cReportGroup group, cEditor editor)

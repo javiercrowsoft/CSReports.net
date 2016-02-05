@@ -59,7 +59,7 @@ namespace CSXml
 
         public int getValueInt(eTypes type)
         {
-            return (int)getValue(type);
+            return Convert.ToInt32(getValue(type));
         }
 
         public string getValueString(eTypes type)

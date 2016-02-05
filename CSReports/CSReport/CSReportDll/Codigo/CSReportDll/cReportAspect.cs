@@ -303,7 +303,7 @@ namespace CSReportDll
             try { m_borderRounded = xDoc.getNodeProperty(nodeObj, "BorderRounded").getValueBool(eTypes.eBoolean); }
             catch { }
 
-            return !m_font.load(xDoc, nodeObj);
+            return m_font.load(xDoc, nodeObj);
         }
 
         internal bool save(CSXml.cXml xDoc, XmlNode nodeFather)

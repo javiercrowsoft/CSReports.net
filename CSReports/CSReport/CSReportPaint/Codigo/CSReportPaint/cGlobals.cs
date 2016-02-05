@@ -55,7 +55,7 @@ namespace CSReportPaint
             return height;
         }
 
-        public static RectangleF newRectangle(Single left, Single top, Single right, Single bottom)
+        public static RectangleF newRectangleF(Single left, Single top, Single right, Single bottom)
         {
             if (left < 0) left = 0;
             if (top < 0) top = 0;
@@ -63,6 +63,16 @@ namespace CSReportPaint
             if (bottom < top) bottom = top;
 
             return new RectangleF(left, top, right, bottom);
+        }
+
+        public static Rectangle newRectangle(int left, int top, int right, int bottom)
+        {
+            if (left < 0) left = 0;
+            if (top < 0) top = 0;
+            if (right < left) right = left;
+            if (bottom < top) bottom = top;
+
+            return new Rectangle(left, top, right, bottom);
         }
 
         private static float getPixelsFromCmX(float cm)
