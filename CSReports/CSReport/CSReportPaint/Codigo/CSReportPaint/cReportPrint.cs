@@ -28,7 +28,7 @@ namespace CSReportPaint
 
         private int m_lastIndexField = 0;
 
-        private int m_currPage = 0;
+        private int m_currPage = -1;
 
         private Font[] m_fnt;
         private int m_iFontCount = 0;
@@ -402,34 +402,34 @@ namespace CSReportPaint
                 switch (nPage)
                 {
                     case (int)csEMoveTo.C_FIRSTPAGE:
-                        m_currPage = 1;
+                        m_currPage = 0;
                         break;
                     case (int)csEMoveTo.C_LASTPAGE:
-                        m_currPage = m_report.getPages().count();
+                        m_currPage = m_report.getPages().count()-1;
                         break;
                     case (int)csEMoveTo.C_NEXTPAGE:
-                        if (m_currPage + 1 <= m_report.getPages().count())
+                        if (m_currPage + 1 < m_report.getPages().count())
                         {
                             m_currPage = m_currPage + 1;
                         }
                         else
                         {
-                            m_currPage = m_report.getPages().count();
+                            m_currPage = m_report.getPages().count()-1;
                         }
                         break;
                     case (int)csEMoveTo.C_PREVIOUSPAGE:
-                        if (m_currPage - 1 >= 1)
+                        if (m_currPage - 1 >= 0)
                         {
                             m_currPage = m_currPage - 1;
                         }
                         else
                         {
-                            m_currPage = 1;
+                            m_currPage = 0;
                         }
                         break;
                 }
             }
-            if (m_currPage == 0) { return; }
+            if (m_currPage == -1) { return; }
 
             page = m_report.getPages().item(m_currPage);
 
@@ -548,7 +548,7 @@ namespace CSReportPaint
                     printer.getPaperInfo().setPagesToPrint("1-" + m_report.getPages().count().ToString());
                 }
 
-                for (q = 1; q <= copies; q++)
+                for (q = 0; q < copies; q++)
                 {
                     if (!printPagesToPrinter(printer, objClient))
                     {
@@ -664,14 +664,13 @@ namespace CSReportPaint
                 m_paint.setZoom(100);
                 m_scaleFont = 1;
 
-
-                for (i = 1; i <= m_report.getPages().count(); i++)
+                for (i = 0; i < m_report.getPages().count(); i++)
                 {
                     if (pHaveToPrintThisPage(i, vPages))
                     {
                         if (!printer.starPage())
                         {
-                            throw new ReportPaintException(csRptPaintErrors.CSRPTPATINTERRPRINTING,
+                            throw new ReportPaintException(csRptPaintErrors.CSRPT_PAINT_ERR_PRINTING,
                                                       C_MODULE,
                                                       "Ocurrio un error al imprimir el reporte."
                                                       );
@@ -684,7 +683,7 @@ namespace CSReportPaint
                         }
                         if (!printer.endPage())
                         {
-                            throw new ReportPaintException(csRptPaintErrors.CSRPTPATINTERRPRINTING,
+                            throw new ReportPaintException(csRptPaintErrors.CSRPT_PAINT_ERR_PRINTING,
                                                       C_MODULE,
                                                       "Ocurrio un error al imprimir el reporte."
                                                       );
@@ -698,7 +697,7 @@ namespace CSReportPaint
 
                 if (!printer.endDoc())
                 {
-                    throw new ReportPaintException(csRptPaintErrors.CSRPTPATINTERRPRINTING,
+                    throw new ReportPaintException(csRptPaintErrors.CSRPT_PAINT_ERR_PRINTING,
                                               C_MODULE,
                                               "Ocurrio un error al imprimir el reporte."
                                               );
@@ -737,10 +736,8 @@ namespace CSReportPaint
         }
 
         private bool pHaveToPrintThisPage(int page, int[] v)
-        { // TODO: Use of ByRef founded Private Function pHaveToPrintThisPage(ByVal Page As Long, ByRef v() As Long) As Boolean
-            int n = 0;
-
-            for (n = 1; n <= v.Length; n++)
+        {
+            for (int n = 0; n < v.Length; n++)
             {
                 if (page == v[n])
                 {
@@ -752,10 +749,11 @@ namespace CSReportPaint
 
         private int[] pGetPagesToPrint(String pagesToPrint)
         {
+
+            throw new NotImplementedException();
+
             String[] v = null;
-            int i = 0;
             int[] n = null;
-            int k = 0;
             String[] v2 = null;
             int t = 0;
             int r = 0;
@@ -765,14 +763,14 @@ namespace CSReportPaint
 
             G.redim(ref n, 0);
 
-            for (i = 0; i <= v.Length; i++)
+            for (int i = 0; i < v.Length; i++)
             {
-                k = v[i].IndexOf("-", 1);
+                int k = v[i].IndexOf("-", 1);
                 if (k > 0)
                 {
                     v2 = v[i].Split('-');
                     addInterval = false;
-                    for (t = 0; t <= v2.Length; t++)
+                    for (t = 0; t < v2.Length; t++)
                     {
                         if (G.isNumeric(v2[t]))
                         {
@@ -850,7 +848,7 @@ namespace CSReportPaint
                 m_report.getPaperInfo().getPaperSize(),
                 m_report.getPaperInfo().getOrientation());
 
-            m_currPage = 0;
+            m_currPage = -1;
 
             // we create the first page
             //
@@ -882,11 +880,11 @@ namespace CSReportPaint
 
             // get details dimensions
             //
-            detailHeight = getDetailHeight(m_report.getPages().item(m_report.getPages().count()), top);
+            detailHeight = getDetailHeight(m_report.getPages().item(m_report.getPages().count()-1), top);
 
             // add the height of the images for controls which can grow and are in the header
             //
-            getLineHeight(m_report.getPages().item(m_report.getPages().count()).getHeader(), vdummy);
+            getLineHeight(m_report.getPages().item(m_report.getPages().count()-1).getHeader(), vdummy);
 
             do
             {
@@ -960,7 +958,7 @@ namespace CSReportPaint
                         //
                         // add the line to the page
                         //
-                        detail = m_report.getPages().item(m_report.getPages().count()).getDetail();
+                        detail = m_report.getPages().item(m_report.getPages().count()-1).getDetail();
 
                         for (int _i = 0; _i < fields.count(); _i++)
                         {
@@ -1056,7 +1054,7 @@ namespace CSReportPaint
 
             // get details' dimentions
             //
-            detailHeight = getDetailHeight(m_report.getPages().item(m_report.getPages().count()), top);
+            detailHeight = getDetailHeight(m_report.getPages().item(m_report.getPages().count()-1), top);
 
             return true;
         }
@@ -1739,12 +1737,12 @@ namespace CSReportPaint
 
                 if (graph.GetType() == typeof(cPrinter))
                 {
-                    for (i = 1; i <= m_paint.getPaintObjects().count(); i++)
+                    for (i = 0; i < m_paint.getPaintObjects().count(); i++)
                     {
                         if (!m_paint.drawObject(m_paint.getPaintObjects().getNextKeyForZOrder(i), (graph as cPrinter).getGraph())) { return false; }
                     }
 
-                    for (i = 1; i <= m_paint.getPaintSections().count(); i++)
+                    for (i = 0; i < m_paint.getPaintSections().count(); i++)
                     {
                         if (!m_paint.drawSection(m_paint.getPaintSections().getNextKeyForZOrder(i), (graph as cPrinter).getGraph())) { return false; }
                     }

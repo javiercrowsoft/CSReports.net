@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using CSKernelClient;
+using CSReportDll;
 
 namespace CSReportEditor
 {
@@ -15,6 +16,14 @@ namespace CSReportEditor
         static fMain instance;
 
         private const String C_MODULE = "fMain";
+
+        private int m_paperSize = 0;
+        private int m_paperSizeWidth = 0;
+        private int m_paperSizeHeight = 0;
+        private int m_orientation = 0;
+        private string m_printerName = "";
+        private string m_driverName = "";
+        private string m_port = "";
 
         public fMain()
         {
@@ -209,12 +218,12 @@ namespace CSReportEditor
 
         internal CSReportGlobals.csReportPaperType getPaperSize()
         {
-            throw new NotImplementedException();
+            return (CSReportGlobals.csReportPaperType)m_paperSize;
         }
 
         internal int getOrientation()
         {
-            throw new NotImplementedException();
+            return m_orientation;
         }
 
         private void mnuOpenReport_Click(object sender, EventArgs e)
@@ -224,11 +233,11 @@ namespace CSReportEditor
                 cEditor editor = createEditor();
 
                 editor.init();
-                /*
+
                 if(editor.openDocument()) {
                     addToRecentList(editor.getFileName());
                     saveRecentList();
-                }*/
+                }
 
             } catch (Exception ex) {
                 cError.mngError(ex, "mnuOpenReport_Click", C_MODULE, "");
@@ -255,6 +264,11 @@ namespace CSReportEditor
             {
                 return saveFielDlg;
             }            
+        }
+
+        private void fMain_Load(object sender, EventArgs e)
+        {
+            cPrintAPI.getDefaultPrinter(out m_printerName, out m_driverName, out m_port, out m_paperSize, out m_orientation, out m_paperSizeWidth, out m_paperSizeHeight);
         }
     }
 }

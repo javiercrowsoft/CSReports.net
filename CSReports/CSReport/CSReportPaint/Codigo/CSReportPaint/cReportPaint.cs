@@ -177,15 +177,12 @@ namespace CSReportPaint
 
         public cReportPaintObject getPaintObjectForTag(String tag)
         {
-            cReportPaintObject paintObj = null;
-            int i = 0;
-            for (i = 1; i <= m_paintObjects.count(); i++)
+            for (int i = 0; i < m_paintObjects.count(); i++)
             {
-                paintObj = m_paintObjects.item(i);
+                cReportPaintObject paintObj = m_paintObjects.item(i);
                 if (paintObj.getTag() == tag)
                 {
                     return paintObj;
-                    break;
                 }
             }
             return null;
@@ -193,11 +190,9 @@ namespace CSReportPaint
 
         public cReportPaintObject getPaintSectoinForTag(String tag)
         {
-            cReportPaintObject paintObj = null;
-            int i = 0;
-            for (i = 1; i <= m_paintSections.count(); i++)
+            for (int i = 0; i < m_paintSections.count(); i++)
             {
-                paintObj = m_paintSections.item(i);
+                cReportPaintObject paintObj = m_paintSections.item(i);
                 if (paintObj.getTag() == tag)
                 {
                     return paintObj;
@@ -271,10 +266,8 @@ namespace CSReportPaint
             float y,
             ref String sKey,
             ref csRptPaintRegionType regionType)
-        { // TODO: Use of ByRef founded Private Function PointIsInObjectAux(ByRef PaintObjs As cReportPaintObjects, ByVal x As Single, ByVal y As Single, ByRef sKey As String, Optional ByRef RegionType As csRptPaintRegionType = 0) As Boolean
-            int i = 0;
-
-            for (i = paintObjs.count(); i <= 1; i--)
+        {
+            for (int i = paintObjs.count()-1; i > -1; i--)
             {
                 if (pointIsInThisObjectAux(paintObjs.getNextPaintObjForZOrder(i), x, y, ref sKey, ref regionType))
                 {
@@ -516,8 +509,8 @@ namespace CSReportPaint
 
             pCreateBrushGrid(picGrid, typeGrid);
 
-            y = (int)(picGrid.ClipBounds.Height / C_GRID_AREA_HEIGHT);
-            x = (int)(picGrid.ClipBounds.Width / C_GRID_AREA_WIDTH);
+            y = (int)(picGrid.VisibleClipBounds.Height / C_GRID_AREA_HEIGHT);
+            x = (int)(picGrid.VisibleClipBounds.Width / C_GRID_AREA_WIDTH);
 
             x = x + 1;
             y = y + 1;
@@ -527,7 +520,7 @@ namespace CSReportPaint
             int l = 0;
             int t = 0;
 
-            for (i = 1; i <= y * x; i++)
+            for (i = 0; i < y * x; i++)
             {
                 c = m_paintGridAreas.add(c, getKey());
 
@@ -539,7 +532,7 @@ namespace CSReportPaint
                 w_aspect.setWidth(C_GRID_AREA_WIDTH);
                 w_aspect.setHeight(C_GRID_AREA_HEIGHT);
 
-                m_vGridObjs[l + 1, t + 1] = c.getKey();
+                m_vGridObjs[l, t] = c.getKey();
 
                 c = null;
 
@@ -967,10 +960,10 @@ namespace CSReportPaint
                 if (graph == null)
                 {
                     throw new ReportPaintException(
-                        csRptPaintErrors.CSRPTPATINTERROBJCLIENT,
+                        csRptPaintErrors.CSRPT_PAINT_ERR_OBJ_CLIENT,
                         C_MODULE,
                         cReportPaintError.errGetDescript(
-                                        csRptPaintErrors.CSRPTPATINTERROBJCLIENT));
+                                        csRptPaintErrors.CSRPT_PAINT_ERR_OBJ_CLIENT));
                 }
 
                 cReportPaintObject oPaintObj = null;
@@ -1099,7 +1092,7 @@ namespace CSReportPaint
         {
             int i = 0;
 
-            for (i = 1; i <= m_vSelectedKeys.Length; i++)
+            for (i = 0; i < m_vSelectedKeys.Length; i++)
             {
                 if (m_vSelectedKeys[i] == sKey)
                 {
@@ -1107,10 +1100,9 @@ namespace CSReportPaint
                 }
             }
 
-            if (i > m_vSelectedKeys.Length) { return; }
+            if (i >= m_vSelectedKeys.Length) { return; }
 
-            if (i > m_vSelectedKeys.Length) { return; }
-            for (i = i + 1; i <= m_vSelectedKeys.Length; i++)
+            for (i = i + 1; i < m_vSelectedKeys.Length; i++)
             {
                 m_vSelectedKeys[i - 1] = m_vSelectedKeys[i];
             }
@@ -1129,14 +1121,12 @@ namespace CSReportPaint
 
         private bool pAllreadySelected(String sKey)
         {
-            int i = 0;
-
             if (sKey == "")
             {
                 return true;
             }
 
-            for (i = 1; i <= m_vSelectedKeys.Length; i++)
+            for (int i = 0; i < m_vSelectedKeys.Length; i++)
             {
                 if (m_vSelectedKeys[i] == sKey)
                 {
@@ -1681,13 +1671,11 @@ namespace CSReportPaint
 
         public void beginMove()
         {
-            int i = 0;
-
             if (m_beginMoveDone) { return; }
 
             m_beginMoveDone = true;
 
-            for (i = 1; i <= m_vSelectedKeys.Length; i++)
+            for (int i = 0; i < m_vSelectedKeys.Length; i++)
             {
                 setFocusAux(m_vSelectedKeys[i], m_graph);
             }

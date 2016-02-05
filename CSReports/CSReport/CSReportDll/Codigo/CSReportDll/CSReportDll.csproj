@@ -33,6 +33,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -51,6 +52,7 @@
     <Compile Include="cParameters.cs" />
     <Compile Include="cPrintAPI.cs" />
     <Compile Include="cPrinter.cs" />
+    <Compile Include="cPrintWMI.cs" />
     <Compile Include="cReportAspect.cs" />
     <Compile Include="cReportChart.cs" />
     <Compile Include="cReportChartSerie.cs" />

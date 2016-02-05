@@ -288,7 +288,7 @@ namespace CSReportDll
             {
                 code = formula.getTextC();
 
-                for (i = 1; i <= vResult.Length; i++)
+                for (i = 0; i < vResult.Length; i++)
                 {
                     // if one argument is null it means we don't have a row for this formula
                     // so we don't need to compile the code
@@ -703,7 +703,7 @@ namespace CSReportDll
 
                 try
                 {
-                    for (i = 0; i <= vParams.Length; i++)
+                    for (i = 0; i < vParams.Length; i++)
                     {
                         try
                         {
@@ -1377,7 +1377,7 @@ namespace CSReportDll
             }
 
             cReportControl ctrlValue = null;
-            for (i = 1; i <= collCtrlsToReplace.Count; i++)
+            for (i = 0; i < collCtrlsToReplace.Count; i++)
             {
                 ctrlValue = pGetControl(collCtrlsToReplace[i]);
                 if (ctrlValue != null)
@@ -2108,14 +2108,11 @@ namespace CSReportDll
         //
         private void pCheckParameters(int cantParams, String parameters, String name)
         {
-            String param = "";
-            int i = 0;
-
-            for (i = 1; i <= cantParams; i++)
+            for (int i = 0; i < cantParams; i++)
             {
                 // It must receive the control name
                 //
-                param = pGetParameter(parameters, i, name);
+                string param = pGetParameter(parameters, i, name);
 
                 if (param.Length == 0)
                 {
@@ -2154,15 +2151,17 @@ namespace CSReportDll
 
         private String removeReturns(String code)
         {
-            int i = 0;
             String c = "";
-            for (i = 1; i <= code.Length; i++)
+            for (int i = 0; i < code.Length; i++)
             {
                 c = code.Substring(i, 1);
-                if (c != " " && c != "\r" && c != "\n") { break; }
+                if (c != " " && c != "\r" && c != "\n") {
+                    code = code.Substring(i);
+                    break; 
+                }
             }
 
-            return code.Substring(i);
+            return code;
         }
 
         // Dates start 1-1-1900 00:00:00

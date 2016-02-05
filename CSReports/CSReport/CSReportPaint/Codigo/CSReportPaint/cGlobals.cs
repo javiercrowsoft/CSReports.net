@@ -12,6 +12,11 @@ namespace CSReportPaint
     {
         private static int m_nextKey = 1000;
 
+        private const string C_MODULE = "cGlobals";
+
+        private static Bitmap _flag = new Bitmap(1, 1);
+        private static Graphics _g = Graphics.FromImage(_flag);
+
         public static int getNextKey()
         {
             m_nextKey++;
@@ -60,9 +65,64 @@ namespace CSReportPaint
             return new RectangleF(left, top, right, bottom);
         }
 
-        public static RectangleF getRectFromPaperSize(cReportPaperInfo cReportPaperInfo, csReportPaperType csReportPaperType, int p)
+        private static float getPixelsFromCmX(float cm)
         {
-            throw new NotImplementedException();
+            return cm * _g.DpiX / 2.54f;
+        }
+        private static float getPixelsFromCmY(float cm)
+        {
+            return cm * _g.DpiY / 2.54f;
+        }
+
+        public static RectangleF getRectFromPaperSize(cReportPaperInfo info, csReportPaperType paperSize, int orientation)
+        {
+            RectangleF rtn = new RectangleF();
+
+            switch (paperSize)
+            {
+                case csReportPaperType.CSRPTPAPERTYPELETTER:
+                    rtn.Height = getPixelsFromCmY(27.94f); // 15840;
+                    rtn.Width = getPixelsFromCmX(21.59f);  // 12240;
+                    break;
+
+                case csReportPaperType.CSRPTPAPERTYPELEGAL:
+                    rtn.Height = getPixelsFromCmY(35.56f); // 20160;
+                    rtn.Width = getPixelsFromCmX(21.59f);  // 12060;
+                    break;
+
+                case csReportPaperType.CSRPTPAPERTYPEA4:
+                    rtn.Height = getPixelsFromCmY(29.7f); // 16832;
+                    rtn.Width = getPixelsFromCmX(21f);    // 11908;
+                    break;
+
+                case csReportPaperType.CSRPTPAPERTYPEA3:
+                    rtn.Height = getPixelsFromCmY(42f); // 23816;
+                    rtn.Width = getPixelsFromCmX(29.7f);    // 16832;
+                    break;
+
+                case csReportPaperType.CSRPTPAPERUSER:
+                    if (info == null)
+                    {
+                        string msg = "The settings for the custome user paper size is not defined";
+                        throw new ReportPaintException(csRptPaintErrors.CSRPT_PAINT_ERR_OBJ_CLIENT, C_MODULE, msg);
+                    }
+                    else
+                    {
+                        rtn.Width = getPixelsFromCmY(info.getCustomWidth());
+                        rtn.Height = getPixelsFromCmX(info.getCustomHeight());
+                    }
+                    break;
+            }
+
+            if (orientation == (int)csRptPageOrientation.LANDSCAPE)
+            {
+                float tmp = 0;
+                tmp = rtn.Height;
+                rtn.Height = rtn.Width;
+                rtn.Width = tmp;
+            }
+
+            return rtn;
         }
     }
 

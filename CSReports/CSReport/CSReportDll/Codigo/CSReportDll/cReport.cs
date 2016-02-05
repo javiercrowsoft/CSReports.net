@@ -584,7 +584,7 @@ namespace CSReportDll
                 return;
             }
 
-            for (int i = 1; i <= m_groupCount; i++)
+            for (int i = 0; i < m_groupCount; i++)
             {
                 if (m_groups.item(i).getRePrintInNewPage())
                 {
@@ -595,7 +595,7 @@ namespace CSReportDll
 
         private bool pExistsGroupHeadersToReprint()
         {
-            for (int i = 1; i <= m_groupCount; i++)
+            for (int i = 0; i < m_groupCount; i++)
             {
                 if (m_vGroups[i].reprintHeader)
                 {
@@ -613,7 +613,7 @@ namespace CSReportDll
 
         private void pCheckExistsGroupHToReprint()
         {
-            for (int i = 1; i <= m_groupCount; i++)
+            for (int i = 0; i < m_groupCount; i++)
             {
                 if (m_vGroups[i].reprintHeader)
                 {
@@ -633,7 +633,7 @@ namespace CSReportDll
         {
             // last page
             //
-            cReportPage page = m_pages.item(m_pages.count());
+            cReportPage page = m_pages.item(m_pages.count()-1);
 
             // only formulas located in footer sections
             //
@@ -830,7 +830,7 @@ namespace CSReportDll
         {
             int groupIndex = 0;
             int j = 0;
-            for (j = idxGroupFather; j <= m_groupCount; j++)
+            for (j = idxGroupFather; j < m_groupCount; j++)
             {
                 if (m_vGroups[j].footerMustBeClosed)
                 {
@@ -871,7 +871,7 @@ namespace CSReportDll
         private void pExistsGroupToReprintInNP()
         {
             m_bExistsGrpToRePrintInNP = false;
-            for (int i = 1; i <= m_groupCount; i++)
+            for (int i = 0; i < m_groupCount; i++)
             {
                 if (m_groups.item(i).getRePrintInNewPage())
                 {
@@ -883,7 +883,7 @@ namespace CSReportDll
 
         private bool pNotPendingFooters()
         {
-            for (int i = 1; i <= m_groupCount; i++)
+            for (int i = 0; i < m_groupCount; i++)
             {
                 if (m_vGroups[i].footerMustBeClosed)
                 {
@@ -1207,8 +1207,7 @@ namespace CSReportDll
 
         private bool pEvalFooterToClose2()
         {
-            int i = 0;
-            for (i = m_groupCount; i <= 1; i--)
+            for (int i = m_groupCount-1; i > -1; i--)
             {
                 if (m_vGroups[i].footerMustBeClosed)
                 {
@@ -1220,8 +1219,7 @@ namespace CSReportDll
 
         private bool pEvalFooterToClose()
         {
-            int i = 0;
-            for (i = m_groupCount; i <= 1; i--)
+            for (int i = m_groupCount-1; i > -1; i--)
             {
                 if (m_vGroups[i].footerMustBeClosed)
                 {
@@ -1248,7 +1246,7 @@ namespace CSReportDll
         {
             // we need to evaluate groups
             //
-            for (int i = 1; i <= m_groupCount; i++)
+            for (int i = 0; i < m_groupCount; i++)
             {
 
                 if (!m_vGroups[i].grandTotalGroup)
@@ -1303,7 +1301,7 @@ namespace CSReportDll
             for (i = first + 1; i <= last; i++)
             {
                 bChanged = false;
-                for (j = last; j <= i; j--)
+                for (j = last; j > i; j--)
                 {
                     q = q + 1;
                     int row1 = m_vRowsIndex[j];
@@ -1344,7 +1342,7 @@ namespace CSReportDll
             for (i = first + 1; i <= last; i++)
             {
                 bChanged = false;
-                for (j = last; j <= i; j--)
+                for (j = last; j > i; j--)
                 {
                     q = q + 1;
                     int row1 = m_vRowsIndex[j];
@@ -1377,7 +1375,7 @@ namespace CSReportDll
         { // TODO: Use of ByRef founded Private Sub pGetLineAuxDoGroups(ByRef bGetNewPage As Boolean)
             // we continue evaluating groups
             //
-            for (int i = 1; i <= m_groupCount; i++)
+            for (int i = 0; i < m_groupCount; i++)
             {
 
                 // if the group has changed
@@ -1436,7 +1434,7 @@ namespace CSReportDll
             //
             int j = 0;
 
-            for (j = m_groupIndexChange; j <= m_idxGroupFooter; j++)
+            for (j = m_groupIndexChange; j < m_idxGroupFooter; j++)
             {
                 m_vGroups[j].footerMustBeClosed = true;
             }
@@ -1528,7 +1526,7 @@ namespace CSReportDll
 
         private void pEvalGroupChangedAux(int i)
         {
-            for (; i <= m_groupCount; i++)
+            for (; i < m_groupCount; i++)
             {
                 pGroupChangedAux(i);
             }
@@ -1758,7 +1756,7 @@ namespace CSReportDll
                         // for every control in the section line
                         //
                         int[] collByLeft = secLn.getControls().getCollByLeft();
-                        for (indexCtrl = 1; indexCtrl <= collByLeft.Length; indexCtrl++)
+                        for (indexCtrl = 0; indexCtrl < collByLeft.Length; indexCtrl++)
                         {
                             ctrl = secLn.getControls().item(collByLeft[indexCtrl]);
 
@@ -2923,7 +2921,7 @@ namespace CSReportDll
 
             if (indexGroup == -1)
             {
-                for (iRow = 0; iRow <= m_recordCount; iRow++)
+                for (iRow = 0; iRow < m_recordCount; iRow++)
                 {
                     rtn = rtn + (double)cReportGlobals.valVariant(m_rows.Rows[m_vRowsIndex[iRow]][colIndex]);
                 }
@@ -2932,16 +2930,16 @@ namespace CSReportDll
             {
                 if (m_vGroups[indexGroup].grandTotalGroup)
                 {
-                    for (iRow = 0; iRow <= m_recordCount; iRow++)
+                    for (iRow = 0; iRow < m_recordCount; iRow++)
                     {
                         rtn = rtn + (double)cReportGlobals.valVariant(m_rows.Rows[m_vRowsIndex[iRow]][colIndex]);
                     }
                 }
                 else
                 {
-                    for (iRow = m_iRow; iRow <= m_recordCount; iRow++)
+                    for (iRow = m_iRow; iRow < m_recordCount; iRow++)
                     {
-                        for (i = 1; i <= indexGroup; i++)
+                        for (i = 0; i < indexGroup; i++)
                         {
                             switch (m_vGroups[i].comparisonType)
                             {
@@ -3031,7 +3029,7 @@ namespace CSReportDll
 
             if (indexGroup == -1)
             {
-                for (iRow = 0; iRow <= m_recordCount; iRow++)
+                for (iRow = 0; iRow < m_recordCount; iRow++)
                 {
                     double value = (double)cReportGlobals.valVariant(m_rows.Rows[m_vRowsIndex[iRow]][colIndex]);
                     if (rtn < value)
@@ -3044,7 +3042,7 @@ namespace CSReportDll
             {
                 if (m_vGroups[indexGroup].grandTotalGroup)
                 {
-                    for (iRow = 0; iRow <= m_recordCount; iRow++)
+                    for (iRow = 0; iRow < m_recordCount; iRow++)
                     {
                         double value = (double)cReportGlobals.valVariant(m_rows.Rows[m_vRowsIndex[iRow]][colIndex]);
                         if (rtn < value)
@@ -3055,9 +3053,9 @@ namespace CSReportDll
                 }
                 else
                 {
-                    for (iRow = m_iRow; iRow <= m_recordCount; iRow++)
+                    for (iRow = m_iRow; iRow < m_recordCount; iRow++)
                     {
-                        for (i = 1; i <= indexGroup; i++)
+                        for (i = 0; i < indexGroup; i++)
                         {
                             switch (m_vGroups[i].comparisonType)
                             {
@@ -3153,7 +3151,7 @@ namespace CSReportDll
 
             if (indexGroup == -1)
             {
-                for (iRow = 0; iRow <= m_recordCount; iRow++)
+                for (iRow = 0; iRow < m_recordCount; iRow++)
                 {
                     double value = (double)cReportGlobals.valVariant(m_rows.Rows[m_vRowsIndex[iRow]][colIndex]);
                     if (rtn > value)
@@ -3166,7 +3164,7 @@ namespace CSReportDll
             {
                 if (m_vGroups[indexGroup].grandTotalGroup)
                 {
-                    for (iRow = 0; iRow <= m_recordCount; iRow++)
+                    for (iRow = 0; iRow < m_recordCount; iRow++)
                     {
                         double value = (double)cReportGlobals.valVariant(m_rows.Rows[m_vRowsIndex[iRow]][colIndex]);
                         if (rtn > value)
@@ -3177,9 +3175,9 @@ namespace CSReportDll
                 }
                 else
                 {
-                    for (iRow = m_iRow; iRow <= m_recordCount; iRow++)
+                    for (iRow = m_iRow; iRow < m_recordCount; iRow++)
                     {
-                        for (i = 1; i <= indexGroup; i++)
+                        for (i = 0; i < indexGroup; i++)
                         {
                             switch (m_vGroups[i].comparisonType)
                             {
@@ -3274,7 +3272,7 @@ namespace CSReportDll
 
             if (indexGroup == -1)
             {
-                for (iRow = 0; iRow <= m_recordCount; iRow++)
+                for (iRow = 0; iRow < m_recordCount; iRow++)
                 {
                     rtn = rtn + (double)cReportGlobals.valVariant(m_rows.Rows[m_vRowsIndex[iRow]][colIndex]);
                     count = count + 1;
@@ -3285,7 +3283,7 @@ namespace CSReportDll
                 if (m_vGroups[indexGroup].grandTotalGroup)
                 {
 
-                    for (iRow = 0; iRow <= m_recordCount; iRow++)
+                    for (iRow = 0; iRow < m_recordCount; iRow++)
                     {
                         rtn = rtn + (double)cReportGlobals.valVariant(m_rows.Rows[m_vRowsIndex[iRow]][colIndex]);
                         count = count + 1;
@@ -3294,9 +3292,9 @@ namespace CSReportDll
                 }
                 else
                 {
-                    for (iRow = m_iRow; iRow <= m_recordCount; iRow++)
+                    for (iRow = m_iRow; iRow < m_recordCount; iRow++)
                     {
-                        for (i = 1; i <= indexGroup; i++)
+                        for (i = 0; i < indexGroup; i++)
                         {
                             switch (m_vGroups[i].comparisonType)
                             {
@@ -3403,9 +3401,9 @@ namespace CSReportDll
                 }
                 else
                 {
-                    for (iRow = m_iRow; iRow <= m_recordCount; iRow++)
+                    for (iRow = m_iRow; iRow < m_recordCount; iRow++)
                     {
-                        for (i = 1; i <= indexGroup; i++)
+                        for (i = 0; i < indexGroup; i++)
                         {
                             switch (m_vGroups[i].comparisonType)
                             {
@@ -3582,7 +3580,7 @@ namespace CSReportDll
             m_vGroups[1].groups = new T_Group[0];
             recordCount = m_vRowsIndex.Length;
             m_vGroups[0].groups[0].first = 0;
-            m_vGroups[0].groups[0].last = recordCount;
+            m_vGroups[0].groups[0].last = recordCount-1;
             recordCount = m_groupCount * recordCount;
 
             // we need to sort the data
@@ -3677,7 +3675,7 @@ namespace CSReportDll
                         {
                             int t = i + 1;
                             int r = m_vGroups[t].groups.Length - 1;
-                            m_vGroups[t].groups[r].last = 0;
+                            m_vGroups[t].groups[r].last = -1;
 
                             // add a group item
                             //
@@ -3752,8 +3750,7 @@ namespace CSReportDll
 
         private int pEstimateLoops(int n)
         {
-            int q = 0;
-            for (q = n - 1; q <= 1; q--)
+            for (int q = n - 1; q > 0; q--)
             {
                 n = n + q;
             }
@@ -3941,7 +3938,7 @@ namespace CSReportDll
 
             // if the row to be evaluated is valid
             //
-            if (m_iRowFormula <= recordCount)
+            if (m_iRowFormula < recordCount)
             {
                 switch (idxGroup)
                 {
@@ -4339,7 +4336,7 @@ namespace CSReportDll
                             // index of the most internal group
                             //
                             fint.getParameters().item(cReportGlobals.C_KEYINDEXGROUP).setValue(m_groups.count().ToString());
-                            formula.setIdxGroup(m_groups.count());
+                            formula.setIdxGroup(m_groups.count()-1);
                         }
                         else
                         {
@@ -4526,7 +4523,7 @@ namespace CSReportDll
                         {
                             // For Each Ctrl In Secline.Controls
                             //
-                            for (indexCtrl = 1; indexCtrl <= secline.getControls().getCollByLeft().Length; indexCtrl++)
+                            for (indexCtrl = 0; indexCtrl < secline.getControls().getCollByLeft().Length; indexCtrl++)
                             {
                                 ctrl = secline.getControls().item(secline.getControls().getCollByLeft()[indexCtrl]);
 
@@ -4892,7 +4889,7 @@ namespace CSReportDll
                     {
                         G.redim(ref m_vRowsIndex, vRows.Rows.Count);
                         int k = 0;
-                        for (k = 0; k <= m_vRowsIndex.Length; k++)
+                        for (k = 0; k < m_vRowsIndex.Length; k++)
                         {
                             m_vRowsIndex[k] = k;
                         }
@@ -4957,7 +4954,7 @@ namespace CSReportDll
                 m_lastRowPostEvalued[i] = -1;
             }
 
-            for (i = 0; i <= m_groupCount; i++)
+            for (i = 0; i < m_groupCount; i++)
             {
                 // headers
                 //

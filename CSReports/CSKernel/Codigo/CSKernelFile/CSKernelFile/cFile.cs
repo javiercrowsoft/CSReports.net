@@ -122,8 +122,7 @@ namespace CSKernelFile
             }
             if ((!exists && !createFile) || withDialog)
             {
-                FileInfo fi = new FileInfo(m_curPath + "\\" + getFileName(fullFileName));
-                exists = (fi.Exists);
+                exists = fileExists(m_curPath + "\\" + getFileName(fullFileName));
 
                 if (exists && !withDialog)
                 {
@@ -133,7 +132,7 @@ namespace CSKernelFile
                 {
                     return false;
                 }
-                else if (!userSearchFile(out fullFileName, false, "Open file", false, canOpenOther))
+                else if (!userSearchFile(ref fullFileName, false, "Open file", false, canOpenOther))
                 {
                     return false;
                 }
@@ -166,9 +165,15 @@ namespace CSKernelFile
                                 m_file = new FileStream(fullFileName,
                                                         FileMode.Append,
                                                         FileAccess.Write,
-                                                        FileShare.Write);
+                                                        FileShare.ReadWrite);
                                 break;
                             case eFileAccess.eLockWrite:
+                                m_file = new FileStream(fullFileName,
+                                                        FileMode.Append,
+                                                        FileAccess.Write,
+                                                        FileShare.Read);
+                                break;
+                            case eFileAccess.eLockReadWrite:
                                 m_file = new FileStream(fullFileName,
                                                         FileMode.Append,
                                                         FileAccess.Write,
@@ -186,9 +191,15 @@ namespace CSKernelFile
                                 m_file = new FileStream(fullFileName,
                                                         FileMode.OpenOrCreate,
                                                         FileAccess.Write,
-                                                        FileShare.Write);
+                                                        FileShare.ReadWrite);
                                 break;
                             case eFileAccess.eLockWrite:
+                                m_file = new FileStream(fullFileName,
+                                                        FileMode.OpenOrCreate,
+                                                        FileAccess.Write,
+                                                        FileShare.Read);
+                                break;
+                            case eFileAccess.eLockReadWrite:
                                 m_file = new FileStream(fullFileName,
                                                         FileMode.OpenOrCreate,
                                                         FileAccess.Write,
@@ -205,9 +216,15 @@ namespace CSKernelFile
                                 m_file = new FileStream(fullFileName,
                                                         FileMode.OpenOrCreate,
                                                         FileAccess.Read,
-                                                        FileShare.Read);
+                                                        FileShare.ReadWrite);
                                 break;
                             case eFileAccess.eLockWrite:
+                                m_file = new FileStream(fullFileName,
+                                                        FileMode.OpenOrCreate,
+                                                        FileAccess.Read,
+                                                        FileShare.Read);
+                                break;
+                            case eFileAccess.eLockReadWrite:
                                 m_file = new FileStream(fullFileName,
                                                         FileMode.OpenOrCreate,
                                                         FileAccess.Read,
@@ -225,10 +242,17 @@ namespace CSKernelFile
                                 m_file = new FileStream(fullFileName,
                                                         FileMode.OpenOrCreate,
                                                         FileAccess.Write,
-                                                        FileShare.Write);
+                                                        FileShare.ReadWrite);
                                 m_bw = new BinaryWriter(m_file);
                                 break;
                             case eFileAccess.eLockWrite:
+                                m_file = new FileStream(fullFileName,
+                                                        FileMode.OpenOrCreate,
+                                                        FileAccess.Write,
+                                                        FileShare.Read);
+                                m_bw = new BinaryWriter(m_file);
+                                break;
+                            case eFileAccess.eLockReadWrite:
                                 m_file = new FileStream(fullFileName,
                                                         FileMode.OpenOrCreate,
                                                         FileAccess.Write,
@@ -246,10 +270,17 @@ namespace CSKernelFile
                                 m_file = new FileStream(fullFileName,
                                                         FileMode.OpenOrCreate,
                                                         FileAccess.Read,
-                                                        FileShare.Read);
+                                                        FileShare.ReadWrite);
                                 m_br = new BinaryReader(m_file);
                                 break;
                             case eFileAccess.eLockWrite:
+                                m_file = new FileStream(fullFileName,
+                                                        FileMode.OpenOrCreate,
+                                                        FileAccess.Read,
+                                                        FileShare.Read);
+                                m_br = new BinaryReader(m_file);
+                                break;
+                            case eFileAccess.eLockReadWrite:
                                 m_file = new FileStream(fullFileName,
                                                         FileMode.OpenOrCreate,
                                                         FileAccess.Read,
@@ -285,7 +316,7 @@ namespace CSKernelFile
             {
                 fullFileName = " ";
             }
-            if (userSearchFile(out fullFileName, true, description, true, false))
+            if (userSearchFile(ref fullFileName, true, description, true, false))
             {
                 if (fullFileName.Length > 0)
                 {
@@ -435,7 +466,7 @@ namespace CSKernelFile
             }
         }
 
-        public bool userSearchFile(out string fullFileName,
+        public bool userSearchFile(ref string fullFileName,
                                    bool ifNotExistsIsOk,
                                    string description,
                                    bool saving,
@@ -445,8 +476,6 @@ namespace CSKernelFile
             bool extValid = false;
             bool nameValid = false;
             bool exists = false;
-
-            fullFileName = "";
 
             do
             {
@@ -458,8 +487,8 @@ namespace CSKernelFile
                                     description,
                                     saving))
                 {
-                    FileInfo fi = new FileInfo(fullFileName);
-                    exists = (fi.Exists);
+
+                    exists = fileExists(userFile);
 
                     if (exists || ifNotExistsIsOk)
                     {
@@ -520,7 +549,7 @@ namespace CSKernelFile
         {
             userFile = "";
             FileDialog fd = m_commDialog as FileDialog;
-            if (curDir.Length > 0)
+            if (curDir.Length > 0 && curDir != " ")
             {
                 DirectoryInfo di = new DirectoryInfo(curDir);
                 if (di.Exists)
@@ -528,7 +557,7 @@ namespace CSKernelFile
                     fd.InitialDirectory = curDir;
                 }
             }
-            if (fileToSearch != " ." && fileToSearch.Substring(1, 2) != "*.")
+            if (fileToSearch != " ." && (fileToSearch.Length < 2 || fileToSearch.Substring(0, 2) != "*."))
             {
                 fd.FileName = fileToSearch;
             }
@@ -586,7 +615,7 @@ namespace CSKernelFile
             string sep = "";
 
             getPathAndFileName(fullFileName, out path, out fileName);
-            sepPos = fileName.Length - 1;
+            sepPos = fileName.Length;
 
             if (sepPos == 0)
             {
@@ -594,14 +623,15 @@ namespace CSKernelFile
             }
             else
             {
+                sepPos -= 1;
                 sep = fileName.Substring(sepPos, 1);
                 while (sep != ".")
                 {
                     sepPos--;
-                    if (sepPos == 0) break;
+                    if (sepPos < 0) break;
                     sep = fileName.Substring(sepPos, 1);
                 }
-                if (sepPos == 0)
+                if (sepPos < 0)
                 {
                     return "";
                 }
@@ -620,27 +650,28 @@ namespace CSKernelFile
             string sep = "";
 
             getPathAndFileName(fullFileName, out path, out fileName);
-            sepPos = fileName.Length - 1;
+            sepPos = fileName.Length;
 
             if (sepPos == 0)
             {
                 return fileName;
             }
 
+            sepPos -= 1;
             sep = fileName.Substring(sepPos, 1);
             while (sep != ".")
             {
                 sepPos--;
-                if (sepPos == 0) break;
+                if (sepPos < 0) break;
                 sep = fileName.Substring(sepPos, 1);
             }
-            if (sepPos == 0)
+            if (sepPos < 0)
             {
                 return fileName;
             }
             else
             {
-                return fileName.Substring(1, sepPos - 1);
+                return fileName.Substring(0, sepPos);
             }
         }
 
@@ -660,7 +691,7 @@ namespace CSKernelFile
             int sepPos = 0;
             string sep = "";
 
-            sepPos = fullFileName.Length - 1;
+            sepPos = fullFileName.Length;
             if (sepPos == 0)
             {
                 path = "";
@@ -668,20 +699,21 @@ namespace CSKernelFile
             }
             else
             {
+                sepPos -= 1;
                 sep = fullFileName.Substring(sepPos, 1);
                 while (!isSeparator(sep))
                 {
                     sepPos--;
-                    if (sepPos == 0) break;
+                    if (sepPos < 0) break;
                     sep = fullFileName.Substring(sepPos, 1);
                 }
                 if (sepPos == fullFileName.Length - 1)
                 {
                     // case when fullFileName is c:\ or d:\ etc.
-                    path = fullFileName.Substring(1, sepPos - 1);
+                    path = fullFileName.Substring(0, sepPos);
                     fileName = fullFileName;
                 }
-                else if (sepPos == 0)
+                else if (sepPos < 0)
                 {
                     // case when fullFileName is c: or d: etc.
                     path = fullFileName;
@@ -719,6 +751,18 @@ namespace CSKernelFile
                     return true;
                 default:
                     return false;
+            }
+        }
+
+        private static bool fileExists(string fullFileName) 
+        {
+            try
+            {
+                FileInfo fi = new FileInfo(fullFileName);
+                return fi.Exists;
+            }
+            catch (Exception ex) {
+                return false;
             }
         }
 

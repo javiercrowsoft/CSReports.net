@@ -70,7 +70,7 @@ namespace CSReportDll
 
             int i = 0;
 
-            for (i = 0; i <= x.Length; i++)
+            for (i = 0; i < x.Length; i++)
             {
                 s = s.Replace("$" + (i + 1).ToString(), x[i]);
             }

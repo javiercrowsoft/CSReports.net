@@ -293,7 +293,7 @@ namespace CSReportDll
 
             G.redim(ref m_collByLeft, this.Count);
 
-            for (i = 1; i <= m_collByLeft.Length; i++)
+            for (i = 0; i < m_collByLeft.Length; i++)
             {
                 m_collByLeft[i] = i;
             }

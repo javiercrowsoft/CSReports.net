@@ -116,7 +116,7 @@ namespace CSKernelClient
         public static String arrayToString(int[] v) {
             int i = 0;
             String s = "";
-            for (i = 0; i <= v.Length; i++)
+            for (i = 0; i < v.Length; i++)
             {
                 s = s + v[i].ToString() + ",";
             }
@@ -127,7 +127,7 @@ namespace CSKernelClient
         {
             int i = 0;
             String s = "";
-            for (i = 0; i <= v.Length; i++)
+            for (i = 0; i < v.Length; i++)
             {
                 s = s + v[i] + ",";
             }
@@ -307,7 +307,7 @@ namespace CSKernelClient
         private static void listSetListIndexForText_(ComboBox list, String text)
         {
             int i = 0;
-            for (i = 0; i <= list.Items.Count; i++)
+            for (i = 0; i < list.Items.Count; i++)
             {
                 if (list.Items[i].ToString() == text)
                 {

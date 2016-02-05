@@ -145,7 +145,60 @@ namespace CSReportEditor
 
         internal static void createStandarSections(cReport report, Rectangle tr)
         {
-            throw new NotImplementedException();
+            report.getHeaders().add(null, C_KEY_HEADER);
+            report.getFooters().add(null, C_KEY_FOOTER);
+            report.getDetails().add(null, C_KEY_DETAIL);
+
+            // 
+            // main header
+            //
+            cReportSection sec = report.getHeaders().item(C_KEY_HEADER);
+            sec.setName("Main header");
+
+            cReportAspect aspect = sec.getAspect();
+            aspect.setTop(0);
+            aspect.setHeight(tr.height * 0.25f);
+            aspect.setWidth(tr.width);
+            cReportSectionLine secLn = sec.getSectionLines().item(0);
+            secLn.setSectionName("Main header");
+            aspect = secLn.getAspect();
+            aspect.setTop(0);
+            aspect.setHeight(tr.height * 0.25f);
+            aspect.setWidth(tr.width);
+
+            // 
+            // detail
+            //
+            sec = report.getDetails().item(C_KEY_DETAIL);
+            sec.setName("Detail");
+
+            aspect = sec.getAspect();
+            aspect.setTop(0);
+            aspect.setHeight(tr.height * 0.25f);
+            aspect.setWidth(tr.width);
+            secLn = sec.getSectionLines().item(0);
+            secLn.setSectionName("Detail");
+            aspect = secLn.getAspect();
+            aspect.setTop(0);
+            aspect.setHeight(tr.height * 0.25f);
+            aspect.setWidth(tr.width);
+
+            // 
+            // main footer
+            //
+            sec = report.getFooters().item(C_KEY_FOOTER);
+            sec.setName("Main footer");
+
+            aspect = sec.getAspect();
+            aspect.setTop(0);
+            aspect.setHeight(tr.height * 0.75f);
+            aspect.setWidth(tr.width);
+            secLn = sec.getSectionLines().item(0);
+            secLn.setSectionName("Main footer");
+            aspect = secLn.getAspect();
+            aspect.setTop(0);
+            aspect.setHeight(tr.height * 0.75f);
+            aspect.setWidth(tr.width);
         }
 
         internal static void clearCtrlBox(cEditor editor)

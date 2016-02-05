@@ -88,7 +88,7 @@ namespace CSReportDll
                 c.setTypeSection(m_typeSection);
 
                 pRefreshIndex();
-                c.setIndex(this.count());
+                c.setIndex(this.count()-1);
                 c.setKey(key);
 
                 return c;
@@ -194,8 +194,7 @@ namespace CSReportDll
 
         private void pRefreshIndex()
         {
-            int i = 0;
-            for (i = 1; i <= this.count(); i++)
+            for (int i = 0; i < this.count(); i++)
             {
                 item(i).setRealIndex(i);
             }

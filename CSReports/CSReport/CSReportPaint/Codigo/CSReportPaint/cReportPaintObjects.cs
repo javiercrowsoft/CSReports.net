@@ -181,11 +181,11 @@ namespace CSReportPaint
         //
         public void zorder(String key, bool top)
         {
-            int i = 0;
+            int i;
 
             // first we search the element using key
             //
-            for (i = 1; i <= m_zorder.Length; i++)
+            for (i = 0; i < m_zorder.Length; i++)
             {
                 if (m_zorder[i] == key)
                 {
@@ -193,7 +193,7 @@ namespace CSReportPaint
                 }
             }
 
-            if (i >= m_zorder.Length && top) 
+            if (i >= m_zorder.Length-1 && top) 
             { 
                 return; 
             }
@@ -204,7 +204,7 @@ namespace CSReportPaint
 
             if (top)
             {
-                for (; i <= m_zorder.Length - 1; i++)
+                for (; i < m_zorder.Length - 1; i++)
                 {
                     m_zorder[i] = m_zorder[i + 1];
                     item(m_zorder[i]).getAspect().setNZOrder(i);
@@ -214,31 +214,27 @@ namespace CSReportPaint
             }
             else
             {
-                for (; i <= 2; i--)
+                for (; i > 0; i--)
                 {
                     m_zorder[i] = m_zorder[i - 1];
                     item(m_zorder[i]).getAspect().setNZOrder(i);
                 }
-                m_zorder[1] = key;
-                item(key).getAspect().setNZOrder(1);
+                m_zorder[0] = key;
+                item(key).getAspect().setNZOrder(0);
             }
         }
 
         public int getZOrderForKey(String key)
         {
-            int _rtn = 0;
-            int i = 0;
-
-            for (i = 1; i <= m_zorder.Length; i++)
+            for (int i = 0; i < m_zorder.Length; i++)
             {
                 if (m_zorder[i] == key)
                 {
-                    _rtn = i;
-                    break;
+                    return i;
                 }
             }
 
-            return _rtn;
+            return -1;
         }
 
         public String getNextKeyForZOrder(int index)
@@ -277,13 +273,11 @@ namespace CSReportPaint
 
         private void dellZOrder(String sKey)
         {
-            int i = 0;
-            int j = 0;
-            for (i = 1; i <= m_zorder.Length; i++)
+            for (int i = 0; i < m_zorder.Length; i++)
             {
                 if (m_zorder[i] == sKey)
                 {
-                    for (j = i; j <= m_zorder.Length - 1; j++)
+                    for (int j = i; j < m_zorder.Length - 1; j++)
                     {
                         m_zorder[j] = m_zorder[j + 1];
                     }

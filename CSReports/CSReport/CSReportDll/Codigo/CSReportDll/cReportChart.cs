@@ -492,7 +492,7 @@ namespace CSReportDll
             if (m_groupFieldIndex >= 0)
             {
                 // TODO: we need the rows dimension. remeber rows is a matrix (cols by rows)
-                for (j = 0; j <= rows.Count; j++)
+                for (j = 0; j < rows.Count; j++)
                 {
                     if (cReportGlobals.valVariant(rows[j][m_groupFieldIndex]) == m_groupValue)
                     {
@@ -514,7 +514,7 @@ namespace CSReportDll
                 if (m_groupFieldIndex >= 0)
                 {
                     // TODO: we need the rows dimension. remeber rows is a matrix (cols by rows)
-                    for (j = 0; j <= rows.Count; j++)
+                    for (j = 0; j < rows.Count; j++)
                     {
 
                         if ((String)cReportGlobals.valVariant(rows[j][m_groupFieldIndex]) == m_groupValue)
@@ -534,7 +534,7 @@ namespace CSReportDll
                     v[0].idx = 0;
                 }
                 // TODO: we need the rows dimension. remeber rows is a matrix (cols by rows)
-                for (j = 1; j <= rows.Count; j++)
+                for (j = 0; j < rows.Count; j++)
                 {
 
                     if (m_groupFieldIndex >= 0)
@@ -559,12 +559,12 @@ namespace CSReportDll
                     }
                 }
 
-                for (i = 1; i <= v.Length; i++)
+                for (i = 0; i < v.Length; i++)
                 {
 
                     v[i].idx = -1;
                     // TODO: we need the rows dimension. remeber rows is a matrix (cols by rows)
-                    for (j = 1; j <= rows.Count; j++)
+                    for (j = 0; j < rows.Count; j++)
                     {
 
                         if (m_groupFieldIndex >= 0)
@@ -610,7 +610,7 @@ namespace CSReportDll
             {
                 i = 0;
                 // TODO: we need the rows dimension. remeber rows is a matrix (cols by rows)
-                for (j = 0; j <= rows.Count; j++)
+                for (j = 0; j < rows.Count; j++)
                 {
                     if (m_groupFieldIndex >= 0)
                     {
@@ -636,7 +636,7 @@ namespace CSReportDll
                         bHaveToRedim = true;
                         n = v.Length + 1;
                         // TODO: we need the rows dimension. remeber rows is a matrix (cols by rows)
-                        for (j = 0; j <= rows.Count; j++)
+                        for (j = 0; j < rows.Count; j++)
                         {
                             if (m_groupFieldIndex >= 0)
                             {
@@ -730,7 +730,7 @@ namespace CSReportDll
                                 serie.getLabelIndex(), 
                                 m_chartType == csRptChartType.PIE);
 
-                for (i = 0; i <= values.Length; i++) {
+                for (i = 0; i < values.Length; i++) {
 
                     if (values[i].idx != -1) {
                         if (idxSerie == 1) {

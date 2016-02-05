@@ -977,6 +977,7 @@
             this.MainMenuStrip = this.mnMain;
             this.Name = "fMain";
             this.Text = "CrowSoft Report Editor";
+            this.Load += new System.EventHandler(this.fMain_Load);
             this.mnMain.ResumeLayout(false);
             this.mnMain.PerformLayout();
             this.tbMain.ResumeLayout(false);

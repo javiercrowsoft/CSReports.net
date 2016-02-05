@@ -108,7 +108,7 @@ namespace CSReportDll
 
                 pRefreshIndex();
 
-                c.setIndex(this.count());
+                c.setIndex(this.count()-1);
                 c.setKey(key);
 
                 return c;
@@ -143,7 +143,7 @@ namespace CSReportDll
                 m_coll.Remove(key);
                 m_keys.Remove(key);
 
-                for (int i = 0; i <= this.count(); i++)
+                for (int i = 0; i < this.count(); i++)
                 {
                     m_coll[m_keys[i]].setIndex(i);
                     m_coll[m_keys[i]].setName(m_coll[m_keys[i]].getName().Substring(1, 2).Replace("_", "") 
@@ -164,7 +164,7 @@ namespace CSReportDll
                 m_coll.Remove(m_keys[index]);
                 m_keys.RemoveAt(index);
 
-                for (int i = 0; i <= this.count(); i++)
+                for (int i = 0; i < this.count(); i++)
                 {
                     cReportSection sec = (cReportSection)m_coll[m_keys[i]];
                     sec.setIndex(i);
@@ -209,8 +209,7 @@ namespace CSReportDll
 
         private void pRefreshIndex()
         {
-            int i = 0;
-            for (i = 1; i <= this.count(); i++)
+            for (int i = 0; i < this.count(); i++)
             {
                 item(i).setRealIndex(i);
             }

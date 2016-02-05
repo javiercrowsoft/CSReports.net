@@ -273,7 +273,7 @@ namespace CSReportDll
 
                 // Update the index
                 //
-                for (int i = 1; i <= this.Count; i++)
+                for (int i = 0; i < this.Count; i++)
                 {
                     item(i).setIndex(i);
                 }
@@ -300,7 +300,7 @@ namespace CSReportDll
 
                 // Update the index
                 //
-                for (int i = 1; i <= this.Count; i++)
+                for (int i = 0; i < this.Count; i++)
                 {
                     item(i).setIndex(i);
                 }
