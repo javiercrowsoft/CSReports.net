@@ -794,7 +794,8 @@ namespace CSReportPaint
 
         public bool drawRule(String key, Graphics graph)
         {
-            float top = 0;
+            const int LINE_COLOR = 0xcc6600;
+            int top = 0;
             float heightSec = 0;
             CSReportDll.cReportAspect aspect = null;
 
@@ -809,24 +810,24 @@ namespace CSReportPaint
             aspect.setLeft(0);
             aspect.setHeight(20);
             aspect.setAlign(HorizontalAlignment.Right);
-            aspect.setWidth(graph.ClipBounds.Width - 5);
+            aspect.setWidth(graph.ClipBounds.Width - 1);
 
             if (w_item.getTextLine() != "")
             {
-                top = -w_item.getHeightSec();
+                top = - Convert.ToInt32(w_item.getHeightSec());
                 w_aspect = w_item.getAspect();
-                top = top + w_aspect.getTop() - w_aspect.getOffset() + w_aspect.getHeight() * 2;
+                top += Convert.ToInt32(w_aspect.getTop() - w_aspect.getOffset() + w_aspect.getHeight() * 2);
 
                 printLine(graph, 
-                            false, 
+                            true, 
                             0, 
                             top, 
                             aspect.getWidth(), 
-                            top, 
-                            0, 
-                            3, 
-                            false, 
-                            (int)csColors.C_COLOR_BLACK, 
+                            top,
+                            LINE_COLOR, 
+                            1, 
+                            true,
+                            LINE_COLOR, 
                             false);
 
                 // last section line
@@ -846,26 +847,46 @@ namespace CSReportPaint
             }
             else
             {
-                top = aspect.getTop() - aspect.getOffset() - heightSec + w_item.getAspect().getHeight();
+                top = Convert.ToInt32(aspect.getTop() - aspect.getOffset() - heightSec + w_item.getAspect().getHeight());
 
                 if (w_item.getIsSection())
                 {
                     printLine(graph, 
-                                false, 
+                                true,
                                 0, 
                                 top, 
                                 aspect.getWidth(), 
-                                top, 
-                                0, 
-                                3, 
-                                false, 
-                                (int)csColors.C_COLOR_BLACK, 
+                                top,
+                                LINE_COLOR, 
+                                1, 
+                                true,
+                                LINE_COLOR, 
                                 false);
                 }
 
                 // every section line except the last one
                 //
                 printText(graph, w_item.getText(), aspect, w_item.getImage());
+            }
+            
+            if (w_item == m_paintSections.item(m_paintSections.count() - 1)) 
+            {
+                top = Convert.ToInt32(aspect.getTop() + w_item.getHeightSecLine() - aspect.getOffset() - w_item.getAspect().getHeight());
+
+                if (w_item.getIsSection())
+                {
+                    printLine(graph,
+                                true,
+                                0,
+                                top,
+                                aspect.getWidth(),
+                                top,
+                                LINE_COLOR,
+                                1,
+                                true,
+                                LINE_COLOR,
+                                false);
+                }
             }
 
             return true;
@@ -1460,7 +1481,7 @@ namespace CSReportPaint
                 x2 = x2 * m_scaleX;
 
                 cGraphics extGraph = new cGraphics(graph);
-                extGraph.DrawRoundRectangle(pen, x1, y1, x2, y2, 20f);
+                extGraph.DrawRoundRectangle(pen, x1, y1, x2-x1, y2-y1, 8f);
             }
             else
             {
@@ -2027,7 +2048,7 @@ namespace CSReportPaint
             Graphics graph = Graphics.FromImage(m_bitmap);
             SizeF stringSize = graph.MeasureString(text, font);
             graph.Dispose();
-            return Convert.ToInt32(stringSize.Height / scaleX); // TODO: check if it is / or *
+            return Convert.ToInt32(stringSize.Width / scaleX); // TODO: check if it is / or *
         }
 
         private int getPlEvaluateTextHeight(String text, Font font, float width, StringFormat format, float scaleY, float scaleX)
@@ -2076,12 +2097,11 @@ namespace CSReportPaint
             int colorOut)
         {
 
-            // With aspect;
-            // Si no se indico sin borde o si se
-            // indico Filled
+            // m_notBorder is used by preview and printing to indicate the controls must be print a border only
+            // when BorderType != NONE
+            // 
             if ((m_notBorder == false || filled) || (aspect.getBorderType() != csReportBorderType.CSRPTBSNONE))
             {
-
                 if (aspect.getBorderType() == csReportBorderType.CSRPTBS3D)
                 {
 
@@ -2106,7 +2126,27 @@ namespace CSReportPaint
                 }
                 else
                 {
-                    printLine(graph, filled, x1, y1, x2, y2, colorIn, 1, false, colorOut, false);
+                    //
+                    // we are in the editor window
+                    //
+                    // TODO: this is a bug. Then only way to get a border is setting BorderType to CSRPTBS3D or 
+                    //       BorderRounded == TRUE
+                    //
+                    //       when BorderType == CSRPTBSFIXED the border is not drawn
+                    //
+                    //       we need to fix it but the fix will break all reports so first we need to update
+                    //       those reports to set the BorderType to CSRPTBSNONE
+                    //
+                    bool dash = false;
+                    const int borderWidth = 1;
+
+                    if (m_notBorder == false && aspect.getBorderType() == csReportBorderType.CSRPTBSFIXED && !aspect.getBorderRounded())
+                    {
+                        colorOut = Color.Gray.ToArgb(); // 0xff9966; //Color.LightGray.ToArgb();
+                        dash = true;
+                    }
+
+                    printLine(graph, filled, x1, y1, x2, y2, colorIn, borderWidth, dash, colorOut, false);
                 }
             }
         }

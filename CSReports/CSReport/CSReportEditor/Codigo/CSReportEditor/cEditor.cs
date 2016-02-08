@@ -35,6 +35,7 @@ namespace CSReportEditor
             m_picReport.BackColor = Color.Beige;
 
             m_picReport.Paint += new PaintEventHandler(m_picReport_Paint);
+            m_picRule.Paint += new PaintEventHandler(m_picRule_Paint);
 
             m_editorTab = editorTab;
         }
@@ -1922,10 +1923,15 @@ namespace CSReportEditor
             }            
         }
 
-        private void m_picRule_Paint() {
-            CSReportPaint.cReportPaintObjects ps = m_paint.getPaintSections();
-            for (int i = 0; i < ps.count(); i++) {
-                m_paint.drawRule(ps.getNextKeyForZOrder(i), m_picReport.CreateGraphics());
+        private void m_picRule_Paint(object sender, PaintEventArgs e)
+        {
+            if (m_paint != null)
+            {
+                CSReportPaint.cReportPaintObjects ps = m_paint.getPaintSections();
+                for (int i = 0; i < ps.count(); i++)
+                {
+                    m_paint.drawRule(ps.getNextKeyForZOrder(i), e.Graphics);
+                }
             }
         }
 

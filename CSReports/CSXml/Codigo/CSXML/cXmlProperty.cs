@@ -77,14 +77,16 @@ namespace CSXml
             switch (type)
             {
                 case eTypes.eBoolean:
-                    switch (m_value)
+                    switch (m_value.ToLower())
                     {
-                        case "True":
-                        case "Verdadero":
+                        case "true":
+                        case "verdadero":
+                        case "-1":
+                        case "1":
                             return -1;
-                        case "False":
-                        case "Falseo":
-                            return 0;
+                        //"False":
+                        //"Falso":
+                        // or any other value is FALSE
                         default:
                             return 0;
                     }
