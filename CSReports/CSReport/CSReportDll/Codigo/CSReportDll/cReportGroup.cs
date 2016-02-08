@@ -184,12 +184,13 @@ namespace CSReportDll
 
         private void pSetName()
         {
-            if (m_name.ToLower().Substring(0, 5) == "group" 
-                || m_name.ToLower().Substring(0, 5) == "grupo" 
-                || m_name.ToLower().Substring(0, 3) == "gh_" 
-                || m_name.ToLower().Substring(0, 3) == "gf_" 
-                || m_name.ToLower().Substring(0, 2) == "g_" 
-                || m_name.Length == 0)
+            if (m_name.Length == 0
+                ||cUtil.subString(m_name.ToLower(), 0, 5) == "group" 
+                || cUtil.subString(m_name.ToLower(), 0, 5) == "grupo" 
+                || cUtil.subString(m_name.ToLower(), 0, 3) == "gh_" 
+                || cUtil.subString(m_name.ToLower(), 0, 3) == "gf_" 
+                || cUtil.subString(m_name.ToLower(), 0, 2) == "g_" 
+                )
             {
                 m_name = "G_" + m_index;
             }

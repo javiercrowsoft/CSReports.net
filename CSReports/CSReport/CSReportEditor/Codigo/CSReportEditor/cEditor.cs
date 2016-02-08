@@ -37,6 +37,11 @@ namespace CSReportEditor
             m_picReport.Paint += new PaintEventHandler(m_picReport_Paint);
             m_picRule.Paint += new PaintEventHandler(m_picRule_Paint);
 
+            // mouse events
+            m_picReport.MouseDown += new MouseEventHandler(m_picReport_MouseDown);
+            m_picReport.MouseUp += new MouseEventHandler(m_picReport_MouseUp);
+            m_picReport.MouseMove += new MouseEventHandler(m_picReport_MouseMove);
+
             m_editorTab = editorTab;
         }
         
@@ -78,8 +83,8 @@ namespace CSReportEditor
         private bool m_bMoveHorizontal = false;
         private bool m_bNoMove = false;
 
-        private String[] m_vSelectedKeys = null;
-        private String[] m_vCopyKeys = null;
+        private String[] m_vSelectedKeys = new String[0];
+        private String[] m_vCopyKeys = new String[0];
 
         private fProgress m_fProgress;
         private bool m_cancelPrinting = false;
@@ -114,8 +119,8 @@ namespace CSReportEditor
         private int m_fieldIndex = 0;
         private String m_formulaText = "";
 
-        private float m_x = 0;
-        private float m_y = 0;
+        private int m_x = 0;
+        private int m_y = 0;
         private bool m_keyboardMove = false;
 
         private int m_keyboardMoveStep = 0;
@@ -909,15 +914,15 @@ namespace CSReportEditor
                         return;
                 }
 
-                float x = 0;
-                float y = 0;
+                int x = 0;
+                int y = 0;
 
 				if (m_vSelectedKeys.Length < 1) { return; }
 
                 if (!m_keyboardMove) {
                     aspect = m_paint.getPaintObject(m_vSelectedKeys[1]).getAspect();
-					y = aspect.getTop();
-					x = aspect.getLeft();
+					y = Convert.ToInt32(aspect.getTop());
+					x = Convert.ToInt32(aspect.getLeft());
                 } 
                 else {
                     y = m_y;
@@ -935,8 +940,8 @@ namespace CSReportEditor
                     if (!m_keyboardMove) {
 
                         aspect = m_paint.getPaintObject(m_vSelectedKeys[1]).getAspect();
-						y = y + aspect.getHeight();
-						x = x + aspect.getWidth();
+						y += Convert.ToInt32(aspect.getHeight());
+						x += Convert.ToInt32(aspect.getWidth());
 
                         pSetMovingFromKeyboard(x, y);
 
@@ -1003,7 +1008,7 @@ namespace CSReportEditor
                     }
                 }
 
-                m_picReport_MouseMove(MouseButtons.Left, 0, x, y);
+                m_picReport_MouseMove(this, new MouseEventArgs(MouseButtons.Left, 0, x, y, 0));
                 m_x = x;
                 m_y = y;
 
@@ -1071,11 +1076,17 @@ namespace CSReportEditor
         private void m_picReport_KeyUp(int keyCode, bool ctrlKey) {
             if (m_keyboardMove) {
                 m_keyboardMove = false;
-                m_picReport_MouseUp(MouseButtons.Left, 0, m_x, m_y);
+                m_picReport_MouseUp(this, new MouseEventArgs(MouseButtons.Left, 0, m_x, m_y, 0));
             }
         }
 
-		private void m_picReport_MouseDown(MouseButtons button, bool ctrlKey, int x, int y) {
+        private void m_picReport_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
+        { 
+            MouseButtons button = e.Button;
+            bool ctrlKey = Control.ModifierKeys.HasFlag(Keys.Control); 
+            int x = e.X;
+            int y = e.Y;
+
             try {
 
                 String sKey = "";
@@ -1599,12 +1610,14 @@ namespace CSReportEditor
             }
         }
 
-        private void m_picReport_MouseMove(
-            MouseButtons button, 
-            int shift, 
-            float x, 
-            float y) 
+        private void m_picReport_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
         {
+            if (m_paint == null) return;
+
+            MouseButtons button = e.Button;
+            int x = e.X;
+            int y = e.Y;
+
             String sKey = "";
 			csRptPaintRegionType rgnTp = csRptPaintRegionType.CRPTPNTRGNTYPEBODY;
 
@@ -1856,23 +1869,27 @@ namespace CSReportEditor
             if (ctrlName != "") {
                 msg = "Ctl:[" + ctrlName 
                     + "]Tipo:[" + strCtlType 
-					+ "]F.Hide:[" + formulaHide.Substring(1, 100) 
-                    + "]Activa[" + ((bool) hasFormulaHide).ToString() 
-					+ "]F.Value:[" + formulaValue.Substring(1, 100) 
+					+ "]F.Hide:[" + cUtil.subString(formulaHide, 1, 100) 
+                    + "]Activa[" + ((bool) hasFormulaHide).ToString()
+                    + "]F.Value:[" + cUtil.subString(formulaValue, 1, 100) 
                     + "]Activa[" + ((bool) hasFormulaValue).ToString() 
                     + "]Field:[" + fieldName + "]";
             }
             m_fmain.setsbPnlCtrl(msg);
         }
 
-        private void m_picReport_MouseUp(MouseButtons button, int shift, float x, float y) {
+        private void m_picReport_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            MouseButtons button = e.Button;
+            int x = e.X;
+            int y = e.Y;
+
             // to avoid reentrancy
             if (m_opening) { return; }
 
             //----------------------------------------------------
             // MOVING
             //----------------------------------------------------
-            String sKeySection = "";
 
             if (m_moving) {
                 if (m_keyMoving != "") {
@@ -4184,14 +4201,13 @@ namespace CSReportEditor
             w_aspect.setWidth(aspect.getWidth());
             w_aspect.setHeight(cGlobals.C_HEIGHT_BAR_SECTION);
 
-            int innerColor = 0;
-            innerColor = 0x99ccff;
-
             if (isSectionLine) {
-                w_aspect.setBackColor(innerColor);
+                w_aspect.setBackColor(0xffcc99);
                 w_aspect.setBorderColor(Color.Red.ToArgb());
             } 
             else {
+                const int innerColor = 0x99ccff;
+
                 if (rptType == csRptTypeSection.GROUP_SECTION_FOOTER 
                     || rptType == csRptTypeSection.GROUP_SECTION_HEADER) {
                     w_aspect.setBackColor(innerColor);
@@ -4918,7 +4934,8 @@ namespace CSReportEditor
 
         private void refreshNextNameCtrl(String nameCtrl) {
             int x = 0;
-            if (nameCtrl.Length >= cGlobals.C_CONTROL_NAME.Length && nameCtrl.Substring(0, cGlobals.C_CONTROL_NAME.Length).ToUpper() == cGlobals.C_CONTROL_NAME.ToUpper()) {
+            if (cUtil.subString(nameCtrl, 0, cGlobals.C_CONTROL_NAME.Length).ToUpper() == cGlobals.C_CONTROL_NAME.ToUpper())
+            {
                 x = (int)cReportGlobals.val(nameCtrl.Substring(cGlobals.C_CONTROL_NAME.Length + 1));
                 if (x > m_nextNameCtrl) {
                     m_nextNameCtrl = x + 1;
@@ -6137,7 +6154,8 @@ namespace CSReportEditor
             // if it isn't an internal function we give the user
             // a chance to cancel the changes
             //
-            if (formulaText.Substring(0, 1).Trim() != "_") {
+            if (cUtil.subString(formulaText, 0, 1).Trim() != "_")
+            {
                 fFormulaReplace fReplace = null;
                 fReplace = new fFormulaReplace();
                 fReplace.txCurrFormula.Text = formulaText;

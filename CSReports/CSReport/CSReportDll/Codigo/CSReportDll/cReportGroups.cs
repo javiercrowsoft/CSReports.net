@@ -5,6 +5,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using CSReportGlobals;
+using CSKernelClient;
 
 namespace CSReportDll
 {
@@ -226,11 +227,11 @@ namespace CSReportDll
         {
             String sectionName = section.ToLower();
             if (sectionName.Length == 0
-                || sectionName.Substring(0, 5) == "group"
-                || sectionName.Substring(0, 5) == "grupo"
-                || sectionName.Substring(0, 3) == "gh_"
-                || sectionName.Substring(0, 3) == "gf_"
-                || sectionName.Substring(0, 2) == "g_"
+                || cUtil.subString(sectionName, 0, 5) == "group"
+                || cUtil.subString(sectionName, 0, 5) == "grupo"
+                || cUtil.subString(sectionName, 0, 3) == "gh_"
+                || cUtil.subString(sectionName, 0, 3) == "gf_"
+                || cUtil.subString(sectionName, 0, 2) == "g_"
                 )
             {
                 return name;

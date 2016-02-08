@@ -81,22 +81,22 @@ namespace CSReportEditor
 
 		public static void setEditAlignTextState(object length)
 		{
-			throw new NotImplementedException ();
+            implementThisMessage("setEditAlignTextState", "(CSReportEditor cGlobals)");
 		}
 
 		public static void setEditAlignCtlState(bool b)
 		{
-			throw new NotImplementedException ();
+            implementThisMessage("setEditAlignCtlState", "(CSReportEditor cGlobals)");
 		}
 
 		public static void setEditFontBoldValue(int bBold)
 		{
-			throw new NotImplementedException ();
+            implementThisMessage("setEditFontBoldValue", "(CSReportEditor cGlobals)");
 		}
 
 		public static void setEditAlignValue(int align)
 		{
-			throw new NotImplementedException ();
+            implementThisMessage("setEditAlignValue", "(CSReportEditor cGlobals)");
 		}
 
 		public static void setParametersAux(CSConnect.cConnect connect, object connect2)
@@ -116,7 +116,7 @@ namespace CSReportEditor
 
 		public static void setDocActive (cEditor editor)
 		{
-            MessageBox.Show("Implement this: public static void setDocActive (cEditor editor)");
+            implementThisMessage("setDocActive", "(CSReportEditor cGlobals)");
             
             TabPage editorTab = editor.getEditorTab();
             (editorTab.Parent as TabControl).SelectedTab = editorTab;
@@ -219,6 +219,12 @@ namespace CSReportEditor
         {
             throw new NotImplementedException();
         }
+
+        public static void implementThisMessage(string functionName, string moduleName) 
+        {
+            Console.WriteLine(String.Format("Implement this: public static void {0} {1}", functionName, moduleName));
+        }
+
     }
 
     public enum csRptEditorMoveType {

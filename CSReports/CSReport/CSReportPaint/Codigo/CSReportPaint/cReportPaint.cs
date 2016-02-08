@@ -165,7 +165,7 @@ namespace CSReportPaint
         */
         public cReportPaintObject getPaintObject(String sKey)
         {
-            if (sKey.Substring(1, C_KEY_PAINT_OBJ.Length) == C_KEY_PAINT_OBJ)
+            if (sKey.Substring(0, C_KEY_PAINT_OBJ.Length) == C_KEY_PAINT_OBJ)
             {
                 return m_paintObjects.item(sKey);
             }
@@ -1220,10 +1220,10 @@ namespace CSReportPaint
 
             CSReportDll.cReportAspect w_aspect = paintObjAsp.getAspect();
             showHandles(graph, 
-                        w_aspect.getLeft(), 
-                        w_aspect.getTop() - w_aspect.getOffset(), 
-                        w_aspect.getLeft() + w_aspect.getWidth(), 
-                        w_aspect.getTop() - w_aspect.getOffset() + w_aspect.getHeight(), 
+                        Convert.ToInt32(w_aspect.getLeft()), 
+                        Convert.ToInt32(w_aspect.getTop() - w_aspect.getOffset()), 
+                        Convert.ToInt32(w_aspect.getLeft() + w_aspect.getWidth()), 
+                        Convert.ToInt32(w_aspect.getTop() - w_aspect.getOffset() + w_aspect.getHeight()), 
                         color, 
                         bCircle);
         }
@@ -1725,11 +1725,11 @@ namespace CSReportPaint
         }
 
         private void showHandles(
-            Graphics hDC,
-            float x1,
-            float y1,
-            float x2,
-            float y2,
+            Graphics graph,
+            int x1,
+            int y1,
+            int x2,
+            int y2,
             int color,
             bool bCircle)
         {
@@ -1861,6 +1861,55 @@ namespace CSReportPaint
                 DeleteObject(hBrush);
             }
             */
+            const int iSize = 7;
+
+            if (x1 - iSize < 0) { x1 = iSize; }
+            if (y1 - iSize < 0) { y1 = iSize; }
+
+            if (x1 - iSize < 0) { x1 = iSize; }
+            if (y1 - iSize < 0) { y1 = iSize; }            
+
+            Brush brush = new SolidBrush(cGlobals.colorFromRGB(color));
+
+            Rectangle rect = cGlobals.newRectangle(x1 - iSize, y1 - iSize - 1, x1, y1);
+            showHandle(graph, brush, rect, bCircle);
+
+            rect = cGlobals.newRectangle(x1 - iSize, y2, x1, y2 + iSize);
+            showHandle(graph, brush, rect, bCircle);
+
+            rect = cGlobals.newRectangle(x2, y1 - iSize - 1, x2 + iSize, y1);
+            showHandle(graph, brush, rect, bCircle);
+
+            rect = cGlobals.newRectangle(x2, y2, x2 + iSize, y2 + iSize);
+            showHandle(graph, brush, rect, bCircle);
+
+            int x = Convert.ToInt32((x1 + (x2 - x1) / 2f) - iSize / 2f);
+            rect = cGlobals.newRectangle(x, y2, x + iSize, y2 + iSize);
+            showHandle(graph, brush, rect, bCircle);
+
+            rect = cGlobals.newRectangle(x, y1 - iSize - 1, x + iSize, y1);
+            showHandle(graph, brush, rect, bCircle);
+
+            int y = Convert.ToInt32((y1 + (y2 - y1) / 2f) - iSize / 2f);
+            rect = cGlobals.newRectangle(x1 - iSize, y, x1, y + iSize);
+            showHandle(graph, brush, rect, bCircle);
+
+            rect = cGlobals.newRectangle(x2, y, x2 + iSize, y + iSize);
+            showHandle(graph, brush, rect, bCircle);
+
+            brush.Dispose();
+        }
+
+        private void showHandle(Graphics graph, Brush brush, Rectangle rect, bool circle) 
+        {
+            if (circle)
+            {
+                graph.FillEllipse(brush, rect);
+            }
+            else
+            {
+                graph.FillRectangle(brush, rect);
+            }
         }
 
         public void paintPicture(Graphics graph, bool disposeGraphicObject)

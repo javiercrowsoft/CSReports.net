@@ -208,7 +208,7 @@ namespace CSReportEditor
 
 		public void setsbPnlCtrl (string msg)
 		{
-			throw new NotImplementedException ();
+            cGlobals.implementThisMessage("setsbPnlCtrl", "(fMain)");
 		}
 
         internal void setReportCopySource(cEditor cEditor)

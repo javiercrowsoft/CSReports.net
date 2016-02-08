@@ -432,6 +432,23 @@ namespace CSKernelClient
                 return 0;
             }
         }
+
+        public static string subString(string text, int start, int length)
+        {
+            if (String.IsNullOrEmpty(text))
+            {
+                return "";
+            }
+            else
+            {
+                if (text.Length - start < length)
+                {
+                    length = text.Length - start;
+                }
+                return text.Substring(start, length);
+            }
+        }
+
     }
 
     public class ListValueWithId {
