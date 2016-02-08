@@ -620,8 +620,8 @@ namespace CSReportPaint
             int maxX = 0;
             CSReportDll.cReportAspect gridObjAspect = null;
 
-            maxY = m_vGridObjs.GetLength(1);
-            maxX = m_vGridObjs.GetLength(1);
+            maxX = m_vGridObjs.GetLength(0)-1;
+            maxY = m_vGridObjs.GetLength(1)-1;            
 
             float top = 0;
             float left = 0;
@@ -663,8 +663,8 @@ namespace CSReportPaint
                 if (nLeft > z1 * C_GRID_AREA_WIDTH) { z1 = z1 + 1; }
                 if (nTop > q1 * C_GRID_AREA_HEIGHT) { q1 = q1 + 1; }
 
-                if (z1 < 1) { z1 = 1; }
-                if (q1 < 1) { q1 = 1; }
+                if (z1 < 0) { z1 = 0; }
+                if (q1 < 0) { q1 = 0; }
 
                 if (z1 > maxX) { z1 = maxX; }
                 if (q1 > maxY) { q1 = maxY; }
@@ -713,8 +713,8 @@ namespace CSReportPaint
                 q1 = (int)(nTop / C_GRID_AREA_HEIGHT);
                 if (nTop > q1 * C_GRID_AREA_HEIGHT) { q1 = q1 + 1; }
 
-                if (z1 < 1) { z1 = 1; }
-                if (q1 < 1) { q1 = 1; }
+                if (z1 < 1) { z1 = 0; }
+                if (q1 < 1) { q1 = 0; }
 
                 if (z1 > maxX) { z1 = maxX; }
                 if (q1 > maxY) { q1 = maxY; }
@@ -739,8 +739,8 @@ namespace CSReportPaint
                 if (nLeft > z1 * C_GRID_AREA_WIDTH) { z1 = z1 + 1; }
                 if (nTop + w_aspect.getHeight() > q1 * C_GRID_AREA_HEIGHT) { q1 = q1 + 1; }
 
-                if (z1 < 1) { z1 = 1; }
-                if (q1 < 1) { q1 = 1; }
+                if (z1 < 1) { z1 = 0; }
+                if (q1 < 1) { q1 = 0; }
 
                 if (z1 > maxX) { z1 = maxX; }
                 if (q1 > maxY) { q1 = maxY; }
@@ -816,7 +816,7 @@ namespace CSReportPaint
             {
                 top = - Convert.ToInt32(w_item.getHeightSec());
                 w_aspect = w_item.getAspect();
-                top += Convert.ToInt32(w_aspect.getTop() - w_aspect.getOffset() + w_aspect.getHeight() * 2);
+                top += Convert.ToInt32(w_aspect.getTop() - w_aspect.getOffset() - 6 + w_aspect.getHeight() * 2);
 
                 printLine(graph, 
                             true, 
@@ -839,7 +839,7 @@ namespace CSReportPaint
                 // print section's name
                 //
                 w_aspect = m_paintSections.item(key).getAspect();
-                aspect.setTop(w_aspect.getTop() + 3 - heightSec);
+                aspect.setTop(w_aspect.getTop() - heightSec);
                 aspect.setAlign(HorizontalAlignment.Left);
 
                 printText(graph, w_item.getText(), aspect, w_item.getImage());
@@ -871,7 +871,7 @@ namespace CSReportPaint
             
             if (w_item == m_paintSections.item(m_paintSections.count() - 1)) 
             {
-                top = Convert.ToInt32(aspect.getTop() + w_item.getHeightSecLine() - aspect.getOffset() - w_item.getAspect().getHeight());
+                top = Convert.ToInt32(aspect.getTop() + w_item.getHeightSecLine() - heightSec - aspect.getOffset() + 6);
 
                 if (w_item.getIsSection())
                 {

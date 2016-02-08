@@ -42,6 +42,12 @@ namespace CSReportEditor
             m_picReport.MouseUp += new MouseEventHandler(m_picReport_MouseUp);
             m_picReport.MouseMove += new MouseEventHandler(m_picReport_MouseMove);
 
+            // mouse well
+            //
+            // se me cae un lagrimon :(
+            //
+            m_picReport.MouseEnter += (s, e) => { editor.Focus(); };
+
             m_editorTab = editorTab;
         }
         
@@ -1081,7 +1087,9 @@ namespace CSReportEditor
         }
 
         private void m_picReport_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
-        { 
+        {
+            if (m_paint == null) return;
+
             MouseButtons button = e.Button;
             bool ctrlKey = Control.ModifierKeys.HasFlag(Keys.Control); 
             int x = e.X;
@@ -1904,6 +1912,8 @@ namespace CSReportEditor
 
         private void m_picReport_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
         {
+            if (m_paint == null) return;
+
             MouseButtons button = e.Button;
             int x = e.X;
             int y = e.Y;
@@ -2854,8 +2864,8 @@ namespace CSReportEditor
         {
 			csRptTypeSection typeSecLn = csRptTypeSection.CONTROL;
 			cReportAspect aspect = null;
-            int maxBottom = 0;
-            int minBottom = 0;
+            float maxBottom = 0;
+            float minBottom = 0;
             int index = 0;
 			float y = 0;
 
@@ -2863,7 +2873,7 @@ namespace CSReportEditor
                 case csRptTypeSection.CSRPTTPSCHEADER:
                 case csRptTypeSection.CSRPTTPMAINSECTIONHEADER:
 
-                    pMoveHeader(sec.getKey(), minBottom, maxBottom, false);
+                    pMoveHeader(sec.getKey(), out minBottom, out maxBottom, false);
                     aspect = sec.getAspect();
                     y = aspect.getHeight() + aspect.getTop();
                     typeSecLn = csRptTypeSection.C_KEY_SECLN_HEADER;
@@ -2873,7 +2883,7 @@ namespace CSReportEditor
                 case csRptTypeSection.CSRPTTPSCDETAIL:
                 case csRptTypeSection.CSRPTTPMAINSECTIONDETAIL:
 
-                    pMoveDetails(sec.getKey(), minBottom, maxBottom, false);
+                    pMoveDetails(sec.getKey(), out minBottom, out maxBottom, false);
                     aspect = sec.getAspect();
                     y = aspect.getHeight() + aspect.getTop();
                     typeSecLn = csRptTypeSection.C_KEY_SECLN_DETAIL;
@@ -2882,7 +2892,7 @@ namespace CSReportEditor
 
                 case csRptTypeSection.CSRPTTPGROUPHEADER:
 
-                    pMoveGroupHeader(sec.getKey(), minBottom, maxBottom, false);
+                    pMoveGroupHeader(sec.getKey(), out minBottom, out maxBottom, false);
                     aspect = sec.getAspect();
                     y = aspect.getHeight() + aspect.getTop();
                     typeSecLn = csRptTypeSection.C_KEY_SECLN_GROUPH;
@@ -2891,7 +2901,7 @@ namespace CSReportEditor
 
                 case csRptTypeSection.CSRPTTPGROUPFOOTER:
 
-                    pMoveGroupFooter(sec.getKey(), minBottom, maxBottom, false);
+                    pMoveGroupFooter(sec.getKey(), out minBottom, out maxBottom, false);
                     aspect = sec.getAspect();
                     y = aspect.getHeight() + aspect.getTop();
                     typeSecLn = csRptTypeSection.C_KEY_SECLN_GROUPF;
@@ -2903,7 +2913,7 @@ namespace CSReportEditor
 
                     aspect = sec.getAspect();
                     aspect.setTop(aspect.getTop() - cGlobals.C_HEIGHT_NEW_SECTION);
-                    pMoveFooter(sec.getKey(), minBottom, maxBottom, false);
+                    pMoveFooter(sec.getKey(), out minBottom, out maxBottom, false);
                     m_offY = 0;
                     y = aspect.getHeight() + aspect.getTop() - m_offSet - cGlobals.C_HEIGHT_BAR_SECTION;
                     typeSecLn = csRptTypeSection.C_KEY_SECLN_FOOTER;
@@ -2947,8 +2957,8 @@ namespace CSReportEditor
 			cReportAspect aspect = null;
             CSReportPaint.cReportPaintObject paintObj = null;
 
-            int maxBottom = 0;
-            int minBottom = 0;
+            float maxBottom = 0;
+            float minBottom = 0;
             float y = 0;
 
             switch (typeSection) {
@@ -3040,7 +3050,7 @@ namespace CSReportEditor
                                                         false));
 
                     paintObj = m_paint.getPaintObject(rptSection.getKeyPaint());
-                    pMoveGroupFooter(rptSection.getKey(), minBottom, maxBottom, false);
+                    pMoveGroupFooter(rptSection.getKey(), out minBottom, out maxBottom, false);
                     
                     m_offY = 0;
 
@@ -3070,7 +3080,7 @@ namespace CSReportEditor
                                                         false));
 
                     paintObj = m_paint.getPaintObject(rptSection.getKeyPaint());
-                    pMoveFooter(rptSection.getKey(), minBottom, maxBottom, false);
+                    pMoveFooter(rptSection.getKey(), out minBottom, out maxBottom, false);
 
                     m_offY = 0;
 
@@ -5328,7 +5338,7 @@ namespace CSReportEditor
                 case csRptTypeSection.CSRPTTPMAINSECTIONHEADER:
                 case csRptTypeSection.CSRPTTPSCHEADER:
 
-                    rptSec = pMoveHeader(sKeySection, minBottom, maxBottom, false);
+                    rptSec = pMoveHeader(sKeySection, out minBottom, out maxBottom, false);
 
                     //---------------------
                     // GROUP HEADER
@@ -5338,7 +5348,7 @@ namespace CSReportEditor
                 
                 case  csRptTypeSection.GROUP_SECTION_HEADER:
 
-                    rptSec = pMoveGroupHeader(sKeySection, minBottom, maxBottom, false);
+                    rptSec = pMoveGroupHeader(sKeySection, out minBottom, out maxBottom, false);
 
                     //---------------------
                     // DETAIL
@@ -5349,7 +5359,7 @@ namespace CSReportEditor
                 case  csRptTypeSection.CSRPTTPMAINSECTIONDETAIL:
                 case  csRptTypeSection.CSRPTTPSCDETAIL:
 
-                    rptSec = pMoveDetails(sKeySection, minBottom, maxBottom, false);
+                    rptSec = pMoveDetails(sKeySection, out minBottom, out maxBottom, false);
 
                     //---------------------
                     // GROUP FOOTER
@@ -5359,7 +5369,7 @@ namespace CSReportEditor
                 
                 case  csRptTypeSection.GROUP_SECTION_FOOTER:
 
-                    rptSec = pMoveGroupFooter(sKeySection, minBottom, maxBottom, false);
+                    rptSec = pMoveGroupFooter(sKeySection, out minBottom, out maxBottom, false);
 
                     //---------------------
                     // FOOTER
@@ -5370,7 +5380,7 @@ namespace CSReportEditor
                 case  csRptTypeSection.CSRPTTPMAINSECTIONFOOTER:
                 case  csRptTypeSection.CSRPTTPSCFOOTER:
 
-                    rptSec = pMoveFooter(sKeySection, minBottom, maxBottom, false);
+                    rptSec = pMoveFooter(sKeySection, out minBottom, out maxBottom, false);
 
                     //---------------------
                     // Section Lines
@@ -5379,31 +5389,31 @@ namespace CSReportEditor
 
                 case  csRptTypeSection.C_KEY_SECLN_HEADER:
                     sKeySection = paintObj.getRptKeySec();
-                    rptSec = pMoveHeader(sKeySection, minBottom, maxBottom, true);
+                    rptSec = pMoveHeader(sKeySection, out minBottom, out maxBottom, true);
                     isSecLn = true;
                     break;
 
                 case  csRptTypeSection.C_KEY_SECLN_GROUPH:
                     sKeySection = paintObj.getRptKeySec();
-                    rptSec = pMoveGroupHeader(sKeySection, minBottom, maxBottom, true);
+                    rptSec = pMoveGroupHeader(sKeySection, out minBottom, out maxBottom, true);
                     isSecLn = true;
                     break;
 
                 case  csRptTypeSection.C_KEY_SECLN_DETAIL:
                     sKeySection = paintObj.getRptKeySec();
-                    rptSec = pMoveDetails(sKeySection, minBottom, maxBottom, true);
+                    rptSec = pMoveDetails(sKeySection, out minBottom, out maxBottom, true);
                     isSecLn = true;
                     break;
 
                 case  csRptTypeSection.C_KEY_SECLN_GROUPF:
                     sKeySection = paintObj.getRptKeySec();
-                    rptSec = pMoveGroupFooter(sKeySection, minBottom, maxBottom, true);
+                    rptSec = pMoveGroupFooter(sKeySection, out minBottom, out maxBottom, true);
                     isSecLn = true;
                     break;
 
                 case  csRptTypeSection.C_KEY_SECLN_FOOTER:
                     sKeySection = paintObj.getRptKeySec();
-                    rptSec = pMoveFooter(sKeySection, minBottom, maxBottom, true);
+                    rptSec = pMoveFooter(sKeySection, out minBottom, out maxBottom, true);
                     isSecLn = true;
                     m_indexSecLnMoved = rptSec.getSectionLines().item(paintObj.getTag()).getRealIndex();
                     break;
@@ -5638,8 +5648,8 @@ namespace CSReportEditor
 
         private cReportSection pMoveHeader(
             String sKeySection, 
-            float minBottom, 
-            float maxBottom, 
+            out float minBottom, 
+            out float maxBottom, 
             bool isForSectionLine) 
         {
             int index = 0;
@@ -5672,8 +5682,8 @@ namespace CSReportEditor
 
         private cReportSection pMoveGroupHeader(
             String sKeySection, 
-            float minBottom, 
-            float maxBottom, 
+            out float minBottom, 
+            out float maxBottom, 
             bool isForSectionLine) 
         {
             int index = 0;
@@ -5709,8 +5719,8 @@ namespace CSReportEditor
 
         private cReportSection pMoveDetails(
             String sKeySection, 
-            float minBottom, 
-            float maxBottom, 
+            out float minBottom, 
+            out float maxBottom, 
             bool isForSectionLine) 
         { 
             int index = 0;
@@ -5758,8 +5768,8 @@ namespace CSReportEditor
 
         private cReportSection pMoveGroupFooter(
             String sKeySection, 
-            float minBottom, 
-            float maxBottom, 
+            out float minBottom, 
+            out float maxBottom, 
             bool isForSectionLine) 
         {
             int index = 0;
@@ -5795,9 +5805,9 @@ namespace CSReportEditor
         }
 
         private cReportSection pMoveFooter(
-            String sKeySection, 
-            float minBottom, 
-            float maxBottom, 
+            String sKeySection,
+            out float minBottom,
+            out float maxBottom, 
             bool isForSectionLine) 
         {
 
