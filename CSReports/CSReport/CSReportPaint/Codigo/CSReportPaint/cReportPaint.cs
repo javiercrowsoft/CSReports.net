@@ -325,7 +325,7 @@ namespace CSReportPaint
                     xX = left + width / 2;
                     xX = xX - C_WIDTH_REGION;
 
-                    // we need to know in where region it is
+                    // we need to know in which region it is
                     //
 
                     // body
@@ -633,7 +633,7 @@ namespace CSReportPaint
 
             cReportPaintObjects paintObjs = null;
 
-            if (sKey.Substring(1, 1) == C_KEY_PAINT_SEC)
+            if (sKey.Substring(0, 1) == C_KEY_PAINT_SEC)
             {
                 paintObjs = m_paintSections;
             }
@@ -1303,12 +1303,12 @@ namespace CSReportPaint
                 m_y2 = y2;
             }
 
-            // Validaciones :
+            // validations :
 
-            // x2 no puede ser menor a Left
+            // x2 can't be lower than Left
             if (m_x2 < paintObjAsp.getLeft() + C_MIN_WIDTH) { m_x2 = paintObjAsp.getLeft() + C_MIN_WIDTH; }
 
-            // y2 no puede ser menor a Top
+            // y2 can't be lower than Top
             if (m_y2 < paintObjAsp.getTop() - paintObjAsp.getOffset() + C_MIN_HEIGHT) { m_y2 = paintObjAsp.getTop() - paintObjAsp.getOffset() + C_MIN_HEIGHT; }
 
             paintPicture(graph, false);
@@ -2003,6 +2003,12 @@ namespace CSReportPaint
 
                       BitBlt(graph.hDC, tR.left, tR.top, tR.right - tR.left, tR.bottom - tR.top, m_hMemDC, tR.left, tR.top, vbSrcCopy);
              * */
+            Rectangle rect = cGlobals.newRectangle(0, 0, m_bitmap.Size.Width, m_bitmap.Size.Height);
+            if (m_zoom == 100)
+            {
+                //BitBlt(graph.hDC, 0, 0, tR.right, tR.bottom, m_hMemDC, 0, 0, vbSrcCopy);
+                graph.DrawImage(m_bitmap, rect, rect, GraphicsUnit.Pixel);
+            }
         }
 
         // grid

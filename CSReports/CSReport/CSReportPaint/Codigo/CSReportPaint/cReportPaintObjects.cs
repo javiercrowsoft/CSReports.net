@@ -197,7 +197,7 @@ namespace CSReportPaint
             { 
                 return; 
             }
-            if (i == 1 && !top) 
+            if (i == 0 && !top) 
             { 
                 return; 
             }

@@ -1691,7 +1691,7 @@ namespace CSReportDll
         { // TODO: Use of ByRef founded Private Function pGetLineAuxDetail(ByRef Fields As cReportPageFields) As csRptGetLineResult
             m_firstGroup = false;
 
-            getLineAux(m_details.item(1), fields);
+            getLineAux(m_details.item(0), fields);
 
             // we return a detail line
             //
@@ -4102,17 +4102,17 @@ namespace CSReportDll
 
             // the main header is -2000
             //
-            if (m_headers.item(1).getHasFormulaHide())
+            if (m_headers.item(0).getHasFormulaHide())
             {
-                m_headers.item(1).getFormulaHide().setIdxGroup(C_IDX_GROUP_REPORTHEADER);
+                m_headers.item(0).getFormulaHide().setIdxGroup(C_IDX_GROUP_REPORTHEADER);
             }
 
             cReportSectionLine secLn = null;
             cReportControl ctrl = null;
 
-            for (int _i = 0; _i < m_headers.item(1).getSectionLines().count(); _i++)
+            for (int _i = 0; _i < m_headers.item(0).getSectionLines().count(); _i++)
             {
-                secLn = m_headers.item(1).getSectionLines().item(_i);
+                secLn = m_headers.item(0).getSectionLines().item(_i);
                 for (int _j = 0; _j < secLn.getControls().count(); _j++)
                 {
                     ctrl = secLn.getControls().item(_j);

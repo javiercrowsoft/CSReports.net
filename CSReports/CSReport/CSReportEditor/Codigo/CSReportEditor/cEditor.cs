@@ -1087,7 +1087,8 @@ namespace CSReportEditor
             int x = e.X;
             int y = e.Y;
 
-            try {
+            try
+            {
 
                 String sKey = "";
                 bool bClearSelected = false;
@@ -1099,132 +1100,146 @@ namespace CSReportEditor
 
                 m_inMouseDown = true;
 
-                if (m_draging) {
+                if (m_draging)
+                {
                     addControlEnd(x, y);
                     endDraging();
                 }
 
                 endEditText(false);
 
-				bClearSelected = pClearSelected(button, ctrlKey, x, y);
+                bClearSelected = pClearSelected(button, ctrlKey, x, y);
 
-                if (button == MouseButtons.Left) {
+                if (button == MouseButtons.Left)
+                {
 
                     lastKeyObj = m_keyObj;
                     m_keyObj = "";
 
-					sKey = m_keyMoving != "" ? m_keyMoving : m_keySizing;
+                    sKey = m_keyMoving != "" ? m_keyMoving : m_keySizing;
 
                     // to force focus in the header
-                    if (sKey == "") {
-						m_paint.pointIsInObject(x, y, ref sKey);
+                    if (sKey == "")
+                    {
+                        m_paint.pointIsInObject(x, y, ref sKey);
 
-                        if (sKey != "") {
+                        if (sKey != "")
+                        {
 
                             CSReportPaint.cReportPaintObject po = m_paint.getPaintObject(sKey);
                             lastKeyMoving = m_keyMoving;
                             m_keyMoving = sKey;
 
-							switch (po.getTag()) {
+                            switch (po.getTag())
+                            {
                                 case cGlobals.C_KEY_DETAIL:
                                 case cGlobals.C_KEY_FOOTER:
                                 case cGlobals.C_KEY_HEADER:
 
                                     // only if no controls are selected
                                     //
-                                    if (ctrlKey) {
+                                    if (ctrlKey)
+                                    {
 
-										if (m_vSelectedKeys.Length > 0) 
-											return;
-										if (m_vSelectedKeys[0].Length > 0)
-											return;
+                                        if (m_vSelectedKeys.Length > 0)
+                                            return;
+                                        if (m_vSelectedKeys[0].Length > 0)
+                                            return;
                                         m_keyMoving = lastKeyMoving;
                                         m_keyObj = lastKeyObj;
                                         return;
                                     }
 
                                     m_moveType = csRptEditorMoveType.CSRPTEDMOVTVERTICAL;
-									m_picReport.Cursor = Cursors.SizeNS;
+                                    m_picReport.Cursor = Cursors.SizeNS;
 
                                     break;
-								default:
-								if (po.getRptType() == csRptTypeSection.CSRPTTPSCDETAIL 
-									|| po.getRptType() == csRptTypeSection.CSRPTTPSCHEADER 
-									|| po.getRptType() == csRptTypeSection.GROUP_SECTION_HEADER 
-									|| po.getRptType() == csRptTypeSection.GROUP_SECTION_FOOTER 
-									|| po.getRptType() == csRptTypeSection.CSRPTTPSCFOOTER) {
+                                default:
+                                    if (po.getRptType() == csRptTypeSection.CSRPTTPSCDETAIL
+                                        || po.getRptType() == csRptTypeSection.CSRPTTPSCHEADER
+                                        || po.getRptType() == csRptTypeSection.GROUP_SECTION_HEADER
+                                        || po.getRptType() == csRptTypeSection.GROUP_SECTION_FOOTER
+                                        || po.getRptType() == csRptTypeSection.CSRPTTPSCFOOTER)
+                                    {
 
                                         // only if no controls are selected
                                         //
-                                        if (ctrlKey) {
+                                        if (ctrlKey)
+                                        {
 
-											if (m_vSelectedKeys.Length > 0) 
-												return;
-											if (m_vSelectedKeys[0].Length > 0)
-												return;
+                                            if (m_vSelectedKeys.Length > 0)
+                                                return;
+                                            if (m_vSelectedKeys[0].Length > 0)
+                                                return;
                                             m_keyMoving = lastKeyMoving;
                                             m_keyObj = lastKeyObj;
                                             return;
                                         }
 
-										m_picReport.Cursor = Cursors.SizeNS;
+                                        m_picReport.Cursor = Cursors.SizeNS;
                                         m_moveType = csRptEditorMoveType.CSRPTEDMOVTVERTICAL;
 
-                                    } 
-									else if (po.getRptType() == csRptTypeSection.C_KEY_SECLN_HEADER 
-										|| po.getRptType() == csRptTypeSection.C_KEY_SECLN_DETAIL 
-										|| po.getRptType() == csRptTypeSection.C_KEY_SECLN_FOOTER 
-										|| po.getRptType() == csRptTypeSection.C_KEY_SECLN_GROUPH 
-										|| po.getRptType() == csRptTypeSection.C_KEY_SECLN_GROUPF) {
+                                    }
+                                    else if (po.getRptType() == csRptTypeSection.C_KEY_SECLN_HEADER
+                                        || po.getRptType() == csRptTypeSection.C_KEY_SECLN_DETAIL
+                                        || po.getRptType() == csRptTypeSection.C_KEY_SECLN_FOOTER
+                                        || po.getRptType() == csRptTypeSection.C_KEY_SECLN_GROUPH
+                                        || po.getRptType() == csRptTypeSection.C_KEY_SECLN_GROUPF)
+                                    {
 
                                         // only if no controls are selected
                                         //
-                                        if (ctrlKey) {
-											if (m_vSelectedKeys.Length > 0) 
-												return;
-											if (m_vSelectedKeys[0].Length > 0)
-												return;
+                                        if (ctrlKey)
+                                        {
+                                            if (m_vSelectedKeys.Length > 0)
+                                                return;
+                                            if (m_vSelectedKeys[0].Length > 0)
+                                                return;
                                             m_keyMoving = lastKeyMoving;
                                             m_keyObj = lastKeyObj;
                                             return;
                                         }
 
-									    m_picReport.Cursor = Cursors.SizeNS;
+                                        m_picReport.Cursor = Cursors.SizeNS;
                                         m_moveType = csRptEditorMoveType.CSRPTEDMOVTVERTICAL;
 
-                                    } 
-                                    else {
+                                    }
+                                    else
+                                    {
                                         m_moveType = csRptEditorMoveType.CSRPTEDMOVTALL;
-										m_picReport.Cursor = Cursors.SizeAll;
+                                        m_picReport.Cursor = Cursors.SizeAll;
                                     }
                                     break;
-                            }                            
+                            }
                         }
                     }
 
                     bool bWasRemoved = false;
-					pAddToSelected(m_keyMoving, ctrlKey, out bWasRemoved);
+                    pAddToSelected(m_keyMoving, ctrlKey, out bWasRemoved);
 
                     if (bWasRemoved) { sKey = ""; }
 
-                    if (sKey != "") {
+                    if (sKey != "")
+                    {
                         cReportAspect aspect = m_paint.getPaintObject(sKey).getAspect();
-						m_offX = x - aspect.getLeft();
-						m_offY = y - (aspect.getTop() - aspect.getOffset());
+                        m_offX = x - aspect.getLeft();
+                        m_offY = y - (aspect.getTop() - aspect.getOffset());
                     }
 
                     m_keyFocus = sKey;
                     m_keyObj = sKey;
                     m_paint.setFocus(m_keyFocus, m_picReport.CreateGraphics(), bClearSelected);
 
-                } 
-                else if (button == MouseButtons.Right) {
+                }
+                else if (button == MouseButtons.Right)
+                {
 
                     m_keySizing = "";
                     m_keyMoving = "";
                     m_keyObj = "";
 
-					if (m_paint.pointIsInObject(x, y, ref sKey)) {
+                    if (m_paint.pointIsInObject(x, y, ref sKey))
+                    {
                         m_keyObj = sKey;
 
                         bClearSelected = pSetSelectForRightBttn();
@@ -1234,18 +1249,20 @@ namespace CSReportEditor
 
                         CSReportPaint.cReportPaintObject po = m_paint.getPaintObject(sKey);
 
-                        if (m_paint.paintObjIsSection(sKey)) {
+                        if (m_paint.paintObjIsSection(sKey))
+                        {
 
                             bool noDelete = false;
 
-                            switch (po.getTag()) {
+                            switch (po.getTag())
+                            {
                                 // this sections can not be moved
                                 case cGlobals.C_KEY_HEADER:
                                 case cGlobals.C_KEY_DETAIL:
                                 case cGlobals.C_KEY_FOOTER:
                                     noDelete = true;
                                     break;
-                                
+
                                 default:
                                     noDelete = false;
                                     break;
@@ -1259,23 +1276,30 @@ namespace CSReportEditor
                             if (isSecLn) { noDelete = true; }
 
                             showPopMenuSection(noDelete, isGroup);
-                        } 
-                        else {
+                        }
+                        else
+                        {
                             showPopMenuControl(true);
                         }
                     }
-                    else {
+                    else
+                    {
                         showPopMenuControl(false);
                     }
                 }
 
-				cGlobals.setEditAlignTextState(m_vSelectedKeys.Length);
-				cGlobals.setEditAlignCtlState(m_vSelectedKeys.Length > 1);
+                cGlobals.setEditAlignTextState(m_vSelectedKeys.Length);
+                cGlobals.setEditAlignCtlState(m_vSelectedKeys.Length > 1);
                 pSetEditAlignValue();
                 pSetFontBoldValue();
 
-            } catch (Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 cError.mngError(ex, "m_picReport_MouseDown", C_MODULE, "");
+            }
+            finally 
+            {
                 m_inMouseDown = false;
             }
         }
@@ -2490,7 +2514,7 @@ namespace CSReportEditor
             // we would move the control to the desired
             // section line
             //
-			ctrl = m_report.getHeaders().item(cGlobals.C_KEY_HEADER).getSectionLines().item(1).getControls().add();
+			ctrl = m_report.getHeaders().item(cGlobals.C_KEY_HEADER).getSectionLines().item(0).getControls().add();
 
             // later we will set the properties related to the type of the control
             //
@@ -2995,7 +3019,7 @@ namespace CSReportEditor
                 case csRptTypeSection.CSRPTTPGROUPFOOTER:
 
                     cIReportGroupSections w_groupsFooters = m_report.getGroupsFooters();
-                    rptSection = w_groupsFooters.item(1);
+                    rptSection = w_groupsFooters.item(0);
                     rptSection.setName("GF_" + rptSection.getIndex().ToString());
 
                     // all group footers are added to the top so at the
@@ -3660,22 +3684,22 @@ namespace CSReportEditor
                     m_fProperties.txText.Text = rptCtrl.getChart().getChartTitle();
 
                     if (rptCtrl.getChart().getSeries().count() > 0) {
-                        m_fProperties.txDbFieldLbl1.Text = rptCtrl.getChart().getSeries().item(1).getLabelFieldName();
-                        m_fProperties.txDbFieldVal1.Text = rptCtrl.getChart().getSeries().item(1).getValueFieldName();
+                        m_fProperties.txDbFieldLbl1.Text = rptCtrl.getChart().getSeries().item(0).getLabelFieldName();
+                        m_fProperties.txDbFieldVal1.Text = rptCtrl.getChart().getSeries().item(0).getValueFieldName();
 
-                        m_fProperties.setChartIndex(0, rptCtrl.getChart().getSeries().item(1).getLabelIndex());
-                        m_fProperties.setChartIndex(1, rptCtrl.getChart().getSeries().item(1).getValueIndex());
+                        m_fProperties.setChartIndex(0, rptCtrl.getChart().getSeries().item(0).getLabelIndex());
+                        m_fProperties.setChartIndex(1, rptCtrl.getChart().getSeries().item(0).getValueIndex());
 
-                        cUtil.listSetListIndexForId(m_fProperties.cbColorSerie1, (int)rptCtrl.getChart().getSeries().item(1).getColor());
+                        cUtil.listSetListIndexForId(m_fProperties.cbColorSerie1, (int)rptCtrl.getChart().getSeries().item(0).getColor());
 
                         if (rptCtrl.getChart().getSeries().count() > 1) {
-                            m_fProperties.txDbFieldLbl2.Text = rptCtrl.getChart().getSeries().item(2).getLabelFieldName();
-                            m_fProperties.txDbFieldVal2.Text = rptCtrl.getChart().getSeries().item(2).getValueFieldName();
+                            m_fProperties.txDbFieldLbl2.Text = rptCtrl.getChart().getSeries().item(1).getLabelFieldName();
+                            m_fProperties.txDbFieldVal2.Text = rptCtrl.getChart().getSeries().item(1).getValueFieldName();
 
-                            m_fProperties.setChartIndex(2, rptCtrl.getChart().getSeries().item(2).getLabelIndex());
-                            m_fProperties.setChartIndex(3, rptCtrl.getChart().getSeries().item(2).getValueIndex());
+                            m_fProperties.setChartIndex(2, rptCtrl.getChart().getSeries().item(1).getLabelIndex());
+                            m_fProperties.setChartIndex(3, rptCtrl.getChart().getSeries().item(1).getValueIndex());
 
-                            cUtil.listSetListIndexForId(m_fProperties.cbColorSerie2, (int)rptCtrl.getChart().getSeries().item(2).getColor());
+                            cUtil.listSetListIndexForId(m_fProperties.cbColorSerie2, (int)rptCtrl.getChart().getSeries().item(1).getColor());
                         }
                     }
                 }
@@ -3846,16 +3870,16 @@ namespace CSReportEditor
                         }
 
                         if (m_fProperties.getChartFieldLbl1Changed()) {
-                            rptCtrl.getChart().getSeries().item(1).setLabelFieldName(m_fProperties.txDbFieldLbl1.Text);
-                            rptCtrl.getChart().getSeries().item(1).setLabelIndex(m_fProperties.getChartIndex(0));
+                            rptCtrl.getChart().getSeries().item(0).setLabelFieldName(m_fProperties.txDbFieldLbl1.Text);
+                            rptCtrl.getChart().getSeries().item(0).setLabelIndex(m_fProperties.getChartIndex(0));
                         }
                         if (m_fProperties.getChartFieldVal1Changed()) {
-                            rptCtrl.getChart().getSeries().item(1).setValueFieldName(m_fProperties.txDbFieldVal1.Text);
-                            rptCtrl.getChart().getSeries().item(1).setValueIndex(m_fProperties.getChartIndex(1));
+                            rptCtrl.getChart().getSeries().item(0).setValueFieldName(m_fProperties.txDbFieldVal1.Text);
+                            rptCtrl.getChart().getSeries().item(0).setValueIndex(m_fProperties.getChartIndex(1));
                         }
 
                         if (m_fProperties.getChartColorSerie1Changed()) {
-                            rptCtrl.getChart().getSeries().item(1).setColor((csColors)cUtil.listID(m_fProperties.cbColorSerie1));
+                            rptCtrl.getChart().getSeries().item(0).setColor((csColors)cUtil.listID(m_fProperties.cbColorSerie1));
                         }
 
                         if (m_fProperties.getChartFieldLbl2Changed() || m_fProperties.getChartFieldVal2Changed()) {
@@ -3865,22 +3889,22 @@ namespace CSReportEditor
                         }
 
                         if (m_fProperties.txDbFieldLbl2.Text == "" || m_fProperties.txDbFieldVal2.Text == "") {
-                            if (rptCtrl.getChart().getSeries().count() > 1) { rptCtrl.getChart().getSeries().remove(2); }
+                            if (rptCtrl.getChart().getSeries().count() > 1) { rptCtrl.getChart().getSeries().remove(1); }
                         }
 
                         if (rptCtrl.getChart().getSeries().count() > 1) {
 
                             if (m_fProperties.getChartFieldLbl2Changed()) {
-                                rptCtrl.getChart().getSeries().item(2).setLabelFieldName(m_fProperties.txDbFieldLbl2.Text);
-                                rptCtrl.getChart().getSeries().item(2).setLabelIndex(m_fProperties.getChartIndex(2));
+                                rptCtrl.getChart().getSeries().item(1).setLabelFieldName(m_fProperties.txDbFieldLbl2.Text);
+                                rptCtrl.getChart().getSeries().item(1).setLabelIndex(m_fProperties.getChartIndex(2));
                             }
                             if (m_fProperties.getChartFieldVal2Changed()) {
-                                rptCtrl.getChart().getSeries().item(2).setValueFieldName(m_fProperties.txDbFieldVal2.Text);
-                                rptCtrl.getChart().getSeries().item(2).setValueIndex(m_fProperties.getChartIndex(3));
+                                rptCtrl.getChart().getSeries().item(1).setValueFieldName(m_fProperties.txDbFieldVal2.Text);
+                                rptCtrl.getChart().getSeries().item(1).setValueIndex(m_fProperties.getChartIndex(3));
                             }
 
                             if (m_fProperties.getChartColorSerie2Changed()) {
-                                rptCtrl.getChart().getSeries().item(2).setColor((csColors)cUtil.listID(m_fProperties.cbColorSerie2));
+                                rptCtrl.getChart().getSeries().item(1).setColor((csColors)cUtil.listID(m_fProperties.cbColorSerie2));
                             }
                         }
                     }
@@ -4364,8 +4388,9 @@ namespace CSReportEditor
                     }
                 } 
                 else {
-                    if (y1 <= y && y2 >= y) { 
-                        return true; 
+                    if (y1 <= y && y2 >= y) {
+                        rtnSec = rptSec;
+                        break; 
                     }
                 }
             }
@@ -4394,7 +4419,7 @@ namespace CSReportEditor
 
             cReportAspect secAspect = rptSec.getAspect();
             secAspect.setTop(secAspect.getTop() + offSetTopSection);
-            offSet = rptSec.getSectionLines().item(1).getAspect().getTop() - secAspect.getTop();
+            offSet = rptSec.getSectionLines().item(0).getAspect().getTop() - secAspect.getTop();
             secTop = secAspect.getTop();
 
             for (int _i = 0; _i < rptSec.getSectionLines().count(); _i++) {
@@ -5627,7 +5652,7 @@ namespace CSReportEditor
             //-----------
             // MinBottom
             //-----------
-            if (index == 1) {
+            if (index == 0) {
                 minBottom = C_MIN_HEIGHT_SECTION;
             } 
             else {
@@ -5661,7 +5686,7 @@ namespace CSReportEditor
             //-----------
             // MinBottom
             //-----------
-            if (index == 1) {
+            if (index == 0) {
                 // bottom of previous header + C_Min_Height_Section
                 cReportSections w_headers = m_report.getHeaders();
                 cReportAspect w_aspect = w_headers.item(w_headers.count()-1).getAspect();
@@ -5699,7 +5724,7 @@ namespace CSReportEditor
             // MinBottom
             //-----------
 
-            if (index == 1) {
+            if (index == 0) {
                 // if there are groups
                 //
                 if (m_report.getGroupsHeaders().count() > 0) {
@@ -5747,7 +5772,7 @@ namespace CSReportEditor
             //-----------
             // MinBottom
             //-----------
-            if (index == 1) {
+            if (index == 0) {
                 // bottom of the last detail + C_Min_Height_Section
                 //
                 cReportSections w_details = m_report.getDetails();
@@ -5786,7 +5811,7 @@ namespace CSReportEditor
             //-----------
             // MinBottom
             //-----------
-            if (index == 1) {
+            if (index == 0) {
                 
                 // if there are groups
                 //
