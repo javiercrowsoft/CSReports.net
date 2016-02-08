@@ -628,8 +628,8 @@ namespace CSReportPaint
             float width = 0;
             float height = 0;
             float offset = 0;
-            const float pointSeparation = 9;
-            const float offSetPointSep = 4.5f;
+            const float pointSeparation = 0.6f;
+            const float offSetPointSep = 0.3f;
 
             cReportPaintObjects paintObjs = null;
 
@@ -657,8 +657,8 @@ namespace CSReportPaint
             {
                 // we get the grid where the point A is located
                 //
-                z1 = (int)(nLeft / C_GRID_AREA_WIDTH);
-                q1 = (int)(nTop / C_GRID_AREA_HEIGHT);
+                z1 = Convert.ToInt32(nLeft / C_GRID_AREA_WIDTH);
+                q1 = Convert.ToInt32(nTop / C_GRID_AREA_HEIGHT);
 
                 if (nLeft > z1 * C_GRID_AREA_WIDTH) { z1 = z1 + 1; }
                 if (nTop > q1 * C_GRID_AREA_HEIGHT) { q1 = q1 + 1; }
@@ -676,7 +676,7 @@ namespace CSReportPaint
                     // now we need to get which is the nearest point
                     //
                     top = (w_aspect.getTop() - w_aspect.getOffset()) - gridObjAspect.getTop();
-                    top = (top / pointSeparation) * pointSeparation;
+                    top = Convert.ToInt32(top / pointSeparation) * pointSeparation;
                     offset = gridObjAspect.getTop() 
                                 + top 
                                 - offSetPointSep 
@@ -692,7 +692,7 @@ namespace CSReportPaint
                 if (toLeft)
                 {
                     left = w_aspect.getLeft() - gridObjAspect.getLeft();
-                    left = (left / pointSeparation) * pointSeparation;
+                    left = Convert.ToInt32(left / pointSeparation) * pointSeparation;
                     offset = gridObjAspect.getLeft() + left - offSetPointSep - w_aspect.getLeft();
                     w_aspect.setLeft(gridObjAspect.getLeft() + left - offSetPointSep);
 
@@ -707,10 +707,10 @@ namespace CSReportPaint
             {
                 // we get the grid where the point B is located
                 //
-                z1 = (int)((nLeft + w_aspect.getWidth()) / C_GRID_AREA_WIDTH);
+                z1 = Convert.ToInt32((nLeft + w_aspect.getWidth()) / C_GRID_AREA_WIDTH);
                 if (nLeft + w_aspect.getWidth() > z1 * C_GRID_AREA_WIDTH) { z1 = z1 + 1; }
 
-                q1 = (int)(nTop / C_GRID_AREA_HEIGHT);
+                q1 = Convert.ToInt32(nTop / C_GRID_AREA_HEIGHT);
                 if (nTop > q1 * C_GRID_AREA_HEIGHT) { q1 = q1 + 1; }
 
                 if (z1 < 1) { z1 = 0; }
@@ -724,7 +724,7 @@ namespace CSReportPaint
                 // now we need to get which is the nearest point
                 //
                 width = w_aspect.getLeft() + w_aspect.getWidth() - gridObjAspect.getLeft();
-                width = (width / pointSeparation) * pointSeparation - offSetPointSep;
+                width = Convert.ToInt32(width / pointSeparation) * pointSeparation - offSetPointSep;
                 w_aspect.setWidth(gridObjAspect.getLeft() + width - w_aspect.getLeft());
 
             }
@@ -733,8 +733,8 @@ namespace CSReportPaint
             {
                 // we get the grid where the point C is located
                 //
-                z1 = (int)(nLeft / C_GRID_AREA_WIDTH);
-                q1 = (int)((nTop + w_aspect.getHeight()) / C_GRID_AREA_HEIGHT);
+                z1 = Convert.ToInt32(nLeft / C_GRID_AREA_WIDTH);
+                q1 = Convert.ToInt32((nTop + w_aspect.getHeight()) / C_GRID_AREA_HEIGHT);
 
                 if (nLeft > z1 * C_GRID_AREA_WIDTH) { z1 = z1 + 1; }
                 if (nTop + w_aspect.getHeight() > q1 * C_GRID_AREA_HEIGHT) { q1 = q1 + 1; }
@@ -750,7 +750,7 @@ namespace CSReportPaint
                 // now we need to get which is the nearest point
                 //
                 height = (w_aspect.getTop() - w_aspect.getOffset()) + w_aspect.getHeight() - gridObjAspect.getTop();
-                height = (height / pointSeparation) * pointSeparation - offSetPointSep;
+                height = Convert.ToInt32(height / pointSeparation) * pointSeparation - offSetPointSep;
                 w_aspect.setHeight(gridObjAspect.getTop() + height - (w_aspect.getTop() - w_aspect.getOffset()));
             }
         }

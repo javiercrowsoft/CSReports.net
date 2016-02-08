@@ -2938,7 +2938,7 @@ namespace CSReportEditor
 
 			// section
             po = m_paint.getPaintSections().item(sec.getKeyPaint());
-			po.setTextLine(C_SECTIONLINE + sec.getSectionLines().count().ToString());
+			po.setTextLine(C_SECTIONLINE + (sec.getSectionLines().count() - 1).ToString());
 
             moveSection(m_paint.getPaintSections().item(m_keyFocus), 0, y, minBottom, maxBottom, sec, false);
 
@@ -4547,14 +4547,14 @@ namespace CSReportEditor
 
             cReportAspect w_aspect = paintObj.getAspect();
 
-            // if Y is contained by the premited range everything is ok
+            // if Y is contained by the allowed range everything is ok
             //
             if (y >= minBottom && y <= maxBottom) {
                 w_aspect.setTop(y - m_offY);
 
                 // because the top has been set to real dimensions
                 // of the screen we must move to the offset
-                // of his section
+                // of its section
                 //
                 w_aspect.setTop(w_aspect.getTop() + w_aspect.getOffset());
             } 
@@ -4575,7 +4575,9 @@ namespace CSReportEditor
                 }
             }
 
-            m_paint.alingToGrid(paintObj.getKey());
+            // TODO: remove after more testing - aligning the sections has an undesired result: the last section line is shrinked after five resize actions
+            //
+            // m_paint.alingToGrid(paintObj.getKey());
 
             if (isNew) {
                 oldHeight = 0;
@@ -4604,7 +4606,7 @@ namespace CSReportEditor
             switch (secToMove.getTypeSection()) {
 
                     // if the section is a footer we move to bottom
-                    // (Ojo footer sections, no group footers)
+                    // (OJO: footer sections, no group footers)
                     //
                 case  csRptTypeSection.CSRPTTPSCFOOTER:
                 case csRptTypeSection.CSRPTTPMAINSECTIONFOOTER:
@@ -4956,7 +4958,7 @@ namespace CSReportEditor
                 // textLine to show the name of the last line
                 //
                 CSReportPaint.cReportPaintObject po = m_paint.getPaintSections().item(sec.getKeyPaint());
-                po.setTextLine(C_SECTIONLINE + sec.getSectionLines().count().ToString());
+                po.setTextLine(C_SECTIONLINE + (sec.getSectionLines().count() - 1).ToString());
             }
 
             // we set the height of the last section line
@@ -4964,7 +4966,7 @@ namespace CSReportEditor
             paintSec = m_paint.getPaintSections().item(sec.getKeyPaint());
 
             cReportSectionLines secLines = sec.getSectionLines();
-            paintSec.setHeightSecLine(secLines.item(secLines.count()-1).getAspect().getHeight());
+            paintSec.setHeightSecLine(secLines.item(secLines.count() - 1).getAspect().getHeight());
         }
 
         private void refreshNextNameCtrl(String nameCtrl) {
@@ -5497,7 +5499,9 @@ namespace CSReportEditor
             //
             w_aspect.setTop(w_aspect.getTop() + w_aspect.getOffset());
 
-            m_paint.alingToGrid(paintObj.getKey());
+            // TODO: remove after more testing - aligning the sections has an undesired result: the last section line is shrinked after five resize actions
+            //
+            // m_paint.alingToGrid(paintObj.getKey());
 
             // the section line height has been changed
             //
