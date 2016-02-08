@@ -69,7 +69,7 @@ namespace CSXml
 
         public bool getValueBool(eTypes type)
         {
-            return ((int)getValue(type) == 0);
+            return ((int)getValue(type) != 0);
         }
 
         public object getValue(eTypes type)

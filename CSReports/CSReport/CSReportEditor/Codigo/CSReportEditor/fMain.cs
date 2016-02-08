@@ -274,6 +274,14 @@ namespace CSReportEditor
         private void fMain_Load(object sender, EventArgs e)
         {
             cPrintAPI.getDefaultPrinter(out m_printerName, out m_driverName, out m_port, out m_paperSize, out m_orientation, out m_paperSizeWidth, out m_paperSizeHeight);
+            
+            //
+            // remove me and implement a better window position code
+            //
+            this.Width = 1200;
+            this.Height = 900;
+            this.Left = (Screen.FromControl(this).Bounds.Width - this.Width) / 2;
+            this.Top = (Screen.FromControl(this).Bounds.Height - this.Height) / 2;
         }
     }
 }

@@ -312,14 +312,7 @@ namespace CSXml
 
         public XmlNode getNodeFromNode(XmlNode node, string nodeTag)
         {
-            if (node.OwnerDocument.GetElementsByTagName(nodeTag).Count > 0)
-            {
-                return node.OwnerDocument.GetElementsByTagName(nodeTag)[0];
-            }
-            else
-            {
-                return null;
-            }
+            return node.SelectSingleNode(nodeTag);
         }
 
         public XmlNode getNodeChild(XmlNode node)

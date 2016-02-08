@@ -758,8 +758,15 @@ namespace CSKernelFile
         {
             try
             {
-                FileInfo fi = new FileInfo(fullFileName);
-                return fi.Exists;
+                if (fullFileName == "\\ .")
+                {
+                    return false;
+                }
+                else 
+                {
+                    FileInfo fi = new FileInfo(fullFileName);
+                    return fi.Exists;                
+                }
             }
             catch (Exception ex) {
                 return false;

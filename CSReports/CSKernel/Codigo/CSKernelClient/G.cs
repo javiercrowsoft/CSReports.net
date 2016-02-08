@@ -18,21 +18,14 @@ namespace CSKernelClient
 
         public static void redim(ref byte[] vBytes, int size)
         {
-            if (size == 0)
-            {
-                vBytes = null;
-            }
-            else
-            {
-                vBytes = new byte[size];
-            }
+            vBytes = new byte[size];
         }
 
         public static void redimPreserve(ref byte[] vBytes, int size) 
         {
             if (size == 0)
             {
-                vBytes = null;
+                vBytes = new byte[0];
             }
             else
             {
@@ -57,37 +50,30 @@ namespace CSKernelClient
 
         public static void redim(ref object[] vObjects, int size)
         {
-            if (size == 0)
-            {
-                vObjects = null;
-            }
-            else
-            {
-                vObjects = new object[size];
-            }
+            vObjects = new object[size];
         }
 
-        public static void redimPreserve(ref object[] objects, int size)
+        public static void redimPreserve(ref object[] vObjects, int size)
         {
             if (size == 0)
             {
-                objects = null;
+                vObjects = new object[size];
             }
             else
             {
-                if (objects == null)
+                if (vObjects == null)
                 {
-                    objects = new object[size];
+                    vObjects = new object[size];
                 }
-                else if (objects.Length == 0)
+                else if (vObjects.Length == 0)
                 {
-                    objects = new object[size];
+                    vObjects = new object[size];
                 }
                 else
                 {
                     object[] newArray = new object[size];
-                    Array.Copy(objects, newArray, objects.Length);
-                    objects = newArray;
+                    Array.Copy(vObjects, newArray, vObjects.Length);
+                    vObjects = newArray;
                 }
             }
         }
@@ -96,33 +82,19 @@ namespace CSKernelClient
 
         public static void redim(ref String[] vStrings, int size)
         {
-            if (size == 0)
-            {
-                vStrings = null;
-            }
-            else
-            {
-                vStrings = new String[size];
-            }
+            vStrings = new String[size];
         }
 
         public static void redim(ref String[,] vStrings, int size1, int size2)
         {
-            if (size1 == 0)
-            {
-                vStrings = null;
-            }
-            else
-            {
-                vStrings = new String[size1, size2];
-            }
+            vStrings = new String[size1, size2];
         }
 
         public static void redimPreserve(ref String[] vStrings, int size)
         {
             if (size == 0)
             {
-                vStrings = null;
+                vStrings = new String[0];
             }
             else
             {
@@ -147,21 +119,14 @@ namespace CSKernelClient
 
         public static void redim(ref int[] vInts, int size)
         {
-            if (size == 0)
-            {
-                vInts = null;
-            }
-            else
-            {
-                vInts = new int[size];
-            }
+            vInts = new int[size];
         }
 
         public static void redimPreserve(ref int[] vInts, int size)
         {
             if (size == 0)
             {
-                vInts = null;
+                vInts = new int[0];
             }
             else
             {
@@ -186,21 +151,14 @@ namespace CSKernelClient
 
         public static void redim(ref float[] vFloats, int size)
         {
-            if (size == 0)
-            {
-                vFloats = null;
-            }
-            else
-            {
-                vFloats = new float[size];
-            }
+            vFloats = new float[size];
         }
 
         public static void redimPreserve(ref float[] vFloats, int size)
         {
             if (size == 0)
             {
-                vFloats = null;
+                vFloats = new float[0];
             }
             else
             {
@@ -225,21 +183,14 @@ namespace CSKernelClient
 
         public static void redim(ref DataTable[] vDataTables, int size)
         {
-            if (size == 0)
-            {
-                vDataTables = null;
-            }
-            else
-            { 
-                vDataTables = new DataTable[size];
-            }
+            vDataTables = new DataTable[size];
         }
 
         public static void redimPreserve(ref DataTable[] vDataTables, int size)
         {
             if (size == 0)
             {
-                vDataTables = null;
+                vDataTables = new DataTable[0];
             }
             else
             {

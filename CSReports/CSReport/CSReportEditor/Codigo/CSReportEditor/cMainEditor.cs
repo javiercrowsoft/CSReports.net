@@ -49,6 +49,10 @@ namespace CSReportEditor
             return fmain;
         }
 
+        public static fMain getEditor() {
+            return fmain;
+        }
+
 	    public static cEditor getDocActive() {
 	        return m_editor;
 	    }

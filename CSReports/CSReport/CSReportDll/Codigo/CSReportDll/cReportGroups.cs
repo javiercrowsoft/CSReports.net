@@ -225,12 +225,13 @@ namespace CSReportDll
         private String pSetName(String section, String name)
         {
             String sectionName = section.ToLower();
-            if (sectionName.Substring(0, 5) == "group"
+            if (sectionName.Length == 0
+                || sectionName.Substring(0, 5) == "group"
                 || sectionName.Substring(0, 5) == "grupo"
                 || sectionName.Substring(0, 3) == "gh_"
                 || sectionName.Substring(0, 3) == "gf_"
                 || sectionName.Substring(0, 2) == "g_"
-                || sectionName.Length == 0)
+                )
             {
                 return name;
             }

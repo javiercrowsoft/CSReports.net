@@ -117,6 +117,9 @@ namespace CSReportEditor
 		public static void setDocActive (cEditor editor)
 		{
             MessageBox.Show("Implement this: public static void setDocActive (cEditor editor)");
+            
+            TabPage editorTab = editor.getEditorTab();
+            (editorTab.Parent as TabControl).SelectedTab = editorTab;
 		}
 
         public static void moveGroup(cReportGroup group, cEditor editor)

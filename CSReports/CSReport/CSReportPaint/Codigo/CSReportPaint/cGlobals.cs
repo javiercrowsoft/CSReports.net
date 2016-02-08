@@ -62,7 +62,7 @@ namespace CSReportPaint
             if (right < left) right = left;
             if (bottom < top) bottom = top;
 
-            return new RectangleF(left, top, right, bottom);
+            return new RectangleF(left, top, right-left, bottom-top);
         }
 
         public static Rectangle newRectangle(int left, int top, int right, int bottom)
@@ -72,7 +72,7 @@ namespace CSReportPaint
             if (right < left) right = left;
             if (bottom < top) bottom = top;
 
-            return new Rectangle(left, top, right, bottom);
+            return new Rectangle(left, top, right-left, bottom-top);
         }
 
         private static float getPixelsFromCmX(float cm)
@@ -133,6 +133,72 @@ namespace CSReportPaint
             }
 
             return rtn;
+        }
+
+        // fonts
+
+        public static void redim(ref Font[] vFonts, int size)
+        {
+            vFonts = new Font[size];
+        }
+
+        public static void redimPreserve(ref Font[] vFonts, int size)
+        {
+            if (size == 0)
+            {
+                vFonts = new Font[0];
+            }
+            else
+            {
+                if (vFonts == null)
+                {
+                    vFonts = new Font[size];
+                }
+                else if (vFonts.Length == 0)
+                {
+                    vFonts = new Font[size];
+                }
+                else
+                {
+                    Font[] newArray = new Font[size];
+                    Array.Copy(vFonts, newArray, vFonts.Length);
+                    vFonts = newArray;
+                }
+            }
+        }
+
+        public static int addFontIfRequired(cReportFont font, ref Font[] m_fnt)
+        {
+            for(int i = 0; i < m_fnt.Length; i++) {
+                if(font.getName() == m_fnt[i].Name 
+                    && font.getBold() == m_fnt[i].Bold 
+                    && font.getItalic() == m_fnt[i].Italic 
+                    && font.getUnderline() == m_fnt[i].Underline 
+                    && font.getSize() == m_fnt[i].Size 
+                    && font.getStrike() == m_fnt[i].Strikeout) {
+                    return i;
+                }
+            }
+
+            redimPreserve(ref m_fnt, m_fnt.Length + 1);
+
+            FontStyle fontStyle = FontStyle.Regular;
+            if (font.getBold()) fontStyle = fontStyle | FontStyle.Bold;
+            if (font.getItalic()) fontStyle = fontStyle | FontStyle.Italic;
+            if (font.getUnderline()) fontStyle = fontStyle | FontStyle.Underline;
+            if (font.getStrike()) fontStyle = fontStyle | FontStyle.Strikeout;
+
+            Font afont = new Font(font.getName(), ((font.getSize() > 0) ? font.getSize() : 3), fontStyle);
+
+            m_fnt[m_fnt.Length - 1] = afont;
+
+            return m_fnt.Length - 1;
+        }
+
+        public static Color colorFromRGB(int rgb) {
+            byte[] values = BitConverter.GetBytes(rgb);
+            if (!BitConverter.IsLittleEndian) Array.Reverse(values);
+            return Color.FromArgb(values[2], values[1], values[0]);
         }
     }
 

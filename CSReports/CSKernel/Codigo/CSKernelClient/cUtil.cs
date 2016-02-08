@@ -20,24 +20,24 @@ namespace CSKernelClient
         {
             const int nTwipsPerInch = 1440;
             int dpi = getDPI();
-            return (twips / nTwipsPerInch) * dpi;
+            return Convert.ToInt32((twips / (float)nTwipsPerInch) * dpi);
         }
 
         public static int pt(int pixels) {
             const int nTwipsPerInch = 1440;
             int dpi = getDPI();
-            return (pixels / dpi) * nTwipsPerInch;
+            return Convert.ToInt32((pixels / (float)dpi) * nTwipsPerInch);
         }
 
         public static int mt(int millimeters) {
             const int nTwipsPerInch = 1440;
-            return (int)(mi(millimeters) * nTwipsPerInch);
+            return Convert.ToInt32(mi(millimeters) * nTwipsPerInch);
         }
 
         public static int mp(int millimeters)
         {
             int dpi = getDPI();
-            return (int)(mi(millimeters) * dpi);
+            return Convert.ToInt32(mi(millimeters) * dpi);
         }
 
         public static double mi(double millimeters)

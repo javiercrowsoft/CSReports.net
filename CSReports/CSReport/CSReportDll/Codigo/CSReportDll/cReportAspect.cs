@@ -82,7 +82,7 @@ namespace CSReportDll
 
         public void setHeight(float rhs)
         {
-            if (rhs < 20) { rhs = 20; }
+            if (rhs < 1) { rhs = 1; }
             m_height = rhs;
         }
 
@@ -303,11 +303,15 @@ namespace CSReportDll
             try { m_borderRounded = xDoc.getNodeProperty(nodeObj, "BorderRounded").getValueBool(eTypes.eBoolean); }
             catch { }
 
+            twipsToPixels();
+
             return m_font.load(xDoc, nodeObj);
         }
 
         internal bool save(CSXml.cXml xDoc, XmlNode nodeFather)
         {
+            pixelsToTwips();
+
             CSXml.cXmlProperty xProperty = null;
             XmlNode nodeObj = null;
             xProperty = new CSXml.cXmlProperty();
@@ -396,9 +400,26 @@ namespace CSReportDll
             xProperty.setValue(eTypes.eBoolean, m_borderRounded);
             xDoc.addPropertyToNode(nodeObj, xProperty);
 
+            twipsToPixels();
+
             return !m_font.save(xDoc, nodeObj);
         }
 
+        private void twipsToPixels() 
+        {
+            m_height = cUtil.tp(Convert.ToInt32(m_height));
+            m_left = cUtil.tp(Convert.ToInt32(m_left));
+            m_top = cUtil.tp(Convert.ToInt32(m_top));
+            m_width = cUtil.tp(Convert.ToInt32(m_width));
+        }
+
+        private void pixelsToTwips() 
+        {
+            m_height = cUtil.pt(Convert.ToInt32(m_height));
+            m_left = cUtil.pt(Convert.ToInt32(m_left));
+            m_top = cUtil.pt(Convert.ToInt32(m_top));
+            m_width = cUtil.pt(Convert.ToInt32(m_width));        
+        }
     }
 
 }

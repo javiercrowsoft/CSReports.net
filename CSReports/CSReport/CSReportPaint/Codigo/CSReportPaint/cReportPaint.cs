@@ -16,8 +16,8 @@ namespace CSReportPaint
 
         private const String C_MODULE = "cReportPaint";
 
-        private const float C_GRID_AREA_WIDTH = 3000;
-        private const float C_GRID_AREA_HEIGHT = 1000;
+        private const float C_GRID_AREA_WIDTH = 200;
+        private const float C_GRID_AREA_HEIGHT = 67;
 
         private const String C_KEY_PAINT_OBJ = "P";
         private const String C_KEY_PAINT_SEC = "S";
@@ -27,7 +27,7 @@ namespace CSReportPaint
         private cReportPaintObjects m_paintGridAreas = new cReportPaintObjects();
 
         private int m_nextKey = 0;
-        private int m_hBrushGrid = 0;
+        private HatchBrush m_brushGrid;
 
         private float m_x1 = 0;
         private float m_y1 = 0;
@@ -46,7 +46,6 @@ namespace CSReportPaint
         private bool m_notBorder;
 
         private Font[] m_fnt;
-        private int m_fontCount = 0;
 
         private float m_gridHeight = 0;
 
@@ -67,7 +66,7 @@ namespace CSReportPaint
                 m_scaleY = 1;
 
                 G.redim(ref m_vGridObjs, 0, 0);
-                redim(ref m_fnt, 0);
+                cGlobals.redim(ref m_fnt, 0);
                 G.redim(ref m_vSelectedKeys, 0);
 
                 m_zoom = 100;
@@ -290,7 +289,7 @@ namespace CSReportPaint
            * ByRef sKey As String, 
            * Optional ByRef RegionType As csRptPaintRegionType */
 
-            const int C_WIDTH_REGION = 50;
+            const int C_WIDTH_REGION = 3;
 
             float yY = 0;
             float xX = 0;
@@ -782,8 +781,15 @@ namespace CSReportPaint
 
         public bool drawSection(String key, Graphics graph)
         {
-            if (!draw(m_paintSections, key, graph)) { return false; }
-            return drawRule(key, graph);
+            // check the width of the paintObject for this section
+            // is into the bounds of the page
+            //
+            cReportAspect aspect = m_paintSections.item(key).getAspect();
+            if (aspect.getWidth() > m_bitmap.Size.Width-2)
+            {
+                aspect.setWidth(m_bitmap.Size.Width-2);
+            }
+            return draw(m_paintSections, key, graph);
         }
 
         public bool drawRule(String key, Graphics graph)
@@ -797,13 +803,13 @@ namespace CSReportPaint
             cReportPaintObject w_item = m_paintSections.item(key);
             heightSec = w_item.getHeightSecLine() * 0.5f;
             CSReportDll.cReportAspect w_aspect = w_item.getAspect();
-            aspect.setTop(w_aspect.getTop() + 50 - heightSec);
+            aspect.setTop(w_aspect.getTop() + 3 - heightSec);
             aspect.setOffset(w_aspect.getOffset());
             aspect.setTransparent(true);
             aspect.setLeft(0);
-            aspect.setHeight(285);
+            aspect.setHeight(20);
             aspect.setAlign(HorizontalAlignment.Right);
-            aspect.setWidth(graph.ClipBounds.Width - 80);
+            aspect.setWidth(graph.ClipBounds.Width - 5);
 
             if (w_item.getTextLine() != "")
             {
@@ -832,7 +838,7 @@ namespace CSReportPaint
                 // print section's name
                 //
                 w_aspect = m_paintSections.item(key).getAspect();
-                aspect.setTop(w_aspect.getTop() + 50 - heightSec);
+                aspect.setTop(w_aspect.getTop() + 3 - heightSec);
                 aspect.setAlign(HorizontalAlignment.Left);
 
                 printText(graph, w_item.getText(), aspect, w_item.getImage());
@@ -1009,7 +1015,7 @@ namespace CSReportPaint
 
                     case csRptPaintObjType.CSRPTPAINTOBJLINE:
 
-                        printLine(graph, filled, x1, y1, x2, y2, colorIn, 0, false, colorOut, false);
+                        printLine(graph, filled, x1, y1, x2, y2, colorIn, 1, false, colorOut, false);
                         break;
 
                     case csRptPaintObjType.CSRPTPAINTOBJCIRCLE:
@@ -1019,7 +1025,7 @@ namespace CSReportPaint
 
                         pDrawObjBox(graph,
                                     oPaintObj.getAspect(),
-                                    x1 - 20, y1 - 20, x2 + 20, y2 + 20,
+                                    x1 - 1, y1 - 1, x2 + 1, y2 + 1,
                                     filled,
                                     colorIn,
                                     0xC0C000);
@@ -1073,6 +1079,36 @@ namespace CSReportPaint
         private void drawBMP(Graphics graph, Image image, float x, float y, int bmpWidth, int bmpHeight, float destWidth, float destHeight)
         {
             throw new NotImplementedException();
+            /*
+              Dim hDC      As Long
+              Dim hOldBmp  As Long
+  
+              hDC = CreateCompatibleDC(0&)
+              hOldBmp = SelectObject(hDC, hBmp)
+  
+              x = x / Screen.TwipsPerPixelX
+              y = y / Screen.TwipsPerPixelY
+              Width = Width / Screen.TwipsPerPixelX
+              Height = Height / Screen.TwipsPerPixelY
+              DestWidth = DestWidth / Screen.TwipsPerPixelX
+              DestHeight = DestHeight / Screen.TwipsPerPixelY
+  
+              If DestWidth <> Width Then
+                Dim OldStrMode As Long
+    
+                OldStrMode = SetStretchBltMode(hDCDest, HALFTONE)
+  
+                StretchBlt hDCDest, x, y, DestWidth, DestHeight, hDC, 0, 0, Width, Height, vbSrcCopy
+    
+                SetStretchBltMode hDCDest, OldStrMode
+    
+              Else
+                BitBlt hDCDest, x, y, Width, Height, hDC, 0, 0, vbSrcCopy
+              End If
+  
+              SelectObject hDC, hOldBmp
+              DeleteObject hDC
+             */
         }
 
         public void setFocus(String sKey, Graphics graph, bool clearSelected)
@@ -1183,7 +1219,7 @@ namespace CSReportPaint
             m_x2 = left + width;
             m_y2 = top + height;
 
-            printLine(graph, false, m_x1, m_y1, m_x2, m_y2, 0, 0, true, (int)csColors.C_COLOR_BLACK, false);
+            printLine(graph, false, m_x1, m_y1, m_x2, m_y2, 0, 1, true, (int)csColors.C_COLOR_BLACK, false);
 
             if (m_x1 > 1) { m_x1 = m_x1 - 2; }
             if (m_y1 > 1) { m_y1 = m_y1 - 2; }
@@ -1194,8 +1230,8 @@ namespace CSReportPaint
 
         public void resize(Graphics graph, String sKey, float left, float top, float x2, float y2)
         {
-            const int C_MIN_WIDTH = 10;
-            const int C_MIN_HEIGHT = 10;
+            const int C_MIN_WIDTH = 1;
+            const int C_MIN_HEIGHT = 1;
 
             CSReportDll.cReportAspect paintObjAsp = null;
 
@@ -1256,7 +1292,7 @@ namespace CSReportPaint
 
             paintPicture(graph, false);
 
-            printLine(graph, false, m_x1, m_y1, m_x2, m_y2, (int)csColors.C_COLOR_WHITE, 0, true, (int)csColors.C_COLOR_BLACK, false);
+            printLine(graph, false, m_x1, m_y1, m_x2, m_y2, (int)csColors.C_COLOR_WHITE, 1, true, (int)csColors.C_COLOR_BLACK, false);
 
             graph.Dispose();
         }
@@ -1311,20 +1347,22 @@ namespace CSReportPaint
                 m_bitmap.Dispose();
             }
 
-            m_bitmap = new Bitmap((int)graph.VisibleClipBounds.Width, (int)graph.VisibleClipBounds.Height + 56); // TODO check why 56 ???
+            m_bitmap = new Bitmap((int)graph.VisibleClipBounds.Width + 1, (int)graph.VisibleClipBounds.Height + 3); // TODO check why 56 ???
 
             Graphics bitmapGraphic = Graphics.FromImage(m_bitmap);
 
-            Rectangle rect = cGlobals.newRectangle(0, 0, (int)graph.VisibleClipBounds.Width, (int)graph.VisibleClipBounds.Height + 56); // TODO check why 56 ???
-            Brush brush = new SolidBrush(Color.FromArgb(color));
-            graph.FillRectangle(brush, rect);
+            Rectangle rect = cGlobals.newRectangle(0, 0, (int)graph.VisibleClipBounds.Width, (int)graph.VisibleClipBounds.Height + 3); // TODO check why 56 ???
+            Brush brush = new SolidBrush(cGlobals.colorFromRGB(color));
+            bitmapGraphic.FillRectangle(brush, rect);
             brush.Dispose();
 
+            bitmapGraphic.FillRectangle(m_brushGrid, rect);
+            
             for (int i = 0; i < getPaintObjects().count(); i++)
             {
                 drawObject(getPaintObjects().getNextKeyForZOrder(i), bitmapGraphic);
             }
-
+            
             for (int i = 0; i < getPaintSections().count(); i++)
             {
                 drawSection(getPaintSections().getNextKeyForZOrder(i), bitmapGraphic);
@@ -1407,7 +1445,7 @@ namespace CSReportPaint
 
             Pen pen;
 
-            pen = new Pen(Color.FromArgb(colorOut), width);
+            pen = new Pen(cGlobals.colorFromRGB(colorOut), width);
 
             if (dash)
             {
@@ -1430,14 +1468,26 @@ namespace CSReportPaint
 
                 if (y2 != y1 && x1 != x2)
                 {
-                    graph.DrawRectangle(pen, rect);
-
                     if (filled)
                     {
-                        rect.Inflate(-1, -1);
-                        Brush brush = new SolidBrush(Color.FromArgb(colorInside));
+                        /* TODO: remove me after some testing
+                         * 
+                        if (!(rect.Height == 1 && filled))
+                        {
+                            rect.Inflate(-1, -1);
+                        }
+                        */
+                        Brush brush = new SolidBrush(cGlobals.colorFromRGB(colorInside));
                         graph.FillRectangle(brush, rect);
                         brush.Dispose();
+                    }
+                    
+                    // the original version didn't put a border when the height is 20 twips
+                    // we want to preserve that behaviour
+                    //
+                    if (!(rect.Height == 1 && filled))
+                    {
+                        graph.DrawRectangle(pen, rect);
                     }
                 }
                 else
@@ -1567,8 +1617,91 @@ namespace CSReportPaint
 
             SelectObject(hDC, hFntOld);
              */
-        }
 
+            // padding
+            const int c_Margen_Y = 1; // 20 twips;
+            const int c_Margen_X = 4; // 80 twips;
+            const int c_Margen_Bottom = 4; // 80 twips;
+            
+            int idx = cGlobals.addFontIfRequired(aspect.getFont(), ref m_fnt);
+            
+            Font font = m_fnt[idx];
+
+            StringFormat format = new StringFormat();
+
+            format.Trimming = StringTrimming.EllipsisWord;
+            format.Alignment = StringAlignment.Near;
+
+            if (!aspect.getWordWrap()) {
+                format.FormatFlags = StringFormatFlags.NoWrap;
+            }
+
+            int stringWidth = getPlEvaluateTextWidth(sText, font, m_scaleX);
+            int stringHeight = getPlEvaluateTextHeight(sText, font, aspect.getWidth(), format, m_scaleY, m_scaleX);
+
+            // TODO: translate this to English if it is really needed
+            //
+            // Esto es por seguridad, ya que
+            // cuando imprimo en la impresora (en pantalla esto no pasa)
+            // por pequeñas diferencias en la
+            // proceso de escalar hasta la resolucion
+            // de la impresora en algunos casos
+            // pierdo parte del texto si el
+            // rectangulo que pido es demasiado pequeño
+            //
+            stringHeight += 25; //+ 400 the original code was in twips;
+
+            int margenX = c_Margen_X;
+            int margenY = c_Margen_Y;
+
+            if (image != null)
+            {
+                margenX += image.Size.Width;
+                margenY = image.Size.Height - stringHeight - c_Margen_Bottom;
+                
+                if (margenY + stringHeight > aspect.getHeight()) 
+                { 
+                    margenY = Convert.ToInt32(aspect.getHeight() - stringHeight - c_Margen_Bottom); 
+                }                
+                if (margenY < c_Margen_Y) 
+                { 
+                    margenY = c_Margen_Y; 
+                }
+            }
+
+            int nWidth = Convert.ToInt32(aspect.getWidth() - margenX * 2);
+            
+            if (stringWidth > nWidth) 
+            { 
+                stringWidth = nWidth; 
+            }
+
+            int x = 0;
+            int y = 0;
+
+            switch (aspect.getAlign())
+            {
+                case HorizontalAlignment.Right:
+                    x = Convert.ToInt32(aspect.getLeft() + aspect.getWidth() - stringWidth - margenX);
+                    break;
+                case HorizontalAlignment.Center:
+                    x = Convert.ToInt32(aspect.getLeft() + (aspect.getWidth() - stringWidth) * 0.5);
+                    break;
+                case HorizontalAlignment.Left:
+                    x = Convert.ToInt32(aspect.getLeft() + margenX);
+                    break;
+            }
+
+            y = Convert.ToInt32(aspect.getTop() - aspect.getOffset() + margenY);
+
+            RectangleF rect = cGlobals.newRectangleF(x, y, Convert.ToInt32(x + aspect.getWidth() - margenX), y + stringHeight);
+
+            SolidBrush brush = new SolidBrush(cGlobals.colorFromRGB(aspect.getFont().getForeColor()));
+
+            graph.DrawString(sText, font, brush, rect, format);
+
+            brush.Dispose();
+        }
 
         private void showHandles(
             Graphics hDC,
@@ -1743,7 +1876,7 @@ namespace CSReportPaint
             }
             */
 
-            Rectangle rect = cGlobals.newRectangle(0, 0, (int)graph.VisibleClipBounds.Width, (int)graph.VisibleClipBounds.Height);
+            Rectangle rect = cGlobals.newRectangle(0, 0, m_bitmap.Size.Width, m_bitmap.Size.Height);
             if (m_zoom == 100)
             {
                 //BitBlt(graph.hDC, 0, 0, tR.right, tR.bottom, m_hMemDC, 0, 0, vbSrcCopy);
@@ -1850,32 +1983,59 @@ namespace CSReportPaint
             DeleteObject(hMemDC);
             DeleteObject(hBmp);
             DeleteObject(hBrush);
-             */ 
+             */
+            
+            switch (typeGrid)
+            {
+                case csETypeGrid.CSEGRIDLINES:
+                    m_brushGrid = new HatchBrush(
+                                            HatchStyle.Cross,
+                                            cGlobals.colorFromRGB(0xC0C0C0),
+                                            Color.White);
+                    break;
+                case csETypeGrid.CSEGRIDPOINTS:
+                    m_brushGrid = new HatchBrush(
+                                            HatchStyle.DottedGrid,
+                                            cGlobals.colorFromRGB(0xC0C0C0),
+                                            Color.White);
+                    break;
+                case csETypeGrid.CSEGRIDLINESHORIZONTAL:
+                    m_brushGrid = new HatchBrush(
+                                            HatchStyle.Horizontal,
+                                            cGlobals.colorFromRGB(0xC0C0C0),
+                                            Color.White);
+                    break;
+                case csETypeGrid.CSEGRIDLINESVERTICAL:
+                    m_brushGrid = new HatchBrush(
+                                            HatchStyle.Vertical,
+                                            cGlobals.colorFromRGB(0xC0C0C0),
+                                            Color.White);
+                    break;
+                case csETypeGrid.CSEGRIDNONE:
+                    m_brushGrid = new HatchBrush(
+                                            HatchStyle.DottedGrid,
+                                            cGlobals.colorFromRGB(0xCCCCCC),
+                                            Color.White);
+                    break;
+            }
         }
 
         //
         //
-        private int getPlEvaluateTextWidth(String text, int hDC, int scaleX)
+        private int getPlEvaluateTextWidth(String text, Font font, float scaleX)
         {
-            /*
-            RECT tR = null;
-
-            DrawText(hDC, text + vbNullChar, -1, tR, ECGTextAlignFlags.DT_CALCRECT);
-            return ((tR.right - tR.left) * Screen.TwipsPerPixelX) / scaleX;
-             */
-            return 0;
+            Graphics graph = Graphics.FromImage(m_bitmap);
+            SizeF stringSize = graph.MeasureString(text, font);
+            graph.Dispose();
+            return Convert.ToInt32(stringSize.Height / scaleX); // TODO: check if it is / or *
         }
 
-        private int getPlEvaluateTextHeight(String text, int hDC, int lWidth, int flags, int scaleY, int scaleX)
+        private int getPlEvaluateTextHeight(String text, Font font, float width, StringFormat format, float scaleY, float scaleX)
         {
-            /*
-            RECT tR = null;
-
-            tR.right = (lWidth / Screen.TwipsPerPixelX) * scaleX;
-            DrawText(hDC, text + vbNullChar, -1, tR, ECGTextAlignFlags.DT_CALCRECT || flags);
-            return ((tR.bottom - tR.top) * Screen.TwipsPerPixelY) / scaleY;
-             */
-            return 0;
+            Graphics graph = Graphics.FromImage(m_bitmap);
+            SizeF stringSize = graph.MeasureString(text, font, Convert.ToInt32(width * scaleX), format);
+            graph.Dispose();
+            return Convert.ToInt32(stringSize.Height / scaleY); // TODO: check if it is / or * the same function in cReportPrint is using * one has to be wrong
         }
 
         private void pClearObject(String key, Graphics graph)
@@ -1932,13 +2092,13 @@ namespace CSReportPaint
                     printLine(graph, false, x1, y1, x2, y1, (int)csColors.C_COLOR_WHITE, 1, false, aspect.getBorderColor3d(), false);
                     // down
                     //
-                    printLine(graph, false, x1, y2 - 20, x2, y2 - 20, (int)csColors.C_COLOR_WHITE, 1, false, aspect.getBorderColor3dShadow(), false);
+                    printLine(graph, false, x1, y2 - 1, x2, y2 - 1, (int)csColors.C_COLOR_WHITE, 1, false, aspect.getBorderColor3dShadow(), false);
                     // left
                     //
-                    printLine(graph, false, x1 + 10, y1, x1 + 10, y2, (int)csColors.C_COLOR_WHITE, 1, false, aspect.getBorderColor3d(), false);
+                    printLine(graph, false, x1 + 1, y1, x1 + 1, y2, (int)csColors.C_COLOR_WHITE, 1, false, aspect.getBorderColor3d(), false);
                     // right
                     //
-                    printLine(graph, false, x2 - 10, y1, x2 - 10, y2, (int)csColors.C_COLOR_WHITE, 1, false, aspect.getBorderColor3dShadow(), false);
+                    printLine(graph, false, x2 - 1, y1, x2 - 1, y2, (int)csColors.C_COLOR_WHITE, 1, false, aspect.getBorderColor3dShadow(), false);
                 }
                 else if (aspect.getBorderRounded())
                 {
@@ -1946,21 +2106,16 @@ namespace CSReportPaint
                 }
                 else
                 {
-                    printLine(graph, filled, x1, y1, x2, y2, colorIn, 0, false, colorOut, false);
+                    printLine(graph, filled, x1, y1, x2, y2, colorIn, 1, false, colorOut, false);
                 }
             }
         }
 
-        public static void redim(ref Font[] vFonts, int size)
+        // Testing
+
+        public Image getBitmap()
         {
-            if (size == 0)
-            {
-                vFonts = null;
-            }
-            else
-            {
-                vFonts = new Font[size];
-            }
+            return m_bitmap;
         }
 
     }

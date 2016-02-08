@@ -34,15 +34,17 @@ namespace CSReportEditor
             m_picReport.SetBounds(cUtil.mp(50) + cUtil.mp(1), cUtil.mp(1), cUtil.mp(210), cUtil.mp(297));
             m_picReport.BackColor = Color.Beige;
 
+            m_picReport.Paint += new PaintEventHandler(m_picReport_Paint);
+
             m_editorTab = editorTab;
         }
         
         private cEditor() {}
 
         private const String C_MODULE = "cEditor";
-        private const int C_TOPBODY = 150;
+        private const int C_TOPBODY = 10;
         private const int C_LEFTBODY = 0;
-        private const int C_MIN_HEIGHT_SECTION = 50;
+        private const int C_MIN_HEIGHT_SECTION = 3;
         private const String C_SECTIONLINE = "Line ";
 
         private const int C_NOMOVE = -1111111;
@@ -120,7 +122,11 @@ namespace CSReportEditor
         private bool m_inMouseDown = false;
 
         private CSReportPaint.csETypeGrid m_typeGrid;
-         
+
+        public TabPage getEditorTab() {
+            return m_editorTab;
+        }
+
         public String getVCopyKeys(int idx) {
             return m_vCopyKeys[idx];
         }
@@ -1908,8 +1914,12 @@ namespace CSReportEditor
             m_keyMoving = "";
         }
 
-        private void m_picReport_Paint() {
-            m_paint.paintPicture(m_picReport.CreateGraphics(), true);
+        private void m_picReport_Paint(object sender, PaintEventArgs e)
+        {
+            if (m_paint != null)
+            {
+                m_paint.paintPicture(e.Graphics, false);                
+            }            
         }
 
         private void m_picRule_Paint() {
@@ -2727,7 +2737,6 @@ namespace CSReportEditor
         
         public void addSectionLine() {
             cReportSection sec = null;
-            CSReportPaint.cReportPaintObject paintObj = null;
 			cReportAspect aspect = null;
             bool isGroup = false;
 
@@ -2787,16 +2796,14 @@ namespace CSReportEditor
             aspect = sec.getAspect();
             aspect.setHeight(aspect.getHeight() + cGlobals.C_HEIGHT_NEW_SECTION);
 
-            pAddSectionLinesAux(sec, paintObj);
+            pAddSectionLinesAux(sec);
 
             // we reset this variable to zero
             //
             m_newSecLineOffSet = 0;
         }
 
-        private void pAddSectionLinesAux(
-            cReportSection sec, 
-            CSReportPaint.cReportPaintObject paintObj) 
+        private void pAddSectionLinesAux(cReportSection sec) 
         {
 			csRptTypeSection typeSecLn = csRptTypeSection.CONTROL;
 			cReportAspect aspect = null;
@@ -2876,7 +2883,7 @@ namespace CSReportEditor
             po = m_paint.getPaintSections().item(sec.getKeyPaint());
 			po.setTextLine(C_SECTIONLINE + sec.getSectionLines().count().ToString());
 
-            moveSection(paintObj, 0, y, minBottom, maxBottom, sec, false);
+            moveSection(m_paint.getPaintSections().item(m_keyFocus), 0, y, minBottom, maxBottom, sec, false);
 
             refreshBody();
             refreshRule();
@@ -3180,6 +3187,41 @@ namespace CSReportEditor
 				cGlobals.setDocActive(this);
 
                 m_opening = false;
+
+                // Testing
+                //
+
+                //m_paint.initGrid(m_picReport.CreateGraphics(), m_typeGrid);
+
+                //var bmp = m_paint.getBitmap();
+/*
+                var g = Graphics.FromImage(bmp);
+                var graph = m_picReport.CreateGraphics();
+
+                System.Drawing.Rectangle rect = new System.Drawing.Rectangle(0, 0, (int)graph.VisibleClipBounds.Width, (int)graph.VisibleClipBounds.Height + 56); // TODO check why 56 ???
+                Brush brush = new SolidBrush(Color.Red);
+                g.FillRectangle(brush, rect);
+                brush.Dispose();
+
+                var b = new SolidBrush(Color.Black);
+                g.FillRectangle(b, new RectangleF(0,0,10,10));
+                g.FillRectangle(b, new RectangleF(100,100, 10, 10));
+
+                Brush bg = new System.Drawing.Drawing2D.HatchBrush(
+                                            System.Drawing.Drawing2D.HatchStyle.DottedGrid,
+                                            Color.FromArgb(0xC0C0C0),
+                                            Color.White);
+
+                g.FillRectangle(bg, new RectangleF(200, 100, 100, 100));
+
+                                
+
+                b.Dispose();
+                bg.Dispose();
+                graph.Dispose();
+                g.Dispose();
+ */ 
+                //m_picReport.Image = bmp;
 
                 return true;
             }
@@ -4016,7 +4058,7 @@ namespace CSReportEditor
         public void editText() {
             try {
 
-                const int c_margen = 20;
+                const int c_margen = 1;
 
                 String sText = "";
                 cReportAspect paintObjAspect = null;
@@ -4137,7 +4179,7 @@ namespace CSReportEditor
             w_aspect.setHeight(cGlobals.C_HEIGHT_BAR_SECTION);
 
             int innerColor = 0;
-            innerColor = 0xAEAEAE;
+            innerColor = 0x99ccff;
 
             if (isSectionLine) {
                 w_aspect.setBackColor(innerColor);
@@ -4151,7 +4193,7 @@ namespace CSReportEditor
                 } 
                 else {
                     w_aspect.setBackColor(innerColor);
-                    w_aspect.setBorderColor(0x5A7FB);
+                    w_aspect.setBorderColor(0x0066cc);
                 }
             }
 
@@ -5490,8 +5532,8 @@ namespace CSReportEditor
         }
 
         private void pMoveControl(cReportAspect aspect, bool bSizing) { 
-            const int C_MIN_WIDTH = 10;
-            const int C_MIN_HEIGHT = 10;
+            const int C_MIN_WIDTH = 1;
+            const int C_MIN_HEIGHT = 1;
 
             cReportAspect rptCtrlAspect = null;
 

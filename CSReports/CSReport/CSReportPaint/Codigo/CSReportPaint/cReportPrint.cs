@@ -31,7 +31,6 @@ namespace CSReportPaint
         private int m_currPage = -1;
 
         private Font[] m_fnt;
-        private int m_iFontCount = 0;
 
         private int m_hDC = 0;
 
@@ -1200,25 +1199,19 @@ namespace CSReportPaint
                                             || ECGTextAlignFlags.DT_LEFT
                                             || ECGTextAlignFlags.DT_NOPREFIX*/;
                                 }
+                                
+                                int idx = cGlobals.addFontIfRequired(aspect.getFont(), ref m_fnt);
+                                
+                                font = m_fnt[idx];
 
-                                CSReportDll.cReportFont w_font = aspect.getFont();
-                                FontStyle style = new FontStyle();
-                                if (w_font.getBold())
-                                {
-                                    style = style | FontStyle.Bold;
-                                }
-                                if (w_font.getItalic())
-                                {
-                                    style = style | FontStyle.Italic;
-                                }
-                                if (w_font.getUnderline())
-                                {
-                                    style = style | FontStyle.Underline;
-                                }
-                                font = new Font(w_font.getName(), w_font.getSize(), style);
-
-                                //TODO: evaluate height
-                                //field.setHeight(mAux.evaluateTextHeight(field.getValue(), m_hFnt[mAux.addFontIfRequired(font, m_hDC, m_iFontCount, m_fnt, m_hFnt)], aspect.getWidth(), m_hDC, flags, m_scaleY, m_scaleX));
+                                field.setHeight(
+                                    evaluateTextHeight(
+                                        field.getValue(), 
+                                        font, 
+                                        aspect.getWidth(), 
+                                        flags, 
+                                        m_scaleY, 
+                                        m_scaleX));
                                 if (field.getHeight() < aspectHeight) { field.setHeight(aspectHeight); }
                             }
                         }
@@ -1262,6 +1255,18 @@ namespace CSReportPaint
             // return the height of the section
             //
             return heightSection;
+        }
+
+        // TODO: check if we should have a bitmap as a member field so it is not created everytime
+        //
+        private float evaluateTextHeight(string text, Font font, float width, int flags, float scaleY, float scaleX)
+        {
+            Bitmap bmp = new Bitmap(1,1);
+            Graphics graph = Graphics.FromImage(bmp);
+            SizeF stringSize = graph.MeasureString(text, font, Convert.ToInt32(width * scaleX));
+            graph.Dispose();
+            bmp.Dispose();
+            return stringSize.Height * scaleY;
         }
 
         // if the caller hasn't assigned a preview object
