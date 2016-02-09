@@ -46,11 +46,11 @@ namespace CSReportDll
         {
             object printerConfigInfo = cPrintWMI.getPrinterConfigInfoFromWMI(deviceName);
 
-            int paperSize = getPaperSizeFromSizeName(cPrintWMI.getPrinterConfigInfoValueFromWMI("PaperSize", printerConfigInfo) as string);
-            int orientation = (int)cPrintWMI.getPrinterConfigInfoValueFromWMI("Orientation", printerConfigInfo);
+            int paperSize = getPaperSizeFromSizeName(cPrintWMI.getPrinterConfigInfoValueFromWMI("PaperSize", printerConfigInfo, "A4") as string);
+            int orientation = (int)cPrintWMI.getPrinterConfigInfoValueFromWMI("Orientation", printerConfigInfo, 1);
 
-            int width = (int)cPrintWMI.getPrinterConfigInfoValueFromWMI("PaperWidth", printerConfigInfo);
-            int height = (int)cPrintWMI.getPrinterConfigInfoValueFromWMI("PaperLength", printerConfigInfo);
+            int width = (int)cPrintWMI.getPrinterConfigInfoValueFromWMI("PaperWidth", printerConfigInfo, 210);
+            int height = (int)cPrintWMI.getPrinterConfigInfoValueFromWMI("PaperLength", printerConfigInfo, 297);
 
             return getcPrint(deviceName, driverName, port, orientation, paperSize, width, height);
         }
@@ -92,16 +92,16 @@ namespace CSReportDll
 
             object printerInfo = cPrintWMI.getPrinterInfoFromWMI(settings.PrinterName);
 
-            driverName = cPrintWMI.getPrinterInfoValueFromWMI("DriverName", printerInfo) as string;
-            port = cPrintWMI.getPrinterInfoValueFromWMI("PortName", printerInfo) as string;
+            driverName = cPrintWMI.getPrinterInfoValueFromWMI("DriverName", printerInfo, "") as string;
+            port = cPrintWMI.getPrinterInfoValueFromWMI("PortName", printerInfo, "") as string;
 
             object printerConfigInfo = cPrintWMI.getPrinterConfigInfoFromWMI(settings.PrinterName);
 
-            paperSize = getPaperSizeFromSizeName(cPrintWMI.getPrinterConfigInfoValueFromWMI("PaperSize", printerConfigInfo) as string);
-            orientation = Convert.ToInt32(cPrintWMI.getPrinterConfigInfoValueFromWMI("Orientation", printerConfigInfo));
+            paperSize = getPaperSizeFromSizeName(cPrintWMI.getPrinterConfigInfoValueFromWMI("PaperSize", printerConfigInfo, "A4") as string);
+            orientation = Convert.ToInt32(cPrintWMI.getPrinterConfigInfoValueFromWMI("Orientation", printerConfigInfo, 1));
 
-            width = (int)cReportGlobals.val(cPrintWMI.getPrinterConfigInfoValueFromWMI("PaperWidth", printerConfigInfo));
-            height = (int)cReportGlobals.val(cPrintWMI.getPrinterConfigInfoValueFromWMI("PaperLength", printerConfigInfo));
+            width = (int)cReportGlobals.val(cPrintWMI.getPrinterConfigInfoValueFromWMI("PaperWidth", printerConfigInfo, 210));
+            height = (int)cReportGlobals.val(cPrintWMI.getPrinterConfigInfoValueFromWMI("PaperLength", printerConfigInfo, 297));
         }
 
         private static int getPaperSizeFromSizeName(string sizeName) 

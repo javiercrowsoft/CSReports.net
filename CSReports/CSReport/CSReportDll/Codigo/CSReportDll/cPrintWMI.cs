@@ -18,7 +18,7 @@ namespace CSReportDll
         // first call getPrinterInfoFromWMI to get a printerInfo object ( ManagementObject )
         // then call this function one time for each property you need to access
         //
-        public static object getPrinterInfoValueFromWMI(string propertyName, object printerInfo)
+        public static object getPrinterInfoValueFromWMI(string propertyName, object printerInfo, object defaultValue)
         {
             ManagementObject printer = printerInfo as ManagementObject;
             if (printer != null)
@@ -32,15 +32,15 @@ namespace CSReportDll
                     }
                 }
             }
-            return null;
+            return defaultValue;
         }
 
         //
         // used when we need only one property
         //
-        public static object getPrinterInfoValueFromWMI(string printerName, string propertyName)
+        public static object getPrinterInfoValueFromWMI(string printerName, string propertyName, object defaultValue)
         {
-            return getPrinterInfoValueFromWMI(propertyName, getPrinterInfoFromWMI(printerName));
+            return getPrinterInfoValueFromWMI(propertyName, getPrinterInfoFromWMI(printerName), defaultValue);
         }
 
         //
@@ -53,17 +53,17 @@ namespace CSReportDll
         // first call getPrinterConfigInfoFromWMI to get a printerInfo object ( ManagementObject )
         // then call this function one time for each property you need to access
         //
-        public static object getPrinterConfigInfoValueFromWMI(string propertyName, object printerInfo)
+        public static object getPrinterConfigInfoValueFromWMI(string propertyName, object printerInfo, object defaultValue)
         {
-            return getPrinterInfoValueFromWMI(propertyName, printerInfo);
+            return getPrinterInfoValueFromWMI(propertyName, printerInfo, defaultValue);
         }
 
         //
         // used when we need only one property
         //
-        public static object getPrinterConfigInfoValueFromWMI(string printerName, string propertyName)
+        public static object getPrinterConfigInfoValueFromWMI(string printerName, string propertyName, object defaultValue)
         {
-            return getPrinterInfoValueFromWMI(propertyName, getPrinterConfigInfoFromWMI(printerName));
+            return getPrinterInfoValueFromWMI(propertyName, getPrinterConfigInfoFromWMI(printerName), defaultValue);
         }
 
         //
@@ -85,15 +85,21 @@ namespace CSReportDll
         //
         private static object getInfoFromWMI(string tableName, string objectName)
         {
-            string query = string.Format("SELECT * from {0} WHERE Name = '{1}'", tableName, objectName);
-            ManagementObjectSearcher searcher = new ManagementObjectSearcher(query);
-            ManagementObjectCollection coll = searcher.Get();
-
-            foreach (ManagementObject printer in coll)
+            try
             {
-                return printer;
+                string query = string.Format("SELECT * from {0} WHERE Name = '{1}'", tableName, objectName);
+                ManagementObjectSearcher searcher = new ManagementObjectSearcher(query);
+                ManagementObjectCollection coll = searcher.Get();
+
+                foreach (ManagementObject printer in coll)
+                {
+                    return printer;
+                }
+                return null;
             }
-            return null;
+            catch (System.NotImplementedException ex) {
+                return null;
+            }
         }
     }
 }
