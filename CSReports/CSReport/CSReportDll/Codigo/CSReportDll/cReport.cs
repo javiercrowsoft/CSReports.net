@@ -6,10 +6,11 @@ using System.Data;
 using System.Xml;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Data.Common;
+using System.IO;
 using CSKernelClient;
 using CSReportGlobals;
 using CSKernelFile;
-using System.Data.Common;
 
 namespace CSReportDll
 {
@@ -5249,7 +5250,7 @@ namespace CSReportDll
                 file.filter = "Access files|*.mdb";
                 file.init("ResumeDBAccessMissing", C_MODULE, commDialog);
 
-                if (!file.open(m_pathDefault + "\\" + file,
+                if (!file.open(m_pathDefault + Path.DirectorySeparatorChar + file,
                                 CSKernelClient.eFileMode.eRead,
                                 false,
                                 false,

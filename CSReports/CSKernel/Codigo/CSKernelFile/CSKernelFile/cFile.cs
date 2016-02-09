@@ -84,7 +84,7 @@ namespace CSKernelFile
 
         public string fullName
         {
-            get { return m_path + "\\" + m_name; }
+            get { return m_path + Path.DirectorySeparatorChar + m_name; }
         }
 
         public void init(string function, string module, object commDialog)
@@ -122,11 +122,11 @@ namespace CSKernelFile
             }
             if ((!exists && !createFile) || withDialog)
             {
-                exists = fileExists(m_curPath + "\\" + getFileName(fullFileName));
+                exists = fileExists(m_curPath + Path.DirectorySeparatorChar + getFileName(fullFileName));
 
                 if (exists && !withDialog)
                 {
-                    fullFileName = m_curPath + "\\" + getFileName(fullFileName);
+                    fullFileName = m_curPath + Path.DirectorySeparatorChar + getFileName(fullFileName);
                 }
                 else if (silens)
                 {
@@ -360,7 +360,7 @@ namespace CSKernelFile
             }
             catch (Exception ex)
             {
-                cError.mngError(ex, "write", c_module, "failed writing text to file: " + m_path + "\\" + m_name);
+                cError.mngError(ex, "write", c_module, "failed writing text to file: " + m_path + Path.DirectorySeparatorChar + m_name);
                 return false;
             }
         }
@@ -390,7 +390,7 @@ namespace CSKernelFile
             }
             catch (Exception ex)
             {
-                cError.mngError(ex, "read", c_module, "failed reading text from file: " + m_path + "\\" + m_name);
+                cError.mngError(ex, "read", c_module, "failed reading text from file: " + m_path + Path.DirectorySeparatorChar + m_name);
                 return false;
             }
         }
@@ -405,7 +405,7 @@ namespace CSKernelFile
             }
             catch (Exception ex)
             {
-                cError.mngError(ex, "binaryWrite", c_module, "failed writing in binary mode to file: " + m_path + "\\" + m_name);
+                cError.mngError(ex, "binaryWrite", c_module, "failed writing in binary mode to file: " + m_path + Path.DirectorySeparatorChar + m_name);
                 return false;
             }
         }
@@ -435,7 +435,7 @@ namespace CSKernelFile
             }
             catch (Exception ex)
             {
-                cError.mngError(ex, "binaryRead", c_module, "failed reading in binary mode from file: " + m_path + "\\" + m_name);
+                cError.mngError(ex, "binaryRead", c_module, "failed reading in binary mode from file: " + m_path + Path.DirectorySeparatorChar + m_name);
                 return false;
             }
         }
@@ -462,7 +462,7 @@ namespace CSKernelFile
             }
             catch (Exception ex)
             {
-                cError.mngError(ex, "binaryRead", c_module, "failed reading in binary mode from file: " + m_path + "\\" + m_name);
+                cError.mngError(ex, "binaryRead", c_module, "failed reading in binary mode from file: " + m_path + Path.DirectorySeparatorChar + m_name);
             }
         }
 

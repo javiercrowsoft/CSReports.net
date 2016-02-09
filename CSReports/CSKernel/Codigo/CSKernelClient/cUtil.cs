@@ -211,7 +211,7 @@ namespace CSKernelClient
         }
 
         public static String getValidPath(String path) {
-            if (path.Substring(path.Length - 1) != "\\") { path = path + "\\"; }
+            if (path.Substring(path.Length - 1) != Path.DirectorySeparatorChar.ToString()) { path = path + Path.DirectorySeparatorChar; }
             return path;
         }
 
@@ -449,6 +449,35 @@ namespace CSKernelClient
             }
         }
 
+        /* probably we will need it in the future
+         * 
+         * https://github.com/PintaProject/Pinta/blob/cc4a6960d65464f57fe23443ca8408d7e7fa3760/Pinta.Core/Managers/SystemManager.cs
+         * 
+        public static bool IsRunningOnMac()
+        {
+            IntPtr buf = IntPtr.Zero;
+            try
+            {
+                buf = Marshal.AllocHGlobal(8192);
+                // This is a hacktastic way of getting sysname from uname ()
+                if (uname(buf) == 0)
+                {
+                    string os = Marshal.PtrToStringAnsi(buf);
+                    if (os == "Darwin")
+                        return true;
+                }
+            }
+            catch
+            {
+            }
+            finally
+            {
+                if (buf != IntPtr.Zero)
+                    Marshal.FreeHGlobal(buf);
+            }
+            return false;
+        }
+         * */
     }
 
     public class ListValueWithId {

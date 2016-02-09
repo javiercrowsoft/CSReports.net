@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Xml;
+using System.IO;
 using CSKernelClient;
 
 namespace CSXml
 {
-
 
     public class cXml : IDisposable
     {
@@ -30,13 +30,13 @@ namespace CSXml
         public string getPath()
         {
             string _rtn = "";
-            if (m_path.Substring(m_path.Length - 1) == "\\")
+            if (m_path.Substring(m_path.Length - 1) == Path.DirectorySeparatorChar.ToString())
             {
                 _rtn = m_path;
             }
             else
             {
-                _rtn = m_path + "\\";
+                _rtn = m_path + Path.DirectorySeparatorChar;
             }
             return _rtn;
         }

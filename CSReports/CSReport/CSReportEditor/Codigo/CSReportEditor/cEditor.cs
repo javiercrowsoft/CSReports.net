@@ -1956,7 +1956,7 @@ namespace CSReportEditor
                 //----------------------------------------------------
                 } 
                 else if (m_keySizing != "") {
-                    pSizingControl(x, y);
+                    pResizeControl(x, y);
                 }
 
                 refreshBody();
@@ -4298,14 +4298,34 @@ namespace CSReportEditor
                 w1 = w_aspect.getTop();
                 w2 = w_aspect.getTop() + w_aspect.getHeight();
                 if (isFreeCtrl) {
+                    //
+                    // if the control is a free control
+                    // this function will return the last sectionLine which
+                    // has a bottom bigger than the top of the control
+                    //
                     if (w1 <= y) {
                         rtnSecLine = rptSL;
                     }
                 } 
                 else {
-                    if (w1 <= y && w2 >= y) { return false; }
+                    //
+                    // if the control is not a free control
+                    // this function will return the section line
+                    // which contains the control
+                    //
+                    if (w1 <= y && w2 >= y) {
+                        rtnSecLine = rptSL;
+                        break;
+                    }
                 }
             }
+
+            //
+            // if the control is not a free contrl and there wasn't a
+            // section line which contained the top of the control
+            // (I think that can't be posible but anyways)
+            // this function will return false and rptSecLine will be null
+            //
 
             if (rtnSecLine != null) {
                 rptSecLine = rtnSecLine;
@@ -5509,7 +5529,7 @@ namespace CSReportEditor
                                         - secLn.getAspect().getTop());
         }
 
-        private void pSizingControl(float x, float y) {
+        private void pResizeControl(float x, float y) {
             float height = 0;
             float width = 0;
             float left = 0;
@@ -5573,7 +5593,7 @@ namespace CSReportEditor
             width = w_aspect.getWidth() - width;
             height = w_aspect.getHeight() - height;
 
-            pMoveControl(w_getPaintObject.getAspect(), true);
+            pMoveControlAfterResize(w_getPaintObject.getAspect(), true);
 
             for (int i = 0; i < m_vSelectedKeys.Length; i++) {
 
@@ -5587,12 +5607,12 @@ namespace CSReportEditor
                     w_aspect.setWidth(w_aspect.getWidth() + width);
                     w_aspect.setLeft(w_aspect.getLeft() + left);
 
-                    pMoveControl(w_getPaintObject.getAspect(), false);
+                    pMoveControlAfterResize(w_getPaintObject.getAspect(), false);
                 }
             }
         }
 
-        private void pMoveControl(cReportAspect aspect, bool bSizing) { 
+        private void pMoveControlAfterResize(cReportAspect aspect, bool bSizing) { 
             const int C_MIN_WIDTH = 1;
             const int C_MIN_HEIGHT = 1;
 
