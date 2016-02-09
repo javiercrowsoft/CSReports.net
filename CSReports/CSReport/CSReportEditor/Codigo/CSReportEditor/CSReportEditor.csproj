@@ -65,6 +65,8 @@
     <Compile Include="cEditor.cs" />
     <Compile Include="cGlobals.cs" />
     <Compile Include="cMainEditor.cs" />
+    <Compile Include="cReportEditorError.cs" />
+    <Compile Include="cReportEditorException.cs" />
     <Compile Include="fConnectsAux.cs">
       <SubType>Form</SubType>
     </Compile>

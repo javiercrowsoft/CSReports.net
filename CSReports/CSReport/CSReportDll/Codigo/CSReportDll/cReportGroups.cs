@@ -163,8 +163,8 @@ namespace CSReportDll
                 pSetName(c.getHeader(), c.getName());
                 pSetName(c.getFooter(), c.getName());
 
-                c.getHeader().setTypeSection(csRptTypeSection.CSRPTTPGROUPHEADER);
-                c.getFooter().setTypeSection(csRptTypeSection.CSRPTTPGROUPFOOTER);
+                c.getHeader().setTypeSection(csRptTypeSection.GROUP_HEADER);
+                c.getFooter().setTypeSection(csRptTypeSection.GROUP_FOOTER);
 
                 return c;
             } 
@@ -204,8 +204,8 @@ namespace CSReportDll
                 pSetName(c.getHeader(), c.getName());
                 pSetName(c.getFooter(), c.getName());
 
-                c.getHeader().setTypeSection(csRptTypeSection.CSRPTTPGROUPHEADER);
-                c.getFooter().setTypeSection(csRptTypeSection.CSRPTTPGROUPFOOTER);
+                c.getHeader().setTypeSection(csRptTypeSection.GROUP_HEADER);
+                c.getFooter().setTypeSection(csRptTypeSection.GROUP_FOOTER);
 
                 return c;
             } 
