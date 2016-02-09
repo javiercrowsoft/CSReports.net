@@ -976,6 +976,7 @@
             this.Controls.Add(this.sbMain);
             this.Controls.Add(this.tbMain);
             this.Controls.Add(this.mnMain);
+            this.DoubleBuffered = true;
             this.MainMenuStrip = this.mnMain;
             this.Name = "fMain";
             this.Text = "CrowSoft Report Editor";
