@@ -883,7 +883,7 @@ namespace CSReportDll
             r = tc.ToLower().IndexOf(name.ToLower(), 1);
             q = tc.ToLower().IndexOf(")".ToLower(), r) + 1;
 
-            m_formula.setTextC((tc.Substring(1, r - 1)).ToString()
+            m_formula.setTextC((tc.Substring(0, r - 1)).ToString()
                                 + C_KEYFUNCINT
                                 + cReportGlobals.format(m_formula.getFormulasInt().count(), "000")
                                 + tc.Substring(q));

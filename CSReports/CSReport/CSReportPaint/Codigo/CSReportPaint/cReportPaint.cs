@@ -1256,7 +1256,7 @@ namespace CSReportPaint
 
             CSReportDll.cReportAspect paintObjAsp = null;
 
-            if (sKey.Substring(1, 1) == C_KEY_PAINT_OBJ)
+            if (sKey.Substring(0, 1) == C_KEY_PAINT_OBJ)
             {
                 paintObjAsp = m_paintObjects.item(sKey).getAspect();
             }

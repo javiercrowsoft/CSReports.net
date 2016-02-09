@@ -385,7 +385,7 @@ namespace CSKernelClient
             list = list.Trim();
             if (list.Substring(list.Length - 1) == ",")
             {
-                return list.Substring(1, list.Length - 1);
+                return list.Substring(0, list.Length - 1);
             }
             else
             {

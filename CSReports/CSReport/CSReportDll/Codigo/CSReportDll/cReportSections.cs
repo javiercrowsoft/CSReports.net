@@ -146,7 +146,7 @@ namespace CSReportDll
                 for (int i = 0; i < this.count(); i++)
                 {
                     m_coll[m_keys[i]].setIndex(i);
-                    m_coll[m_keys[i]].setName(m_coll[m_keys[i]].getName().Substring(1, 2).Replace("_", "") 
+                    m_coll[m_keys[i]].setName(m_coll[m_keys[i]].getName().Substring(0, 2).Replace("_", "") 
                                                 + "_" + i.ToString());
                 }
                 return;
@@ -168,7 +168,7 @@ namespace CSReportDll
                 {
                     cReportSection sec = (cReportSection)m_coll[m_keys[i]];
                     sec.setIndex(i);
-                    sec.setName(sec.getName().Substring(1, 2).Replace("_", "")
+                    sec.setName(sec.getName().Substring(0, 2).Replace("_", "")
                                 + "_" + i.ToString());
                 }
                 return;
