@@ -87,12 +87,16 @@ namespace CSReportDll
             gdiBitmap.bmBitsPixel = getShortFromByteArray(bytes, 18);
             gdiBitmap.bmBits = getIntFromByteArray(bytes, 20);
 
+            //
+            // from
+            // http://stackoverflow.com/questions/742236/how-to-create-a-bmp-file-from-byte-in-c-sharp
+            //
             unsafe
             {
                 fixed (byte* ptr = bytes)
                 {
                     int stride = gdiBitmap.bmWidth * 3;
-                    return new Bitmap(gdiBitmap.bmWidth, gdiBitmap.bmHeight, -stride, PixelFormat.Format24bppRgb, new IntPtr(ptr + stride * (gdiBitmap.bmHeight - 1)));                    
+                    return new Bitmap(gdiBitmap.bmWidth, gdiBitmap.bmHeight, -stride, PixelFormat.Format24bppRgb, new IntPtr(ptr + 24 + stride * (gdiBitmap.bmHeight - 1)));                    
                 }
             }
         }
