@@ -53,9 +53,12 @@ namespace CSReportDll
             nodeObj = xDoc.getNodeFromNode(nodeObj, "Image");
             byte[] vBytes = null;
             vBytes = xDoc.getBinaryNodeProperty(nodeObj, "Data").getBinaryValue();
-            if (vBytes.Length > 0)
+            //
+            // an empty image is serialized as AA== which is vBytes == [0] ( yes the number zero ) and vBytes.Length == 1
+            //
+            if (vBytes.Length > 1)
             {
-                cImage.deSerialiseBitmap(m_image, vBytes);
+                m_image = cImage.deSerialiseBitmap(vBytes);
             }
             G.redim(ref vBytes, 0);
             return m_aspect.load(xDoc, nodeObj);

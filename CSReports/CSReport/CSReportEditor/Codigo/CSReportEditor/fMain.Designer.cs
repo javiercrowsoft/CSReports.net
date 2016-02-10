@@ -132,6 +132,8 @@
             this.pnReport = new System.Windows.Forms.PictureBox();
             this.openFileDlg = new System.Windows.Forms.OpenFileDialog();
             this.saveFielDlg = new System.Windows.Forms.SaveFileDialog();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.mnMain.SuspendLayout();
             this.tbMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -148,6 +150,8 @@
             this.pnEditor.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pnRule)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pnReport)).BeginInit();
+            this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // mnMain
@@ -852,6 +856,7 @@
             this.tabControl2.Controls.Add(this.tabPage3);
             this.tabControl2.Controls.Add(this.tabPage4);
             this.tabControl2.Controls.Add(this.tabPage5);
+            this.tabControl2.Controls.Add(this.tabPage1);
             this.tabControl2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl2.Location = new System.Drawing.Point(0, 0);
             this.tabControl2.Name = "tabControl2";
@@ -967,6 +972,25 @@
             this.pnReport.TabIndex = 0;
             this.pnReport.TabStop = false;
             // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.pictureBox1);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Size = new System.Drawing.Size(218, 235);
+            this.tabPage1.TabIndex = 3;
+            this.tabPage1.Text = "Properties";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(218, 235);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            // 
             // fMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -976,7 +1000,6 @@
             this.Controls.Add(this.sbMain);
             this.Controls.Add(this.tbMain);
             this.Controls.Add(this.mnMain);
-            this.DoubleBuffered = true;
             this.MainMenuStrip = this.mnMain;
             this.Name = "fMain";
             this.Text = "CrowSoft Report Editor";
@@ -999,6 +1022,8 @@
             this.pnEditor.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pnRule)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pnReport)).EndInit();
+            this.tabPage1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1110,6 +1135,8 @@
         private System.Windows.Forms.ToolStripMenuItem mnuFileRecentList;
         private System.Windows.Forms.OpenFileDialog openFileDlg;
         private System.Windows.Forms.SaveFileDialog saveFielDlg;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.PictureBox pictureBox1;
 
     }
 }

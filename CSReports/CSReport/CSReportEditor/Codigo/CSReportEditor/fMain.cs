@@ -41,6 +41,10 @@ namespace CSReportEditor
             return null;
         }
 
+        public PictureBox pic1() {
+            return pictureBox1;
+        }
+
         private cEditor createEditor() 
         {
             TabPage tab = new TabPage();

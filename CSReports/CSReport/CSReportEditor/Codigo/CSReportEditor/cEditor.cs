@@ -4943,6 +4943,8 @@ namespace CSReportEditor
 
             m_paint.createPicture(m_picReport.CreateGraphics());
 
+            m_fmain.pic1().Image = m_report.getControls().item("K321078").getImage().getImage();
+
             m_picRule.Refresh();
         }
 

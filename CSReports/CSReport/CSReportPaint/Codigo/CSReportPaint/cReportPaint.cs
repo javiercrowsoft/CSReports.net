@@ -1099,7 +1099,7 @@ namespace CSReportPaint
 
         private void drawBMP(Graphics graph, Image image, float x, float y, int bmpWidth, int bmpHeight, float destWidth, float destHeight)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
             /*
               Dim hDC      As Long
               Dim hOldBmp  As Long
@@ -1130,6 +1130,11 @@ namespace CSReportPaint
               SelectObject hDC, hOldBmp
               DeleteObject hDC
              */
+
+            Rectangle sourceRect = new Rectangle(0, 0, bmpWidth, bmpHeight);
+            Rectangle destRect = new Rectangle(Convert.ToInt32(x), Convert.ToInt32(y), bmpWidth, bmpHeight);
+
+            graph.DrawImage(image, destRect, sourceRect, GraphicsUnit.Pixel);
         }
 
         public void setFocus(String sKey, Graphics graph, bool clearSelected)
