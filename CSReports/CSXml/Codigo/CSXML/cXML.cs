@@ -350,7 +350,8 @@ namespace CSXml
                 txt = node.Attributes[propertyName].Value;
             }
 
-            txt = txt.Replace("\n", "\\n");
+            // TODO: remove after testing
+            //txt = txt.Replace("\n", "\\n");
             o.setValue(eTypes.eVariant, txt);
             return o;
         }

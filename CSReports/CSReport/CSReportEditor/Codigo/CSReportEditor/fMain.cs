@@ -25,6 +25,8 @@ namespace CSReportEditor
         private string m_driverName = "";
         private string m_port = "";
 
+        private cEditor m_contextMenuEditor;
+
         public fMain()
         {
             InitializeComponent();
@@ -284,8 +286,33 @@ namespace CSReportEditor
             //
             this.Width = 1200;
             this.Height = 900;
-            this.Left = (Screen.FromControl(this).Bounds.Width - this.Width) / 2;
-            this.Top = (Screen.FromControl(this).Bounds.Height - this.Height) / 2;
+            cWindow.centerForm(this);
+        }
+
+        private void cmCtrlProperties_Click(object sender, EventArgs e)
+        {
+            if (m_contextMenuEditor != null) 
+            {
+                m_contextMenuEditor.showProperties();
+            }
+        }
+
+        public void showPopMenuControl(cEditor editor, bool clickInCtrl, bool pasteEnabled, Point p)
+        {
+            cmCtrlCopy.Enabled = clickInCtrl;
+            cmCtrlCut.Enabled = clickInCtrl;
+            cmCtrlDelete.Enabled = clickInCtrl;
+            cmCtrlEditText.Enabled = clickInCtrl;
+            cmCtrlSendBack.Enabled = clickInCtrl;
+            cmCtrlBringFront.Enabled = clickInCtrl;
+            cmCtrlProperties.Enabled = clickInCtrl;
+
+            cmCtrlPaste.Enabled = pasteEnabled;
+            cmCtrlPasteEx.Enabled = pasteEnabled;
+
+            m_contextMenuEditor = editor;
+
+            cmnControl.Show(p);
         }
     }
 }

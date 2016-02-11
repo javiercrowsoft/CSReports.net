@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace CSKernelClient
 {
@@ -72,6 +73,12 @@ namespace CSKernelClient
             fmsg.setMessage(msg);
             fmsg.setTitle(title);
             fmsg.ShowDialog();
+        }
+
+        public static void centerForm(Form form) 
+        {
+            form.Left = (Screen.FromControl(form).Bounds.Width - form.Width) / 2;
+            form.Top = (Screen.FromControl(form).Bounds.Height - form.Height) / 2;
         }
     }
 }

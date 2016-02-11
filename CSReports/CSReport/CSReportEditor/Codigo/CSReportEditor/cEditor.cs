@@ -1289,12 +1289,12 @@ namespace CSReportEditor
                         }
                         else
                         {
-                            showPopMenuControl(true);
+                            showPopMenuControl(true, x, y);
                         }
                     }
                     else
                     {
-                        showPopMenuControl(false);
+                        showPopMenuControl(false, x, y);
                     }
                 }
 
@@ -4943,8 +4943,6 @@ namespace CSReportEditor
 
             m_paint.createPicture(m_picReport.CreateGraphics());
 
-            m_fmain.pic1().Image = m_report.getControls().item("K321078").getImage().getImage();
-
             m_picRule.Refresh();
         }
 
@@ -5061,42 +5059,18 @@ namespace CSReportEditor
              */ 
         }
 
-        private void showPopMenuControl(bool clickInCtrl) {
-            /* TODO: implement me
-            if (!clickInCtrl) {
-                m_fmain.popObjCopy.Enabled = false;
-                m_fmain.popObjCut.Enabled = false;
-                m_fmain.popObjDelete.Enabled = false;
-                m_fmain.popObjEditText.Enabled = false;
-                m_fmain.popObjSendToBack.Enabled = false;
-                m_fmain.popObjBringToFront.Enabled = false;
-                m_fmain.popObjSendToBack.Enabled = false;
-                m_fmain.popObjProperties.Enabled = false;
-            } 
-            else {
-                m_fmain.popObjCopy.Enabled = true;
-                m_fmain.popObjCut.Enabled = true;
-                m_fmain.popObjDelete.Enabled = true;
-                m_fmain.popObjEditText.Enabled = true;
-                m_fmain.popObjSendToBack.Enabled = true;
-                m_fmain.popObjBringToFront.Enabled = true;
-                m_fmain.popObjSendToBack.Enabled = true;
-                m_fmain.popObjProperties.Enabled = true;
-            }
+        private void showPopMenuControl(bool clickInCtrl, int x, int y) {
 
-            bool bPasteEnabled = false;
+            bool pasteEnabled = false;
 
             if (m_vCopyKeys.Length > 0) {
-                bPasteEnabled = true;
+                pasteEnabled = true;
             } 
             else if (!(m_fmain.getReportCopySource() == null)) {
-                bPasteEnabled = m_fmain.getReportCopySource().getVCopyKeysCount() > 0;
+                pasteEnabled = m_fmain.getReportCopySource().getVCopyKeysCount() > 0;
             }
 
-            m_fmain.popObjPaste.Enabled = bPasteEnabled;
-            m_fmain.popObjPasteEx.Enabled = bPasteEnabled;
-            m_fmain.PopupMenu(w___TYPE_NOT_FOUND.popObj);
-             */ 
+            m_fmain.showPopMenuControl(this, clickInCtrl, pasteEnabled, m_picReport.PointToScreen(new Point(x, y)));
         }
 
         private void m_fGroup_UnloadForm() {
@@ -6135,7 +6109,7 @@ namespace CSReportEditor
             }
 
             G.redim(ref m_vSelectedKeys, 1);
-            m_vSelectedKeys[1] = m_keyObj;
+            m_vSelectedKeys[0] = m_keyObj;
 
             return true;
         }

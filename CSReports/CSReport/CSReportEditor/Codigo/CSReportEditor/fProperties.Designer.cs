@@ -30,9 +30,10 @@
         {
             this.panel1 = new System.Windows.Forms.Panel();
             this.lb_control = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tab_main = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tbpFormat = new System.Windows.Forms.TabPage();
             this.cmd_backColor = new System.Windows.Forms.Button();
             this.cmd_foreColor = new System.Windows.Forms.Button();
             this.label24 = new System.Windows.Forms.Label();
@@ -81,7 +82,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.tx_name = new System.Windows.Forms.TextBox();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tbpFormulas = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label41 = new System.Windows.Forms.Label();
             this.op_afterPrint = new System.Windows.Forms.RadioButton();
@@ -109,15 +110,16 @@
             this.label25 = new System.Windows.Forms.Label();
             this.chk_formulaHide = new System.Windows.Forms.CheckBox();
             this.cmd_formulaHide = new System.Windows.Forms.Button();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.tbpDatabase = new System.Windows.Forms.TabPage();
             this.cmd_dbField = new System.Windows.Forms.Button();
             this.label42 = new System.Windows.Forms.Label();
             this.tx_dbField = new System.Windows.Forms.TextBox();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.tbpImage = new System.Windows.Forms.TabPage();
+            this.pic_image = new System.Windows.Forms.PictureBox();
             this.cmd_imageFile = new System.Windows.Forms.Button();
             this.label43 = new System.Windows.Forms.Label();
             this.tx_imageFile = new System.Windows.Forms.TextBox();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.tbpBorders = new System.Windows.Forms.TabPage();
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.cmd_textColor = new System.Windows.Forms.Button();
@@ -135,7 +137,7 @@
             this.tx_borderColor = new System.Windows.Forms.TextBox();
             this.label48 = new System.Windows.Forms.Label();
             this.cb_borderType = new System.Windows.Forms.ComboBox();
-            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.tbpChart = new System.Windows.Forms.TabPage();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.label63 = new System.Windows.Forms.Label();
             this.cb_colorSerie2 = new System.Windows.Forms.ComboBox();
@@ -176,23 +178,21 @@
             this.cb_type = new System.Windows.Forms.ComboBox();
             this.cmd_apply = new System.Windows.Forms.Button();
             this.cmd_cancel = new System.Windows.Forms.Button();
-            this.pic_image = new System.Windows.Forms.PictureBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tab_main.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
+            this.tbpFormat.SuspendLayout();
+            this.tbpFormulas.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.tabPage3.SuspendLayout();
-            this.tabPage4.SuspendLayout();
-            this.tabPage5.SuspendLayout();
-            this.tabPage6.SuspendLayout();
+            this.tbpDatabase.SuspendLayout();
+            this.tbpImage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_image)).BeginInit();
+            this.tbpBorders.SuspendLayout();
+            this.tbpChart.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pic_image)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -216,6 +216,15 @@
             this.lb_control.TabIndex = 2;
             this.lb_control.Text = "lbControlName";
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::CSReportEditor.Properties.Resources.config_page;
+            this.pictureBox1.Location = new System.Drawing.Point(24, 18);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(46, 39);
+            this.pictureBox1.TabIndex = 1;
+            this.pictureBox1.TabStop = false;
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -228,75 +237,75 @@
             // 
             // tab_main
             // 
-            this.tab_main.Controls.Add(this.tabPage1);
-            this.tab_main.Controls.Add(this.tabPage2);
-            this.tab_main.Controls.Add(this.tabPage3);
-            this.tab_main.Controls.Add(this.tabPage4);
-            this.tab_main.Controls.Add(this.tabPage5);
-            this.tab_main.Controls.Add(this.tabPage6);
+            this.tab_main.Controls.Add(this.tbpFormat);
+            this.tab_main.Controls.Add(this.tbpFormulas);
+            this.tab_main.Controls.Add(this.tbpDatabase);
+            this.tab_main.Controls.Add(this.tbpImage);
+            this.tab_main.Controls.Add(this.tbpBorders);
+            this.tab_main.Controls.Add(this.tbpChart);
             this.tab_main.Location = new System.Drawing.Point(-3, 75);
             this.tab_main.Name = "tab_main";
             this.tab_main.SelectedIndex = 0;
             this.tab_main.Size = new System.Drawing.Size(455, 509);
             this.tab_main.TabIndex = 1;
             // 
-            // tabPage1
+            // tbpFormat
             // 
-            this.tabPage1.Controls.Add(this.cmd_backColor);
-            this.tabPage1.Controls.Add(this.cmd_foreColor);
-            this.tabPage1.Controls.Add(this.label24);
-            this.tabPage1.Controls.Add(this.tx_exportColIdx);
-            this.tabPage1.Controls.Add(this.label23);
-            this.tabPage1.Controls.Add(this.chk_isFreeCtrl);
-            this.tabPage1.Controls.Add(this.label22);
-            this.tabPage1.Controls.Add(this.chk_wordWrap);
-            this.tabPage1.Controls.Add(this.chk_canGrow);
-            this.tabPage1.Controls.Add(this.label21);
-            this.tabPage1.Controls.Add(this.label20);
-            this.tabPage1.Controls.Add(this.tx_width);
-            this.tabPage1.Controls.Add(this.label19);
-            this.tabPage1.Controls.Add(this.tx_height);
-            this.tabPage1.Controls.Add(this.label18);
-            this.tabPage1.Controls.Add(this.tx_top);
-            this.tabPage1.Controls.Add(this.label17);
-            this.tabPage1.Controls.Add(this.tx_left);
-            this.tabPage1.Controls.Add(this.label16);
-            this.tabPage1.Controls.Add(this.label15);
-            this.tabPage1.Controls.Add(this.label13);
-            this.tabPage1.Controls.Add(this.tx_symbol);
-            this.tabPage1.Controls.Add(this.label14);
-            this.tabPage1.Controls.Add(this.tx_format);
-            this.tabPage1.Controls.Add(this.chk_transparent);
-            this.tabPage1.Controls.Add(this.sh_backColor);
-            this.tabPage1.Controls.Add(this.label11);
-            this.tabPage1.Controls.Add(this.tx_backColor);
-            this.tabPage1.Controls.Add(this.chk_fontStrike);
-            this.tabPage1.Controls.Add(this.chk_fontItalic);
-            this.tabPage1.Controls.Add(this.sh_foreColor);
-            this.tabPage1.Controls.Add(this.label9);
-            this.tabPage1.Controls.Add(this.tx_foreColor);
-            this.tabPage1.Controls.Add(this.chk_fontUnderline);
-            this.tabPage1.Controls.Add(this.chk_fontBold);
-            this.tabPage1.Controls.Add(this.label8);
-            this.tabPage1.Controls.Add(this.cb_align);
-            this.tabPage1.Controls.Add(this.label7);
-            this.tabPage1.Controls.Add(this.tx_fontSize);
-            this.tabPage1.Controls.Add(this.label6);
-            this.tabPage1.Controls.Add(this.tx_font);
-            this.tabPage1.Controls.Add(this.label5);
-            this.tabPage1.Controls.Add(this.tx_tag);
-            this.tabPage1.Controls.Add(this.label4);
-            this.tabPage1.Controls.Add(this.tx_text);
-            this.tabPage1.Controls.Add(this.label3);
-            this.tabPage1.Controls.Add(this.label2);
-            this.tabPage1.Controls.Add(this.tx_name);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(447, 483);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Format";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.tbpFormat.Controls.Add(this.cmd_backColor);
+            this.tbpFormat.Controls.Add(this.cmd_foreColor);
+            this.tbpFormat.Controls.Add(this.label24);
+            this.tbpFormat.Controls.Add(this.tx_exportColIdx);
+            this.tbpFormat.Controls.Add(this.label23);
+            this.tbpFormat.Controls.Add(this.chk_isFreeCtrl);
+            this.tbpFormat.Controls.Add(this.label22);
+            this.tbpFormat.Controls.Add(this.chk_wordWrap);
+            this.tbpFormat.Controls.Add(this.chk_canGrow);
+            this.tbpFormat.Controls.Add(this.label21);
+            this.tbpFormat.Controls.Add(this.label20);
+            this.tbpFormat.Controls.Add(this.tx_width);
+            this.tbpFormat.Controls.Add(this.label19);
+            this.tbpFormat.Controls.Add(this.tx_height);
+            this.tbpFormat.Controls.Add(this.label18);
+            this.tbpFormat.Controls.Add(this.tx_top);
+            this.tbpFormat.Controls.Add(this.label17);
+            this.tbpFormat.Controls.Add(this.tx_left);
+            this.tbpFormat.Controls.Add(this.label16);
+            this.tbpFormat.Controls.Add(this.label15);
+            this.tbpFormat.Controls.Add(this.label13);
+            this.tbpFormat.Controls.Add(this.tx_symbol);
+            this.tbpFormat.Controls.Add(this.label14);
+            this.tbpFormat.Controls.Add(this.tx_format);
+            this.tbpFormat.Controls.Add(this.chk_transparent);
+            this.tbpFormat.Controls.Add(this.sh_backColor);
+            this.tbpFormat.Controls.Add(this.label11);
+            this.tbpFormat.Controls.Add(this.tx_backColor);
+            this.tbpFormat.Controls.Add(this.chk_fontStrike);
+            this.tbpFormat.Controls.Add(this.chk_fontItalic);
+            this.tbpFormat.Controls.Add(this.sh_foreColor);
+            this.tbpFormat.Controls.Add(this.label9);
+            this.tbpFormat.Controls.Add(this.tx_foreColor);
+            this.tbpFormat.Controls.Add(this.chk_fontUnderline);
+            this.tbpFormat.Controls.Add(this.chk_fontBold);
+            this.tbpFormat.Controls.Add(this.label8);
+            this.tbpFormat.Controls.Add(this.cb_align);
+            this.tbpFormat.Controls.Add(this.label7);
+            this.tbpFormat.Controls.Add(this.tx_fontSize);
+            this.tbpFormat.Controls.Add(this.label6);
+            this.tbpFormat.Controls.Add(this.tx_font);
+            this.tbpFormat.Controls.Add(this.label5);
+            this.tbpFormat.Controls.Add(this.tx_tag);
+            this.tbpFormat.Controls.Add(this.label4);
+            this.tbpFormat.Controls.Add(this.tx_text);
+            this.tbpFormat.Controls.Add(this.label3);
+            this.tbpFormat.Controls.Add(this.label2);
+            this.tbpFormat.Controls.Add(this.tx_name);
+            this.tbpFormat.Location = new System.Drawing.Point(4, 22);
+            this.tbpFormat.Name = "tbpFormat";
+            this.tbpFormat.Padding = new System.Windows.Forms.Padding(3);
+            this.tbpFormat.Size = new System.Drawing.Size(447, 483);
+            this.tbpFormat.TabIndex = 0;
+            this.tbpFormat.Text = "Format";
+            this.tbpFormat.UseVisualStyleBackColor = true;
             // 
             // cmd_backColor
             // 
@@ -714,37 +723,37 @@
             this.tx_name.Size = new System.Drawing.Size(335, 20);
             this.tx_name.TabIndex = 0;
             // 
-            // tabPage2
+            // tbpFormulas
             // 
-            this.tabPage2.Controls.Add(this.groupBox3);
-            this.tabPage2.Controls.Add(this.label40);
-            this.tabPage2.Controls.Add(this.label39);
-            this.tabPage2.Controls.Add(this.tx_idxGroup);
-            this.tabPage2.Controls.Add(this.label37);
-            this.tabPage2.Controls.Add(this.label38);
-            this.tabPage2.Controls.Add(this.label35);
-            this.tabPage2.Controls.Add(this.label36);
-            this.tabPage2.Controls.Add(this.label33);
-            this.tabPage2.Controls.Add(this.label34);
-            this.tabPage2.Controls.Add(this.label31);
-            this.tabPage2.Controls.Add(this.label32);
-            this.tabPage2.Controls.Add(this.label30);
-            this.tabPage2.Controls.Add(this.label29);
-            this.tabPage2.Controls.Add(this.label28);
-            this.tabPage2.Controls.Add(this.groupBox2);
-            this.tabPage2.Controls.Add(this.chk_formulaValue);
-            this.tabPage2.Controls.Add(this.cmd_formulaValue);
-            this.tabPage2.Controls.Add(this.groupBox1);
-            this.tabPage2.Controls.Add(this.label25);
-            this.tabPage2.Controls.Add(this.chk_formulaHide);
-            this.tabPage2.Controls.Add(this.cmd_formulaHide);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(447, 483);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Formulas";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.tbpFormulas.Controls.Add(this.groupBox3);
+            this.tbpFormulas.Controls.Add(this.label40);
+            this.tbpFormulas.Controls.Add(this.label39);
+            this.tbpFormulas.Controls.Add(this.tx_idxGroup);
+            this.tbpFormulas.Controls.Add(this.label37);
+            this.tbpFormulas.Controls.Add(this.label38);
+            this.tbpFormulas.Controls.Add(this.label35);
+            this.tbpFormulas.Controls.Add(this.label36);
+            this.tbpFormulas.Controls.Add(this.label33);
+            this.tbpFormulas.Controls.Add(this.label34);
+            this.tbpFormulas.Controls.Add(this.label31);
+            this.tbpFormulas.Controls.Add(this.label32);
+            this.tbpFormulas.Controls.Add(this.label30);
+            this.tbpFormulas.Controls.Add(this.label29);
+            this.tbpFormulas.Controls.Add(this.label28);
+            this.tbpFormulas.Controls.Add(this.groupBox2);
+            this.tbpFormulas.Controls.Add(this.chk_formulaValue);
+            this.tbpFormulas.Controls.Add(this.cmd_formulaValue);
+            this.tbpFormulas.Controls.Add(this.groupBox1);
+            this.tbpFormulas.Controls.Add(this.label25);
+            this.tbpFormulas.Controls.Add(this.chk_formulaHide);
+            this.tbpFormulas.Controls.Add(this.cmd_formulaHide);
+            this.tbpFormulas.Location = new System.Drawing.Point(4, 22);
+            this.tbpFormulas.Name = "tbpFormulas";
+            this.tbpFormulas.Padding = new System.Windows.Forms.Padding(3);
+            this.tbpFormulas.Size = new System.Drawing.Size(447, 483);
+            this.tbpFormulas.TabIndex = 1;
+            this.tbpFormulas.Text = "Formulas";
+            this.tbpFormulas.UseVisualStyleBackColor = true;
             // 
             // groupBox3
             // 
@@ -997,17 +1006,17 @@
             this.cmd_formulaHide.Text = "Edit";
             this.cmd_formulaHide.UseVisualStyleBackColor = true;
             // 
-            // tabPage3
+            // tbpDatabase
             // 
-            this.tabPage3.Controls.Add(this.cmd_dbField);
-            this.tabPage3.Controls.Add(this.label42);
-            this.tabPage3.Controls.Add(this.tx_dbField);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(447, 483);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Database";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.tbpDatabase.Controls.Add(this.cmd_dbField);
+            this.tbpDatabase.Controls.Add(this.label42);
+            this.tbpDatabase.Controls.Add(this.tx_dbField);
+            this.tbpDatabase.Location = new System.Drawing.Point(4, 22);
+            this.tbpDatabase.Name = "tbpDatabase";
+            this.tbpDatabase.Size = new System.Drawing.Size(447, 483);
+            this.tbpDatabase.TabIndex = 2;
+            this.tbpDatabase.Text = "Database";
+            this.tbpDatabase.UseVisualStyleBackColor = true;
             // 
             // cmd_dbField
             // 
@@ -1034,18 +1043,26 @@
             this.tx_dbField.Size = new System.Drawing.Size(276, 20);
             this.tx_dbField.TabIndex = 2;
             // 
-            // tabPage4
+            // tbpImage
             // 
-            this.tabPage4.Controls.Add(this.pic_image);
-            this.tabPage4.Controls.Add(this.cmd_imageFile);
-            this.tabPage4.Controls.Add(this.label43);
-            this.tabPage4.Controls.Add(this.tx_imageFile);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(447, 483);
-            this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "Image";
-            this.tabPage4.UseVisualStyleBackColor = true;
+            this.tbpImage.Controls.Add(this.pic_image);
+            this.tbpImage.Controls.Add(this.cmd_imageFile);
+            this.tbpImage.Controls.Add(this.label43);
+            this.tbpImage.Controls.Add(this.tx_imageFile);
+            this.tbpImage.Location = new System.Drawing.Point(4, 22);
+            this.tbpImage.Name = "tbpImage";
+            this.tbpImage.Size = new System.Drawing.Size(447, 483);
+            this.tbpImage.TabIndex = 3;
+            this.tbpImage.Text = "Image";
+            this.tbpImage.UseVisualStyleBackColor = true;
+            // 
+            // pic_image
+            // 
+            this.pic_image.Location = new System.Drawing.Point(77, 58);
+            this.pic_image.Name = "pic_image";
+            this.pic_image.Size = new System.Drawing.Size(100, 50);
+            this.pic_image.TabIndex = 8;
+            this.pic_image.TabStop = false;
             // 
             // cmd_imageFile
             // 
@@ -1072,31 +1089,31 @@
             this.tx_imageFile.Size = new System.Drawing.Size(276, 20);
             this.tx_imageFile.TabIndex = 5;
             // 
-            // tabPage5
+            // tbpBorders
             // 
-            this.tabPage5.Controls.Add(this.button3);
-            this.tabPage5.Controls.Add(this.button2);
-            this.tabPage5.Controls.Add(this.cmd_textColor);
-            this.tabPage5.Controls.Add(this.chk_borderRounded);
-            this.tabPage5.Controls.Add(this.label51);
-            this.tabPage5.Controls.Add(this.tx_borderWidth);
-            this.tabPage5.Controls.Add(this.sh_borderShadow);
-            this.tabPage5.Controls.Add(this.label50);
-            this.tabPage5.Controls.Add(this.tx_borderShadow);
-            this.tabPage5.Controls.Add(this.sh_border3D);
-            this.tabPage5.Controls.Add(this.label45);
-            this.tabPage5.Controls.Add(this.tx_border3D);
-            this.tabPage5.Controls.Add(this.sh_borderColor);
-            this.tabPage5.Controls.Add(this.label47);
-            this.tabPage5.Controls.Add(this.tx_borderColor);
-            this.tabPage5.Controls.Add(this.label48);
-            this.tabPage5.Controls.Add(this.cb_borderType);
-            this.tabPage5.Location = new System.Drawing.Point(4, 22);
-            this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(447, 483);
-            this.tabPage5.TabIndex = 4;
-            this.tabPage5.Text = "Borders";
-            this.tabPage5.UseVisualStyleBackColor = true;
+            this.tbpBorders.Controls.Add(this.button3);
+            this.tbpBorders.Controls.Add(this.button2);
+            this.tbpBorders.Controls.Add(this.cmd_textColor);
+            this.tbpBorders.Controls.Add(this.chk_borderRounded);
+            this.tbpBorders.Controls.Add(this.label51);
+            this.tbpBorders.Controls.Add(this.tx_borderWidth);
+            this.tbpBorders.Controls.Add(this.sh_borderShadow);
+            this.tbpBorders.Controls.Add(this.label50);
+            this.tbpBorders.Controls.Add(this.tx_borderShadow);
+            this.tbpBorders.Controls.Add(this.sh_border3D);
+            this.tbpBorders.Controls.Add(this.label45);
+            this.tbpBorders.Controls.Add(this.tx_border3D);
+            this.tbpBorders.Controls.Add(this.sh_borderColor);
+            this.tbpBorders.Controls.Add(this.label47);
+            this.tbpBorders.Controls.Add(this.tx_borderColor);
+            this.tbpBorders.Controls.Add(this.label48);
+            this.tbpBorders.Controls.Add(this.cb_borderType);
+            this.tbpBorders.Location = new System.Drawing.Point(4, 22);
+            this.tbpBorders.Name = "tbpBorders";
+            this.tbpBorders.Size = new System.Drawing.Size(447, 483);
+            this.tbpBorders.TabIndex = 4;
+            this.tbpBorders.Text = "Borders";
+            this.tbpBorders.UseVisualStyleBackColor = true;
             // 
             // button3
             // 
@@ -1244,36 +1261,36 @@
             this.cb_borderType.Size = new System.Drawing.Size(121, 21);
             this.cb_borderType.TabIndex = 24;
             // 
-            // tabPage6
+            // tbpChart
             // 
-            this.tabPage6.Controls.Add(this.groupBox5);
-            this.tabPage6.Controls.Add(this.groupBox4);
-            this.tabPage6.Controls.Add(this.label58);
-            this.tabPage6.Controls.Add(this.tx_chartGroupValue);
-            this.tabPage6.Controls.Add(this.cmd_dbFieldGroupValue);
-            this.tabPage6.Controls.Add(this.label57);
-            this.tabPage6.Controls.Add(this.tx_dbFieldGroupValue);
-            this.tabPage6.Controls.Add(this.chk_sort);
-            this.tabPage6.Controls.Add(this.chk_showOutlines);
-            this.tabPage6.Controls.Add(this.chk_showBarValues);
-            this.tabPage6.Controls.Add(this.label59);
-            this.tabPage6.Controls.Add(this.tx_chartTop);
-            this.tabPage6.Controls.Add(this.label56);
-            this.tabPage6.Controls.Add(this.cb_chartThickness);
-            this.tabPage6.Controls.Add(this.label54);
-            this.tabPage6.Controls.Add(this.cb_chartSize);
-            this.tabPage6.Controls.Add(this.label55);
-            this.tabPage6.Controls.Add(this.cb_linesType);
-            this.tabPage6.Controls.Add(this.label53);
-            this.tabPage6.Controls.Add(this.cb_formatType);
-            this.tabPage6.Controls.Add(this.label52);
-            this.tabPage6.Controls.Add(this.cb_type);
-            this.tabPage6.Location = new System.Drawing.Point(4, 22);
-            this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Size = new System.Drawing.Size(447, 483);
-            this.tabPage6.TabIndex = 5;
-            this.tabPage6.Text = "Chart";
-            this.tabPage6.UseVisualStyleBackColor = true;
+            this.tbpChart.Controls.Add(this.groupBox5);
+            this.tbpChart.Controls.Add(this.groupBox4);
+            this.tbpChart.Controls.Add(this.label58);
+            this.tbpChart.Controls.Add(this.tx_chartGroupValue);
+            this.tbpChart.Controls.Add(this.cmd_dbFieldGroupValue);
+            this.tbpChart.Controls.Add(this.label57);
+            this.tbpChart.Controls.Add(this.tx_dbFieldGroupValue);
+            this.tbpChart.Controls.Add(this.chk_sort);
+            this.tbpChart.Controls.Add(this.chk_showOutlines);
+            this.tbpChart.Controls.Add(this.chk_showBarValues);
+            this.tbpChart.Controls.Add(this.label59);
+            this.tbpChart.Controls.Add(this.tx_chartTop);
+            this.tbpChart.Controls.Add(this.label56);
+            this.tbpChart.Controls.Add(this.cb_chartThickness);
+            this.tbpChart.Controls.Add(this.label54);
+            this.tbpChart.Controls.Add(this.cb_chartSize);
+            this.tbpChart.Controls.Add(this.label55);
+            this.tbpChart.Controls.Add(this.cb_linesType);
+            this.tbpChart.Controls.Add(this.label53);
+            this.tbpChart.Controls.Add(this.cb_formatType);
+            this.tbpChart.Controls.Add(this.label52);
+            this.tbpChart.Controls.Add(this.cb_type);
+            this.tbpChart.Location = new System.Drawing.Point(4, 22);
+            this.tbpChart.Name = "tbpChart";
+            this.tbpChart.Size = new System.Drawing.Size(447, 483);
+            this.tbpChart.TabIndex = 5;
+            this.tbpChart.Text = "Chart";
+            this.tbpChart.UseVisualStyleBackColor = true;
             // 
             // groupBox5
             // 
@@ -1634,23 +1651,6 @@
             this.cmd_cancel.Text = "Cancel";
             this.cmd_cancel.UseVisualStyleBackColor = true;
             // 
-            // pic_image
-            // 
-            this.pic_image.Location = new System.Drawing.Point(77, 58);
-            this.pic_image.Name = "pic_image";
-            this.pic_image.Size = new System.Drawing.Size(100, 50);
-            this.pic_image.TabIndex = 8;
-            this.pic_image.TabStop = false;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::CSReportEditor.Properties.Resources.config_page;
-            this.pictureBox1.Location = new System.Drawing.Point(24, 18);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(46, 39);
-            this.pictureBox1.TabIndex = 1;
-            this.pictureBox1.TabStop = false;
-            // 
             // fProperties
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1663,31 +1663,32 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "fProperties";
             this.Text = "fProperties";
+            this.Load += new System.EventHandler(this.fProperties_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tab_main.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
+            this.tbpFormat.ResumeLayout(false);
+            this.tbpFormat.PerformLayout();
+            this.tbpFormulas.ResumeLayout(false);
+            this.tbpFormulas.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
-            this.tabPage3.ResumeLayout(false);
-            this.tabPage3.PerformLayout();
-            this.tabPage4.ResumeLayout(false);
-            this.tabPage4.PerformLayout();
-            this.tabPage5.ResumeLayout(false);
-            this.tabPage5.PerformLayout();
-            this.tabPage6.ResumeLayout(false);
-            this.tabPage6.PerformLayout();
+            this.tbpDatabase.ResumeLayout(false);
+            this.tbpDatabase.PerformLayout();
+            this.tbpImage.ResumeLayout(false);
+            this.tbpImage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pic_image)).EndInit();
+            this.tbpBorders.ResumeLayout(false);
+            this.tbpBorders.PerformLayout();
+            this.tbpChart.ResumeLayout(false);
+            this.tbpChart.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pic_image)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1698,7 +1699,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.TabControl tab_main;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tbpFormat;
         private System.Windows.Forms.Label label24;
         private System.Windows.Forms.TextBox tx_exportColIdx;
         private System.Windows.Forms.Label label23;
@@ -1745,11 +1746,11 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox tx_name;
-        private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.TabPage tabPage4;
-        private System.Windows.Forms.TabPage tabPage5;
-        private System.Windows.Forms.TabPage tabPage6;
+        private System.Windows.Forms.TabPage tbpFormulas;
+        private System.Windows.Forms.TabPage tbpDatabase;
+        private System.Windows.Forms.TabPage tbpImage;
+        private System.Windows.Forms.TabPage tbpBorders;
+        private System.Windows.Forms.TabPage tbpChart;
         private System.Windows.Forms.Button cmd_apply;
         private System.Windows.Forms.Button cmd_cancel;
         private System.Windows.Forms.GroupBox groupBox3;

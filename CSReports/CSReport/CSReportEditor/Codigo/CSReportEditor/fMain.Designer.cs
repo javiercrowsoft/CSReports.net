@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.mnMain = new System.Windows.Forms.MenuStrip();
             this.mnFile = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuNewReport = new System.Windows.Forms.ToolStripMenuItem();
@@ -125,6 +126,8 @@
             this.listView1 = new System.Windows.Forms.ListView();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.treeView1 = new System.Windows.Forms.TreeView();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tabReports = new System.Windows.Forms.TabControl();
             this.tbpEditor = new System.Windows.Forms.TabPage();
             this.pnEditor = new System.Windows.Forms.Panel();
@@ -132,8 +135,20 @@
             this.pnReport = new System.Windows.Forms.PictureBox();
             this.openFileDlg = new System.Windows.Forms.OpenFileDialog();
             this.saveFielDlg = new System.Windows.Forms.SaveFileDialog();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.cmnControl = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.cmCtrlProperties = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmCtrlCopy = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmCtrlCut = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmCtrlDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmCtrlEditText = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmCtrlSendBack = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmCtrlBringFront = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator17 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator18 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator19 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator20 = new System.Windows.Forms.ToolStripSeparator();
+            this.cmCtrlPaste = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmCtrlPasteEx = new System.Windows.Forms.ToolStripMenuItem();
             this.mnMain.SuspendLayout();
             this.tbMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -145,13 +160,14 @@
             this.tabPage3.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabPage5.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabReports.SuspendLayout();
             this.tbpEditor.SuspendLayout();
             this.pnEditor.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pnRule)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pnReport)).BeginInit();
-            this.tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.cmnControl.SuspendLayout();
             this.SuspendLayout();
             // 
             // mnMain
@@ -922,6 +938,25 @@
             this.treeView1.Size = new System.Drawing.Size(218, 235);
             this.treeView1.TabIndex = 0;
             // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.pictureBox1);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Size = new System.Drawing.Size(218, 235);
+            this.tabPage1.TabIndex = 3;
+            this.tabPage1.Text = "Properties";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(218, 235);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            // 
             // tabReports
             // 
             this.tabReports.Controls.Add(this.tbpEditor);
@@ -972,24 +1007,99 @@
             this.pnReport.TabIndex = 0;
             this.pnReport.TabStop = false;
             // 
-            // tabPage1
+            // cmnControl
             // 
-            this.tabPage1.Controls.Add(this.pictureBox1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(218, 235);
-            this.tabPage1.TabIndex = 3;
-            this.tabPage1.Text = "Properties";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.cmnControl.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cmCtrlCopy,
+            this.cmCtrlCut,
+            this.cmCtrlPaste,
+            this.cmCtrlPasteEx,
+            this.toolStripSeparator17,
+            this.cmCtrlDelete,
+            this.toolStripSeparator18,
+            this.cmCtrlEditText,
+            this.toolStripSeparator20,
+            this.cmCtrlSendBack,
+            this.cmCtrlBringFront,
+            this.toolStripSeparator19,
+            this.cmCtrlProperties});
+            this.cmnControl.Name = "cmnControl";
+            this.cmnControl.Size = new System.Drawing.Size(161, 248);
             // 
-            // pictureBox1
+            // cmCtrlProperties
             // 
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(218, 235);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            this.cmCtrlProperties.Name = "cmCtrlProperties";
+            this.cmCtrlProperties.Size = new System.Drawing.Size(160, 22);
+            this.cmCtrlProperties.Text = "Properties";
+            this.cmCtrlProperties.Click += new System.EventHandler(this.cmCtrlProperties_Click);
+            // 
+            // cmCtrlCopy
+            // 
+            this.cmCtrlCopy.Name = "cmCtrlCopy";
+            this.cmCtrlCopy.Size = new System.Drawing.Size(160, 22);
+            this.cmCtrlCopy.Text = "Copy";
+            // 
+            // cmCtrlCut
+            // 
+            this.cmCtrlCut.Name = "cmCtrlCut";
+            this.cmCtrlCut.Size = new System.Drawing.Size(160, 22);
+            this.cmCtrlCut.Text = "Cut";
+            // 
+            // cmCtrlDelete
+            // 
+            this.cmCtrlDelete.Name = "cmCtrlDelete";
+            this.cmCtrlDelete.Size = new System.Drawing.Size(160, 22);
+            this.cmCtrlDelete.Text = "Delete";
+            // 
+            // cmCtrlEditText
+            // 
+            this.cmCtrlEditText.Name = "cmCtrlEditText";
+            this.cmCtrlEditText.Size = new System.Drawing.Size(160, 22);
+            this.cmCtrlEditText.Text = "Edit text";
+            // 
+            // cmCtrlSendBack
+            // 
+            this.cmCtrlSendBack.Name = "cmCtrlSendBack";
+            this.cmCtrlSendBack.Size = new System.Drawing.Size(160, 22);
+            this.cmCtrlSendBack.Text = "Send back";
+            // 
+            // cmCtrlBringFront
+            // 
+            this.cmCtrlBringFront.Name = "cmCtrlBringFront";
+            this.cmCtrlBringFront.Size = new System.Drawing.Size(160, 22);
+            this.cmCtrlBringFront.Text = "Bring front";
+            // 
+            // toolStripSeparator17
+            // 
+            this.toolStripSeparator17.Name = "toolStripSeparator17";
+            this.toolStripSeparator17.Size = new System.Drawing.Size(157, 6);
+            // 
+            // toolStripSeparator18
+            // 
+            this.toolStripSeparator18.Name = "toolStripSeparator18";
+            this.toolStripSeparator18.Size = new System.Drawing.Size(157, 6);
+            // 
+            // toolStripSeparator19
+            // 
+            this.toolStripSeparator19.Name = "toolStripSeparator19";
+            this.toolStripSeparator19.Size = new System.Drawing.Size(157, 6);
+            // 
+            // toolStripSeparator20
+            // 
+            this.toolStripSeparator20.Name = "toolStripSeparator20";
+            this.toolStripSeparator20.Size = new System.Drawing.Size(157, 6);
+            // 
+            // cmCtrlPaste
+            // 
+            this.cmCtrlPaste.Name = "cmCtrlPaste";
+            this.cmCtrlPaste.Size = new System.Drawing.Size(160, 22);
+            this.cmCtrlPaste.Text = "Paste";
+            // 
+            // cmCtrlPasteEx
+            // 
+            this.cmCtrlPasteEx.Name = "cmCtrlPasteEx";
+            this.cmCtrlPasteEx.Size = new System.Drawing.Size(160, 22);
+            this.cmCtrlPasteEx.Text = "Paste (no move)";
             // 
             // fMain
             // 
@@ -1017,13 +1127,14 @@
             this.tabPage3.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
             this.tabPage5.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabReports.ResumeLayout(false);
             this.tbpEditor.ResumeLayout(false);
             this.pnEditor.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pnRule)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pnReport)).EndInit();
-            this.tabPage1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.cmnControl.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1137,6 +1248,20 @@
         private System.Windows.Forms.SaveFileDialog saveFielDlg;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.ContextMenuStrip cmnControl;
+        private System.Windows.Forms.ToolStripMenuItem cmCtrlProperties;
+        private System.Windows.Forms.ToolStripMenuItem cmCtrlCopy;
+        private System.Windows.Forms.ToolStripMenuItem cmCtrlCut;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator17;
+        private System.Windows.Forms.ToolStripMenuItem cmCtrlDelete;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator18;
+        private System.Windows.Forms.ToolStripMenuItem cmCtrlEditText;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator20;
+        private System.Windows.Forms.ToolStripMenuItem cmCtrlSendBack;
+        private System.Windows.Forms.ToolStripMenuItem cmCtrlBringFront;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator19;
+        private System.Windows.Forms.ToolStripMenuItem cmCtrlPaste;
+        private System.Windows.Forms.ToolStripMenuItem cmCtrlPasteEx;
 
     }
 }
