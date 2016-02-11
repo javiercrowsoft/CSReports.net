@@ -160,52 +160,6 @@ namespace CSReportGlobals
             return name.Substring(n);
         }
 
-        public static double val(object value)
-        {
-            if (value == null)
-            {
-                return 0;
-            }
-            else
-            {
-
-                System.TypeCode typeCode = System.Type.GetTypeCode(value.GetType());
-                switch (typeCode)
-                {
-                    case System.TypeCode.Char:
-                    case System.TypeCode.String:
-                        double dbl = 0;
-                        if (double.TryParse((String)value, out dbl))
-                        {
-                            return dbl;
-                        }
-                        else
-                        {
-                            return 0;
-                        }
-                    case System.TypeCode.Decimal:
-                    case System.TypeCode.Double:
-                    case System.TypeCode.Int16:
-                    case System.TypeCode.Int32:
-                    case System.TypeCode.Int64:
-                    case System.TypeCode.Single:
-                    case System.TypeCode.UInt16:
-                    case System.TypeCode.UInt32:
-                    case System.TypeCode.UInt64:
-                        return Convert.ToDouble(value);
-                    case System.TypeCode.DateTime:
-                        return 0;
-                    case System.TypeCode.Boolean:
-                        if ((bool)value)
-                            return 1;
-                        else
-                            return 0;
-                    default:
-                        return 0;
-                }
-            }
-        }
-
     }
 
     public enum csRptControlType 

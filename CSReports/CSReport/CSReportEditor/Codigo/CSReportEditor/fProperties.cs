@@ -13,6 +13,8 @@ namespace CSReportEditor
 {
     public partial class fProperties : Form
     {
+        private cEditor m_editor;
+
         private bool m_ok;
         private bool m_done;
 
@@ -94,6 +96,21 @@ namespace CSReportEditor
         public fProperties()
         {
             InitializeComponent();
+
+            cb_align.Items.Clear();
+            cUtil.listAdd(cb_align, "Left", (int)CSReportGlobals.HorizontalAlignment.Left);
+            cUtil.listAdd(cb_align, "Right", (int)CSReportGlobals.HorizontalAlignment.Right);
+            cUtil.listAdd(cb_align, "Center", (int)CSReportGlobals.HorizontalAlignment.Center);
+
+            cb_borderType.Items.Clear();
+            cUtil.listAdd(cb_borderType, "Flat", (int)csReportBorderType.CSRPTBSFIXED);
+            cUtil.listAdd(cb_borderType, "3D", (int)csReportBorderType.CSRPTBS3D);
+            cUtil.listAdd(cb_borderType, "(Ninguno)", (int)csReportBorderType.CSRPTBSNONE);
+
+            G.redim(ref m_chartFieldType, 3);
+            G.redim(ref m_chartIndex, 3);
+
+            initChart();
         }
 
         // properties
@@ -766,10 +783,8 @@ namespace CSReportEditor
 
         private void cmd_formulaHide_Click(object sender, EventArgs e)
         {
-            bool cancel = false;
             m_formulaName = "Ocultar";
-            showFormula(m_formulaHide, out cancel);
-            if (!cancel)
+            if (m_editor.showEditFormula(m_formulaHide))
             {
                 m_formulaHideChanged = true;
                 lb_formulaHide.Text = m_formulaHide;
@@ -778,25 +793,12 @@ namespace CSReportEditor
 
         private void cmd_formulaValue_Click(object sender, EventArgs e)
         {
-            bool cancel = false;
             m_formulaName = "Valor";
-            showFormula(m_formulaValue, out cancel);
-            if (!cancel)
+            if (m_editor.showEditFormula(m_formulaValue))
             {
                 m_formulaValueChanged = true;
                 lbFormulaValue.Text = m_formulaValue;
             }
-        }
-
-        private void showFormula(String formula, out bool cancel)
-        {
-            //TODO: fix me
-            cancel = false;
-            /*
-          Iterator listeners = m_listeners.iterator();
-          while(listeners.hasNext()) {
-              ((fPropertiesEventI)listeners.next()).showEditFormula(formula, cancel);
-          };*/
         }
 
         private void op_afterPrint_Click(object sender, EventArgs e)
@@ -995,26 +997,6 @@ namespace CSReportEditor
              * */
         }
 
-        private void cmd_foreColor_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                /* TODO: fix me
-                __TYPE_NOT_FOUND w___TYPE_NOT_FOUND = CommDialog;
-                w___TYPE_NOT_FOUND.CancelError = true;
-                w___TYPE_NOT_FOUND.Color = TxForeColor.csValue;
-                w___TYPE_NOT_FOUND.Flags = cdlCCRGBInit;
-                VBA.ex.clear();
-                w___TYPE_NOT_FOUND.ShowColor;
-                if (VBA.ex.Number != 0) { return; }
-                TxForeColor.cReportPaintObject.setText(w___TYPE_NOT_FOUND.Color);
-
-                shForeColor.cReportAspect.setBackColor(TxForeColor.csValue);
-                 * */
-            }
-            catch (Exception ignore) { }
-        }
-
         private void tx_foreColor_LostFocus(object sender, EventArgs e)
         {
             try
@@ -1024,62 +1006,11 @@ namespace CSReportEditor
             catch (Exception ignore) { }
         }
 
-        private void cmd_backColor_Click(object sender, EventArgs e)
-        { // TODO: Use of ByRef founded Private Sub TxBackColor_Click(ByRef Cancel As Boolean)
-            try
-            {
-                /* TODO: fix me
-                __TYPE_NOT_FOUND w___TYPE_NOT_FOUND = CommDialog;
-                w___TYPE_NOT_FOUND.CancelError = true;
-                w___TYPE_NOT_FOUND.Color = TxBackColor.csValue;
-                VBA.ex.clear();
-                w___TYPE_NOT_FOUND.ShowColor;
-                if (VBA.ex.Number != 0) { return; }
-                TxBackColor.cReportPaintObject.setText(w___TYPE_NOT_FOUND.Color);
-                shBackColor.BackColor = Color.FromArgb(Int32.Parse(tx_backColor.Text));
-                 * */
-            }
-            catch (Exception ignore) { }
-        }
-
         private void tx_backColor_LostFocus(object sender, EventArgs e)
         {
             try
             {
                 shBackColor.BackColor = Color.FromArgb(Int32.Parse(tx_backColor.Text));
-            }
-            catch (Exception ignore) { }
-        }
-
-        private void cmd_font_Click(object sender, EventArgs e)
-        { // TODO: Use of ByRef founded Private Sub TxFont_Click(ByRef Cancel As Boolean)
-            try
-            {
-
-                /* TODO: fix me
-                __TYPE_NOT_FOUND w___TYPE_NOT_FOUND = CommDialog;
-                w___TYPE_NOT_FOUND.CancelError = true;
-                w___TYPE_NOT_FOUND.Flags = cdlCFBoth || cdlCFEffects;
-                w___TYPE_NOT_FOUND.FontName = txFont.cReportPaintObject.getText();
-                w___TYPE_NOT_FOUND.FontBold = chkFontBold.cColumnInfo.getValue() == vbChecked;
-                w___TYPE_NOT_FOUND.FontItalic = chkFontItalic.cColumnInfo.getValue() == vbChecked;
-                w___TYPE_NOT_FOUND.FontUnderline = chkFontUnderline.cColumnInfo.getValue() == vbChecked;
-                w___TYPE_NOT_FOUND.FontStrikethru = chkFontStrike.cColumnInfo.getValue() == vbChecked;
-                w___TYPE_NOT_FOUND.FontSize = TxFontSize.csValue;
-                w___TYPE_NOT_FOUND.Color = TxForeColor.csValue;
-                VBA.ex.clear();
-                w___TYPE_NOT_FOUND.ShowFont;
-
-                if (VBA.ex.Number != 0) { return; }
-
-                txFont.cReportPaintObject.setText(w___TYPE_NOT_FOUND.FontName);
-                chkFontBold.cColumnInfo.setValue(w___TYPE_NOT_FOUND.FontBold ? vbChecked : vbUnchecked));
-                chkFontItalic.cColumnInfo.setValue(w___TYPE_NOT_FOUND.FontItalic ? vbChecked : vbUnchecked));
-                chkFontUnderline.cColumnInfo.setValue(w___TYPE_NOT_FOUND.FontUnderline ? vbChecked : vbUnchecked));
-                chkFontStrike.cColumnInfo.setValue(w___TYPE_NOT_FOUND.FontStrikethru ? vbChecked : vbUnchecked));
-                TxFontSize.cReportPaintObject.setText(w___TYPE_NOT_FOUND.FontSize);
-                TxForeColor.cReportPaintObject.setText(w___TYPE_NOT_FOUND.Color);
-                 * */
             }
             catch (Exception ignore) { }
         }
@@ -1754,26 +1685,10 @@ namespace CSReportEditor
             m_done = false;
             tab_main.SelectedTab = tbpFormat;
             cWindow.centerForm(this);
-            m_ok = false;
-
-            cb_align.Items.Clear();
-            cUtil.listAdd(cb_align, "Left", (int)CSReportGlobals.HorizontalAlignment.Left);
-            cUtil.listAdd(cb_align, "Right", (int)CSReportGlobals.HorizontalAlignment.Right);
-            cUtil.listAdd(cb_align, "Center", (int)CSReportGlobals.HorizontalAlignment.Center);
-
-            cb_borderType.Items.Clear();
-            cUtil.listAdd(cb_borderType, "Flat", (int)csReportBorderType.CSRPTBSFIXED);
-            cUtil.listAdd(cb_borderType, "3D", (int)csReportBorderType.CSRPTBS3D);
-            cUtil.listAdd(cb_borderType, "(Ninguno)", (int)csReportBorderType.CSRPTBSNONE);
-
-            G.redim(ref m_chartFieldType, 3);
-            G.redim(ref m_chartIndex, 3);
-
-            initChart();
+            m_ok = false;            
 
             lb_formulaHide.Text = m_formulaHide;
             lb_formulaValue.Text = m_formulaValue;
-
         }
 
         private void initChart() 
@@ -1964,6 +1879,90 @@ namespace CSReportEditor
             cUtil.listAdd(cb_list, "WhiteSmoke ", (int)0xF5F5F5);
             cUtil.listAdd(cb_list, "Yellow ", (int)0xFFFF00);
             cUtil.listAdd(cb_list, "YellowGreen ", (int)0x9ACD32);
+        }
+
+        private void cmd_cancel_Click(object sender, EventArgs e)
+        {
+            m_ok = false;
+            this.Hide();
+        }
+
+        private void cmd_foreColor_Click(object sender, EventArgs e)
+        {
+            picColor(tx_foreColor, sh_foreColor);
+        }
+
+        private void cmd_backColor_Click(object sender, EventArgs e)
+        {
+            picColor(tx_backColor, sh_backColor);
+        }
+
+        private void picColor(TextBox txColor, Label shColor)
+        {
+            // Show the color dialog.
+            DialogResult result = colorDialog.ShowDialog();
+            // See if user pressed ok.
+            if (result == DialogResult.OK)
+            {
+                // Set form background to the selected color.
+                txColor.Text = colorDialog.Color.ToArgb().ToString();
+                shColor.BackColor = colorDialog.Color;
+            }
+        }
+
+        private void cmd_font_Click(object sender, EventArgs e)
+        {
+            
+            fontDialog.ShowEffects = true;
+
+            FontStyle fontStyle = FontStyle.Regular;
+            if (chkFontBold.Checked) fontStyle = fontStyle | FontStyle.Bold;
+            if (chkFontItalic.Checked) fontStyle = fontStyle | FontStyle.Italic;
+            if (chkFontUnderline.Checked) fontStyle = fontStyle | FontStyle.Underline;
+            if (chkFontStrike.Checked) fontStyle = fontStyle | FontStyle.Strikeout;
+
+            float fontSize = (float)cUtil.val(txFontSize.Text);
+            Font font = new Font(txFont.Text, ((fontSize > 0f) ? fontSize : 3f), fontStyle);
+
+            fontDialog.Font = font;
+            fontDialog.Color = cColor.colorFromRGB(cUtil.valAsInt(txForeColor.Text));
+
+	        DialogResult result = fontDialog.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                font = fontDialog.Font;
+
+                txFont.Text = font.Name;
+                chkFontBold.Checked = font.Bold;
+                chkFontItalic.Checked = font.Italic;
+                chkFontUnderline.Checked = font.Underline;
+                chkFontStrike.Checked = font.Strikeout;
+                txFontSize.Text = font.Size.ToString();
+                txForeColor.Text = fontDialog.Color.ToArgb().ToString();
+                shForeColor.BackColor = fontDialog.Color;
+            }            
+        }
+
+        private void cmd_borderColor_Click_1(object sender, EventArgs e)
+        {
+            picColor(tx_borderColor, sh_borderColor);
+        }
+
+        private void cmd_borderColor3d_Click(object sender, EventArgs e)
+        {
+            picColor(tx_border3D, sh_border3D);
+        }
+
+        private void cmd_borderShadowColor_Click(object sender, EventArgs e)
+        {
+            picColor(tx_borderShadow, sh_borderShadow);
+        }
+
+
+        internal void setHandler(cEditor editor)
+        {
+            m_editor = editor;
         }
     }
 }

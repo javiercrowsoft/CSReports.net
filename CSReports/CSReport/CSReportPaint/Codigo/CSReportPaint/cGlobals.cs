@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Drawing;
 using CSReportDll;
 using CSReportGlobals;
+using System.Drawing;
 
 namespace CSReportPaint
 {
@@ -193,12 +193,6 @@ namespace CSReportPaint
             m_fnt[m_fnt.Length - 1] = afont;
 
             return m_fnt.Length - 1;
-        }
-
-        public static Color colorFromRGB(int rgb) {
-            byte[] values = BitConverter.GetBytes(rgb);
-            if (!BitConverter.IsLittleEndian) Array.Reverse(values);
-            return Color.FromArgb(values[2], values[1], values[0]);
         }
     }
 

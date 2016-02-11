@@ -74,7 +74,7 @@ namespace CSReportEditor
             return false;
         }
 
-		public static bool showDbFields (string sField, int nFieldType, int nIndex, cEditor editor)
+		public static bool showDbFields(string sField, int nFieldType, int nIndex, cEditor editor)
 		{
 			throw new NotImplementedException ();
 		}

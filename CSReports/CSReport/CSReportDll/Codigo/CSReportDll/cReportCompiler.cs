@@ -322,11 +322,11 @@ namespace CSReportDll
                 else
                 {
                     int columnIndex = int.Parse(fint.getParameters().item(cReportGlobals.C_KEYINDEXCOL2).getValue());
-                    value = cReportGlobals.val(m_report.getValueFromRs(columnIndex).ToString());
+                    value = cUtil.val(m_report.getValueFromRs(columnIndex).ToString());
                 }
 
                 cReportVariable var = fint.getVariables().item(C_GROUPPERCENTT);
-                total = cReportGlobals.val(var.getValue().ToString());
+                total = cUtil.val(var.getValue().ToString());
                 value = cUtil.divideByZero(value, total);
                 var.setValue(value);
 
@@ -1105,7 +1105,7 @@ namespace CSReportDll
             }
             cStructTime st = null;
             st = (cStructTime)fint.getVariables().item(C_SUMTIME).getValue();
-            if (cReportGlobals.val(fint.getParameters().item(1).getValue()) != 0)
+            if (cUtil.val(fint.getParameters().item(1).getValue()) != 0)
             {
                 return cReportGlobals.format(st.getHour(), "00")
                         + ":" + cReportGlobals.format(st.getMinute(), "00")
@@ -1533,7 +1533,7 @@ namespace CSReportDll
                 {
                     strNumber = strNumber.Replace(".", sepDecimal);
                 }
-                rtn = cReportGlobals.val(strNumber);
+                rtn = cUtil.val(strNumber);
 
             }
 
@@ -1724,7 +1724,7 @@ namespace CSReportDll
             int iLenguage = 0;
 
             iNumber = pGetNumber(m_report.getValue(fint.getParameters().item(0).getValue(), true));
-            iLenguage = (int)cReportGlobals.val(fint.getParameters().item(1).getValue());
+            iLenguage = cUtil.valAsInt(fint.getParameters().item(1).getValue());
 
             cNumberToString ntos = new cNumberToString();
 

@@ -548,7 +548,7 @@ namespace CSReportDll
 
                     if (bCompare)
                     {
-                        value = cReportGlobals.val(cReportGlobals.valVariant(rows[j][valueIndex]));
+                        value = cUtil.val(cReportGlobals.valVariant(rows[j][valueIndex]));
 
                         if (value > v[0].value)
                         {
@@ -578,7 +578,7 @@ namespace CSReportDll
 
                         if (bCompare)
                         {
-                            value = cReportGlobals.val(cReportGlobals.valVariant(rows[j][valueIndex]));
+                            value = cUtil.val(cReportGlobals.valVariant(rows[j][valueIndex]));
 
                             if ((value > v[i].value || v[i].idx == -1)
                                 && value <= v[i - 1].value && j != v[i - 1].idx)

@@ -1271,7 +1271,7 @@ namespace CSReportDll
                             }
                             break;
                         case csRptGrpComparisonType.CSRPTGRPNUMBER:
-                            double number = cReportGlobals.val(cReportGlobals.valVariant(m_rows.Rows[row][col]));
+                            double number = cUtil.val(cReportGlobals.valVariant(m_rows.Rows[row][col]));
                             if ((double)m_vGroups[i].value != number)
                             {
                                 return true;
@@ -1499,7 +1499,7 @@ namespace CSReportDll
                         break;
                     
                     case csRptGrpComparisonType.CSRPTGRPNUMBER:
-                        double number = cReportGlobals.val(cReportGlobals.valVariant(m_rows.Rows[row][col]));
+                        double number = cUtil.val(cReportGlobals.valVariant(m_rows.Rows[row][col]));
                         if (m_vGroups[i].value == null)
                         {
                             changeGroup(i, number);
@@ -1543,7 +1543,7 @@ namespace CSReportDll
                     m_vGroups[i].value = cReportGlobals.valVariant(m_rows.Rows[row][col]).ToString().ToLower();
                     break;
                 case csRptGrpComparisonType.CSRPTGRPNUMBER:
-                    m_vGroups[i].value = cReportGlobals.val(cReportGlobals.valVariant(m_rows.Rows[row][col]));
+                    m_vGroups[i].value = cUtil.val(cReportGlobals.valVariant(m_rows.Rows[row][col]));
                     break;
                 case csRptGrpComparisonType.CSRPTGRPDATE:
                     m_vGroups[i].value = cReportGlobals.dateValue(cReportGlobals.valVariant(m_rows.Rows[row][col]));
@@ -1726,7 +1726,7 @@ namespace CSReportDll
 
             if (sec.getHasFormulaHide())
             {
-                isVisible = cReportGlobals.val(m_compiler.resultFunction(sec.getFormulaHide())) != 0;
+                isVisible = cUtil.val(m_compiler.resultFunction(sec.getFormulaHide())) != 0;
             }
             else
             {
@@ -1745,7 +1745,7 @@ namespace CSReportDll
                     if (secLn.getHasFormulaHide())
                     {
                         m_compiler.evalFunction(secLn.getFormulaHide());
-                        isVisible = cReportGlobals.val(m_compiler.resultFunction(secLn.getFormulaHide())) != 0;
+                        isVisible = cUtil.val(m_compiler.resultFunction(secLn.getFormulaHide())) != 0;
                     }
                     else
                     {
@@ -1830,7 +1830,7 @@ namespace CSReportDll
 
                             if (ctrl.getHasFormulaHide())
                             {
-                                field.setVisible(cReportGlobals.val(m_compiler.resultFunction(ctrl.getFormulaHide())) != 0);
+                                field.setVisible(cUtil.val(m_compiler.resultFunction(ctrl.getFormulaHide())) != 0);
                             }
                             else
                             {
@@ -2976,7 +2976,7 @@ namespace CSReportDll
                                     else
                                     {
                                         object value = m_rows.Rows[m_vRowsIndex[iRow]][m_vGroups[i].indexField];
-                                        double number = cReportGlobals.val(cReportGlobals.valVariant(value));
+                                        double number = cUtil.val(cReportGlobals.valVariant(value));
                                         if ((double)m_vGroups[i].value != number)
                                         {
                                             return rtn;
@@ -3094,7 +3094,7 @@ namespace CSReportDll
                                     else
                                     {
                                         object value = m_rows.Rows[m_vRowsIndex[iRow]][m_vGroups[i].indexField];
-                                        double number = cReportGlobals.val(cReportGlobals.valVariant(value));
+                                        double number = cUtil.val(cReportGlobals.valVariant(value));
                                         if ((double)m_vGroups[i].value != number)
                                         {
                                             return rtn;
@@ -3216,7 +3216,7 @@ namespace CSReportDll
                                     else
                                     {
                                         object value = m_rows.Rows[m_vRowsIndex[iRow]][m_vGroups[i].indexField];
-                                        double number = cReportGlobals.val(cReportGlobals.valVariant(value));
+                                        double number = cUtil.val(cReportGlobals.valVariant(value));
                                         if ((double)m_vGroups[i].value != number)
                                         {
                                             return rtn;
@@ -3330,7 +3330,7 @@ namespace CSReportDll
                                     else
                                     {
                                         object value = m_rows.Rows[m_vRowsIndex[iRow]][m_vGroups[i].indexField];
-                                        double number = cReportGlobals.val(cReportGlobals.valVariant(value));
+                                        double number = cUtil.val(cReportGlobals.valVariant(value));
                                         if ((double)m_vGroups[i].value != number)
                                         {
                                             return rtn;
@@ -3438,7 +3438,7 @@ namespace CSReportDll
                                     else
                                     {
                                         object value = m_rows.Rows[m_vRowsIndex[iRow]][m_vGroups[i].indexField];
-                                        double number = cReportGlobals.val(cReportGlobals.valVariant(value));
+                                        double number = cUtil.val(cReportGlobals.valVariant(value));
                                         if ((double)m_vGroups[i].value != number)
                                         {
                                             return rtn;
@@ -3720,8 +3720,8 @@ namespace CSReportDll
 
                                         case csRptGrpComparisonType.CSRPTGRPNUMBER:
 
-                                            double number1 = cReportGlobals.val(m_vGroups[i + 1].value);
-                                            double number2 = cReportGlobals.val(value);
+                                            double number1 = cUtil.val(m_vGroups[i + 1].value);
+                                            double number2 = cUtil.val(value);
                                             if (number1 != number2)
                                             {
                                                 addGroup(i, j, value);
@@ -3773,8 +3773,8 @@ namespace CSReportDll
                 for (j = last; j <= i; j--)
                 {
                     q = q + 1;
-                    double value1 = cReportGlobals.val(m_rows.Rows[m_vRowsIndex[j]][orderBy]);
-                    double value2 = cReportGlobals.val(m_rows.Rows[m_vRowsIndex[j - 1]][orderBy]);
+                    double value1 = cUtil.val(m_rows.Rows[m_vRowsIndex[j]][orderBy]);
+                    double value2 = cUtil.val(m_rows.Rows[m_vRowsIndex[j - 1]][orderBy]);
                     if (value1 < value2)
                     {
                         if (!OnProgress("", 0, q, t)) 
@@ -3812,8 +3812,8 @@ namespace CSReportDll
                 for (j = last; j <= i; j--)
                 {
                     q = q + 1;
-                    double number1 = cReportGlobals.val(m_rows.Rows[m_vRowsIndex[j]][orderBy]);
-                    double number2 = cReportGlobals.val(m_rows.Rows[m_vRowsIndex[j - 1]][orderBy]);
+                    double number1 = cUtil.val(m_rows.Rows[m_vRowsIndex[j]][orderBy]);
+                    double number2 = cUtil.val(m_rows.Rows[m_vRowsIndex[j - 1]][orderBy]);
                     if (number1 > number2)
                     {
                         if (!OnProgress("", 0, q, t))
@@ -4312,11 +4312,11 @@ namespace CSReportDll
                     if (fint.getFormulaType() == csRptFormulaType.CSRPTGROUPPERCENT)
                     {
                         formula.setIdxGroup2(0);
-                        indexGroup = (int)cReportGlobals.val(fint.getParameters().item(3).getValue());
+                        indexGroup = cUtil.valAsInt(fint.getParameters().item(3).getValue());
                     }
                     else
                     {
-                        indexGroup = (int)cReportGlobals.val(fint.getParameters().item(2).getValue());
+                        indexGroup = cUtil.valAsInt(fint.getParameters().item(2).getValue());
                     }
                     if (fint.getParameters().item(cReportGlobals.C_KEYINDEXGROUP) == null)
                     {
@@ -4439,7 +4439,7 @@ namespace CSReportDll
                 sec = m_headers.item(_i);
                 if (sec.getHasFormulaHide())
                 {
-                    isVisible = cReportGlobals.val(m_compiler.resultFunction(sec.getFormulaHide())) != 0;
+                    isVisible = cUtil.val(m_compiler.resultFunction(sec.getFormulaHide())) != 0;
                 }
                 else
                 {
@@ -4501,7 +4501,7 @@ namespace CSReportDll
 
                 if (sec.getHasFormulaHide())
                 {
-                    isVisible = cReportGlobals.val(m_compiler.resultFunction(sec.getFormulaHide())) != 0;
+                    isVisible = cUtil.val(m_compiler.resultFunction(sec.getFormulaHide())) != 0;
                 }
                 else
                 {
@@ -4514,7 +4514,7 @@ namespace CSReportDll
                         secline = sec.getSectionLines().item(_j);
                         if (secline.getHasFormulaHide())
                         {
-                            isVisible = cReportGlobals.val(m_compiler.resultFunction(secline.getFormulaHide())) != 0;
+                            isVisible = cUtil.val(m_compiler.resultFunction(secline.getFormulaHide())) != 0;
                         }
                         else
                         {
@@ -4613,7 +4613,7 @@ namespace CSReportDll
                                 if (ctrl.getHasFormulaHide())
                                 {
                                     field.setVisible(
-                                        cReportGlobals.val(m_compiler.resultFunction(ctrl.getFormulaHide())) != 0);
+                                        cUtil.val(m_compiler.resultFunction(ctrl.getFormulaHide())) != 0);
                                 }
                                 else
                                 {

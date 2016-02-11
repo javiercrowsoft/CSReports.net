@@ -362,14 +362,86 @@ namespace CSKernelClient
             return mUtil.getWindowState_(retValue, o);
         }
         
+        */
+
         //--------------------------------------------------------------------------------------------------------------------
-        public String setInfoString(String fuente, String clave, String value) {
-            return mUtil.setInfoString_(fuente, clave, value);
+        public static String setInfoString(String source, String key, String value)
+        {
+            key = "#" + key;
+
+            int i = source.ToLower().IndexOf(key.ToLower(), 0);
+
+            // the key can't apears more than one
+            //
+            if (source.ToLower().IndexOf(key.ToLower(), i + 1) != -1) 
+            {
+                throw (new Exception("cUtil.getInfoString: the key can't apears more than one.")); 
+            }
+
+            // if the key is not present we add it to the end of the string
+            //
+            if (i == -1)
+            {
+                return source + key + "=" + value + ";";
+            }
+            else            {
+                const string c_errorstr = "cUtil.getInfoString: source invalid, the character {0} is not present.";
+
+                int j = source.ToLower().IndexOf(";".ToLower(), i);
+                if (j == -1) 
+                { 
+                    throw (new Exception(String.Format(c_errorstr, ";"))); 
+                }
+
+                int k = source.Substring(i, j).ToLower().IndexOf("=".ToLower(), 0);
+                if (k == -1) 
+                { 
+                    throw (new Exception(String.Format(c_errorstr, "="))); 
+                }
+                k = k + i - 1;
+                return source.Substring(0, k) + value + source.Substring(j);
+            }
         }
-        public String getInfoString(String fuente, String clave, String defaultValue) {
-            return mUtil.getInfoString_(fuente, clave, defaultValue);
+
+        public static String getInfoString(String source, String key, String defaultValue)
+        {
+
+            key = "#"+ key;
+
+            int i = source.ToLower().IndexOf(key.ToLower(), 0);
+
+            // the key can't apears more than one
+            //
+            if (source.ToLower().IndexOf(key.ToLower(), i + 1) != -1) 
+            { 
+                throw(new Exception("cUtil.getInfoString: the key can't apears more than one.")); 
+            }
+
+            // if the key is not present return default
+            //
+            if (i == -1) {
+              return defaultValue;
+            } 
+            else {
+
+              const string c_errorstr = "cUtil.getInfoString: source invalid, the character {0} is not present.";
+
+              int j = source.ToLower().IndexOf(";".ToLower(), i);
+              if (j == -1) 
+              { 
+                  throw(new Exception(String.Format(c_errorstr, ";"))); 
+              }
+
+              int k = source.Substring(i, j).ToLower().IndexOf("=".ToLower(), 0);
+              if (k == -1) 
+              { 
+                  throw(new Exception(String.Format(c_errorstr, "="))); 
+              }
+              k = k + i - 1;
+              return source.Substring(k + 1, j - k - 1);
+            }
         }
-        */          
+
         //--------------------------------------------------------------------------------------------------------------------
         public static bool getInput(out string value, String descrip) {
             // TODO: implement
@@ -446,6 +518,57 @@ namespace CSKernelClient
                     length = text.Length - start;
                 }
                 return text.Substring(start, length);
+            }
+        }
+
+        public static int valAsInt(object value) 
+        {
+            return Convert.ToInt32(val(value));
+        }
+
+        public static double val(object value)
+        {
+            if (value == null)
+            {
+                return 0;
+            }
+            else
+            {
+
+                System.TypeCode typeCode = System.Type.GetTypeCode(value.GetType());
+                switch (typeCode)
+                {
+                    case System.TypeCode.Char:
+                    case System.TypeCode.String:
+                        double dbl = 0;
+                        if (double.TryParse((String)value, out dbl))
+                        {
+                            return dbl;
+                        }
+                        else
+                        {
+                            return 0;
+                        }
+                    case System.TypeCode.Decimal:
+                    case System.TypeCode.Double:
+                    case System.TypeCode.Int16:
+                    case System.TypeCode.Int32:
+                    case System.TypeCode.Int64:
+                    case System.TypeCode.Single:
+                    case System.TypeCode.UInt16:
+                    case System.TypeCode.UInt32:
+                    case System.TypeCode.UInt64:
+                        return Convert.ToDouble(value);
+                    case System.TypeCode.DateTime:
+                        return 0;
+                    case System.TypeCode.Boolean:
+                        if ((bool)value)
+                            return 1;
+                        else
+                            return 0;
+                    default:
+                        return 0;
+                }
             }
         }
 

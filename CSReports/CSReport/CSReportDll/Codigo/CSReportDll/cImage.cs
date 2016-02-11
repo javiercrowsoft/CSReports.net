@@ -96,7 +96,16 @@ namespace CSReportDll
                 fixed (byte* ptr = bytes)
                 {
                     int stride = gdiBitmap.bmWidth * 3;
-                    return new Bitmap(gdiBitmap.bmWidth, gdiBitmap.bmHeight, -stride, PixelFormat.Format24bppRgb, new IntPtr(ptr + 24 + stride * (gdiBitmap.bmHeight - 1)));                    
+                    //
+                    // the new Bitmap(new Bitmap is to get a new copy of the bitmap)
+                    //
+                    // first we create a bitmap from the bytes array but this array will be garbage collected in the future
+                    // so we make a deep copy and then refresh the unsafe bitmap
+                    //
+                    Bitmap unsafeBitmap = new Bitmap(gdiBitmap.bmWidth, gdiBitmap.bmHeight, -stride, PixelFormat.Format24bppRgb, new IntPtr(ptr + 24 + stride * (gdiBitmap.bmHeight - 1)));
+                    Bitmap safeBitmap = new Bitmap(unsafeBitmap);
+                    unsafeBitmap.Dispose();
+                    return safeBitmap;
                 }
             }
         }

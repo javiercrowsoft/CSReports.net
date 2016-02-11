@@ -28,18 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(fFormula));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.treeView1 = new System.Windows.Forms.TreeView();
+            this.tv_formulas = new System.Windows.Forms.TreeView();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.tx_formula = new System.Windows.Forms.TextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -107,7 +110,7 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.treeView1);
+            this.splitContainer1.Panel1.Controls.Add(this.tv_formulas);
             // 
             // splitContainer1.Panel2
             // 
@@ -116,19 +119,22 @@
             this.splitContainer1.SplitterDistance = 217;
             this.splitContainer1.TabIndex = 3;
             // 
-            // treeView1
+            // tv_formulas
             // 
-            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeView1.Location = new System.Drawing.Point(0, 0);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(217, 275);
-            this.treeView1.TabIndex = 0;
+            this.tv_formulas.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tv_formulas.ImageIndex = 0;
+            this.tv_formulas.ImageList = this.imageList;
+            this.tv_formulas.Location = new System.Drawing.Point(0, 0);
+            this.tv_formulas.Name = "tv_formulas";
+            this.tv_formulas.SelectedImageIndex = 0;
+            this.tv_formulas.Size = new System.Drawing.Size(217, 275);
+            this.tv_formulas.TabIndex = 0;
             // 
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.ColumnCount = 1;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Controls.Add(this.textBox2, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.tx_formula, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.textBox1, 0, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
@@ -139,14 +145,14 @@
             this.tableLayoutPanel2.Size = new System.Drawing.Size(432, 275);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
-            // textBox2
+            // tx_formula
             // 
-            this.textBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox2.Location = new System.Drawing.Point(3, 78);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(426, 194);
-            this.textBox2.TabIndex = 1;
+            this.tx_formula.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tx_formula.Location = new System.Drawing.Point(3, 78);
+            this.tx_formula.Multiline = true;
+            this.tx_formula.Name = "tx_formula";
+            this.tx_formula.Size = new System.Drawing.Size(426, 194);
+            this.tx_formula.TabIndex = 1;
             // 
             // textBox1
             // 
@@ -187,6 +193,15 @@
             this.button1.Text = "Apply";
             this.button1.UseVisualStyleBackColor = true;
             // 
+            // imageList
+            // 
+            this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
+            this.imageList.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList.Images.SetKeyName(0, "xtratabcontrol.gif");
+            this.imageList.Images.SetKeyName(1, "base002.ico");
+            this.imageList.Images.SetKeyName(2, "property.ico");
+            this.imageList.Images.SetKeyName(3, "aspxroundpanel.gif");
+            // 
             // fFormula
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -195,6 +210,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "fFormula";
             this.Text = "fFormula";
+            this.Load += new System.EventHandler(this.fFormula_Load);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -218,13 +234,14 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.TreeView treeView1;
+        private System.Windows.Forms.TreeView tv_formulas;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox tx_formula;
+        private System.Windows.Forms.ImageList imageList;
 
     }
 }

@@ -1378,7 +1378,7 @@ namespace CSReportPaint
             Graphics bitmapGraphic = Graphics.FromImage(m_bitmap);
 
             Rectangle rect = cGlobals.newRectangle(0, 0, (int)graph.VisibleClipBounds.Width, (int)graph.VisibleClipBounds.Height + 3); // TODO check why 56 ???
-            Brush brush = new SolidBrush(cGlobals.colorFromRGB(color));
+            Brush brush = new SolidBrush(cColor.colorFromRGB(color));
             bitmapGraphic.FillRectangle(brush, rect);
             brush.Dispose();
 
@@ -1471,7 +1471,7 @@ namespace CSReportPaint
 
             Pen pen;
 
-            pen = new Pen(cGlobals.colorFromRGB(colorOut), width);
+            pen = new Pen(cColor.colorFromRGB(colorOut), width);
 
             if (dash)
             {
@@ -1503,7 +1503,7 @@ namespace CSReportPaint
                             rect.Inflate(-1, -1);
                         }
                         */
-                        Brush brush = new SolidBrush(cGlobals.colorFromRGB(colorInside));
+                        Brush brush = new SolidBrush(cColor.colorFromRGB(colorInside));
                         graph.FillRectangle(brush, rect);
                         brush.Dispose();
                     }
@@ -1722,7 +1722,7 @@ namespace CSReportPaint
 
             RectangleF rect = cGlobals.newRectangleF(x, y, Convert.ToInt32(x + aspect.getWidth() - margenX), y + stringHeight);
 
-            SolidBrush brush = new SolidBrush(cGlobals.colorFromRGB(aspect.getFont().getForeColor()));
+            SolidBrush brush = new SolidBrush(cColor.colorFromRGB(aspect.getFont().getForeColor()));
 
             graph.DrawString(sText, font, brush, rect, format);
 
@@ -1874,7 +1874,7 @@ namespace CSReportPaint
             if (x1 - iSize < 0) { x1 = iSize; }
             if (y1 - iSize < 0) { y1 = iSize; }            
 
-            Brush brush = new SolidBrush(cGlobals.colorFromRGB(color));
+            Brush brush = new SolidBrush(cColor.colorFromRGB(color));
 
             Rectangle rect = cGlobals.newRectangle(x1 - iSize, y1 - iSize - 1, x1, y1);
             showHandle(graph, brush, rect, bCircle);
@@ -2071,31 +2071,31 @@ namespace CSReportPaint
                 case csETypeGrid.CSEGRIDLINES:
                     m_brushGrid = new HatchBrush(
                                             HatchStyle.Cross,
-                                            cGlobals.colorFromRGB(0xC0C0C0),
+                                            cColor.colorFromRGB(0xC0C0C0),
                                             Color.White);
                     break;
                 case csETypeGrid.CSEGRIDPOINTS:
                     m_brushGrid = new HatchBrush(
                                             HatchStyle.DottedGrid,
-                                            cGlobals.colorFromRGB(0xC0C0C0),
+                                            cColor.colorFromRGB(0xC0C0C0),
                                             Color.White);
                     break;
                 case csETypeGrid.CSEGRIDLINESHORIZONTAL:
                     m_brushGrid = new HatchBrush(
                                             HatchStyle.Horizontal,
-                                            cGlobals.colorFromRGB(0xC0C0C0),
+                                            cColor.colorFromRGB(0xC0C0C0),
                                             Color.White);
                     break;
                 case csETypeGrid.CSEGRIDLINESVERTICAL:
                     m_brushGrid = new HatchBrush(
                                             HatchStyle.Vertical,
-                                            cGlobals.colorFromRGB(0xC0C0C0),
+                                            cColor.colorFromRGB(0xC0C0C0),
                                             Color.White);
                     break;
                 case csETypeGrid.CSEGRIDNONE:
                     m_brushGrid = new HatchBrush(
                                             HatchStyle.DottedGrid,
-                                            cGlobals.colorFromRGB(0xCCCCCC),
+                                            cColor.colorFromRGB(0xCCCCCC),
                                             Color.White);
                     break;
             }

@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="cColor.cs" />
     <Compile Include="cConstants.cs" />
     <Compile Include="cDateUtils.cs" />
     <Compile Include="cError.cs" />

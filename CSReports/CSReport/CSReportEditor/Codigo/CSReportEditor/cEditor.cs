@@ -696,17 +696,21 @@ namespace CSReportEditor
 			return null;
         }
 
-        private void m_fFormula_CheckSintaxis(out bool cancel, String code) { 
+        public bool checkSintaxis(String code) { 
             cReportFormula f = null;
+            
             f = new cReportFormula();
+            
             if (m_fProperties != null) {
                 f.setName(m_fProperties.getFormulaName());
             } 
             else {
                 f.setName(m_fSecProperties.getFormulaName());
             }
+            
             f.setText(code);
-			cancel = !m_report.getCompiler().checkSyntax(f);
+			
+            return !m_report.getCompiler().checkSyntax(f);
         }
 
         private void m_fGroup_ShowHelpDbField() {
@@ -725,11 +729,7 @@ namespace CSReportEditor
             m_fGroup.setIndex(nIndex);
         }
 
-        private void m_fProperties_ShowEditFormula(String formula, out bool cancel) {
-			pShowEditFormula(formula, out cancel);
-        }
-
-		private void m_fProperties_ShowHelpChartField(out bool cancel, TextBox ctrl, int idx) {
+		public bool showHelpChartField(TextBox ctrl, int idx) {
             int nIndex = 0;
             int nFieldType = 0;
             String sField = "";
@@ -738,15 +738,20 @@ namespace CSReportEditor
             nFieldType = m_fProperties.getChartFieldType(idx);
             nIndex = m_fProperties.getChartIndex(idx);
 
-			cancel = !cGlobals.showDbFields(sField, nFieldType, nIndex, this);
-            if (cancel) { return; }
-
-            ctrl.Text = sField;
-            m_fProperties.setChartFieldType(idx, nFieldType);
-            m_fProperties.setChartIndex(idx, nIndex);
+            if (cGlobals.showDbFields(sField, nFieldType, nIndex, this))
+            {
+                ctrl.Text = sField;
+                m_fProperties.setChartFieldType(idx, nFieldType);
+                m_fProperties.setChartIndex(idx, nIndex);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
-        private void m_fProperties_ShowHelpChartGroupField(out bool cancel) {
+        public bool showHelpChartGroupField() {
             int nIndex = 0;
             int nFieldType = 0;
             String sField = "";
@@ -755,71 +760,87 @@ namespace CSReportEditor
             nFieldType = m_fProperties.getChartGroupFieldType();
             nIndex = m_fProperties.getChartGroupIndex();
 
-			cancel = cGlobals.showDbFields(sField, nFieldType, nIndex, this);
-            if (cancel) { return; }
-
-			m_fProperties.setDbFieldGroupValue(sField);
-            m_fProperties.setChartGroupFieldType(nFieldType);
-            m_fProperties.setChartGroupIndex(nIndex);
+			if(cGlobals.showDbFields(sField, nFieldType, nIndex, this)) 
+            {
+                m_fProperties.setDbFieldGroupValue(sField);
+                m_fProperties.setChartGroupFieldType(nFieldType);
+                m_fProperties.setChartGroupIndex(nIndex);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
-        private void m_fSecProperties_ShowEditFormula(String formula, out bool cancel) {
-            pShowEditFormula(formula, out cancel);
-        }
+		public bool showEditFormula(String formula) {
 
-		private void pShowEditFormula(String formula, out bool cancel) {
-			cancel = false;
-			try {
+            try
+            {
+                cReportFormulaType f = null;
+                cReportControl c = null;
 
-				cReportFormulaType f = null;
-				cReportControl c = null;
+                if (m_fFormula == null)
+                {
+                    m_fFormula = new fFormula();
+                    // TODO: set event handlers for fFormula
+                }
 
-				if (m_fFormula == null) { 
-					m_fFormula = new fFormula();
-					// TODO: set event handlers for fFormula
-				}
+                // TODO: this functionality has to be moved to fFormula
+                //
 
-				// TODO: this functionality has to be moved to fFormula
-				//
+                // Load formulas in the tree
+                m_fFormula.createTree();
 
-				// Load formulas in the tree
-				m_fFormula.createTree();
+                for (int _i = 0; _i < m_report.getFormulaTypes().count(); _i++)
+                {
+                    f = m_report.getFormulaTypes().item(_i);
+                    m_fFormula.addFormula(f.getId(), f.getName(), f.getNameUser(), f.getDecrip(), f.getHelpContextId());
+                }
 
-				for (int _i = 0; _i < m_report.getFormulaTypes().count(); _i++) {
-					f = m_report.getFormulaTypes().item(_i);
-					m_fFormula.addFormula(f.getId(), f.getName(), f.getNameUser(), f.getDecrip(), f.getHelpContextId());
-				}
+                for (int _i = 0; _i < m_report.getControls().count(); _i++)
+                {
+                    c = m_report.getControls().item(_i);
+                    if (c.getControlType() == csRptControlType.CSRPTCTFIELD)
+                    {
+                        m_fFormula.addDBField(c.getName(), c.getField().getName());
+                    }
+                    else if (c.getControlType() == csRptControlType.CSRPTCTLABEL)
+                    {
+                        m_fFormula.addLabel(c.getName());
+                    }
+                }
 
-				for (int _i = 0; _i < m_report.getControls().count(); _i++) {
-					c = m_report.getControls().item(_i);
-					if (c.getControlType() == csRptControlType.CSRPTCTFIELD) {
-						m_fFormula.addDBField(c.getName(), c.getField().getName());
-					} 
-					else if (c.getControlType() == csRptControlType.CSRPTCTLABEL) {
-						m_fFormula.addLabel(c.getName());
-					}
-				}
+                m_fFormula.setFormula(formula);
 
-				m_fFormula.setFormula(formula);
+                m_fFormula.expandTree();
 
-				m_fFormula.expandTree();
+                //
+                // TODO: end functionality to move 
 
-				m_fFormula.center();
+                m_fFormula.ShowDialog();
 
-				//
-				// TODO: end functionality to move 
+                if (m_fFormula.getOk())
+                {
+                    formula = m_fFormula.getFormula();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
 
-				m_fFormula.Show();
-
-				cancel = !m_fFormula.getOk();
-
-				if (!cancel) {
-					formula = m_fFormula.getFormula();
-				}
-
-			} catch (Exception ex) {
-				cError.mngError(ex, "m_fProperties_ShowEditFormula", C_MODULE, "");
-			}
+            }
+            catch (Exception ex)
+            {
+                cError.mngError(ex, "showEditFormula", C_MODULE, "");
+                return false;
+            }
+            finally 
+            {
+                m_fFormula.Hide();
+                m_fFormula = null;
+            }
 		}
 
         private void m_fSecProperties_UnloadForm() {
@@ -901,7 +922,6 @@ namespace CSReportEditor
                     }
                 }
             }
-
         }
 
         private void m_picReport_KeyDown(int keyCode, int shift) {
@@ -2378,10 +2398,10 @@ namespace CSReportEditor
             pAddLabelAux(csRptEditCtrlType.CSRPTEDITCHART);
         }
 
-        public void pAddLabelAux(csRptEditCtrlType ctlType) {
+        public void pAddLabelAux(csRptEditCtrlType ctrlType) {
             beginDraging();
             m_controlName = "";
-            m_controlType = ctlType;
+            m_controlType = ctrlType;
             m_fieldName = "";
             m_formulaText = "";
             m_fieldIndex = 0;
@@ -2389,7 +2409,6 @@ namespace CSReportEditor
         }
 
 		private bool addControlEnd(float left, float top) {
-            cReportControl ctrl = null;
 
             m_draging = false;
 
@@ -3328,7 +3347,7 @@ namespace CSReportEditor
             }
         }
 
-        private void m_fProperties_ShowHelpDbField(out bool cancel) { 
+        public bool showHelpDbField() { 
             int nIndex = 0;
             int nFieldType = 0;
             String sField = "";
@@ -3337,13 +3356,18 @@ namespace CSReportEditor
             nFieldType = m_fProperties.getFieldType();
             nIndex = m_fProperties.getIndex();
 
-            cancel = !cGlobals.showDbFields(sField, nFieldType, nIndex, this);
-            if (cancel) { return; }
-
-            m_fProperties.txDbField.Text = sField;
-            m_fProperties.setFieldType(nFieldType);
-            m_fProperties.setIndex(nIndex);
-            m_fProperties.txText.Text = sField;
+            if (cGlobals.showDbFields(sField, nFieldType, nIndex, this))
+            {
+                m_fProperties.txDbField.Text = sField;
+                m_fProperties.setFieldType(nFieldType);
+                m_fProperties.setIndex(nIndex);
+                m_fProperties.txText.Text = sField;
+                return true;
+            }
+            else 
+            {
+                return false;
+            }
         }
 
         public void showGroupProperties() {
@@ -3636,31 +3660,28 @@ namespace CSReportEditor
             } 
             else {
                 m_keyObj = m_keyFocus;
-                pShowCtrlProperties();
+                showCtrlProperties();
             }
 
             refreshAll();
         }
 
-        private void pShowCtrlProperties() {
+        private void showCtrlProperties() {
             try {
 
                 CSReportPaint.cReportPaintObject paintObject = null;
                 cReportControl rptCtrl = null;
 				cReportAspect w_aspect = null;
 				cReportFont w_font = null;
-                cReportImage image = null;
                 bool bMultiSelect = false;
-                String sText = "";
                 
                 m_showingProperties = true;
 
                 if (m_fProperties == null) { 
                     m_fProperties = new fProperties();
-                    // TODO: set event handler for 
-                    // ShowEditFormula, ShowHelpChartField, ShowHelpChartGroupField, ShowHelpDbField
-                    // UnloadForm
                 }
+
+                m_fProperties.setHandler(this);
 
                 paintObject = m_paint.getPaintObject(m_keyObj);
                 if (paintObject == null) { return; }
@@ -3668,8 +3689,12 @@ namespace CSReportEditor
                 m_fProperties.txText.Text = paintObject.getText();
                 rptCtrl = m_report.getControls().item(paintObject.getTag());
 
-                if (rptCtrl.getControlType() != csRptControlType.CSRPTCTIMAGE) {
+                if (rptCtrl.getControlType() != csRptControlType.CSRPTCTIMAGE)
+                {
                     m_fProperties.hideTabImage();
+                }
+                else {
+                    m_fProperties.picImage.Image = rptCtrl.getImage().getImage();
                 }
 
                 if (rptCtrl.getControlType() != csRptControlType.CSRPTCTCHART) {
@@ -3762,6 +3787,7 @@ namespace CSReportEditor
                 w_font = w_aspect.getFont();
                 m_fProperties.txFont.Text = w_font.getName();
                 m_fProperties.txForeColor.Text = w_font.getForeColor().ToString();
+                m_fProperties.shForeColor.BackColor = cColor.colorFromRGB(w_font.getForeColor());
                 m_fProperties.txFontSize.Text = w_font.getSize().ToString();
                 m_fProperties.chkFontBold.Checked = w_font.getBold();
                 m_fProperties.chkFontItalic.Checked = w_font.getItalic();
@@ -3774,6 +3800,7 @@ namespace CSReportEditor
                 m_fProperties.txWidth.Text = w_aspect.getWidth().ToString();
                 m_fProperties.txHeight.Text = w_aspect.getHeight().ToString();
                 m_fProperties.txBackColor.Text = w_aspect.getBackColor().ToString();
+                m_fProperties.shBackColor.BackColor = cColor.colorFromRGB(w_aspect.getBackColor());
                 m_fProperties.chkTransparent.Checked = w_aspect.getTransparent();
 
                 bMultiSelect = m_vSelectedKeys.Length > 1;
@@ -3806,10 +3833,10 @@ namespace CSReportEditor
                     if (m_fProperties.getSetFormulaValueChanged()) { rptCtrl.setHasFormulaValue(m_fProperties.chkFormulaValue.Checked); }
                     if (m_fProperties.getFormulaHideChanged()) { rptCtrl.getFormulaHide().setText(m_fProperties.getFormulaHide()); }
                     if (m_fProperties.getFormulaValueChanged()) { rptCtrl.getFormulaValue().setText(m_fProperties.getFormulaValue()); }
-                    if (m_fProperties.getIdxGroupChanged()) { rptCtrl.getFormulaValue().setIdxGroup((int)cReportGlobals.val(m_fProperties.txIdxGroup.Text)); }
+                    if (m_fProperties.getIdxGroupChanged()) { rptCtrl.getFormulaValue().setIdxGroup(cUtil.valAsInt(m_fProperties.txIdxGroup.Text)); }
                     if (m_fProperties.getWhenEvalChanged()) { rptCtrl.getFormulaValue().setWhenEval(m_fProperties.opAfterPrint.Checked ? csRptWhenEval.CSRPTEVALPOST : csRptWhenEval.CSRPTEVALPRE); }
 
-                    if (m_fProperties.getExportColIdxChanged()) { rptCtrl.setExportColIdx((int)cReportGlobals.val(m_fProperties.txExportColIdx.Text)); }
+                    if (m_fProperties.getExportColIdxChanged()) { rptCtrl.setExportColIdx(cUtil.valAsInt(m_fProperties.txExportColIdx.Text)); }
                     if (m_fProperties.getIsFreeCtrlChanged()) { rptCtrl.setIsFreeCtrl(m_fProperties.chkIsFreeCtrl.Checked); }
 
                     if (rptCtrl.getControlType() == csRptControlType.CSRPTCTFIELD || rptCtrl.getControlType() == csRptControlType.CSRPTCTDBIMAGE) {
@@ -3823,9 +3850,7 @@ namespace CSReportEditor
                     }
 
                     if (m_fProperties.getPictureChanged()) {
-                        image = rptCtrl.getImage();
-                        PictureBox picImage = m_fProperties.picImage;
-                        image.setImage((Image)picImage.Image.Clone());
+                        rptCtrl.getImage().setImage(new Bitmap(m_fProperties.picImage.Image));
                     }
 
                     if (rptCtrl.getControlType() == csRptControlType.CSRPTCTCHART) {
@@ -3862,7 +3887,7 @@ namespace CSReportEditor
                         }
 
                         if (m_fProperties.getChartTopChanged()) {
-                            rptCtrl.getChart().setTop((int)cReportGlobals.val(m_fProperties.txChartTop.Text));
+                            rptCtrl.getChart().setTop(cUtil.valAsInt(m_fProperties.txChartTop.Text));
                         }
 
                         if (m_fProperties.getChartSortChanged()) {
@@ -3921,11 +3946,11 @@ namespace CSReportEditor
                     if (m_fProperties.getTextChanged()) { paintObject.setText(m_fProperties.txText.Text); }
 
                     w_aspect = rptCtrl.getLabel().getAspect();
-                    if (m_fProperties.getLeftChanged()) { w_aspect.setLeft((float)cReportGlobals.val(m_fProperties.txLeft.Text)); }
-                    if (m_fProperties.getTopChanged()) { w_aspect.setTop((float)cReportGlobals.val(m_fProperties.txTop.Text)); }
-                    if (m_fProperties.getWidthChanged()) { w_aspect.setWidth((float)cReportGlobals.val(m_fProperties.txWidth.Text)); }
-                    if (m_fProperties.getHeightChanged()) { w_aspect.setHeight((float)cReportGlobals.val(m_fProperties.txHeight.Text)); }
-                    if (m_fProperties.getBackColorChanged()) { w_aspect.setBackColor((int)cReportGlobals.val(m_fProperties.txBackColor.Text)); }
+                    if (m_fProperties.getLeftChanged()) { w_aspect.setLeft((float)cUtil.val(m_fProperties.txLeft.Text)); }
+                    if (m_fProperties.getTopChanged()) { w_aspect.setTop((float)cUtil.val(m_fProperties.txTop.Text)); }
+                    if (m_fProperties.getWidthChanged()) { w_aspect.setWidth((float)cUtil.val(m_fProperties.txWidth.Text)); }
+                    if (m_fProperties.getHeightChanged()) { w_aspect.setHeight((float)cUtil.val(m_fProperties.txHeight.Text)); }
+                    if (m_fProperties.getBackColorChanged()) { w_aspect.setBackColor(cUtil.valAsInt(m_fProperties.txBackColor.Text)); }
                     if (m_fProperties.getTransparentChanged()) { w_aspect.setTransparent(m_fProperties.chkTransparent.Checked); }
                     if (m_fProperties.getAlignChanged()) { w_aspect.setAlign((CSReportGlobals.HorizontalAlignment)cUtil.listID(m_fProperties.cbAlign)); }
                     if (m_fProperties.getFormatChanged()) { w_aspect.setFormat(m_fProperties.txFormat.Text); }
@@ -3936,17 +3961,17 @@ namespace CSReportEditor
                     if (m_fProperties.getWordWrapChanged()) { w_aspect.setWordWrap(m_fProperties.chkWordWrap.Checked); }
                     if (m_fProperties.getCanGrowChanged()) { w_aspect.setCanGrow(m_fProperties.chkCanGrow.Checked); }
 
-                    if (m_fProperties.getBorderColorChanged()) { w_aspect.setBorderColor((int)cReportGlobals.val(m_fProperties.txBorderColor.Text)); }
-                    if (m_fProperties.getBorder3DChanged()) { w_aspect.setBorderColor3d((int)cReportGlobals.val(m_fProperties.txBorder3D.Text)); }
-                    if (m_fProperties.getBorder3DShadowChanged()) { w_aspect.setBorderColor3dShadow((int)cReportGlobals.val(m_fProperties.txBorderShadow.Text)); }
+                    if (m_fProperties.getBorderColorChanged()) { w_aspect.setBorderColor(cUtil.valAsInt(m_fProperties.txBorderColor.Text)); }
+                    if (m_fProperties.getBorder3DChanged()) { w_aspect.setBorderColor3d(cUtil.valAsInt(m_fProperties.txBorder3D.Text)); }
+                    if (m_fProperties.getBorder3DShadowChanged()) { w_aspect.setBorderColor3dShadow(cUtil.valAsInt(m_fProperties.txBorderShadow.Text)); }
                     if (m_fProperties.getBorderRoundedChanged()) { w_aspect.setBorderRounded(m_fProperties.chkBorderRounded.Checked); }
-                    if (m_fProperties.getBorderWidthChanged()) { w_aspect.setBorderWidth((int)cReportGlobals.val(m_fProperties.txBorderWidth.Text)); }
+                    if (m_fProperties.getBorderWidthChanged()) { w_aspect.setBorderWidth(cUtil.valAsInt(m_fProperties.txBorderWidth.Text)); }
                     if (m_fProperties.getBorderTypeChanged()) { w_aspect.setBorderType((csReportBorderType)cUtil.listID(m_fProperties.cbBorderType)); }
 
                     w_font = w_aspect.getFont();
                     if (m_fProperties.getFontChanged()) { w_font.setName(m_fProperties.txFont.Text); }
-                    if (m_fProperties.getForeColorChanged()) { w_font.setForeColor((int)cReportGlobals.val(m_fProperties.txForeColor.Text)); }
-                    if (m_fProperties.getFontSizeChanged()) { w_font.setSize((float)cReportGlobals.val(m_fProperties.txFontSize.Text)); }
+                    if (m_fProperties.getForeColorChanged()) { w_font.setForeColor(cUtil.valAsInt(m_fProperties.txForeColor.Text)); }
+                    if (m_fProperties.getFontSizeChanged()) { w_font.setSize((float)cUtil.val(m_fProperties.txFontSize.Text)); }
                     if (m_fProperties.getBoldChanged()) { w_font.setBold(m_fProperties.chkFontBold.Checked); }
                     if (m_fProperties.getItalicChanged()) { w_font.setItalic(m_fProperties.chkFontItalic.Checked); }
                     if (m_fProperties.getUnderlineChanged()) { w_font.setUnderline(m_fProperties.chkFontUnderline.Checked); }
@@ -3961,11 +3986,11 @@ namespace CSReportEditor
                     //
 
                     w_aspect = paintObject.getAspect();
-                    if (m_fProperties.getLeftChanged()) { w_aspect.setLeft((float)cReportGlobals.val(m_fProperties.txLeft.Text)); }
-                    if (m_fProperties.getTopChanged()) { w_aspect.setTop((float)cReportGlobals.val(m_fProperties.txTop.Text)); }
-                    if (m_fProperties.getWidthChanged()) { w_aspect.setWidth((float)cReportGlobals.val(m_fProperties.txWidth.Text)); }
-                    if (m_fProperties.getHeightChanged()) { w_aspect.setHeight((float)cReportGlobals.val(m_fProperties.txHeight.Text)); }
-                    if (m_fProperties.getBackColorChanged()) { w_aspect.setBackColor((int)cReportGlobals.val(m_fProperties.txBackColor.Text)); }
+                    if (m_fProperties.getLeftChanged()) { w_aspect.setLeft((float)cUtil.val(m_fProperties.txLeft.Text)); }
+                    if (m_fProperties.getTopChanged()) { w_aspect.setTop((float)cUtil.val(m_fProperties.txTop.Text)); }
+                    if (m_fProperties.getWidthChanged()) { w_aspect.setWidth((float)cUtil.val(m_fProperties.txWidth.Text)); }
+                    if (m_fProperties.getHeightChanged()) { w_aspect.setHeight((float)cUtil.val(m_fProperties.txHeight.Text)); }
+                    if (m_fProperties.getBackColorChanged()) { w_aspect.setBackColor(cUtil.valAsInt(m_fProperties.txBackColor.Text)); }
                     if (m_fProperties.getTransparentChanged()) { w_aspect.setTransparent(m_fProperties.chkTransparent.Checked); }
                     if (m_fProperties.getAlignChanged()) { w_aspect.setAlign((CSReportGlobals.HorizontalAlignment)cUtil.listID(m_fProperties.cbAlign)); }
                     if (m_fProperties.getFormatChanged()) { w_aspect.setFormat(m_fProperties.txFormat.Text); }
@@ -3981,17 +4006,17 @@ namespace CSReportEditor
                         w_aspect.setBorderType(csReportBorderType.CSRPTBSFIXED);
                     } 
                     else {
-                        if (m_fProperties.getBorderColorChanged()) { w_aspect.setBorderColor((int)cReportGlobals.val(m_fProperties.txBorderColor.Text)); }
-                        if (m_fProperties.getBorder3DChanged()) { w_aspect.setBorderColor3d((int)cReportGlobals.val(m_fProperties.txBorder3D.Text)); }
-                        if (m_fProperties.getBorder3DShadowChanged()) { w_aspect.setBorderColor3dShadow((int)cReportGlobals.val(m_fProperties.txBorderShadow.Text)); }
+                        if (m_fProperties.getBorderColorChanged()) { w_aspect.setBorderColor(cUtil.valAsInt(m_fProperties.txBorderColor.Text)); }
+                        if (m_fProperties.getBorder3DChanged()) { w_aspect.setBorderColor3d(cUtil.valAsInt(m_fProperties.txBorder3D.Text)); }
+                        if (m_fProperties.getBorder3DShadowChanged()) { w_aspect.setBorderColor3dShadow(cUtil.valAsInt(m_fProperties.txBorderShadow.Text)); }
                         if (m_fProperties.getBorderRoundedChanged()) { w_aspect.setBorderRounded(m_fProperties.chkBorderRounded.Checked); }
-                        if (m_fProperties.getBorderWidthChanged()) { w_aspect.setBorderWidth((int)cReportGlobals.val(m_fProperties.txBorderWidth.Text)); }
+                        if (m_fProperties.getBorderWidthChanged()) { w_aspect.setBorderWidth(cUtil.valAsInt(m_fProperties.txBorderWidth.Text)); }
                     }
 
                     w_font = w_aspect.getFont();
                     if (m_fProperties.getFontChanged()) { w_font.setName(m_fProperties.txFont.Text); }
-                    if (m_fProperties.getForeColorChanged()) { w_font.setForeColor((int)cReportGlobals.val(m_fProperties.txForeColor.Text)); }
-                    if (m_fProperties.getFontSizeChanged()) { w_font.setSize((float)cReportGlobals.val(m_fProperties.txFontSize.Text)); }
+                    if (m_fProperties.getForeColorChanged()) { w_font.setForeColor(cUtil.valAsInt(m_fProperties.txForeColor.Text)); }
+                    if (m_fProperties.getFontSizeChanged()) { w_font.setSize((float)cUtil.val(m_fProperties.txFontSize.Text)); }
                     if (m_fProperties.getBoldChanged()) { w_font.setBold(m_fProperties.chkFontBold.Checked); }
                     if (m_fProperties.getItalicChanged()) { w_font.setItalic(m_fProperties.chkFontItalic.Checked); }
                     if (m_fProperties.getUnderlineChanged()) { w_font.setUnderline(m_fProperties.chkFontUnderline.Checked); }
@@ -4104,7 +4129,7 @@ namespace CSReportEditor
 
                 }
 
-                fFormula.addLabel();
+                addLabel();
 
             } catch (Exception ex) {
                 cError.mngError(ex, "Paste", C_MODULE, "");
@@ -4991,7 +5016,7 @@ namespace CSReportEditor
             int x = 0;
             if (cUtil.subString(nameCtrl, 0, cGlobals.C_CONTROL_NAME.Length).ToUpper() == cGlobals.C_CONTROL_NAME.ToUpper())
             {
-                x = (int)cReportGlobals.val(nameCtrl.Substring(cGlobals.C_CONTROL_NAME.Length + 1));
+                x = cUtil.valAsInt(nameCtrl.Substring(cGlobals.C_CONTROL_NAME.Length + 1));
                 if (x > m_nextNameCtrl) {
                     m_nextNameCtrl = x + 1;
                 }
@@ -5077,7 +5102,7 @@ namespace CSReportEditor
             m_fGroup = null;
         }
 
-        private void m_fProperties_UnloadForm() {
+        public void destroyPropertiesFormReference() {
             m_fProperties = null;
         }
 

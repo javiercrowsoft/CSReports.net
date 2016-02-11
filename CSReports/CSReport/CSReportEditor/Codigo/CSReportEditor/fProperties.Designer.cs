@@ -31,9 +31,9 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.lb_control = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.tab_main = new System.Windows.Forms.TabControl();
             this.tbpFormat = new System.Windows.Forms.TabPage();
+            this.cmd_font = new System.Windows.Forms.Button();
             this.cmd_backColor = new System.Windows.Forms.Button();
             this.cmd_foreColor = new System.Windows.Forms.Button();
             this.label24 = new System.Windows.Forms.Label();
@@ -115,14 +115,15 @@
             this.label42 = new System.Windows.Forms.Label();
             this.tx_dbField = new System.Windows.Forms.TextBox();
             this.tbpImage = new System.Windows.Forms.TabPage();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.pic_image = new System.Windows.Forms.PictureBox();
             this.cmd_imageFile = new System.Windows.Forms.Button();
             this.label43 = new System.Windows.Forms.Label();
             this.tx_imageFile = new System.Windows.Forms.TextBox();
             this.tbpBorders = new System.Windows.Forms.TabPage();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.cmd_textColor = new System.Windows.Forms.Button();
+            this.cmd_borderShadowColor = new System.Windows.Forms.Button();
+            this.cmd_borderColor3d = new System.Windows.Forms.Button();
+            this.cmd_borderColor = new System.Windows.Forms.Button();
             this.chk_borderRounded = new System.Windows.Forms.CheckBox();
             this.label51 = new System.Windows.Forms.Label();
             this.tx_borderWidth = new System.Windows.Forms.TextBox();
@@ -178,6 +179,8 @@
             this.cb_type = new System.Windows.Forms.ComboBox();
             this.cmd_apply = new System.Windows.Forms.Button();
             this.cmd_cancel = new System.Windows.Forms.Button();
+            this.colorDialog = new System.Windows.Forms.ColorDialog();
+            this.fontDialog = new System.Windows.Forms.FontDialog();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tab_main.SuspendLayout();
@@ -188,6 +191,7 @@
             this.groupBox1.SuspendLayout();
             this.tbpDatabase.SuspendLayout();
             this.tbpImage.SuspendLayout();
+            this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_image)).BeginInit();
             this.tbpBorders.SuspendLayout();
             this.tbpChart.SuspendLayout();
@@ -200,7 +204,6 @@
             this.panel1.BackColor = System.Drawing.Color.White;
             this.panel1.Controls.Add(this.lb_control);
             this.panel1.Controls.Add(this.pictureBox1);
-            this.panel1.Controls.Add(this.label1);
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(455, 70);
@@ -209,10 +212,10 @@
             // lb_control
             // 
             this.lb_control.AutoSize = true;
-            this.lb_control.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lb_control.Location = new System.Drawing.Point(266, 19);
+            this.lb_control.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_control.Location = new System.Drawing.Point(76, 18);
             this.lb_control.Name = "lb_control";
-            this.lb_control.Size = new System.Drawing.Size(154, 25);
+            this.lb_control.Size = new System.Drawing.Size(232, 37);
             this.lb_control.TabIndex = 2;
             this.lb_control.Text = "lbControlName";
             // 
@@ -224,16 +227,6 @@
             this.pictureBox1.Size = new System.Drawing.Size(46, 39);
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(76, 18);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(184, 26);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Control properties";
             // 
             // tab_main
             // 
@@ -251,6 +244,7 @@
             // 
             // tbpFormat
             // 
+            this.tbpFormat.Controls.Add(this.cmd_font);
             this.tbpFormat.Controls.Add(this.cmd_backColor);
             this.tbpFormat.Controls.Add(this.cmd_foreColor);
             this.tbpFormat.Controls.Add(this.label24);
@@ -307,6 +301,16 @@
             this.tbpFormat.Text = "Format";
             this.tbpFormat.UseVisualStyleBackColor = true;
             // 
+            // cmd_font
+            // 
+            this.cmd_font.Location = new System.Drawing.Point(275, 120);
+            this.cmd_font.Name = "cmd_font";
+            this.cmd_font.Size = new System.Drawing.Size(27, 23);
+            this.cmd_font.TabIndex = 49;
+            this.cmd_font.Text = "...";
+            this.cmd_font.UseVisualStyleBackColor = true;
+            this.cmd_font.Click += new System.EventHandler(this.cmd_font_Click);
+            // 
             // cmd_backColor
             // 
             this.cmd_backColor.Location = new System.Drawing.Point(180, 197);
@@ -315,6 +319,7 @@
             this.cmd_backColor.TabIndex = 48;
             this.cmd_backColor.Text = "...";
             this.cmd_backColor.UseVisualStyleBackColor = true;
+            this.cmd_backColor.Click += new System.EventHandler(this.cmd_backColor_Click);
             // 
             // cmd_foreColor
             // 
@@ -324,6 +329,7 @@
             this.cmd_foreColor.TabIndex = 47;
             this.cmd_foreColor.Text = "...";
             this.cmd_foreColor.UseVisualStyleBackColor = true;
+            this.cmd_foreColor.Click += new System.EventHandler(this.cmd_foreColor_Click);
             // 
             // label24
             // 
@@ -664,7 +670,7 @@
             // 
             this.tx_font.Location = new System.Drawing.Point(77, 120);
             this.tx_font.Name = "tx_font";
-            this.tx_font.Size = new System.Drawing.Size(216, 20);
+            this.tx_font.Size = new System.Drawing.Size(194, 20);
             this.tx_font.TabIndex = 7;
             // 
             // label5
@@ -958,6 +964,7 @@
             this.cmd_formulaValue.TabIndex = 30;
             this.cmd_formulaValue.Text = "Edit";
             this.cmd_formulaValue.UseVisualStyleBackColor = true;
+            this.cmd_formulaValue.Click += new System.EventHandler(this.cmd_formulaValue_Click);
             // 
             // groupBox1
             // 
@@ -1005,6 +1012,7 @@
             this.cmd_formulaHide.TabIndex = 0;
             this.cmd_formulaHide.Text = "Edit";
             this.cmd_formulaHide.UseVisualStyleBackColor = true;
+            this.cmd_formulaHide.Click += new System.EventHandler(this.cmd_formulaHide_Click);
             // 
             // tbpDatabase
             // 
@@ -1045,7 +1053,7 @@
             // 
             // tbpImage
             // 
-            this.tbpImage.Controls.Add(this.pic_image);
+            this.tbpImage.Controls.Add(this.panel2);
             this.tbpImage.Controls.Add(this.cmd_imageFile);
             this.tbpImage.Controls.Add(this.label43);
             this.tbpImage.Controls.Add(this.tx_imageFile);
@@ -1056,11 +1064,21 @@
             this.tbpImage.Text = "Image";
             this.tbpImage.UseVisualStyleBackColor = true;
             // 
+            // panel2
+            // 
+            this.panel2.AutoScroll = true;
+            this.panel2.Controls.Add(this.pic_image);
+            this.panel2.Location = new System.Drawing.Point(11, 52);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(423, 416);
+            this.panel2.TabIndex = 9;
+            // 
             // pic_image
             // 
-            this.pic_image.Location = new System.Drawing.Point(77, 58);
+            this.pic_image.Location = new System.Drawing.Point(0, 0);
             this.pic_image.Name = "pic_image";
             this.pic_image.Size = new System.Drawing.Size(100, 50);
+            this.pic_image.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pic_image.TabIndex = 8;
             this.pic_image.TabStop = false;
             // 
@@ -1091,9 +1109,9 @@
             // 
             // tbpBorders
             // 
-            this.tbpBorders.Controls.Add(this.button3);
-            this.tbpBorders.Controls.Add(this.button2);
-            this.tbpBorders.Controls.Add(this.cmd_textColor);
+            this.tbpBorders.Controls.Add(this.cmd_borderShadowColor);
+            this.tbpBorders.Controls.Add(this.cmd_borderColor3d);
+            this.tbpBorders.Controls.Add(this.cmd_borderColor);
             this.tbpBorders.Controls.Add(this.chk_borderRounded);
             this.tbpBorders.Controls.Add(this.label51);
             this.tbpBorders.Controls.Add(this.tx_borderWidth);
@@ -1115,32 +1133,35 @@
             this.tbpBorders.Text = "Borders";
             this.tbpBorders.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // cmd_borderShadowColor
             // 
-            this.button3.Location = new System.Drawing.Point(256, 92);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(27, 23);
-            this.button3.TabIndex = 44;
-            this.button3.Text = "...";
-            this.button3.UseVisualStyleBackColor = true;
+            this.cmd_borderShadowColor.Location = new System.Drawing.Point(256, 92);
+            this.cmd_borderShadowColor.Name = "cmd_borderShadowColor";
+            this.cmd_borderShadowColor.Size = new System.Drawing.Size(27, 23);
+            this.cmd_borderShadowColor.TabIndex = 44;
+            this.cmd_borderShadowColor.Text = "...";
+            this.cmd_borderShadowColor.UseVisualStyleBackColor = true;
+            this.cmd_borderShadowColor.Click += new System.EventHandler(this.cmd_borderShadowColor_Click);
             // 
-            // button2
+            // cmd_borderColor3d
             // 
-            this.button2.Location = new System.Drawing.Point(256, 66);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(27, 23);
-            this.button2.TabIndex = 43;
-            this.button2.Text = "...";
-            this.button2.UseVisualStyleBackColor = true;
+            this.cmd_borderColor3d.Location = new System.Drawing.Point(256, 66);
+            this.cmd_borderColor3d.Name = "cmd_borderColor3d";
+            this.cmd_borderColor3d.Size = new System.Drawing.Size(27, 23);
+            this.cmd_borderColor3d.TabIndex = 43;
+            this.cmd_borderColor3d.Text = "...";
+            this.cmd_borderColor3d.UseVisualStyleBackColor = true;
+            this.cmd_borderColor3d.Click += new System.EventHandler(this.cmd_borderColor3d_Click);
             // 
-            // cmd_textColor
+            // cmd_borderColor
             // 
-            this.cmd_textColor.Location = new System.Drawing.Point(256, 41);
-            this.cmd_textColor.Name = "cmd_textColor";
-            this.cmd_textColor.Size = new System.Drawing.Size(27, 23);
-            this.cmd_textColor.TabIndex = 42;
-            this.cmd_textColor.Text = "...";
-            this.cmd_textColor.UseVisualStyleBackColor = true;
+            this.cmd_borderColor.Location = new System.Drawing.Point(256, 41);
+            this.cmd_borderColor.Name = "cmd_borderColor";
+            this.cmd_borderColor.Size = new System.Drawing.Size(27, 23);
+            this.cmd_borderColor.TabIndex = 42;
+            this.cmd_borderColor.Text = "...";
+            this.cmd_borderColor.UseVisualStyleBackColor = true;
+            this.cmd_borderColor.Click += new System.EventHandler(this.cmd_borderColor_Click_1);
             // 
             // chk_borderRounded
             // 
@@ -1650,6 +1671,7 @@
             this.cmd_cancel.TabIndex = 3;
             this.cmd_cancel.Text = "Cancel";
             this.cmd_cancel.UseVisualStyleBackColor = true;
+            this.cmd_cancel.Click += new System.EventHandler(this.cmd_cancel_Click);
             // 
             // fProperties
             // 
@@ -1662,7 +1684,7 @@
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "fProperties";
-            this.Text = "fProperties";
+            this.Text = "Control properties";
             this.Load += new System.EventHandler(this.fProperties_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -1680,6 +1702,8 @@
             this.tbpDatabase.PerformLayout();
             this.tbpImage.ResumeLayout(false);
             this.tbpImage.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_image)).EndInit();
             this.tbpBorders.ResumeLayout(false);
             this.tbpBorders.PerformLayout();
@@ -1696,7 +1720,6 @@
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.TabControl tab_main;
         private System.Windows.Forms.TabPage tbpFormat;
@@ -1841,9 +1864,13 @@
         private System.Windows.Forms.TextBox tx_dbFieldGroupValue;
         private System.Windows.Forms.Button cmd_backColor;
         private System.Windows.Forms.Button cmd_foreColor;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button cmd_textColor;
+        private System.Windows.Forms.Button cmd_borderShadowColor;
+        private System.Windows.Forms.Button cmd_borderColor3d;
+        private System.Windows.Forms.Button cmd_borderColor;
         private System.Windows.Forms.Label lb_control;
+        private System.Windows.Forms.ColorDialog colorDialog;
+        private System.Windows.Forms.FontDialog fontDialog;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Button cmd_font;
     }
 }

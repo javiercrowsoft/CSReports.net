@@ -15,6 +15,7 @@ namespace CSReportDll
         // Creates an empty collection.
         public cReportFormulaTypes()
         {
+            initialize();
         }
 
         // Adds elements from an IDictionary into the new collection.
