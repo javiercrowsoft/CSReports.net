@@ -1034,6 +1034,7 @@
             this.cmd_dbField.TabIndex = 4;
             this.cmd_dbField.Text = "...";
             this.cmd_dbField.UseVisualStyleBackColor = true;
+            this.cmd_dbField.Click += new System.EventHandler(this.cmd_dbField_Click);
             // 
             // label42
             // 

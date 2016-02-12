@@ -696,7 +696,7 @@ namespace CSReportEditor
 			return null;
         }
 
-        public bool checkSintaxis(String code) { 
+        public bool checkSyntax(String code) { 
             cReportFormula f = null;
             
             f = new cReportFormula();
@@ -710,7 +710,7 @@ namespace CSReportEditor
             
             f.setText(code);
 			
-            return !m_report.getCompiler().checkSyntax(f);
+            return m_report.getCompiler().checkSyntax(f);
         }
 
         private void m_fGroup_ShowHelpDbField() {
@@ -812,6 +812,8 @@ namespace CSReportEditor
                 }
 
                 m_fFormula.setFormula(formula);
+
+                m_fFormula.setHandler(this);
 
                 m_fFormula.expandTree();
 
@@ -4088,7 +4090,7 @@ namespace CSReportEditor
                 cColumnInfo col = columns.item(_i);
                 m_fToolBox.addField(
                     cGlobals.getDataSourceStr(dataSource) + col.getName(), 
-                    (int)col.getTypeColumn(), 
+                    (int)col.getColumnType(), 
                     col.getPosition());
                 m_fToolBox.addLabels(col.getName());
             }

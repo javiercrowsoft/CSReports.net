@@ -76,7 +76,50 @@ namespace CSReportEditor
 
 		public static bool showDbFields(string sField, int nFieldType, int nIndex, cEditor editor)
 		{
-			throw new NotImplementedException ();
+            fColumns fc = null;
+
+            try {
+                fc = new fColumns();
+
+                fc.clearColumns();
+
+                cReport report = editor.getReport();
+                
+                cReportConnect connect = report.getConnect();
+                fc.fillColumns(connect.getDataSource(), connect.getColumns());
+
+                for (int _i = 0; _i < report.getConnectsAux().count(); _i++)
+                {
+                    connect = report.getConnectsAux().item(_i);
+                    fc.fillColumns(connect.getDataSource(), connect.getColumns());
+                }
+
+                fc.setField(sField);
+                fc.ShowDialog();
+
+                if (fc.getOk())
+                {
+                    sField = fc.getField();
+                    nFieldType = fc.getFieldType();
+                    nIndex = fc.getIndex();
+
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+            } catch (Exception ex) {
+                cError.mngError(ex, "showDbFields", C_MODULE, "");
+                return false;
+            }
+            finally {
+                if (fc != null)
+                {
+                    fc.Close();
+                }
+            }      
 		}
 
 		public static void setEditAlignTextState(object length)

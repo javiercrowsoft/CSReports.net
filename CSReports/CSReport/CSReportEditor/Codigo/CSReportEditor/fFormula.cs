@@ -32,6 +32,8 @@ namespace CSReportEditor
 
         private bool m_ok = false;
 
+        private cEditor m_editor;
+
         public fFormula()
         {
             InitializeComponent();
@@ -52,10 +54,10 @@ namespace CSReportEditor
             item.SelectedImageIndex = item.ImageIndex;
 
             string info = "";
-            info += cUtil.setInfoString(info, C_FUNID, formulaType.ToString());
-            info += cUtil.setInfoString(info, C_FUNDESCRIP, descrip);
-            info += cUtil.setInfoString(info, C_FUNNAME, name);
-            info += cUtil.setInfoString(info, C_HELPCONTEXTID, helpContextId.ToString());
+            info = cUtil.setInfoString(info, C_FUNID, formulaType.ToString());
+            info = cUtil.setInfoString(info, C_FUNDESCRIP, descrip);
+            info = cUtil.setInfoString(info, C_FUNNAME, name);
+            info = cUtil.setInfoString(info, C_HELPCONTEXTID, helpContextId.ToString());
 
             item.Tag = info;
 		}
@@ -103,9 +105,9 @@ namespace CSReportEditor
             }
             
             var info = "";
-            info += cUtil.setInfoString(info, C_FUNDESCRIP, descrip);
-            info += cUtil.setInfoString(info, C_FUNNAME, name);
-            info += cUtil.setInfoString(info, C_ISDBFIELDORLABEL, "1");
+            info = cUtil.setInfoString(info, C_FUNDESCRIP, descrip);
+            info = cUtil.setInfoString(info, C_FUNNAME, name);
+            info = cUtil.setInfoString(info, C_ISDBFIELDORLABEL, "1");
 
             item.Tag = info;
         }
@@ -114,5 +116,58 @@ namespace CSReportEditor
         {
             cWindow.centerForm(this);
         }
+
+        private void tv_formulas_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            var info = e.Node.Tag as string;
+            tx_descrip.Text = cUtil.getInfoString(info, C_FUNDESCRIP, "");
+        }
+
+        private bool isDbOrLabel(string info)
+        {
+            return cUtil.valAsInt(cUtil.getInfoString(info, C_ISDBFIELDORLABEL, "")) == 1;
+        }
+
+        private void tv_formulas_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            var info = e.Node.Tag as string;
+            var name = cUtil.getInfoString(info, C_FUNNAME, "");
+            if (! isDbOrLabel(info))
+            {
+                name += "()";
+            }
+            int i = tx_formula.SelectionStart;
+            tx_formula.Text = tx_formula.Text.Substring(0, i) + name + tx_formula.Text.Substring(i);
+        }
+
+        private void cmd_apply_Click(object sender, EventArgs e)
+        {
+            if (m_editor.checkSyntax(tx_formula.Text)) 
+            {
+                m_ok = true;
+                this.Hide();
+            }
+        }
+
+        internal void setHandler(cEditor editor)
+        {
+            m_editor = editor;
+        }
+
+        private void cmd_cancel_Click(object sender, EventArgs e)
+        {
+            m_ok = false;
+            this.Hide();
+        }
     }
 }
+
+/**
+ * TODO: I would like to add a code editor so you can se coloring and use intelisence when editing a formula
+ * 
+ * http://www.codeproject.com/Articles/27744/Net-Script-Editor-C-Vb-net-Mini-IDE
+ * 
+ * http://stackoverflow.com/questions/2968057/free-open-source-code-editor-ui-control-for-net
+ * 
+ * 
+ */

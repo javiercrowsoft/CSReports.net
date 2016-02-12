@@ -36,13 +36,13 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tv_formulas = new System.Windows.Forms.TreeView();
+            this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tx_formula = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tx_descrip = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.imageList = new System.Windows.Forms.ImageList(this.components);
+            this.cmd_cancel = new System.Windows.Forms.Button();
+            this.cmd_apply = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -129,13 +129,24 @@
             this.tv_formulas.SelectedImageIndex = 0;
             this.tv_formulas.Size = new System.Drawing.Size(217, 275);
             this.tv_formulas.TabIndex = 0;
+            this.tv_formulas.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tv_formulas_NodeMouseClick);
+            this.tv_formulas.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tv_formulas_NodeMouseDoubleClick);
+            // 
+            // imageList
+            // 
+            this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
+            this.imageList.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList.Images.SetKeyName(0, "xtratabcontrol.gif");
+            this.imageList.Images.SetKeyName(1, "base002.ico");
+            this.imageList.Images.SetKeyName(2, "property.ico");
+            this.imageList.Images.SetKeyName(3, "aspxroundpanel.gif");
             // 
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.ColumnCount = 1;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel2.Controls.Add(this.tx_formula, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.textBox1, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.tx_descrip, 0, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -154,53 +165,46 @@
             this.tx_formula.Size = new System.Drawing.Size(426, 194);
             this.tx_formula.TabIndex = 1;
             // 
-            // textBox1
+            // tx_descrip
             // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.Location = new System.Drawing.Point(3, 3);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(426, 69);
-            this.textBox1.TabIndex = 0;
+            this.tx_descrip.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tx_descrip.Location = new System.Drawing.Point(3, 3);
+            this.tx_descrip.Multiline = true;
+            this.tx_descrip.Name = "tx_descrip";
+            this.tx_descrip.Size = new System.Drawing.Size(426, 69);
+            this.tx_descrip.TabIndex = 0;
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.button2);
-            this.panel2.Controls.Add(this.button1);
+            this.panel2.Controls.Add(this.cmd_cancel);
+            this.panel2.Controls.Add(this.cmd_apply);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(3, 357);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(653, 43);
             this.panel2.TabIndex = 4;
             // 
-            // button2
+            // cmd_cancel
             // 
-            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(569, 11);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Cancel";
-            this.button2.UseVisualStyleBackColor = true;
+            this.cmd_cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmd_cancel.Location = new System.Drawing.Point(569, 11);
+            this.cmd_cancel.Name = "cmd_cancel";
+            this.cmd_cancel.Size = new System.Drawing.Size(75, 23);
+            this.cmd_cancel.TabIndex = 1;
+            this.cmd_cancel.Text = "Cancel";
+            this.cmd_cancel.UseVisualStyleBackColor = true;
+            this.cmd_cancel.Click += new System.EventHandler(this.cmd_cancel_Click);
             // 
-            // button1
+            // cmd_apply
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(488, 11);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Apply";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // imageList
-            // 
-            this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
-            this.imageList.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList.Images.SetKeyName(0, "xtratabcontrol.gif");
-            this.imageList.Images.SetKeyName(1, "base002.ico");
-            this.imageList.Images.SetKeyName(2, "property.ico");
-            this.imageList.Images.SetKeyName(3, "aspxroundpanel.gif");
+            this.cmd_apply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmd_apply.Location = new System.Drawing.Point(488, 11);
+            this.cmd_apply.Name = "cmd_apply";
+            this.cmd_apply.Size = new System.Drawing.Size(75, 23);
+            this.cmd_apply.TabIndex = 0;
+            this.cmd_apply.Text = "Apply";
+            this.cmd_apply.UseVisualStyleBackColor = true;
+            this.cmd_apply.Click += new System.EventHandler(this.cmd_apply_Click);
             // 
             // fFormula
             // 
@@ -236,10 +240,10 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.TreeView tv_formulas;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tx_descrip;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button cmd_cancel;
+        private System.Windows.Forms.Button cmd_apply;
         private System.Windows.Forms.TextBox tx_formula;
         private System.Windows.Forms.ImageList imageList;
 

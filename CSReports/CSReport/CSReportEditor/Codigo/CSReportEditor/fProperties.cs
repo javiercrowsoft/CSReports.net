@@ -913,20 +913,6 @@ namespace CSReportEditor
             m_chartTopChanged = true;
         }
 
-        private void cmd_dbField_Click(object sender, EventArgs e)
-        {
-            /* TODO: fix me
-            bool cancel = false;
-            Iterator listeners = m_listeners.iterator();
-            while(listeners.hasNext()) {
-                ((fPropertiesEventI)listeners.next()).showHelpDbField(cancel);
-            };
-            if (!cancel) {
-              m_dbFieldChanged = true;
-            }
-             * */
-        }
-
         private void cmd_dbFieldGroupValue_Click(object sender, EventArgs e)
         {
             /* TODO: fix me
@@ -1959,10 +1945,17 @@ namespace CSReportEditor
             picColor(tx_borderShadow, sh_borderShadow);
         }
 
-
         internal void setHandler(cEditor editor)
         {
             m_editor = editor;
+        }
+
+        private void cmd_dbField_Click(object sender, EventArgs e)
+        {
+            if (m_editor.showHelpDbField())
+            {
+                m_dbFieldChanged = true;
+            }
         }
     }
 }

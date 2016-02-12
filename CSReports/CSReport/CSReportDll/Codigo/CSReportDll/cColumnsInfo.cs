@@ -8,7 +8,7 @@ using CSReportGlobals;
 
 namespace CSReportDll
 {
-    public class cColumnsInfo : NameObjectCollectionBase
+    public class cColumnsInfo : NameObjectCollectionBase, IEnumerable
     {
 
         // Creates an empty collection.
@@ -188,6 +188,55 @@ namespace CSReportDll
             }
         }
 
+        private class ColumnsInfoEnumerator : IEnumerator
+        {
+            public cColumnsInfo columnsInfo;
+            int position = -1;
+
+            //constructor
+            public ColumnsInfoEnumerator(cColumnsInfo list)
+            {
+                columnsInfo = list;
+            }
+            private IEnumerator getEnumerator()
+            {
+                return (IEnumerator)this;
+            }
+
+
+            //IEnumerator
+            public bool MoveNext()
+            {
+                position++;
+                return (position < columnsInfo.Count);
+            }
+
+            //IEnumerator
+            public void Reset()
+            { position = -1; }
+
+            //IEnumerator
+            public object Current
+            {
+                get
+                {
+                    try
+                    {
+                        return columnsInfo.item(position);
+                    }
+
+                    catch (IndexOutOfRangeException)
+                    {
+                        throw new InvalidOperationException();
+                    }
+                }
+            }
+        }
+
+        public override IEnumerator GetEnumerator()
+        {
+            return new ColumnsInfoEnumerator(this);
+        }
     }
 
 }

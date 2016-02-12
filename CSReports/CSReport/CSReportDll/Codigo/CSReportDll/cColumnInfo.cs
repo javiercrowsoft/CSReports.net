@@ -14,7 +14,7 @@ namespace CSReportDll
         private const String C_MODULE = "cColumnInfo";
 
         private String m_name = "";
-        private CSDataBase.csDataType m_typeColumn;
+        private CSDataBase.csDataType m_columnType;
 
         private String m_value = "";
         private int m_position = 0;
@@ -40,14 +40,14 @@ namespace CSReportDll
             m_name = rhs;
         }
 
-        public CSDataBase.csDataType getTypeColumn()
+        public CSDataBase.csDataType getColumnType()
         {
-            return m_typeColumn;
+            return m_columnType;
         }
 
-        public void setTypeColumn(CSDataBase.csDataType rhs)
+        public void setColumnType(CSDataBase.csDataType rhs)
         {
-            m_typeColumn = rhs;
+            m_columnType = rhs;
         }
 
         public String getValue()
@@ -72,7 +72,7 @@ namespace CSReportDll
 
         internal bool load(CSXml.cXml xDoc, XmlNode nodeObj)
         {
-            m_typeColumn = (CSDataBase.csDataType)xDoc.getNodeProperty(nodeObj, "TypeColumn").getValueInt(eTypes.eInteger);
+            m_columnType = (CSDataBase.csDataType)xDoc.getNodeProperty(nodeObj, "TypeColumn").getValueInt(eTypes.eInteger);
             m_value = xDoc.getNodeProperty(nodeObj, "Value").getValueString(eTypes.eText);
             m_position = xDoc.getNodeProperty(nodeObj, "Position").getValueInt(eTypes.eInteger);
             m_name = xDoc.getNodeProperty(nodeObj, "Name").getValueString(eTypes.eText);
@@ -103,7 +103,7 @@ namespace CSReportDll
             xDoc.addPropertyToNode(nodeObj, xProperty);
 
             xProperty.setName("TypeColumn");
-            xProperty.setValue(eTypes.eInteger, m_typeColumn);
+            xProperty.setValue(eTypes.eInteger, m_columnType);
             xDoc.addPropertyToNode(nodeObj, xProperty);
 
             xProperty.setName("Value");

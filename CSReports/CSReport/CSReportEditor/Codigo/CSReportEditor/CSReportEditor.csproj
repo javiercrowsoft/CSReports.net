@@ -9,7 +9,7 @@
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CSReportEditor</RootNamespace>
-    <AssemblyName>Test</AssemblyName>
+    <AssemblyName>CSReportEditor</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -67,6 +67,12 @@
     <Compile Include="cMainEditor.cs" />
     <Compile Include="cReportEditorError.cs" />
     <Compile Include="cReportEditorException.cs" />
+    <Compile Include="fColumns.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fColumns.Designer.cs">
+      <DependentUpon>fColumns.cs</DependentUpon>
+    </Compile>
     <Compile Include="fConnectsAux.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -102,12 +108,6 @@
     </Compile>
     <Compile Include="fMain.Designer.cs">
       <DependentUpon>fMain.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="fProgress.cs">
       <SubType>Form</SubType>
@@ -153,6 +153,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="fColumns.resx">
+      <DependentUpon>fColumns.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="fFormula.resx">
       <DependentUpon>fFormula.cs</DependentUpon>
     </EmbeddedResource>
@@ -164,9 +167,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="fMain.resx">
       <DependentUpon>fMain.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="fProgress.resx">
       <DependentUpon>fProgress.cs</DependentUpon>

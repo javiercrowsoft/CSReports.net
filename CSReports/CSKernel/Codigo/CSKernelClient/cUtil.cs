@@ -384,7 +384,8 @@ namespace CSKernelClient
             {
                 return source + key + "=" + value + ";";
             }
-            else            {
+            else            
+            {
                 const string c_errorstr = "cUtil.getInfoString: source invalid, the character {0} is not present.";
 
                 int j = source.ToLower().IndexOf(";".ToLower(), i);
@@ -393,12 +394,12 @@ namespace CSKernelClient
                     throw (new Exception(String.Format(c_errorstr, ";"))); 
                 }
 
-                int k = source.Substring(i, j).ToLower().IndexOf("=".ToLower(), 0);
+                int k = source.Substring(i, j-i).ToLower().IndexOf("=".ToLower(), 0);
                 if (k == -1) 
                 { 
                     throw (new Exception(String.Format(c_errorstr, "="))); 
                 }
-                k = k + i - 1;
+                k = k + i;
                 return source.Substring(0, k) + value + source.Substring(j);
             }
         }
@@ -419,11 +420,12 @@ namespace CSKernelClient
 
             // if the key is not present return default
             //
-            if (i == -1) {
+            if (i == -1) 
+            {
               return defaultValue;
             } 
-            else {
-
+            else 
+            {
               const string c_errorstr = "cUtil.getInfoString: source invalid, the character {0} is not present.";
 
               int j = source.ToLower().IndexOf(";".ToLower(), i);
@@ -432,12 +434,12 @@ namespace CSKernelClient
                   throw(new Exception(String.Format(c_errorstr, ";"))); 
               }
 
-              int k = source.Substring(i, j).ToLower().IndexOf("=".ToLower(), 0);
+              int k = source.Substring(i, j-i).ToLower().IndexOf("=".ToLower(), 0);
               if (k == -1) 
               { 
                   throw(new Exception(String.Format(c_errorstr, "="))); 
               }
-              k = k + i - 1;
+              k = k + i;
               return source.Substring(k + 1, j - k - 1);
             }
         }

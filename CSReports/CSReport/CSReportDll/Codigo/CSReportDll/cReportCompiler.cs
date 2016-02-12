@@ -746,7 +746,7 @@ namespace CSReportDll
             String[] vTime = null;
 
             code = code.Trim();
-            if (code.IndexOf(":", 1) == 0) 
+            if (code.IndexOf(":", 0) == 0) 
             { 
                 return false; 
             }
@@ -757,7 +757,7 @@ namespace CSReportDll
                 return false; 
             }
 
-            if (!G.isNumeric(vTime[0]) && G.isNumeric(vTime[1])) 
+            if (!(G.isNumeric(vTime[0]) && G.isNumeric(vTime[1]))) 
             { 
                 return false; 
             }
@@ -852,7 +852,7 @@ namespace CSReportDll
             }
             else
             {
-                param = vParam[paramIndex - 1];
+                param = vParam[paramIndex];
             }
 
             return param.Replace(")", "").Trim();
@@ -880,12 +880,12 @@ namespace CSReportDll
             // 
             tc = m_formula.getTextC();
             q = name.Length;
-            r = tc.ToLower().IndexOf(name.ToLower(), 1);
+            r = tc.ToLower().IndexOf(name.ToLower(), 0);
             q = tc.ToLower().IndexOf(")".ToLower(), r) + 1;
 
-            m_formula.setTextC((tc.Substring(0, r - 1)).ToString()
+            m_formula.setTextC((tc.Substring(0, r)).ToString()
                                 + C_KEYFUNCINT
-                                + cReportGlobals.format(m_formula.getFormulasInt().count(), "000")
+                                + cReportGlobals.format(m_formula.getFormulasInt().count(), "{0:D3}")
                                 + tc.Substring(q));
 
             idFunction = pGetIdFunction(name);
@@ -2146,7 +2146,7 @@ namespace CSReportDll
 
         private bool pIsSeparator(String c)
         {
-            return " |:+()/-*=\r\n".IndexOf(c, 1) > 0;
+            return " |:+()/-*=\r\n".IndexOf(c, 0) > -1 && c != "";
         }
 
         private String removeReturns(String code)
@@ -2202,21 +2202,20 @@ namespace CSReportDll
 
         private bool pCompileAux(String code, out String codeC)
         {
-            int nStart = 0;
             String codeCallFunction = "";
             String codeCallFunctionC = "";
-            int nLenCode = 0;
             String functionName = "";
             String word = "";
 
+            int nStart = 0;
+            int nLenCode = code.Length;
+
             codeC = "";
 
-            nLenCode = code.Length;
-            nStart = 1;
             do
             {
-                word = pGetWord(code, nStart);
-                if (pIsFunctionAux(word, functionName))
+                word = pGetWord(code, ref nStart);
+                if (pIsFunctionAux(word, ref functionName))
                 {
 
                     codeCallFunction = pGetCallFunction(code, nStart);
@@ -2232,12 +2231,12 @@ namespace CSReportDll
                 {
                     codeC = codeC + word;
                 }
-            } while (nStart > nLenCode);
+            } while (nStart < nLenCode);
 
             return true;
         }
 
-        private String pGetWord(String code, int nStart)
+        private String pGetWord(String code, ref int nStart)
         {
             String c = "";
             int nLenCode = 0;
@@ -2246,18 +2245,19 @@ namespace CSReportDll
             nLenCode = code.Length;
 
             c = code.Substring(nStart, 1);
+
             do
             {
-                word = word + c;
-                nStart = nStart + 1;
-                if (pIsSeparator(c)) { break; }
+                word += c;
+                nStart += 1;
+                if (pIsSeparator(c)) break;
                 c = code.Substring(nStart, 1);
-            } while (pIsSeparator(c) || nStart > nLenCode);
+            } while (!pIsSeparator(c) && nStart < nLenCode);
 
             return word;
         }
 
-        private bool pIsFunctionAux(String word, String functionName)
+        private bool pIsFunctionAux(String word, ref String functionName)
         {
             if (!pIsFunction(word)) { return false; }
             functionName = word;
@@ -2279,12 +2279,12 @@ namespace CSReportDll
                 c = code.Substring(nStart, 1);
                 word = word + c;
                 nStart = nStart + 1;
-            } while (pIsEndCallFunction(c, nInner) || nStart > nLenCode);
+            } while (!pIsEndCallFunction(c, ref nInner) && nStart < nLenCode);
 
             return word;
         }
 
-        private bool pIsEndCallFunction(String c, int nInner)
+        private bool pIsEndCallFunction(String c, ref int nInner)
         {
             bool _rtn = false;
             if (c == ")")
