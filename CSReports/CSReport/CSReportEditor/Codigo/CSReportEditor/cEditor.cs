@@ -38,6 +38,7 @@ namespace CSReportEditor
             m_picRule.Paint += new PaintEventHandler(m_picRule_Paint);
 
             // mouse events
+            //
             m_picReport.MouseDown += new MouseEventHandler(m_picReport_MouseDown);
             m_picReport.MouseUp += new MouseEventHandler(m_picReport_MouseUp);
             m_picReport.MouseMove += new MouseEventHandler(m_picReport_MouseMove);
@@ -48,7 +49,11 @@ namespace CSReportEditor
             //
             m_picReport.MouseEnter += (s, e) => { editor.Focus(); };
 
+            // tab
+            //
             m_editorTab = editorTab;
+
+            m_editorTab.Enter += (s, e) => { cMainEditor.setDocActive(this); };            
         }
         
         private cEditor() {}
@@ -105,7 +110,6 @@ namespace CSReportEditor
         private fGroup m_fGroup;
         private fToolbox m_fToolBox;
         private fControls m_fControls;
-        private fTreeViewCtrls m_fTreeCtrls;
         private fConnectsAux m_fConnectsAux;
         private fSearch m_fSearch;
 
@@ -471,35 +475,6 @@ namespace CSReportEditor
             }
         }
 
-        private void m_fSearch_EditSection(String secKey) {
-            try {
-
-                bool bIsSecLn = false;
-
-				pSelectSection(secKey, out bIsSecLn);
-
-                if (bIsSecLn) {
-                    showSecLnProperties();
-                } 
-                else {
-                    showProperties();
-                }
-
-            } catch (Exception ex) {
-                cError.mngError(ex, "m_fSearch_EditSection", C_MODULE, "");
-            }
-        }
-
-        private void m_fSearch_SetFocusCtrl(String ctrlKey) {
-            try {
-
-                pSelectCtrl(ctrlKey);
-
-            } catch (Exception ex) {
-                cError.mngError(ex, "m_fSearch_SetFocusCtrl", C_MODULE, "");
-            }
-        }
-
         private void m_fSearch_SetFocusSec(String secKey) {
             try {
 
@@ -510,30 +485,17 @@ namespace CSReportEditor
             }
         }
 
-        private void m_fTreeCtrls_EditCtrl(String ctrlKey) {
+        private void editCtrl(String ctrlKey) {
             try {
 
                 pSelectCtrl(ctrlKey);
                 showProperties();
-                m_fTreeCtrls.clear();
-                m_fTreeCtrls.addCtrls(m_report);
-
             } catch (Exception ex) {
-                cError.mngError(ex, "m_fTreeCtrls_EditCtrl", C_MODULE, "");
+                cError.mngError(ex, "editCtrl", C_MODULE, "");
             }
         }
 
-        private void m_fControls_SetFocusCtrl(String ctrlKey) {
-            try {
-
-                pSelectCtrl(ctrlKey);
-
-            } catch (Exception ex) {
-                cError.mngError(ex, "m_fControls_SetFocusCtrl", C_MODULE, "");
-            }
-        }
-
-        private void m_fTreeCtrls_EditSection(String secKey) {
+        public void editSection(String secKey) {
             try {
 
                 bool bIsSecLn = false;
@@ -546,21 +508,18 @@ namespace CSReportEditor
                 else {
                     showProperties();
                 }
-                m_fTreeCtrls.clear();
-                m_fTreeCtrls.addCtrls(m_report);
-
             } catch (Exception ex) {
-                cError.mngError(ex, "m_fTreeCtrls_EditCtrl", C_MODULE, "");
+                cError.mngError(ex, "editCtrl", C_MODULE, "");
             }
         }
 
-        private void m_fTreeCtrls_SetFocusCtrl(String ctrlKey) {
+        public void setFocusCtrl(String ctrlKey) {
             try {
 
                 pSelectCtrl(ctrlKey);
 
             } catch (Exception ex) {
-                cError.mngError(ex, "m_fTreeCtrls_SetFocusCtrl", C_MODULE, "");
+                cError.mngError(ex, "setFocusCtrl", C_MODULE, "");
             }
         }
 
@@ -713,22 +672,6 @@ namespace CSReportEditor
             return m_report.getCompiler().checkSyntax(f);
         }
 
-        private void m_fGroup_ShowHelpDbField() {
-            int nIndex = 0;
-            int nFieldType = 0;
-            String sField = "";
-
-			sField = m_fGroup.getDbField();
-            nFieldType = m_fGroup.getFieldType();
-            nIndex = m_fGroup.getIndex();
-
-			if (!cGlobals.showDbFields(sField, nFieldType, nIndex, this)) { return; }
-
-			m_fGroup.setDbField(sField);
-            m_fGroup.setFieldType(nFieldType);
-            m_fGroup.setIndex(nIndex);
-        }
-
 		public bool showHelpChartField(TextBox ctrl, int idx) {
             int nIndex = 0;
             int nFieldType = 0;
@@ -738,7 +681,7 @@ namespace CSReportEditor
             nFieldType = m_fProperties.getChartFieldType(idx);
             nIndex = m_fProperties.getChartIndex(idx);
 
-            if (cGlobals.showDbFields(sField, nFieldType, nIndex, this))
+            if (cGlobals.showDbFields(ref sField, ref nFieldType, ref nIndex, this))
             {
                 ctrl.Text = sField;
                 m_fProperties.setChartFieldType(idx, nFieldType);
@@ -760,7 +703,7 @@ namespace CSReportEditor
             nFieldType = m_fProperties.getChartGroupFieldType();
             nIndex = m_fProperties.getChartGroupIndex();
 
-			if(cGlobals.showDbFields(sField, nFieldType, nIndex, this)) 
+			if(cGlobals.showDbFields(ref sField, ref nFieldType, ref nIndex, this)) 
             {
                 m_fProperties.setDbFieldGroupValue(sField);
                 m_fProperties.setChartGroupFieldType(nFieldType);
@@ -773,7 +716,7 @@ namespace CSReportEditor
             }
         }
 
-		public bool showEditFormula(String formula) {
+		public bool showEditFormula(ref String formula) {
 
             try
             {
@@ -1307,7 +1250,7 @@ namespace CSReportEditor
 
                             if (isSecLn) { noDelete = true; }
 
-                            showPopMenuSection(noDelete, isGroup);
+                            showPopMenuSection(noDelete, isGroup, x, y);
                         }
                         else
                         {
@@ -2376,7 +2319,7 @@ namespace CSReportEditor
             int nIndex = 0;
             int nFieldType = 0;
 
-			if (!cGlobals.showDbFields(sField, nFieldType, nIndex, this))
+			if (!cGlobals.showDbFields(ref sField, ref nFieldType, ref nIndex, this))
 				return;
 
             beginDraging();
@@ -2796,7 +2739,7 @@ namespace CSReportEditor
         }
         
         public void addGroup() {
-			cGlobals.showGroupProperties(null, this);
+			pShowGroupProperties(null);
             refreshAll();
         }
 
@@ -3217,14 +3160,14 @@ namespace CSReportEditor
             } 
             else {
 
+                m_report.setName("New report");
+
                 m_paint.createPicture(m_picReport.CreateGraphics());
                 refreshRule();
 
             }
 
-			Application.DoEvents();
-
-			cGlobals.setDocActive(this);
+			cMainEditor.setDocActive(this);
         }
 
         public bool openDocument()
@@ -3261,7 +3204,7 @@ namespace CSReportEditor
 
                 Application.DoEvents();
 
-				cGlobals.setDocActive(this);
+                cMainEditor.setDocActive(this);
 
                 m_opening = false;
 
@@ -3350,20 +3293,31 @@ namespace CSReportEditor
         }
 
         public bool showHelpDbField() { 
+            return pShowHelpDbField(m_fProperties);
+        }
+
+        public bool showHelpDbFieldForGroup() { 
+            return pShowHelpDbField(m_fGroup);
+        }
+
+        private bool pShowHelpDbField(cIDatabaseFieldSelector f) { 
             int nIndex = 0;
             int nFieldType = 0;
             String sField = "";
 
-            sField = m_fProperties.txDbField.Text;
-            nFieldType = m_fProperties.getFieldType();
-            nIndex = m_fProperties.getIndex();
+            sField = f.txDbField.Text;
+            nFieldType = f.getFieldType();
+            nIndex = f.getIndex();
 
-            if (cGlobals.showDbFields(sField, nFieldType, nIndex, this))
+            if (cGlobals.showDbFields(ref sField, ref nFieldType, ref nIndex, this))
             {
-                m_fProperties.txDbField.Text = sField;
-                m_fProperties.setFieldType(nFieldType);
-                m_fProperties.setIndex(nIndex);
-                m_fProperties.txText.Text = sField;
+                f.txDbField.Text = sField;
+                f.setFieldType(nFieldType);
+                f.setIndex(nIndex);
+                
+                if(f is fProperties) {
+                    (f as fProperties).txText.Text = sField;
+                }
                 return true;
             }
             else 
@@ -3389,9 +3343,114 @@ namespace CSReportEditor
                 if (group.getFooter().getKey() == sec.getKey()) { break; }
             }
 
-            cGlobals.showGroupProperties(group, this);
+            pShowGroupProperties(group);
 
             refreshAll();
+        }
+
+        private void pShowGroupProperties(cReportGroup group) 
+        {
+    
+            try {
+
+                bool isNew = false;
+
+                m_showingProperties = true;
+
+                if (m_fGroup == null) { m_fGroup = new fGroup(); }
+
+                m_fGroup.setHandler(this);
+
+                if (group == null) { isNew = true; }
+
+                if (isNew) {
+                    m_fGroup.txName.Text = "Group" + m_report.getGroups().count() + 1;
+                } 
+                else {
+                    m_fGroup.txName.Text = group.getName();
+                    m_fGroup.txDbField.Text = group.getFieldName();
+
+                    if (group.getOderType() == csRptGrpOrderType.CSRPTGRPASC) {
+                      m_fGroup.opAsc.Checked = true;
+                    } 
+                    else {
+                      m_fGroup.opDesc.Checked = true;
+                    }
+
+                    m_fGroup.chkPrintInNewPage.Checked = group.getPrintInNewPage();
+                    m_fGroup.chkReprintGroup.Checked = group.getRePrintInNewPage();
+                    m_fGroup.chkGrandTotal.Checked = group.getGrandTotalGroup();
+
+                    switch (group.getComparisonType()) {
+                      case  csRptGrpComparisonType.CSRPTGRPDATE:
+                        m_fGroup.opDate.Checked = true;
+                        break;
+
+                      case  csRptGrpComparisonType.CSRPTGRPNUMBER:
+                        m_fGroup.opNumber.Checked = true;
+                        break;
+
+                      case  csRptGrpComparisonType.CSRPTGRPTEXT:
+                        m_fGroup.opText.Checked = true;
+                        break;
+                    }
+                }
+
+                m_fGroup.lbGroup.Text = "Group: " + m_fGroup.txName.Text;
+
+                m_fGroup.ShowDialog();
+
+                if (m_fGroup.getOk())
+                {
+
+                    if (isNew)
+                    {
+                        group = m_report.getGroups().add(null, "");
+                    }
+
+                    group.setName(m_fGroup.txName.Text);
+                    group.setFieldName(m_fGroup.txDbField.Text);
+
+                    group.setIndex(m_report.getGroups().Count);
+                    group.setOderType(m_fGroup.opAsc.Checked ? csRptGrpOrderType.CSRPTGRPASC : csRptGrpOrderType.CSRPTGRPDESC);
+
+                    group.setPrintInNewPage(m_fGroup.chkPrintInNewPage.Checked);
+                    group.setRePrintInNewPage(m_fGroup.chkReprintGroup.Checked);
+                    group.setGrandTotalGroup(m_fGroup.chkGrandTotal.Checked);
+
+                    if (m_fGroup.opDate.Checked)
+                    {
+                        group.setComparisonType(csRptGrpComparisonType.CSRPTGRPDATE);
+                    }
+                    else if (m_fGroup.opNumber.Checked)
+                    {
+                        group.setComparisonType(csRptGrpComparisonType.CSRPTGRPNUMBER);
+                    }
+                    else if (m_fGroup.opText.Checked)
+                    {
+                        group.setComparisonType(csRptGrpComparisonType.CSRPTGRPTEXT);
+                    }
+
+                    if (isNew)
+                    {
+                        addSection(csRptTypeSection.GROUP_HEADER);
+                        addSection(csRptTypeSection.GROUP_FOOTER);
+                    }
+
+                    m_dataHasChanged = true;
+                }
+      
+            } catch (Exception ex) {
+                cError.mngError(ex, "showGroupProperties", C_MODULE, "");
+            }
+            finally {
+                m_showingProperties = false;
+                if (m_fGroup != null)
+                {
+                    m_fGroup.Close();
+                    m_fGroup = null;
+                }                    
+            }      
         }
 
         public void moveGroup() {
@@ -3441,7 +3500,7 @@ namespace CSReportEditor
             if (secLn == null) { return; }
             if (!isSecLn) { return; }
 
-            pShowSecProperties(secLn, sec.getName() + ": renglón " + secLn.getIndex().ToString());
+            pShowSecProperties(secLn, sec.getName() + " - line " + secLn.getIndex().ToString());
 
             refreshAll();
         }
@@ -3458,23 +3517,20 @@ namespace CSReportEditor
 
                 if (m_fSecProperties == null) { 
                     m_fSecProperties = new fSecProperties();
-                    // TODO: set event handler for ShowEditFormula, UnloadForm
                 }
+
+                m_fSecProperties.setHandler(this);
 
                 m_fSecProperties.chkFormulaHide.Checked = sec.getHasFormulaHide();
                 m_fSecProperties.setFormulaHide(sec.getFormulaHide().getText());
                 
-                if (sec is cReportSection) { 
-                    m_fSecProperties.txName.Text = sec.getName(); 
+                if (sec is cReportSectionLine) {
+                    m_fSecProperties.txName.Enabled = false;
                 }
 
-                if (sec is cReportSectionLine) {
-                    m_fSecProperties.lbControl.Text = secLnName;
-                    m_fSecProperties.lbSecLn.Text = "Line properties:";
-                } 
-                else {
-                    m_fSecProperties.lbControl.Text = sec.getName();
-                }
+                m_fSecProperties.txName.Text = sec.getName();
+
+                m_fSecProperties.lbSectionName.Text = "Section: " + (sec is cReportSectionLine ? secLnName : sec.getName());
 
                 m_fSecProperties.ShowDialog();
 
@@ -4197,49 +4253,6 @@ namespace CSReportEditor
             m_report.getControls().item(sKeyRpt).getLabel().setText(paintObjAspect.getText());
             refreshBody();
              */ 
-        }
-
-        private void paintStandarSections() {
-            cReportPaintObject paintSec = null;
-            cReportSections w_headers = m_report.getHeaders();
-            cReportSection w_item = w_headers.item(cGlobals.C_KEY_HEADER);
-            
-            w_item.setKeyPaint(paintSection(m_report.getHeaders().item(cGlobals.C_KEY_HEADER).getAspect(), 
-                                            cGlobals.C_KEY_HEADER,
-                                            csRptTypeSection.MAIN_HEADER, 
-                                            "Header 1", false));
-            
-            paintSec = m_paint.getPaintSections().item(w_item.getKeyPaint());
-            paintSec.setHeightSec(w_item.getAspect().getHeight());
-
-            pAddPaintSetcionForSecLn(w_headers.item(cGlobals.C_KEY_HEADER), 
-                                                    csRptTypeSection.SECLN_HEADER);
-
-            cReportSections w_details = m_report.getDetails();
-            w_item = w_details.item(cGlobals.C_KEY_DETAIL);
-
-            w_item.setKeyPaint(paintSection(m_report.getDetails().item(cGlobals.C_KEY_DETAIL).getAspect(), 
-                                            cGlobals.C_KEY_DETAIL,
-                                            csRptTypeSection.MAIN_DETAIL, 
-                                            "Detail", false));
-            
-            paintSec = m_paint.getPaintSections().item(w_item.getKeyPaint());
-            paintSec.setHeightSec(w_item.getAspect().getHeight());
-            
-            pAddPaintSetcionForSecLn(w_details.item(cGlobals.C_KEY_DETAIL), 
-                                        csRptTypeSection.SECLN_DETAIL);
-
-            cReportSections w_footers = m_report.getFooters();
-            w_item = w_footers.item(cGlobals.C_KEY_FOOTER);
-
-            w_item.setKeyPaint(paintSection(m_report.getFooters().item(cGlobals.C_KEY_FOOTER).getAspect(), 
-                                            cGlobals.C_KEY_FOOTER,
-                                            csRptTypeSection.MAIN_FOOTER, 
-                                            "Footer 1", false));
-
-            paintSec = m_paint.getPaintSections().item(w_item.getKeyPaint());
-            paintSec.setHeightSec(w_item.getAspect().getHeight());
-            pAddPaintSetcionForSecLn(w_footers.item(cGlobals.C_KEY_FOOTER), csRptTypeSection.SECLN_FOOTER);
         }
 
         private String paintSection(cReportAspect aspect, 
@@ -5078,12 +5091,8 @@ namespace CSReportEditor
             }
         }
 
-        private void showPopMenuSection(bool noDelete, bool showGroups) {
-            /* TODO: implement me
-            m_fmain.popSecDelete.Enabled = !noDelete;
-            m_fmain.popSecPropGroup.Visible = showGroups;
-            m_fmain.PopupMenu(m_fmain.popSec);
-             */ 
+        private void showPopMenuSection(bool noDelete, bool showGroups, int x, int y) {
+            m_fmain.showPopMenuSection(this, noDelete, showGroups, m_picReport.PointToScreen(new Point(x, y)));
         }
 
         private void showPopMenuControl(bool clickInCtrl, int x, int y) {
@@ -6247,16 +6256,13 @@ namespace CSReportEditor
 
         public void showControlsTree() {
             try {
-
-                Application.DoEvents();
-
-                m_fTreeCtrls = cGlobals.getCtrlTreeBox(this);
-                cGlobals.clearCtrlTreeBox(this);
-
-                cReportControl ctrl = null;
-                m_fTreeCtrls.addCtrls(m_report);
-                m_fTreeCtrls.Show();
-
+                fTreeViewCtrls f = cMainEditor.getCtrlTreeBox(this);
+                f.clear();
+                f.addCtrls();
+                if (!f.Visible)
+                {
+                    f.Show(m_fmain);
+                }
             } catch (Exception ex) {
                 cError.mngError(ex, "ShowControlsTree", C_MODULE, "");
             }
@@ -6316,6 +6322,7 @@ namespace CSReportEditor
 
             cReportLaunchInfo oLaunchInfo = null;
             m_report = new cReport();
+
             // TODO: event handler for
             //
             /*
@@ -6353,11 +6360,10 @@ namespace CSReportEditor
                                                 m_report.getPaperInfo(), 
                                                 w_paperInfo.getPaperSize(), 
                                                 w_paperInfo.getOrientation()));
+            
             cGlobals.createStandarSections(m_report, tR);
-            m_paint.setGridHeight(pSetSizePics(tR.height));
-            m_paint.initGrid(m_picReport.CreateGraphics(), m_typeGrid);
 
-            paintStandarSections();
+            reLoadReport();
 
             m_dataHasChanged = false;
         }
@@ -6414,7 +6420,7 @@ namespace CSReportEditor
         }
 
         private void form_Activate() {
-            cGlobals.setDocActive(this);
+            cMainEditor.setDocActive(this);
             if (fToolbox.getLoaded()) {
                 if (cGlobals.getToolBox(this) != null) { showToolBox(); }
             }

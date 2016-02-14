@@ -6,102 +6,184 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using CSMaskEdit;
+using CSKernelClient;
 
 namespace CSReportEditor
 {
-    public partial class fGroup : Form
+    public partial class fGroup : Form, cIDatabaseFieldSelector
     {
+        private cEditor m_editor;
         private bool m_ok = false;
+        private bool m_dbFieldChanged = false;
+        private int m_index = 0;
+        private int m_fieldType = 0;
 
         public fGroup()
         {
             InitializeComponent();
         }
 
-        public cMaskEdit getTxName()
+        public TextBox txName
         {
-            return txName;
+            get
+            {
+                return tx_name;
+            }
         }
 
-        public cMaskEdit getTxDbField()
+        public TextBox txDbField
         {
-            return txDbField;
+            get
+            {
+                return tx_dbField;
+            }
+        }
+
+        public RadioButton opDesc
+        {
+            get 
+            {
+                return op_desc;
+            }
+        }
+
+        public RadioButton opAsc
+        {
+            get
+            {
+                return op_asc;
+            }
+        }
+
+        public CheckBox chkPrintInNewPage
+        {
+            get 
+            {
+                return chk_printInNewPage;
+            }
+        }
+
+        public CheckBox chkReprintGroup
+        {
+            get
+            {
+                return chk_reprintGroup;
+            }
+        }
+
+        public CheckBox chkGrandTotal
+        {
+            get
+            {
+                return chk_grandTotal;
+            }
+        }
+
+        public RadioButton opDate
+        {
+            get
+            {
+                return op_date;
+            }
+        }
+
+        public RadioButton opNumber
+        {
+            get
+            {
+                return op_number;
+            }
+        }
+
+        public RadioButton opText
+        {
+            get
+            {
+                return op_text;
+            }
+        }
+
+        public Label lbGroup
+        {
+            get
+            {
+                return lb_group;
+            }
         }
 
         public bool getAsc()
         {
-            return opAsc.Checked;
+            return op_asc.Checked;
         }
 
         public void setAsc(bool value)
         {
-            opAsc.Checked = value;
+            op_asc.Checked = value;
         }
 
         public void setDesc(bool value)
         {
-            opDesc.Checked = value;
+            op_desc.Checked = value;
         }
 
         public bool getPrintInNewPage()
         {
-            return chkPrintInNewPage.Checked;
+            return chk_printInNewPage.Checked;
         }
 
         public void setPrintInNewPage(bool value)
         {
-            chkPrintInNewPage.Checked = value;
+            chk_printInNewPage.Checked = value;
         }
 
         public bool getReprintGroup()
         {
-            return chkReprintGroup.Checked;
+            return chk_reprintGroup.Checked;
         }
 
         public void setReprintGroup(bool value)
         {
-            chkReprintGroup.Checked = value;
+            chk_reprintGroup.Checked = value;
         }
 
         public bool getGrandTotal()
         {
-            return chkGrandTotal.Checked;
+            return chk_grandTotal.Checked;
         }
 
         public void setGrandTotal(bool value)
         {
-            chkGrandTotal.Checked = value;
+            chk_grandTotal.Checked = value;
         }
 
         public bool getSortByDate()
         {
-            return opDate.Checked;
+            return op_date.Checked;
         }
 
         public void setSortByDate(bool value)
         {
-            opDate.Checked = value;
+            op_date.Checked = value;
         }
 
         public bool getSortByNumber()
         {
-            return opNumber.Checked;
+            return op_number.Checked;
         }
 
         public void setSortByNumber(bool value)
         {
-            opNumber.Checked = value;
+            op_number.Checked = value;
         }
 
         public bool getSortByText()
         {
-            return opText.Checked;
+            return op_text.Checked;
         }
 
         public void setSortByText(bool value)
         {
-            opText.Checked = value;
+            op_text.Checked = value;
         }
 
         public bool getOk()
@@ -114,30 +196,25 @@ namespace CSReportEditor
 			throw new NotImplementedException ();
 		}
 
-		public int getFieldType ()
-		{
-			throw new NotImplementedException ();
-		}
+        public int getFieldType()
+        {
+            return m_fieldType;
+        }
 
-		public int getIndex ()
-		{
-			throw new NotImplementedException ();
-		}
+        public void setFieldType(int rhs)
+        {
+            m_fieldType = rhs;
+        }
 
-		public void setDbField (string sField)
-		{
-			throw new NotImplementedException ();
-		}
+        public int getIndex()
+        {
+            return m_index;
+        }
 
-		public void setFieldType (int nFieldType)
-		{
-			throw new NotImplementedException ();
-		}
-
-		public void setIndex (int nIndex)
-		{
-			throw new NotImplementedException ();
-		}
+        public void setIndex(int rhs)
+        {
+            m_index = rhs;
+        }
 
         private void cmdOk_Click(object sender, EventArgs e)
         {
@@ -149,6 +226,24 @@ namespace CSReportEditor
         {
             m_ok = false;
             this.Hide();
+        }
+
+        public void setHandler(cEditor editor)
+        {
+            m_editor = editor;
+        }
+
+        private void cmd_dbField_Click(object sender, EventArgs e)
+        {
+            if (m_editor.showHelpDbFieldForGroup())
+            {
+                m_dbFieldChanged = true;
+            }
+        }
+
+        private void fGroup_Load(object sender, EventArgs e)
+        {
+            cWindow.centerForm(this);
         }
     }
 }

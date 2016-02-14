@@ -29,8 +29,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSAssocFile", "CSAssocFile\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSReportExport", "CSReportExport\Codigo\CSReportExport\CSReportExport.csproj", "{9394BEBF-3F95-4EEF-B763-F79687304DEE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSMaskEdit", "CSMaskEdit\Codigo\CSMaskEdit\CSMaskEdit.csproj", "{884FAF69-53D3-4969-BE13-DF0ECFD2EFA9}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSReportGlobals", "CSReport\CSReportGlobals\Codigo\CSReportGlobals\CSReportGlobals.csproj", "{6018C911-1404-462B-9FA7-31904D56813A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSReportEditor", "CSReport\CSReportEditor\Codigo\CSReportEditor\CSReportEditor.csproj", "{273C5ECF-DB2A-4E01-A4B3-C73B8D37374E}"
@@ -199,17 +197,6 @@ Global
 		{9394BEBF-3F95-4EEF-B763-F79687304DEE}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{9394BEBF-3F95-4EEF-B763-F79687304DEE}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{9394BEBF-3F95-4EEF-B763-F79687304DEE}.Release|x86.ActiveCfg = Release|Any CPU
-		{884FAF69-53D3-4969-BE13-DF0ECFD2EFA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{884FAF69-53D3-4969-BE13-DF0ECFD2EFA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{884FAF69-53D3-4969-BE13-DF0ECFD2EFA9}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{884FAF69-53D3-4969-BE13-DF0ECFD2EFA9}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{884FAF69-53D3-4969-BE13-DF0ECFD2EFA9}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{884FAF69-53D3-4969-BE13-DF0ECFD2EFA9}.Debug|x86.Build.0 = Debug|Any CPU
-		{884FAF69-53D3-4969-BE13-DF0ECFD2EFA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{884FAF69-53D3-4969-BE13-DF0ECFD2EFA9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{884FAF69-53D3-4969-BE13-DF0ECFD2EFA9}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{884FAF69-53D3-4969-BE13-DF0ECFD2EFA9}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{884FAF69-53D3-4969-BE13-DF0ECFD2EFA9}.Release|x86.ActiveCfg = Release|Any CPU
 		{6018C911-1404-462B-9FA7-31904D56813A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6018C911-1404-462B-9FA7-31904D56813A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6018C911-1404-462B-9FA7-31904D56813A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU

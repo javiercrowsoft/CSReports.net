@@ -4,8 +4,7 @@ using CSReportGlobals;
 using CSKernelClient;
 using System.Collections.Generic;
 using CSReportDll;
-using CSMaskEdit;
-using System.Drawing;
+using System.Windows.Forms;
 
 namespace CSReportEditor
 {
@@ -30,9 +29,8 @@ namespace CSReportEditor
 
 	    public static int gNextReport = 0;
 	    private static cEditor m_editor;
-	    private static cEditor m_toolBoxOwner;
-	    private static cEditor m_ctrlBoxOwner;
-	    private static cEditor m_ctrlTreeBoxOwner;
+
+        private static fTreeViewCtrls m_fTreeViewCtrls = null;
 
 		public static int gBackColor = 0;
 	    public static int gLeftBarColor = 0;
@@ -45,6 +43,7 @@ namespace CSReportEditor
         public static fMain initEditor() {
             if (fmain == null) {
                 fmain = new fMain();
+                fmain.init();
             }
             return fmain;
         }
@@ -57,9 +56,14 @@ namespace CSReportEditor
 	        return m_editor;
 	    }
 
-	    public static void setDocActive(cEditor f) {
-	        m_editor = f;
+	    public static void setDocActive(cEditor editor) {
+	        m_editor = editor;
 	        setMenu();
+            if (editor != null)
+            {
+                TabPage editorTab = editor.getEditorTab();
+                (editorTab.Parent as TabControl).SelectedTab = editorTab;
+            }
 	    }
 
 	    public static void setDocInacActive(cEditor f) {
@@ -123,10 +127,6 @@ namespace CSReportEditor
 			// TODO: implement
 	    }
 
-		public static void setEditAlignValue(HorizontalAlignment align) {
-			// TODO: implement
-	    }
-
 	    private static void setMenu() {
 	        try {
 
@@ -150,18 +150,13 @@ namespace CSReportEditor
             return "";
         }
 
-	}
-
-	public class Rectangle {
-		public long height;
-		public long width;
-
-        public Rectangle(RectangleF rect) {
-            height = (long)rect.Height;
-            width = (long)rect.Width;
+        internal static fTreeViewCtrls getCtrlTreeBox(cEditor editor)
+        {
+            if (m_fTreeViewCtrls == null) m_fTreeViewCtrls = new fTreeViewCtrls();
+            m_fTreeViewCtrls.setHandler(editor);
+            return m_fTreeViewCtrls;
         }
 	}
-
 
 	public enum SpecialFolderIDs {
 	    SFIDDESKTOP = 0x0,

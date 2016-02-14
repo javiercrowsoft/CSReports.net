@@ -6,23 +6,35 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using CSKernelClient;
 
 namespace CSReportEditor
 {
     public partial class fSecProperties : Form
     {
+        private cEditor m_editor;
+
+        private bool m_ok = false;
+
         private bool m_formulaHideChanged;
         private bool m_setFormulaHideChanged;
         private String m_formulaHide = "";
+
+        private String m_formulaName = "";
 
         public fSecProperties()
         {
             InitializeComponent();
         }
 
+        public void setHandler(cEditor editor)
+        {
+            m_editor = editor;
+        }
+
 		public string getFormulaName ()
 		{
-			throw new NotImplementedException ();
+			return m_formulaName;
 		}
 
         public String getFormulaHide()
@@ -61,18 +73,11 @@ namespace CSReportEditor
 
         //------------------------------------------------------------------------------------------------------------------
 
-        public System.Windows.Forms.Label lbSecLn
+        public System.Windows.Forms.Label lbSectionName
         {
             get
             {
-                return lb_secLn;
-            }
-        }
-        public System.Windows.Forms.Label lbControl
-        {
-            get
-            {
-                return lb_control;
+                return lb_section;
             }
         }
         public System.Windows.Forms.TextBox txName
@@ -106,7 +111,35 @@ namespace CSReportEditor
 
         internal bool getOk()
         {
-            throw new NotImplementedException();
+            return m_ok;
+        }
+
+        private void fSecProperties_Load(object sender, EventArgs e)
+        {
+            cWindow.centerForm(this);
+            lb_formulaHide.Text = m_formulaHide;
+        }
+
+        private void cmd_apply_Click(object sender, EventArgs e)
+        {
+            m_ok = true;
+            this.Hide();
+        }
+
+        private void cmd_cancel_Click(object sender, EventArgs e)
+        {
+            m_ok = false;
+            this.Hide();
+        }
+
+        private void cmd_formulaHide_Click(object sender, EventArgs e)
+        {
+            m_formulaName = "Ocultar";
+            if (m_editor.showEditFormula(ref m_formulaHide))
+            {
+                m_formulaHideChanged = true;
+                lb_formulaHide.Text = m_formulaHide;
+            }
         }
     }
 }

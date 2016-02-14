@@ -69,7 +69,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 73F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(659, 403);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(941, 539);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // panel1
@@ -80,7 +80,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(653, 67);
+            this.panel1.Size = new System.Drawing.Size(935, 67);
             this.panel1.TabIndex = 2;
             // 
             // label1
@@ -115,8 +115,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.tableLayoutPanel2);
-            this.splitContainer1.Size = new System.Drawing.Size(653, 275);
-            this.splitContainer1.SplitterDistance = 217;
+            this.splitContainer1.Size = new System.Drawing.Size(935, 411);
+            this.splitContainer1.SplitterDistance = 221;
             this.splitContainer1.TabIndex = 3;
             // 
             // tv_formulas
@@ -127,10 +127,11 @@
             this.tv_formulas.Location = new System.Drawing.Point(0, 0);
             this.tv_formulas.Name = "tv_formulas";
             this.tv_formulas.SelectedImageIndex = 0;
-            this.tv_formulas.Size = new System.Drawing.Size(217, 275);
+            this.tv_formulas.Size = new System.Drawing.Size(221, 411);
             this.tv_formulas.TabIndex = 0;
             this.tv_formulas.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tv_formulas_NodeMouseClick);
             this.tv_formulas.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tv_formulas_NodeMouseDoubleClick);
+            this.tv_formulas.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tv_formulas_KeyUp);
             // 
             // imageList
             // 
@@ -151,27 +152,29 @@
             this.tableLayoutPanel2.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 2;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 75F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 117F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(432, 275);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(710, 411);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
             // tx_formula
             // 
             this.tx_formula.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tx_formula.Location = new System.Drawing.Point(3, 78);
+            this.tx_formula.Location = new System.Drawing.Point(3, 120);
             this.tx_formula.Multiline = true;
             this.tx_formula.Name = "tx_formula";
-            this.tx_formula.Size = new System.Drawing.Size(426, 194);
+            this.tx_formula.Size = new System.Drawing.Size(704, 288);
             this.tx_formula.TabIndex = 1;
             // 
             // tx_descrip
             // 
             this.tx_descrip.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tx_descrip.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tx_descrip.Location = new System.Drawing.Point(3, 3);
             this.tx_descrip.Multiline = true;
             this.tx_descrip.Name = "tx_descrip";
-            this.tx_descrip.Size = new System.Drawing.Size(426, 69);
+            this.tx_descrip.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.tx_descrip.Size = new System.Drawing.Size(704, 111);
             this.tx_descrip.TabIndex = 0;
             // 
             // panel2
@@ -179,15 +182,15 @@
             this.panel2.Controls.Add(this.cmd_cancel);
             this.panel2.Controls.Add(this.cmd_apply);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(3, 357);
+            this.panel2.Location = new System.Drawing.Point(3, 493);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(653, 43);
+            this.panel2.Size = new System.Drawing.Size(935, 43);
             this.panel2.TabIndex = 4;
             // 
             // cmd_cancel
             // 
             this.cmd_cancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmd_cancel.Location = new System.Drawing.Point(569, 11);
+            this.cmd_cancel.Location = new System.Drawing.Point(851, 11);
             this.cmd_cancel.Name = "cmd_cancel";
             this.cmd_cancel.Size = new System.Drawing.Size(75, 23);
             this.cmd_cancel.TabIndex = 1;
@@ -198,7 +201,7 @@
             // cmd_apply
             // 
             this.cmd_apply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmd_apply.Location = new System.Drawing.Point(488, 11);
+            this.cmd_apply.Location = new System.Drawing.Point(770, 11);
             this.cmd_apply.Name = "cmd_apply";
             this.cmd_apply.Size = new System.Drawing.Size(75, 23);
             this.cmd_apply.TabIndex = 0;
@@ -210,7 +213,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(659, 403);
+            this.ClientSize = new System.Drawing.Size(941, 539);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "fFormula";
             this.Text = "fFormula";

@@ -98,24 +98,24 @@
             this.tbMain = new System.Windows.Forms.ToolStrip();
             this.tsbNew = new System.Windows.Forms.ToolStripButton();
             this.tsbOpen = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton14 = new System.Windows.Forms.ToolStripButton();
+            this.tsbSave = new System.Windows.Forms.ToolStripButton();
+            this.tsbSaveAs = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
+            this.tsbDatabase = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
+            this.tsbPreview = new System.Windows.Forms.ToolStripButton();
+            this.tsbPrint = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
+            this.tsbProperties = new System.Windows.Forms.ToolStripButton();
+            this.tsbControls = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.btnAlignLeft = new System.Windows.Forms.ToolStripButton();
-            this.btnAligntCenter = new System.Windows.Forms.ToolStripButton();
-            this.btnAlignRight = new System.Windows.Forms.ToolStripButton();
+            this.tsbAlignLeft = new System.Windows.Forms.ToolStripButton();
+            this.tsbAligntCenter = new System.Windows.Forms.ToolStripButton();
+            this.tsbAlignRight = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton12 = new System.Windows.Forms.ToolStripButton();
+            this.tsbBold = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButton13 = new System.Windows.Forms.ToolStripButton();
+            this.tsbSearch = new System.Windows.Forms.ToolStripButton();
             this.sbMain = new System.Windows.Forms.StatusStrip();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -136,19 +136,30 @@
             this.openFileDlg = new System.Windows.Forms.OpenFileDialog();
             this.saveFielDlg = new System.Windows.Forms.SaveFileDialog();
             this.cmnControl = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.cmCtrlProperties = new System.Windows.Forms.ToolStripMenuItem();
             this.cmCtrlCopy = new System.Windows.Forms.ToolStripMenuItem();
             this.cmCtrlCut = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmCtrlDelete = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmCtrlEditText = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmCtrlSendBack = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmCtrlBringFront = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator17 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator18 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator19 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator20 = new System.Windows.Forms.ToolStripSeparator();
             this.cmCtrlPaste = new System.Windows.Forms.ToolStripMenuItem();
             this.cmCtrlPasteEx = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator17 = new System.Windows.Forms.ToolStripSeparator();
+            this.cmCtrlDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator18 = new System.Windows.Forms.ToolStripSeparator();
+            this.cmCtrlEditText = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator20 = new System.Windows.Forms.ToolStripSeparator();
+            this.cmCtrlSendBack = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmCtrlBringFront = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator19 = new System.Windows.Forms.ToolStripSeparator();
+            this.cmCtrlProperties = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmnSection = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.cmSectionAddSectionLine = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator21 = new System.Windows.Forms.ToolStripSeparator();
+            this.cmSectionDeleteSection = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmSectionDeleteSectionLine = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator22 = new System.Windows.Forms.ToolStripSeparator();
+            this.cmSectionSectionProperties = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmSectionSectionLineProperties = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmSectionGroupSeparator = new System.Windows.Forms.ToolStripSeparator();
+            this.cmSectionGroupProperties = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmSectionMoveGroup = new System.Windows.Forms.ToolStripMenuItem();
             this.mnMain.SuspendLayout();
             this.tbMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -168,6 +179,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pnRule)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pnReport)).BeginInit();
             this.cmnControl.SuspendLayout();
+            this.cmnSection.SuspendLayout();
             this.SuspendLayout();
             // 
             // mnMain
@@ -314,39 +326,39 @@
             // 
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
             this.copyToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.copyToolStripMenuItem.Text = "Copy";
             // 
             // cutToolStripMenuItem
             // 
             this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
             this.cutToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.cutToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.cutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.cutToolStripMenuItem.Text = "Cut";
             // 
             // pasteToolStripMenuItem
             // 
             this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
             this.pasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.pasteToolStripMenuItem.Text = "Paste";
             // 
             // toolStripSeparator10
             // 
             this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(146, 6);
+            this.toolStripSeparator10.Size = new System.Drawing.Size(149, 6);
             // 
             // mnuEditSearch
             // 
             this.mnuEditSearch.Name = "mnuEditSearch";
             this.mnuEditSearch.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
-            this.mnuEditSearch.Size = new System.Drawing.Size(149, 22);
+            this.mnuEditSearch.Size = new System.Drawing.Size(152, 22);
             this.mnuEditSearch.Text = "Search";
             // 
             // toolStripSeparator11
             // 
             this.toolStripSeparator11.Name = "toolStripSeparator11";
-            this.toolStripSeparator11.Size = new System.Drawing.Size(146, 6);
+            this.toolStripSeparator11.Size = new System.Drawing.Size(149, 6);
             // 
             // mnuEditAddSec
             // 
@@ -355,7 +367,7 @@
             this.mnuEditAddGroup,
             this.mnuEditAddFooter});
             this.mnuEditAddSec.Name = "mnuEditAddSec";
-            this.mnuEditAddSec.Size = new System.Drawing.Size(149, 22);
+            this.mnuEditAddSec.Size = new System.Drawing.Size(152, 22);
             this.mnuEditAddSec.Text = "Sections";
             // 
             // mnuEditAddHeader
@@ -385,7 +397,7 @@
             this.imageToolStripMenuItem,
             this.chartToolStripMenuItem});
             this.controlsToolStripMenuItem.Name = "controlsToolStripMenuItem";
-            this.controlsToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.controlsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.controlsToolStripMenuItem.Text = "Controls";
             // 
             // mnuEditAddLabel
@@ -421,7 +433,7 @@
             // toolStripSeparator12
             // 
             this.toolStripSeparator12.Name = "toolStripSeparator12";
-            this.toolStripSeparator12.Size = new System.Drawing.Size(146, 6);
+            this.toolStripSeparator12.Size = new System.Drawing.Size(149, 6);
             // 
             // mnuEditMove
             // 
@@ -433,7 +445,7 @@
             this.toolStripSeparator13,
             this.sizeOfMoveStepWithKeyboardToolStripMenuItem});
             this.mnuEditMove.Name = "mnuEditMove";
-            this.mnuEditMove.Size = new System.Drawing.Size(149, 22);
+            this.mnuEditMove.Size = new System.Drawing.Size(152, 22);
             this.mnuEditMove.Text = "Move";
             // 
             // horizontalToolStripMenuItem
@@ -486,25 +498,26 @@
             // mnuViewToolbar
             // 
             this.mnuViewToolbar.Name = "mnuViewToolbar";
-            this.mnuViewToolbar.Size = new System.Drawing.Size(140, 22);
+            this.mnuViewToolbar.Size = new System.Drawing.Size(152, 22);
             this.mnuViewToolbar.Text = "Toolbox";
             // 
             // mnuViewControls
             // 
             this.mnuViewControls.Name = "mnuViewControls";
-            this.mnuViewControls.Size = new System.Drawing.Size(140, 22);
+            this.mnuViewControls.Size = new System.Drawing.Size(152, 22);
             this.mnuViewControls.Text = "Control Grid";
             // 
             // toolStripSeparator14
             // 
             this.toolStripSeparator14.Name = "toolStripSeparator14";
-            this.toolStripSeparator14.Size = new System.Drawing.Size(137, 6);
+            this.toolStripSeparator14.Size = new System.Drawing.Size(149, 6);
             // 
             // mnuViewTreeViewCtrls
             // 
             this.mnuViewTreeViewCtrls.Name = "mnuViewTreeViewCtrls";
-            this.mnuViewTreeViewCtrls.Size = new System.Drawing.Size(140, 22);
+            this.mnuViewTreeViewCtrls.Size = new System.Drawing.Size(152, 22);
             this.mnuViewTreeViewCtrls.Text = "Control Tree";
+            this.mnuViewTreeViewCtrls.Click += new System.EventHandler(this.mnuViewTreeViewCtrls_Click);
             // 
             // viewGridToolStripMenuItem
             // 
@@ -513,7 +526,7 @@
             this.linesToolStripMenuItem,
             this.mnuViewGridMain});
             this.viewGridToolStripMenuItem.Name = "viewGridToolStripMenuItem";
-            this.viewGridToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.viewGridToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.viewGridToolStripMenuItem.Text = "View Grid";
             // 
             // pointsToolStripMenuItem
@@ -628,7 +641,7 @@
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.optionsToolStripMenuItem.Text = "Options";
             // 
             // mnHelp
@@ -650,24 +663,24 @@
             this.tbMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsbNew,
             this.tsbOpen,
-            this.toolStripButton3,
-            this.toolStripButton14,
+            this.tsbSave,
+            this.tsbSaveAs,
             this.toolStripSeparator1,
-            this.toolStripButton4,
+            this.tsbDatabase,
             this.toolStripSeparator2,
-            this.toolStripButton5,
-            this.toolStripButton6,
+            this.tsbPreview,
+            this.tsbPrint,
             this.toolStripSeparator3,
-            this.toolStripButton7,
-            this.toolStripButton8,
+            this.tsbProperties,
+            this.tsbControls,
             this.toolStripSeparator4,
-            this.btnAlignLeft,
-            this.btnAligntCenter,
-            this.btnAlignRight,
+            this.tsbAlignLeft,
+            this.tsbAligntCenter,
+            this.tsbAlignRight,
             this.toolStripSeparator5,
-            this.toolStripButton12,
+            this.tsbBold,
             this.toolStripSeparator6,
-            this.toolStripButton13});
+            this.tsbSearch});
             this.tbMain.Location = new System.Drawing.Point(0, 24);
             this.tbMain.Name = "tbMain";
             this.tbMain.Size = new System.Drawing.Size(682, 25);
@@ -694,143 +707,143 @@
             this.tsbOpen.Text = "toolStripButton2";
             this.tsbOpen.Click += new System.EventHandler(this.tsbOpen_Click);
             // 
-            // toolStripButton3
+            // tsbSave
             // 
-            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton3.Image = global::CSReportEditor.Properties.Resources.disk;
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton3.Text = "toolStripButton3";
+            this.tsbSave.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbSave.Image = global::CSReportEditor.Properties.Resources.disk;
+            this.tsbSave.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbSave.Name = "tsbSave";
+            this.tsbSave.Size = new System.Drawing.Size(23, 22);
+            this.tsbSave.Text = "toolStripButton3";
             // 
-            // toolStripButton14
+            // tsbSaveAs
             // 
-            this.toolStripButton14.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton14.Image = global::CSReportEditor.Properties.Resources.disk_multiple;
-            this.toolStripButton14.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton14.Name = "toolStripButton14";
-            this.toolStripButton14.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton14.Text = "toolStripButton14";
+            this.tsbSaveAs.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbSaveAs.Image = global::CSReportEditor.Properties.Resources.disk_multiple;
+            this.tsbSaveAs.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbSaveAs.Name = "tsbSaveAs";
+            this.tsbSaveAs.Size = new System.Drawing.Size(23, 22);
+            this.tsbSaveAs.Text = "toolStripButton14";
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripButton4
+            // tsbDatabase
             // 
-            this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton4.Image = global::CSReportEditor.Properties.Resources.database_gear;
-            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton4.Name = "toolStripButton4";
-            this.toolStripButton4.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton4.Text = "toolStripButton4";
+            this.tsbDatabase.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbDatabase.Image = global::CSReportEditor.Properties.Resources.database_gear;
+            this.tsbDatabase.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbDatabase.Name = "tsbDatabase";
+            this.tsbDatabase.Size = new System.Drawing.Size(23, 22);
+            this.tsbDatabase.Text = "toolStripButton4";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripButton5
+            // tsbPreview
             // 
-            this.toolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton5.Image = global::CSReportEditor.Properties.Resources.lightning;
-            this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton5.Name = "toolStripButton5";
-            this.toolStripButton5.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton5.Text = "toolStripButton5";
+            this.tsbPreview.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbPreview.Image = global::CSReportEditor.Properties.Resources.lightning;
+            this.tsbPreview.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbPreview.Name = "tsbPreview";
+            this.tsbPreview.Size = new System.Drawing.Size(23, 22);
+            this.tsbPreview.Text = "toolStripButton5";
             // 
-            // toolStripButton6
+            // tsbPrint
             // 
-            this.toolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton6.Image = global::CSReportEditor.Properties.Resources.printer;
-            this.toolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton6.Name = "toolStripButton6";
-            this.toolStripButton6.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton6.Text = "toolStripButton6";
+            this.tsbPrint.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbPrint.Image = global::CSReportEditor.Properties.Resources.printer;
+            this.tsbPrint.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbPrint.Name = "tsbPrint";
+            this.tsbPrint.Size = new System.Drawing.Size(23, 22);
+            this.tsbPrint.Text = "toolStripButton6";
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripButton7
+            // tsbProperties
             // 
-            this.toolStripButton7.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton7.Image = global::CSReportEditor.Properties.Resources.application_side_boxes;
-            this.toolStripButton7.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton7.Name = "toolStripButton7";
-            this.toolStripButton7.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton7.Text = "toolStripButton7";
+            this.tsbProperties.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbProperties.Image = global::CSReportEditor.Properties.Resources.application_side_boxes;
+            this.tsbProperties.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbProperties.Name = "tsbProperties";
+            this.tsbProperties.Size = new System.Drawing.Size(23, 22);
+            this.tsbProperties.Text = "toolStripButton7";
             // 
-            // toolStripButton8
+            // tsbControls
             // 
-            this.toolStripButton8.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton8.Image = global::CSReportEditor.Properties.Resources.wrench;
-            this.toolStripButton8.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton8.Name = "toolStripButton8";
-            this.toolStripButton8.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton8.Text = "toolStripButton8";
+            this.tsbControls.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbControls.Image = global::CSReportEditor.Properties.Resources.wrench;
+            this.tsbControls.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbControls.Name = "tsbControls";
+            this.tsbControls.Size = new System.Drawing.Size(23, 22);
+            this.tsbControls.Text = "toolStripButton8";
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
             // 
-            // btnAlignLeft
+            // tsbAlignLeft
             // 
-            this.btnAlignLeft.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnAlignLeft.Image = global::CSReportEditor.Properties.Resources.text_align_left;
-            this.btnAlignLeft.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnAlignLeft.Name = "btnAlignLeft";
-            this.btnAlignLeft.Size = new System.Drawing.Size(23, 22);
-            this.btnAlignLeft.Text = "toolStripButton9";
+            this.tsbAlignLeft.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbAlignLeft.Image = global::CSReportEditor.Properties.Resources.text_align_left;
+            this.tsbAlignLeft.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbAlignLeft.Name = "tsbAlignLeft";
+            this.tsbAlignLeft.Size = new System.Drawing.Size(23, 22);
+            this.tsbAlignLeft.Text = "toolStripButton9";
             // 
-            // btnAligntCenter
+            // tsbAligntCenter
             // 
-            this.btnAligntCenter.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnAligntCenter.Image = global::CSReportEditor.Properties.Resources.text_align_center;
-            this.btnAligntCenter.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnAligntCenter.Name = "btnAligntCenter";
-            this.btnAligntCenter.Size = new System.Drawing.Size(23, 22);
-            this.btnAligntCenter.Text = "toolStripButton10";
+            this.tsbAligntCenter.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbAligntCenter.Image = global::CSReportEditor.Properties.Resources.text_align_center;
+            this.tsbAligntCenter.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbAligntCenter.Name = "tsbAligntCenter";
+            this.tsbAligntCenter.Size = new System.Drawing.Size(23, 22);
+            this.tsbAligntCenter.Text = "toolStripButton10";
             // 
-            // btnAlignRight
+            // tsbAlignRight
             // 
-            this.btnAlignRight.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.btnAlignRight.Image = global::CSReportEditor.Properties.Resources.text_align_right;
-            this.btnAlignRight.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnAlignRight.Name = "btnAlignRight";
-            this.btnAlignRight.Size = new System.Drawing.Size(23, 22);
-            this.btnAlignRight.Text = "toolStripButton11";
+            this.tsbAlignRight.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbAlignRight.Image = global::CSReportEditor.Properties.Resources.text_align_right;
+            this.tsbAlignRight.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbAlignRight.Name = "tsbAlignRight";
+            this.tsbAlignRight.Size = new System.Drawing.Size(23, 22);
+            this.tsbAlignRight.Text = "toolStripButton11";
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
             this.toolStripSeparator5.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripButton12
+            // tsbBold
             // 
-            this.toolStripButton12.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton12.Image = global::CSReportEditor.Properties.Resources.text_bold;
-            this.toolStripButton12.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton12.Name = "toolStripButton12";
-            this.toolStripButton12.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton12.Text = "toolStripButton12";
+            this.tsbBold.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbBold.Image = global::CSReportEditor.Properties.Resources.text_bold;
+            this.tsbBold.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbBold.Name = "tsbBold";
+            this.tsbBold.Size = new System.Drawing.Size(23, 22);
+            this.tsbBold.Text = "toolStripButton12";
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
             this.toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripButton13
+            // tsbSearch
             // 
-            this.toolStripButton13.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton13.Image = global::CSReportEditor.Properties.Resources.find;
-            this.toolStripButton13.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton13.Name = "toolStripButton13";
-            this.toolStripButton13.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton13.Text = "toolStripButton13";
+            this.tsbSearch.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbSearch.Image = global::CSReportEditor.Properties.Resources.find;
+            this.tsbSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbSearch.Name = "tsbSearch";
+            this.tsbSearch.Size = new System.Drawing.Size(23, 22);
+            this.tsbSearch.Text = "toolStripButton13";
             // 
             // sbMain
             // 
@@ -1024,14 +1037,7 @@
             this.toolStripSeparator19,
             this.cmCtrlProperties});
             this.cmnControl.Name = "cmnControl";
-            this.cmnControl.Size = new System.Drawing.Size(161, 248);
-            // 
-            // cmCtrlProperties
-            // 
-            this.cmCtrlProperties.Name = "cmCtrlProperties";
-            this.cmCtrlProperties.Size = new System.Drawing.Size(160, 22);
-            this.cmCtrlProperties.Text = "Properties";
-            this.cmCtrlProperties.Click += new System.EventHandler(this.cmCtrlProperties_Click);
+            this.cmnControl.Size = new System.Drawing.Size(161, 226);
             // 
             // cmCtrlCopy
             // 
@@ -1045,17 +1051,44 @@
             this.cmCtrlCut.Size = new System.Drawing.Size(160, 22);
             this.cmCtrlCut.Text = "Cut";
             // 
+            // cmCtrlPaste
+            // 
+            this.cmCtrlPaste.Name = "cmCtrlPaste";
+            this.cmCtrlPaste.Size = new System.Drawing.Size(160, 22);
+            this.cmCtrlPaste.Text = "Paste";
+            // 
+            // cmCtrlPasteEx
+            // 
+            this.cmCtrlPasteEx.Name = "cmCtrlPasteEx";
+            this.cmCtrlPasteEx.Size = new System.Drawing.Size(160, 22);
+            this.cmCtrlPasteEx.Text = "Paste (no move)";
+            // 
+            // toolStripSeparator17
+            // 
+            this.toolStripSeparator17.Name = "toolStripSeparator17";
+            this.toolStripSeparator17.Size = new System.Drawing.Size(157, 6);
+            // 
             // cmCtrlDelete
             // 
             this.cmCtrlDelete.Name = "cmCtrlDelete";
             this.cmCtrlDelete.Size = new System.Drawing.Size(160, 22);
             this.cmCtrlDelete.Text = "Delete";
             // 
+            // toolStripSeparator18
+            // 
+            this.toolStripSeparator18.Name = "toolStripSeparator18";
+            this.toolStripSeparator18.Size = new System.Drawing.Size(157, 6);
+            // 
             // cmCtrlEditText
             // 
             this.cmCtrlEditText.Name = "cmCtrlEditText";
             this.cmCtrlEditText.Size = new System.Drawing.Size(160, 22);
             this.cmCtrlEditText.Text = "Edit text";
+            // 
+            // toolStripSeparator20
+            // 
+            this.toolStripSeparator20.Name = "toolStripSeparator20";
+            this.toolStripSeparator20.Size = new System.Drawing.Size(157, 6);
             // 
             // cmCtrlSendBack
             // 
@@ -1069,37 +1102,93 @@
             this.cmCtrlBringFront.Size = new System.Drawing.Size(160, 22);
             this.cmCtrlBringFront.Text = "Bring front";
             // 
-            // toolStripSeparator17
-            // 
-            this.toolStripSeparator17.Name = "toolStripSeparator17";
-            this.toolStripSeparator17.Size = new System.Drawing.Size(157, 6);
-            // 
-            // toolStripSeparator18
-            // 
-            this.toolStripSeparator18.Name = "toolStripSeparator18";
-            this.toolStripSeparator18.Size = new System.Drawing.Size(157, 6);
-            // 
             // toolStripSeparator19
             // 
             this.toolStripSeparator19.Name = "toolStripSeparator19";
             this.toolStripSeparator19.Size = new System.Drawing.Size(157, 6);
             // 
-            // toolStripSeparator20
+            // cmCtrlProperties
             // 
-            this.toolStripSeparator20.Name = "toolStripSeparator20";
-            this.toolStripSeparator20.Size = new System.Drawing.Size(157, 6);
+            this.cmCtrlProperties.Name = "cmCtrlProperties";
+            this.cmCtrlProperties.Size = new System.Drawing.Size(160, 22);
+            this.cmCtrlProperties.Text = "Properties";
+            this.cmCtrlProperties.Click += new System.EventHandler(this.cmCtrlProperties_Click);
             // 
-            // cmCtrlPaste
+            // cmnSection
             // 
-            this.cmCtrlPaste.Name = "cmCtrlPaste";
-            this.cmCtrlPaste.Size = new System.Drawing.Size(160, 22);
-            this.cmCtrlPaste.Text = "Paste";
+            this.cmnSection.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.cmSectionAddSectionLine,
+            this.toolStripSeparator21,
+            this.cmSectionDeleteSection,
+            this.cmSectionDeleteSectionLine,
+            this.toolStripSeparator22,
+            this.cmSectionSectionProperties,
+            this.cmSectionSectionLineProperties,
+            this.cmSectionGroupSeparator,
+            this.cmSectionGroupProperties,
+            this.cmSectionMoveGroup});
+            this.cmnSection.Name = "cmnSection";
+            this.cmnSection.Size = new System.Drawing.Size(192, 176);
             // 
-            // cmCtrlPasteEx
+            // cmSectionAddSectionLine
             // 
-            this.cmCtrlPasteEx.Name = "cmCtrlPasteEx";
-            this.cmCtrlPasteEx.Size = new System.Drawing.Size(160, 22);
-            this.cmCtrlPasteEx.Text = "Paste (no move)";
+            this.cmSectionAddSectionLine.Name = "cmSectionAddSectionLine";
+            this.cmSectionAddSectionLine.Size = new System.Drawing.Size(191, 22);
+            this.cmSectionAddSectionLine.Text = "Add section line";
+            // 
+            // toolStripSeparator21
+            // 
+            this.toolStripSeparator21.Name = "toolStripSeparator21";
+            this.toolStripSeparator21.Size = new System.Drawing.Size(188, 6);
+            // 
+            // cmSectionDeleteSection
+            // 
+            this.cmSectionDeleteSection.Name = "cmSectionDeleteSection";
+            this.cmSectionDeleteSection.Size = new System.Drawing.Size(191, 22);
+            this.cmSectionDeleteSection.Text = "Delete section";
+            // 
+            // cmSectionDeleteSectionLine
+            // 
+            this.cmSectionDeleteSectionLine.Name = "cmSectionDeleteSectionLine";
+            this.cmSectionDeleteSectionLine.Size = new System.Drawing.Size(191, 22);
+            this.cmSectionDeleteSectionLine.Text = "Delete section line";
+            // 
+            // toolStripSeparator22
+            // 
+            this.toolStripSeparator22.Name = "toolStripSeparator22";
+            this.toolStripSeparator22.Size = new System.Drawing.Size(188, 6);
+            // 
+            // cmSectionSectionProperties
+            // 
+            this.cmSectionSectionProperties.Name = "cmSectionSectionProperties";
+            this.cmSectionSectionProperties.Size = new System.Drawing.Size(191, 22);
+            this.cmSectionSectionProperties.Text = "Section properties";
+            this.cmSectionSectionProperties.Click += new System.EventHandler(this.cmSectionSectionProperties_Click);
+            // 
+            // cmSectionSectionLineProperties
+            // 
+            this.cmSectionSectionLineProperties.Name = "cmSectionSectionLineProperties";
+            this.cmSectionSectionLineProperties.Size = new System.Drawing.Size(191, 22);
+            this.cmSectionSectionLineProperties.Text = "Section line properties";
+            this.cmSectionSectionLineProperties.Click += new System.EventHandler(this.cmSectionSectionLineProperties_Click);
+            // 
+            // cmSectionGroupSeparator
+            // 
+            this.cmSectionGroupSeparator.Name = "cmSectionGroupSeparator";
+            this.cmSectionGroupSeparator.Size = new System.Drawing.Size(188, 6);
+            // 
+            // cmSectionGroupProperties
+            // 
+            this.cmSectionGroupProperties.Name = "cmSectionGroupProperties";
+            this.cmSectionGroupProperties.Size = new System.Drawing.Size(191, 22);
+            this.cmSectionGroupProperties.Text = "Group properties";
+            this.cmSectionGroupProperties.Click += new System.EventHandler(this.cmSectionGroupProperties_Click);
+            // 
+            // cmSectionMoveGroup
+            // 
+            this.cmSectionMoveGroup.Name = "cmSectionMoveGroup";
+            this.cmSectionMoveGroup.Size = new System.Drawing.Size(191, 22);
+            this.cmSectionMoveGroup.Text = "Move group";
             // 
             // fMain
             // 
@@ -1135,6 +1224,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pnRule)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pnReport)).EndInit();
             this.cmnControl.ResumeLayout(false);
+            this.cmnSection.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1148,24 +1238,24 @@
         private System.Windows.Forms.ToolStrip tbMain;
         private System.Windows.Forms.ToolStripButton tsbNew;
         private System.Windows.Forms.ToolStripButton tsbOpen;
-        private System.Windows.Forms.ToolStripButton toolStripButton3;
-        private System.Windows.Forms.ToolStripButton toolStripButton14;
+        private System.Windows.Forms.ToolStripButton tsbSave;
+        private System.Windows.Forms.ToolStripButton tsbSaveAs;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripButton toolStripButton4;
+        private System.Windows.Forms.ToolStripButton tsbDatabase;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripButton toolStripButton5;
-        private System.Windows.Forms.ToolStripButton toolStripButton6;
+        private System.Windows.Forms.ToolStripButton tsbPreview;
+        private System.Windows.Forms.ToolStripButton tsbPrint;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripButton toolStripButton7;
-        private System.Windows.Forms.ToolStripButton toolStripButton8;
+        private System.Windows.Forms.ToolStripButton tsbProperties;
+        private System.Windows.Forms.ToolStripButton tsbControls;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.ToolStripButton btnAlignLeft;
-        private System.Windows.Forms.ToolStripButton btnAligntCenter;
-        private System.Windows.Forms.ToolStripButton btnAlignRight;
+        private System.Windows.Forms.ToolStripButton tsbAlignLeft;
+        private System.Windows.Forms.ToolStripButton tsbAligntCenter;
+        private System.Windows.Forms.ToolStripButton tsbAlignRight;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
-        private System.Windows.Forms.ToolStripButton toolStripButton12;
+        private System.Windows.Forms.ToolStripButton tsbBold;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
-        private System.Windows.Forms.ToolStripButton toolStripButton13;
+        private System.Windows.Forms.ToolStripButton tsbSearch;
         private System.Windows.Forms.ToolStripMenuItem mnuNewReport;
         private System.Windows.Forms.ToolStripMenuItem mnuOpenReport;
         private System.Windows.Forms.ToolStripMenuItem mnuSaveReport;
@@ -1262,6 +1352,17 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator19;
         private System.Windows.Forms.ToolStripMenuItem cmCtrlPaste;
         private System.Windows.Forms.ToolStripMenuItem cmCtrlPasteEx;
+        private System.Windows.Forms.ContextMenuStrip cmnSection;
+        private System.Windows.Forms.ToolStripMenuItem cmSectionAddSectionLine;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator21;
+        private System.Windows.Forms.ToolStripMenuItem cmSectionDeleteSection;
+        private System.Windows.Forms.ToolStripMenuItem cmSectionDeleteSectionLine;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator22;
+        private System.Windows.Forms.ToolStripMenuItem cmSectionSectionProperties;
+        private System.Windows.Forms.ToolStripMenuItem cmSectionSectionLineProperties;
+        private System.Windows.Forms.ToolStripMenuItem cmSectionGroupProperties;
+        private System.Windows.Forms.ToolStripSeparator cmSectionGroupSeparator;
+        private System.Windows.Forms.ToolStripMenuItem cmSectionMoveGroup;
 
     }
 }

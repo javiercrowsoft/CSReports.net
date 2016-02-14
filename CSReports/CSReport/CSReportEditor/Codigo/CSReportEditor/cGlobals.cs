@@ -6,6 +6,7 @@ using CSKernelClient;
 using CSReportDll;
 using CSReportGlobals;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace CSReportEditor
 {
@@ -64,6 +65,8 @@ namespace CSReportEditor
 		// TODO: refactor
 		public const int ShiftMask = 1;
 
+        private static cEditor m_editor = null;
+
         public static void setStatus()
         { 
         
@@ -74,7 +77,7 @@ namespace CSReportEditor
             return false;
         }
 
-		public static bool showDbFields(string sField, int nFieldType, int nIndex, cEditor editor)
+		public static bool showDbFields(ref string field, ref int fieldType, ref int index, cEditor editor)
 		{
             fColumns fc = null;
 
@@ -94,14 +97,14 @@ namespace CSReportEditor
                     fc.fillColumns(connect.getDataSource(), connect.getColumns());
                 }
 
-                fc.setField(sField);
+                fc.setField(field);
                 fc.ShowDialog();
 
                 if (fc.getOk())
                 {
-                    sField = fc.getField();
-                    nFieldType = fc.getFieldType();
-                    nIndex = fc.getIndex();
+                    field = fc.getField();
+                    fieldType = fc.getFieldType();
+                    index = fc.getIndex();
 
                     return true;
                 }
@@ -150,19 +153,6 @@ namespace CSReportEditor
 		public static fToolbox getToolBox(cEditor cEditor)
 		{
 			throw new NotImplementedException ();
-		}
-
-		public static void showGroupProperties(object o, cEditor editor)
-		{
-			throw new NotImplementedException ();
-		}
-
-		public static void setDocActive (cEditor editor)
-		{
-            implementThisMessage("setDocActive", "(CSReportEditor cGlobals)");
-            
-            TabPage editorTab = editor.getEditorTab();
-            (editorTab.Parent as TabControl).SelectedTab = editorTab;
 		}
 
         public static void moveGroup(cReportGroup group, cEditor editor)
@@ -220,13 +210,13 @@ namespace CSReportEditor
             sec.setName("Detail");
 
             aspect = sec.getAspect();
-            aspect.setTop(0);
+            aspect.setTop(tr.height * 0.25f);
             aspect.setHeight(tr.height * 0.25f);
             aspect.setWidth(tr.width);
             secLn = sec.getSectionLines().item(0);
             secLn.setSectionName("Detail");
             aspect = secLn.getAspect();
-            aspect.setTop(0);
+            aspect.setTop(tr.height * 0.25f);
             aspect.setHeight(tr.height * 0.25f);
             aspect.setWidth(tr.width);
 
@@ -237,28 +227,18 @@ namespace CSReportEditor
             sec.setName("Main footer");
 
             aspect = sec.getAspect();
-            aspect.setTop(0);
-            aspect.setHeight(tr.height * 0.75f);
+            aspect.setTop(tr.height * 0.75f);
+            aspect.setHeight(tr.height * 0.25f);
             aspect.setWidth(tr.width);
             secLn = sec.getSectionLines().item(0);
             secLn.setSectionName("Main footer");
             aspect = secLn.getAspect();
-            aspect.setTop(0);
-            aspect.setHeight(tr.height * 0.75f);
+            aspect.setTop(tr.height * 0.75f);
+            aspect.setHeight(tr.height * 0.25f);
             aspect.setWidth(tr.width);
         }
 
         internal static void clearCtrlBox(cEditor editor)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal static fTreeViewCtrls getCtrlTreeBox(cEditor editor)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal static void clearCtrlTreeBox(cEditor editor)
         {
             throw new NotImplementedException();
         }
@@ -268,6 +248,27 @@ namespace CSReportEditor
             Console.WriteLine(String.Format("Implement this: public static void {0} {1}", functionName, moduleName));
         }
 
+    }
+
+    public class Rectangle
+    {
+        public long height;
+        public long width;
+
+        public Rectangle(RectangleF rect)
+        {
+            height = (long)rect.Height;
+            width = (long)rect.Width;
+        }
+    }
+
+    public interface cIDatabaseFieldSelector 
+    {
+        int getFieldType();
+        void setFieldType(int rhs);
+        int getIndex();
+        void setIndex(int rhs);
+        System.Windows.Forms.TextBox txDbField { get; }
     }
 
     public enum csRptEditorMoveType {

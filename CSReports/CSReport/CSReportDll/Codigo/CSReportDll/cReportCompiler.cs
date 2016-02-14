@@ -860,7 +860,6 @@ namespace CSReportDll
 
         private object pCheckInternalFunction(String functionName, String code)
         {
-            int pos = 0;
             String name = "";
             String parameters = "";
             csRptFormulaType idFunction = 0;
@@ -907,18 +906,15 @@ namespace CSReportDll
                     {
                         return m_report.getCurrenPage();
                     }
-                    break;
 
                 case csRptFormulaType.CSRPTTEXTREPLACE:
                     // in compiling time we need to return a value which is consistent
                     // with the return type of the internal function
                     //
                     return "";
-                    break;
 
                 case csRptFormulaType.CSRPTFTOTALPAGES:
                     return m_report.getTotalPages();
-                    break;
 
                 // all this functions have the same amount of parameters
                 //
@@ -935,7 +931,6 @@ namespace CSReportDll
                     // with the return type of the internal function
                     //
                     return 0;
-                    break;
 
                 case csRptFormulaType.CSRPTGROUPTOTAL:
                 case csRptFormulaType.CSRPTGROUPMAX:
@@ -948,7 +943,6 @@ namespace CSReportDll
                     // with the return type of the internal function
                     //
                     return 0;
-                    break;
 
                 // all this functions have the same amount of parameters
                 //
@@ -961,7 +955,6 @@ namespace CSReportDll
                     // with the return type of the internal function
                     //
                     return 0;
-                    break;
 
                 case csRptFormulaType.CSRPTFGETSTRING:
                     // in this evaluation we load the parameters of the function
@@ -971,7 +964,6 @@ namespace CSReportDll
                     // with the return type of the internal function
                     //
                     return "\"\"";
-                    break;
 
                 case csRptFormulaType.CSRPTFSUMTIME:
                     // in this evaluation we load the parameters of the function
@@ -981,14 +973,12 @@ namespace CSReportDll
                     // with the return type of the internal function
                     //
                     return 0;
-                    break;
 
                 case csRptFormulaType.CSRPTCOUNT:
                     // in compiling time we need to return a value which is consistent
                     // with the return type of the internal function
                     //
                     return 0;
-                    break;
 
                 case csRptFormulaType.CSRPTFNUMBERTOSTRING:
                     // in this evaluation we load the parameters of the function
@@ -998,7 +988,6 @@ namespace CSReportDll
                     // with the return type of the internal function
                     //
                     return "\"\"";
-                    break;
 
                 // all this functions have the same amount of parameters
                 //
@@ -1014,7 +1003,6 @@ namespace CSReportDll
                     // with the return type of the internal function
                     //
                     return 0;
-                    break;
 
                 // all this functions have the same amount of parameters
                 //
@@ -1028,7 +1016,6 @@ namespace CSReportDll
                     // with the return type of the internal function
                     //
                     return 0;
-                    break;
 
                 // all this functions have the same amount of parameters
                 //
@@ -1041,7 +1028,6 @@ namespace CSReportDll
                     // with the return type of the internal function
                     //
                     return 0;
-                    break;
 
                 case csRptFormulaType.CSRPTGETPARAM:
                     // in this evaluation we load the parameters of the function
@@ -1051,7 +1037,6 @@ namespace CSReportDll
                     // with the return type of the internal function
                     //
                     return 0;
-                    break;
 
                 // all this functions have the same amount of parameters
                 //
@@ -1064,13 +1049,11 @@ namespace CSReportDll
                     // with the return type of the internal function
                     //
                     return 0;
-                    break;
 
                 default:
                     throw new ReportNotDefinedFunctionException(
                         C_MODULE,
                         cReportError.errGetDescript(csRptErrors.CSRPTERRINDEFINEDFUNCTION,name));
-                    break;
             }
         }
 

@@ -407,6 +407,10 @@ namespace CSKernelClient
         public static String getInfoString(String source, String key, String defaultValue)
         {
 
+            if (String.IsNullOrEmpty(source)) {
+                return defaultValue;
+            }
+
             key = "#"+ key;
 
             int i = source.ToLower().IndexOf(key.ToLower(), 0);

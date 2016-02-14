@@ -36,8 +36,8 @@
             this.cmd_cancel = new System.Windows.Forms.Button();
             this.cmd_apply = new System.Windows.Forms.Button();
             this.lv_columns = new System.Windows.Forms.ListView();
-            this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -73,7 +73,7 @@
             // 
             // cmd_cancel
             // 
-            this.cmd_cancel.Location = new System.Drawing.Point(365, 410);
+            this.cmd_cancel.Location = new System.Drawing.Point(329, 410);
             this.cmd_cancel.Name = "cmd_cancel";
             this.cmd_cancel.Size = new System.Drawing.Size(75, 23);
             this.cmd_cancel.TabIndex = 5;
@@ -83,7 +83,7 @@
             // 
             // cmd_apply
             // 
-            this.cmd_apply.Location = new System.Drawing.Point(284, 410);
+            this.cmd_apply.Location = new System.Drawing.Point(248, 410);
             this.cmd_apply.Name = "cmd_apply";
             this.cmd_apply.Size = new System.Drawing.Size(75, 23);
             this.cmd_apply.TabIndex = 4;
@@ -97,12 +97,17 @@
             this.columnHeader1});
             this.lv_columns.Location = new System.Drawing.Point(12, 87);
             this.lv_columns.Name = "lv_columns";
-            this.lv_columns.Size = new System.Drawing.Size(427, 306);
+            this.lv_columns.Size = new System.Drawing.Size(392, 306);
             this.lv_columns.SmallImageList = this.imageList;
             this.lv_columns.TabIndex = 6;
             this.lv_columns.UseCompatibleStateImageBehavior = false;
             this.lv_columns.View = System.Windows.Forms.View.Details;
             this.lv_columns.Click += new System.EventHandler(this.lv_columns_Click);
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Name";
+            this.columnHeader1.Width = 360;
             // 
             // imageList
             // 
@@ -110,21 +115,18 @@
             this.imageList.TransparentColor = System.Drawing.Color.Transparent;
             this.imageList.Images.SetKeyName(0, "base002.ico");
             // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "Name";
-            this.columnHeader1.Width = 360;
-            // 
             // fColumns
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(452, 445);
+            this.ClientSize = new System.Drawing.Size(416, 445);
             this.Controls.Add(this.lv_columns);
             this.Controls.Add(this.cmd_cancel);
             this.Controls.Add(this.cmd_apply);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "fColumns";
             this.Text = "fColumns";
             this.Load += new System.EventHandler(this.fColumns_Load);

@@ -149,7 +149,7 @@ namespace CSReportEditor
             }
         }
 
-        internal void setHandler(cEditor editor)
+        public void setHandler(cEditor editor)
         {
             m_editor = editor;
         }
@@ -158,6 +158,15 @@ namespace CSReportEditor
         {
             m_ok = false;
             this.Hide();
+        }
+
+        private void tv_formulas_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (tv_formulas.SelectedNode != null)
+            {
+                var info = tv_formulas.SelectedNode.Tag as string;
+                tx_descrip.Text = cUtil.getInfoString(info, C_FUNDESCRIP, "");
+            } 
         }
     }
 }

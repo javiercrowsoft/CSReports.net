@@ -187,7 +187,14 @@ namespace CSReportDll
         {
             try
             {
-                return (cReportSection)m_coll[key];
+                if (m_coll.ContainsKey(key))
+                {
+                    return (cReportSection)m_coll[key];
+                }
+                else
+                {
+                    return null;
+                }                
             }
             catch
             {

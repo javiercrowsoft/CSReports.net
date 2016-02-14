@@ -29,8 +29,7 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.lb_control = new System.Windows.Forms.Label();
-            this.lb_secLn = new System.Windows.Forms.Label();
+            this.lb_section = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
             this.tx_name = new System.Windows.Forms.TextBox();
@@ -53,33 +52,22 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
-            this.panel1.Controls.Add(this.lb_control);
+            this.panel1.Controls.Add(this.lb_section);
             this.panel1.Controls.Add(this.pictureBox1);
-            this.panel1.Controls.Add(this.lb_secLn);
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(548, 70);
             this.panel1.TabIndex = 1;
             // 
-            // lb_control
+            // lb_section
             // 
-            this.lb_control.AutoSize = true;
-            this.lb_control.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lb_control.Location = new System.Drawing.Point(266, 19);
-            this.lb_control.Name = "lb_control";
-            this.lb_control.Size = new System.Drawing.Size(154, 25);
-            this.lb_control.TabIndex = 2;
-            this.lb_control.Text = "lbControlName";
-            // 
-            // lb_secLn
-            // 
-            this.lb_secLn.AutoSize = true;
-            this.lb_secLn.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lb_secLn.Location = new System.Drawing.Point(76, 18);
-            this.lb_secLn.Name = "lb_secLn";
-            this.lb_secLn.Size = new System.Drawing.Size(187, 26);
-            this.lb_secLn.TabIndex = 0;
-            this.lb_secLn.Text = "Section properties";
+            this.lb_section.AutoSize = true;
+            this.lb_section.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_section.Location = new System.Drawing.Point(94, 18);
+            this.lb_section.Name = "lb_section";
+            this.lb_section.Size = new System.Drawing.Size(180, 25);
+            this.lb_section.TabIndex = 2;
+            this.lb_section.Text = "section/line name";
             // 
             // pictureBox1
             // 
@@ -152,6 +140,7 @@
             this.cmd_formulaHide.TabIndex = 19;
             this.cmd_formulaHide.Text = "Edit";
             this.cmd_formulaHide.UseVisualStyleBackColor = true;
+            this.cmd_formulaHide.Click += new System.EventHandler(this.cmd_formulaHide_Click);
             // 
             // cmd_cancel
             // 
@@ -161,6 +150,7 @@
             this.cmd_cancel.TabIndex = 50;
             this.cmd_cancel.Text = "Cancel";
             this.cmd_cancel.UseVisualStyleBackColor = true;
+            this.cmd_cancel.Click += new System.EventHandler(this.cmd_cancel_Click);
             // 
             // cmd_apply
             // 
@@ -170,6 +160,7 @@
             this.cmd_apply.TabIndex = 49;
             this.cmd_apply.Text = "Apply";
             this.cmd_apply.UseVisualStyleBackColor = true;
+            this.cmd_apply.Click += new System.EventHandler(this.cmd_apply_Click);
             // 
             // groupBox2
             // 
@@ -204,8 +195,11 @@
             this.Controls.Add(this.cmd_apply);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "fSecProperties";
             this.Text = "fSecProperties";
+            this.Load += new System.EventHandler(this.fSecProperties_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -221,9 +215,8 @@
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label lb_control;
+        private System.Windows.Forms.Label lb_section;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label lb_secLn;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox tx_name;
         private System.Windows.Forms.Label lb_formulaHide;

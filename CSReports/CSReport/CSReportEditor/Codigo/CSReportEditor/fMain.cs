@@ -35,7 +35,17 @@ namespace CSReportEditor
             //
             CSKernelClient.cUtil.setSepDecimal();
 
+            cPrinter printer = cPrintAPI.getcPrinterFromDefaultPrinter();
+            m_paperSize = (int)printer.getPaperInfo().getPaperSize();
+            m_paperSizeHeight = Convert.ToInt32(printer.getPaperInfo().getHeight());
+            m_paperSizeWidth = Convert.ToInt32(printer.getPaperInfo().getHeight());
+        }
+
+        public void init()
+        {
             cEditor editor = new cEditor(this, pnEditor, pnRule, pnReport, tbpEditor);
+            editor.init();
+            editor.newReport(null);        
         }
 
         public cEditor getReportCopySource()
@@ -67,6 +77,8 @@ namespace CSReportEditor
         private void mnuNewReport_Click(object sender, EventArgs e)
         {
             createEditor();
+            cEditor editor = createEditor();
+            editor.init();
         }
 
         private void tsbNew_Click(object sender, EventArgs e)
@@ -127,13 +139,13 @@ namespace CSReportEditor
             this.mnuViewTreeViewCtrls.Enabled = enabled;
 
             var buttons = this.tbMain.Items;
-            buttons[cGlobals.c_BTN_PRINT].Enabled = enabled;
-            buttons[cGlobals.c_BTN_PROPERTIES].Enabled = enabled;
-            buttons[cGlobals.c_BTN_DB].Enabled = enabled;
-            buttons[cGlobals.c_BTN_SAVE].Enabled = enabled;
-            buttons[cGlobals.c_BTN_TOOL].Enabled = enabled;
-            buttons[cGlobals.c_BTN_PREV].Enabled = enabled;
-            buttons[cGlobals.c_BTN_SEARCH].Enabled = enabled;
+            tsbPrint.Enabled = enabled;
+            tsbProperties.Enabled = enabled;
+            tsbDatabase.Enabled = enabled;
+            tsbSave.Enabled = enabled;
+            tsbControls.Enabled = enabled;
+            tsbPreview.Enabled = enabled;
+            tsbSearch.Enabled = enabled;
         }
 
         public void addToRecentList(String fileName)
@@ -297,6 +309,18 @@ namespace CSReportEditor
             }
         }
 
+        public void showPopMenuSection(cEditor editor, bool noDelete, bool showGroups, Point p)
+        {
+            cmSectionDeleteSection.Enabled = !noDelete;
+            cmSectionGroupProperties.Visible = showGroups;
+            cmSectionMoveGroup.Visible = showGroups;
+            cmSectionGroupSeparator.Visible = showGroups;
+
+            m_contextMenuEditor = editor;
+
+            cmnSection.Show(p);
+        }
+
         public void showPopMenuControl(cEditor editor, bool clickInCtrl, bool pasteEnabled, Point p)
         {
             cmCtrlCopy.Enabled = clickInCtrl;
@@ -313,6 +337,39 @@ namespace CSReportEditor
             m_contextMenuEditor = editor;
 
             cmnControl.Show(p);
+        }
+
+        private void cmSectionSectionProperties_Click(object sender, EventArgs e)
+        {
+            if (m_contextMenuEditor != null)
+            {
+                m_contextMenuEditor.showProperties();
+            }
+        }
+
+        private void cmSectionSectionLineProperties_Click(object sender, EventArgs e)
+        {
+            if (m_contextMenuEditor != null)
+            {
+                m_contextMenuEditor.showSecLnProperties();
+            }
+        }
+
+        private void cmSectionGroupProperties_Click(object sender, EventArgs e)
+        {
+            if (m_contextMenuEditor != null)
+            {
+                m_contextMenuEditor.showGroupProperties();
+            }
+        }
+
+        private void mnuViewTreeViewCtrls_Click(object sender, EventArgs e)
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.showControlsTree();
+            }
         }
     }
 }

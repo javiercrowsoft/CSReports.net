@@ -11,7 +11,7 @@ using CSReportGlobals;
 
 namespace CSReportEditor
 {
-    public partial class fProperties : Form
+    public partial class fProperties : Form, cIDatabaseFieldSelector
     {
         private cEditor m_editor;
 
@@ -784,7 +784,7 @@ namespace CSReportEditor
         private void cmd_formulaHide_Click(object sender, EventArgs e)
         {
             m_formulaName = "Ocultar";
-            if (m_editor.showEditFormula(m_formulaHide))
+            if (m_editor.showEditFormula(ref m_formulaHide))
             {
                 m_formulaHideChanged = true;
                 lb_formulaHide.Text = m_formulaHide;
@@ -794,7 +794,7 @@ namespace CSReportEditor
         private void cmd_formulaValue_Click(object sender, EventArgs e)
         {
             m_formulaName = "Valor";
-            if (m_editor.showEditFormula(m_formulaValue))
+            if (m_editor.showEditFormula(ref m_formulaValue))
             {
                 m_formulaValueChanged = true;
                 lbFormulaValue.Text = m_formulaValue;
@@ -1945,7 +1945,7 @@ namespace CSReportEditor
             picColor(tx_borderShadow, sh_borderShadow);
         }
 
-        internal void setHandler(cEditor editor)
+        public void setHandler(cEditor editor)
         {
             m_editor = editor;
         }

@@ -65,6 +65,8 @@ namespace CSReportEditor
                 if (item.Text == field) 
                 {
                     item.Selected = true;
+                    item.Focused = true;
+                    lv_columns.Select();
                     break;
                 }
             }

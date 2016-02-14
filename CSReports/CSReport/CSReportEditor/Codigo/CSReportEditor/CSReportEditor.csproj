@@ -180,6 +180,9 @@
     <EmbeddedResource Include="fSimpleConnect.resx">
       <DependentUpon>fSimpleConnect.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="fTreeViewCtrls.resx">
+      <DependentUpon>fTreeViewCtrls.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -239,10 +242,6 @@
     <ProjectReference Include="..\..\..\..\CSKernel\Codigo\CSKernelFile\CSKernelFile\CSKernelFile.csproj">
       <Project>{0B54F3BA-C9D6-4758-8CB7-1CE9CC3A30C4}</Project>
       <Name>CSKernelFile</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\CSMaskEdit\Codigo\CSMaskEdit\CSMaskEdit.csproj">
-      <Project>{884FAF69-53D3-4969-BE13-DF0ECFD2EFA9}</Project>
-      <Name>CSMaskEdit</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\..\CSOAPI\Codigo\CSOAPI\CSOAPI.csproj">
       <Project>{27D1E082-1492-438B-BBE5-A63D1F380C5F}</Project>

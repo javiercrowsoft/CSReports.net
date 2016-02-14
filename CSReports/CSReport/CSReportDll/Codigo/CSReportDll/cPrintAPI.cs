@@ -38,6 +38,11 @@ namespace CSReportDll
             paperInfo.setOrientation(orientation);
             paperInfo.setPaperSize((csReportPaperType)paperSize);
 
+            if (width == 0 || height == 0)
+            {
+                getSizeFromPaperSize((csReportPaperType)paperSize, orientation, out width, out height);
+            }
+
             paperInfo.setWidth(width);
             paperInfo.setHeight(height);
             return o;
@@ -103,6 +108,50 @@ namespace CSReportDll
 
             width = cUtil.valAsInt(cPrintWMI.getPrinterConfigInfoValueFromWMI("PaperWidth", printerConfigInfo, 210));
             height = cUtil.valAsInt(cPrintWMI.getPrinterConfigInfoValueFromWMI("PaperLength", printerConfigInfo, 297));
+
+            if (width == 0 || height == 0)
+            {
+                getSizeFromPaperSize((csReportPaperType)paperSize, orientation, out width, out height);
+            }
+        }
+
+        private static void getSizeFromPaperSize(csReportPaperType paperSize, int orientation, out int width, out int height)
+        {
+            switch (paperSize)
+            {
+                case csReportPaperType.CSRPTPAPERTYPELETTER:
+                    height = 279;
+                    width = 216;
+                    break;
+
+                case csReportPaperType.CSRPTPAPERTYPELEGAL:
+                    height = 356;
+                    width = 216;
+                    break;
+
+                case csReportPaperType.CSRPTPAPERTYPEA4:
+                    height = 297;
+                    width = 210;
+                    break;
+
+                case csReportPaperType.CSRPTPAPERTYPEA3:
+                    height = 420;
+                    width = 297;
+                    break;
+
+                default:
+                    height = 0;
+                    width = 0;
+                    break;
+            }
+
+            if (orientation == (int)csRptPageOrientation.LANDSCAPE)
+            {
+                int tmp = 0;
+                tmp = height;
+                height = width;
+                width = tmp;
+            }
         }
 
         private static int getPaperSizeFromSizeName(string sizeName) 
