@@ -5,8 +5,9 @@ using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
 using CSKernelClient;
-using CSReportDll;
+using CSDataBase;
 using CSReportGlobals;
+using CSReportDll;
 using CSReportPaint;
 
 namespace CSReportEditor
@@ -2650,7 +2651,8 @@ namespace CSReportEditor
                     field.setName(m_fieldName);
                     field.setFieldType(m_fieldType);
 
-                    if (cGlobals.isNumberField(m_fieldType)) {
+                    if (cDatabaseGlobals.isNumberField(m_fieldType))
+                    {
                         aspect = ctrl.getLabel().getAspect();
 					    aspect.setAlign(CSReportGlobals.HorizontalAlignment.Right);
                         aspect.setFormat("#0.00;-#0.00");
@@ -4110,29 +4112,29 @@ namespace CSReportEditor
 
             fToolbox f = cMainEditor.getToolbox(this);
 
-            cGlobals.clearToolBox(this);
+            f.clear();
 
             pAddColumnsToToolbox(m_report.getConnect().getDataSource(), m_report.getConnect().getColumns(), f);
-            cReportConnect connect = null;
 
             for (int _i = 0; _i < m_report.getConnectsAux().count(); _i++) {
-                cReportConnect Connect = m_report.getConnectsAux().item(_i);
+                cReportConnect connect = m_report.getConnectsAux().item(_i);
                 pAddColumnsToToolbox(connect.getDataSource(), connect.getColumns(), f);
             }
 
             for (int _i = 0; _i < m_report.getControls().count(); _i++) {
                 cReportControl ctrl = m_report.getControls().item(_i);
-                if (cGlobals.isNumberField(ctrl.getField().getFieldType())) {
+                if (cDatabaseGlobals.isNumberField(ctrl.getField().getFieldType()))
+                {
                     f.addLbFormula(ctrl.getField().getName());
 
                     // TODO: refactor this to a better way to suggest the 
                     //       list of formulas applicable to the type of 
                     //       the database field
                     //
-                    f.addFormula("Suma", ctrl.getName(), "_Sum");
-                    f.addFormula("Máximo", ctrl.getName(), "_Max");
-                    f.addFormula("Minimo", ctrl.getName(), "_Min");
-                    f.addFormula("Promedio", ctrl.getName(), "_Average");
+                    f.addFormula("Sum", ctrl.getName(), "_Sum");
+                    f.addFormula("Maximum", ctrl.getName(), "_Max");
+                    f.addFormula("Minimum", ctrl.getName(), "_Min");
+                    f.addFormula("Averagge", ctrl.getName(), "_Average");
                 }
             }
             if (!f.Visible)
@@ -6419,8 +6421,8 @@ namespace CSReportEditor
         }
 
         private void form_Deactivate() {
-            cGlobals.setDocInacActive(this);
-            cGlobals.clearToolBox(this);
+            cMainEditor.setDocInacActive(this);
+            cMainEditor.clearToolbox(this);
         }
     }
 

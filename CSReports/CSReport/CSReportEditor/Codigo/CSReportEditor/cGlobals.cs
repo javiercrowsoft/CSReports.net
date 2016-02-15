@@ -72,11 +72,6 @@ namespace CSReportEditor
         
         }
 
-        public static bool isNumberField(int fieldType)
-        {
-            return false;
-        }
-
 		public static bool showDbFields(ref string field, ref int fieldType, ref int index, cEditor editor)
 		{
             fColumns fc = null;
@@ -158,16 +153,6 @@ namespace CSReportEditor
         public static string getDataSourceStr(string dataSource)
         {
             return "{" + dataSource + "}.";
-        }
-
-        internal static void clearToolBox(cEditor editor)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal static void setDocInacActive(cEditor editor)
-        {
-            throw new NotImplementedException();
         }
 
         internal static void createStandarSections(cReport report, Rectangle tr)

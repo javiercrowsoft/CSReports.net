@@ -183,6 +183,9 @@
     <EmbeddedResource Include="fSimpleConnect.resx">
       <DependentUpon>fSimpleConnect.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="fToolbox.resx">
+      <DependentUpon>fToolbox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="fTreeViewCtrls.resx">
       <DependentUpon>fTreeViewCtrls.cs</DependentUpon>
     </EmbeddedResource>

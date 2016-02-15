@@ -81,8 +81,8 @@ namespace CSReportEditor
             }
 	    }
 
-	    public static void setDocInacActive(cEditor f) {
-	        if (m_editor != f) { return; }
+	    public static void setDocInacActive(cEditor editor) {
+	        if (m_editor != editor) { return; }
 	        m_editor = null;
 	        setMenu();
 	        setEditAlignTextState(false);
@@ -209,7 +209,18 @@ namespace CSReportEditor
             m_fTreeViewCtrls.setHandler(editor);
             return m_fTreeViewCtrls;
         }
-	}
+
+        internal static void clearToolbox(cEditor editor)
+        {
+            if (m_editor == editor)
+            {
+                if (m_fToolbox != null && !m_fToolbox.IsDisposed && m_fToolbox.Visible)
+                {
+                    m_fToolbox.clear();
+                }
+            }
+        }
+    }
 
 	public enum SpecialFolderIDs {
 	    SFIDDESKTOP = 0x0,

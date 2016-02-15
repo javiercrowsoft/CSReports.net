@@ -4,10 +4,32 @@
 namespace CSDataBase
 {
 
-
-    public static class cGlobal
+    public static class cDatabaseGlobals
     {
         public static bool Silent = false;
+
+        public static bool isNumberField(int fieldType)
+        {
+            switch ((csAdoDataType)fieldType) 
+            { 
+                case csAdoDataType.adDecimal:
+                case csAdoDataType.adDouble: 
+                case csAdoDataType.adInteger:
+                case csAdoDataType.adCurrency: 
+                case csAdoDataType.adBigInt: 
+                case csAdoDataType.adNumeric:
+                case csAdoDataType.adSingle:
+                case csAdoDataType.adSmallInt:
+                case csAdoDataType.adTinyInt:
+                case csAdoDataType.adUnsignedBigInt:
+                case csAdoDataType.adUnsignedInt:
+                case csAdoDataType.adUnsignedSmallInt:
+                case csAdoDataType.adUnsignedTinyInt:
+                case csAdoDataType.adVarNumeric:
+                    return true;
+            }
+            return false;
+        }
     }
 
     public enum csDataType
@@ -45,6 +67,49 @@ namespace CSDataBase
         CSCMDTABLEDIRECT = 512,
         CSCMDTEXT = 1,
         CSCMDUNKNOWN = -1
+    }
+
+    public enum csAdoDataType {
+        adBigInt = 20,
+        adBinary = 128,
+        adBoolean = 11,
+        adBSTR = 8,
+        adChapter = 136,
+        adChar = 129,
+        adCurrency = 6,
+        adDate = 7,
+        adDBDate = 133,
+        adDBFileTime = 137,
+        adDBTime = 134,
+        adDBTimeStamp = 135,
+        adDecimal = 14,
+        adDouble = 5,
+        adEmpty = 0,
+        adError = 10,
+        adFileTime = 64,
+        adGUID = 72,
+        adIDispatch = 9,
+        adInteger = 3,
+        adIUnknown = 13,
+        adLongVarBinary = 205,
+        adLongVarChar = 201,
+        adLongVarWChar = 203,
+        adNumeric = 131,
+        adPropVariant = 138,
+        adSingle = 4,
+        adSmallInt = 2,
+        adTinyInt = 16,
+        adUnsignedBigInt = 21,
+        adUnsignedInt = 19,
+        adUnsignedSmallInt = 18,
+        adUnsignedTinyInt = 17,
+        adUserDefined = 132,
+        adVarBinary = 204,
+        adVarChar = 200,
+        adVariant = 12,
+        adVarNumeric = 139,
+        adVarWChar = 202,
+        adWChar = 130
     }
 
 }

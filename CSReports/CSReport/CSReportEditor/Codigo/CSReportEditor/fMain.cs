@@ -380,5 +380,24 @@ namespace CSReportEditor
                 editor.showControls();
             }
         }
+
+        private void mnuViewToolbar_Click(object sender, EventArgs e)
+        {
+            showToolbox();
+        }
+
+        private void tsbControls_Click(object sender, EventArgs e)
+        {
+            showToolbox();
+        }
+
+        private void showToolbox()
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.showToolbox();
+            }
+        }
     }
 }

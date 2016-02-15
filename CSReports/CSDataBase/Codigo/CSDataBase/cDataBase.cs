@@ -58,13 +58,13 @@ namespace CSDataBase
 
         public bool silent
         {
-            get { return cGlobal.Silent; }
-            set { cGlobal.Silent = value; }
+            get { return cDatabaseGlobals.Silent; }
+            set { cDatabaseGlobals.Silent = value; }
         }
 
         public void setSilent(Boolean rhs)
         {
-            cGlobal.Silent = rhs;
+            cDatabaseGlobals.Silent = rhs;
         }
 
         public bool dbIsOpen
