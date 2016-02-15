@@ -156,6 +156,9 @@
     <EmbeddedResource Include="fColumns.resx">
       <DependentUpon>fColumns.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="fControls.resx">
+      <DependentUpon>fControls.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="fFormula.resx">
       <DependentUpon>fFormula.cs</DependentUpon>
     </EmbeddedResource>

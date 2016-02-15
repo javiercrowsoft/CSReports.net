@@ -11,6 +11,8 @@ namespace CSReportEditor
 {
     public partial class fToolbox : Form
     {
+        private cEditor m_editor;
+
         public fToolbox()
         {
             InitializeComponent();
@@ -40,5 +42,11 @@ namespace CSReportEditor
         {
             throw new NotImplementedException();
         }
+
+        public void setHandler(cEditor editor)
+        {
+            m_editor = editor;
+        }
+
     }
 }

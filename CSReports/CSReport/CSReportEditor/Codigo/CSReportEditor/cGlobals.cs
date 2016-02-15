@@ -150,11 +150,6 @@ namespace CSReportEditor
 			throw new NotImplementedException ();
 		}
 
-		public static fToolbox getToolBox(cEditor cEditor)
-		{
-			throw new NotImplementedException ();
-		}
-
         public static void moveGroup(cReportGroup group, cEditor editor)
         {
             throw new NotImplementedException();
@@ -166,11 +161,6 @@ namespace CSReportEditor
         }
 
         internal static void clearToolBox(cEditor editor)
-        {
-            throw new NotImplementedException();
-        }
-
-        internal static fControls getCtrlBox(cEditor editor)
         {
             throw new NotImplementedException();
         }

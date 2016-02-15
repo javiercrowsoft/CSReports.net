@@ -163,6 +163,7 @@
             this.tx_formula.Location = new System.Drawing.Point(3, 120);
             this.tx_formula.Multiline = true;
             this.tx_formula.Name = "tx_formula";
+            this.tx_formula.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.tx_formula.Size = new System.Drawing.Size(704, 288);
             this.tx_formula.TabIndex = 1;
             // 

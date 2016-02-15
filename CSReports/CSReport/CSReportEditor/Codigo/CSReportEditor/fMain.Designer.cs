@@ -160,6 +160,7 @@
             this.cmSectionGroupSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.cmSectionGroupProperties = new System.Windows.Forms.ToolStripMenuItem();
             this.cmSectionMoveGroup = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator23 = new System.Windows.Forms.ToolStripSeparator();
             this.mnMain.SuspendLayout();
             this.tbMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -326,39 +327,39 @@
             // 
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
             this.copyToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.copyToolStripMenuItem.Text = "Copy";
             // 
             // cutToolStripMenuItem
             // 
             this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
             this.cutToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.cutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.cutToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.cutToolStripMenuItem.Text = "Cut";
             // 
             // pasteToolStripMenuItem
             // 
             this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
             this.pasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.pasteToolStripMenuItem.Text = "Paste";
             // 
             // toolStripSeparator10
             // 
             this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator10.Size = new System.Drawing.Size(146, 6);
             // 
             // mnuEditSearch
             // 
             this.mnuEditSearch.Name = "mnuEditSearch";
             this.mnuEditSearch.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
-            this.mnuEditSearch.Size = new System.Drawing.Size(152, 22);
+            this.mnuEditSearch.Size = new System.Drawing.Size(149, 22);
             this.mnuEditSearch.Text = "Search";
             // 
             // toolStripSeparator11
             // 
             this.toolStripSeparator11.Name = "toolStripSeparator11";
-            this.toolStripSeparator11.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator11.Size = new System.Drawing.Size(146, 6);
             // 
             // mnuEditAddSec
             // 
@@ -367,7 +368,7 @@
             this.mnuEditAddGroup,
             this.mnuEditAddFooter});
             this.mnuEditAddSec.Name = "mnuEditAddSec";
-            this.mnuEditAddSec.Size = new System.Drawing.Size(152, 22);
+            this.mnuEditAddSec.Size = new System.Drawing.Size(149, 22);
             this.mnuEditAddSec.Text = "Sections";
             // 
             // mnuEditAddHeader
@@ -397,7 +398,7 @@
             this.imageToolStripMenuItem,
             this.chartToolStripMenuItem});
             this.controlsToolStripMenuItem.Name = "controlsToolStripMenuItem";
-            this.controlsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.controlsToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.controlsToolStripMenuItem.Text = "Controls";
             // 
             // mnuEditAddLabel
@@ -433,7 +434,7 @@
             // toolStripSeparator12
             // 
             this.toolStripSeparator12.Name = "toolStripSeparator12";
-            this.toolStripSeparator12.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator12.Size = new System.Drawing.Size(146, 6);
             // 
             // mnuEditMove
             // 
@@ -445,7 +446,7 @@
             this.toolStripSeparator13,
             this.sizeOfMoveStepWithKeyboardToolStripMenuItem});
             this.mnuEditMove.Name = "mnuEditMove";
-            this.mnuEditMove.Size = new System.Drawing.Size(152, 22);
+            this.mnuEditMove.Size = new System.Drawing.Size(149, 22);
             this.mnuEditMove.Text = "Move";
             // 
             // horizontalToolStripMenuItem
@@ -487,9 +488,10 @@
             // 
             this.mnView.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuViewToolbar,
-            this.mnuViewControls,
             this.toolStripSeparator14,
+            this.mnuViewControls,
             this.mnuViewTreeViewCtrls,
+            this.toolStripSeparator23,
             this.viewGridToolStripMenuItem});
             this.mnView.Name = "mnView";
             this.mnView.Size = new System.Drawing.Size(44, 20);
@@ -506,6 +508,7 @@
             this.mnuViewControls.Name = "mnuViewControls";
             this.mnuViewControls.Size = new System.Drawing.Size(152, 22);
             this.mnuViewControls.Text = "Control Grid";
+            this.mnuViewControls.Click += new System.EventHandler(this.mnuViewControls_Click);
             // 
             // toolStripSeparator14
             // 
@@ -641,7 +644,7 @@
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.optionsToolStripMenuItem.Text = "Options";
             // 
             // mnHelp
@@ -1190,6 +1193,11 @@
             this.cmSectionMoveGroup.Size = new System.Drawing.Size(191, 22);
             this.cmSectionMoveGroup.Text = "Move group";
             // 
+            // toolStripSeparator23
+            // 
+            this.toolStripSeparator23.Name = "toolStripSeparator23";
+            this.toolStripSeparator23.Size = new System.Drawing.Size(149, 6);
+            // 
             // fMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1363,6 +1371,7 @@
         private System.Windows.Forms.ToolStripMenuItem cmSectionGroupProperties;
         private System.Windows.Forms.ToolStripSeparator cmSectionGroupSeparator;
         private System.Windows.Forms.ToolStripMenuItem cmSectionMoveGroup;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator23;
 
     }
 }

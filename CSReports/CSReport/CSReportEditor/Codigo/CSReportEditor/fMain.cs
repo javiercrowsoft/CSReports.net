@@ -371,5 +371,14 @@ namespace CSReportEditor
                 editor.showControlsTree();
             }
         }
+
+        private void mnuViewControls_Click(object sender, EventArgs e)
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.showControls();
+            }
+        }
     }
 }

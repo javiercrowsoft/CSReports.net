@@ -46,6 +46,7 @@
     <Compile Include="cDateUtils.cs" />
     <Compile Include="cError.cs" />
     <Compile Include="cGlobals.cs" />
+    <Compile Include="cListViewColumnSorter.cs" />
     <Compile Include="cMouseWait.cs" />
     <Compile Include="cRegionalCfg.cs" />
     <Compile Include="cUtil.cs" />

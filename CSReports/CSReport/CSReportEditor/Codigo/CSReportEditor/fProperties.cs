@@ -783,7 +783,7 @@ namespace CSReportEditor
 
         private void cmd_formulaHide_Click(object sender, EventArgs e)
         {
-            m_formulaName = "Ocultar";
+            m_formulaName = "Hide";
             if (m_editor.showEditFormula(ref m_formulaHide))
             {
                 m_formulaHideChanged = true;
@@ -793,7 +793,7 @@ namespace CSReportEditor
 
         private void cmd_formulaValue_Click(object sender, EventArgs e)
         {
-            m_formulaName = "Valor";
+            m_formulaName = "Value";
             if (m_editor.showEditFormula(ref m_formulaValue))
             {
                 m_formulaValueChanged = true;
@@ -1092,11 +1092,6 @@ namespace CSReportEditor
         //------------------------------------------------------------------------------------------------------------------
 
         /*
-		public string getFormulaName ()
-		{
-			throw new NotImplementedException ();
-		}
-
 		public int getChartFieldType (int idx)
 		{
 			throw new NotImplementedException ();

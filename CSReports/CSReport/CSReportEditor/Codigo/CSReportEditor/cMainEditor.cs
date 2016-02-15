@@ -30,6 +30,8 @@ namespace CSReportEditor
 	    public static int gNextReport = 0;
 	    private static cEditor m_editor;
 
+        private static fToolbox m_fToolbox = null;
+        private static fControls m_fControls = null;
         private static fTreeViewCtrls m_fTreeViewCtrls = null;
 
 		public static int gBackColor = 0;
@@ -63,6 +65,19 @@ namespace CSReportEditor
             {
                 TabPage editorTab = editor.getEditorTab();
                 (editorTab.Parent as TabControl).SelectedTab = editorTab;
+                
+                if (m_fToolbox != null && !m_fToolbox.IsDisposed && m_fToolbox.Visible)
+                {
+                    if (getToolbox(editor) != null) { editor.showToolbox(); }
+                }
+                if (m_fControls != null && !m_fControls.IsDisposed && m_fControls.Visible)
+                {
+                    if (getCtrlBox(editor) != null) { editor.showControls(); }
+                }
+                if (m_fTreeViewCtrls != null && !m_fTreeViewCtrls.IsDisposed && m_fTreeViewCtrls.Visible)
+                {
+                    if (getCtrlTreeBox(editor) != null) { editor.showControlsTree(); }
+                }
             }
 	    }
 
@@ -150,9 +165,47 @@ namespace CSReportEditor
             return "";
         }
 
+        internal static fToolbox getToolbox()
+        {
+            return m_fToolbox;
+        }
+
+        internal static fToolbox getToolbox(cEditor editor)
+        {
+            if (m_fToolbox == null || m_fToolbox.IsDisposed)
+            {
+                m_fToolbox = new fToolbox();
+            }
+            m_fToolbox.setHandler(editor);
+            return m_fToolbox;
+        }
+
+        internal static fControls getCtrlBox()
+        {
+            return m_fControls;
+        }
+
+        internal static fControls getCtrlBox(cEditor editor)
+        {
+            if (m_fControls == null || m_fControls.IsDisposed)
+            {
+                m_fControls = new fControls();
+            }
+            m_fControls.setHandler(editor);
+            return m_fControls;
+        }
+
+        internal static fTreeViewCtrls getCtrlTreeBox()
+        {
+            return m_fTreeViewCtrls;
+        }
+
         internal static fTreeViewCtrls getCtrlTreeBox(cEditor editor)
         {
-            if (m_fTreeViewCtrls == null) m_fTreeViewCtrls = new fTreeViewCtrls();
+            if (m_fTreeViewCtrls == null || m_fTreeViewCtrls.IsDisposed)
+            {
+                m_fTreeViewCtrls = new fTreeViewCtrls();
+            }
             m_fTreeViewCtrls.setHandler(editor);
             return m_fTreeViewCtrls;
         }

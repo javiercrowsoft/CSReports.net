@@ -108,8 +108,6 @@ namespace CSReportEditor
         private fSecProperties m_fSecProperties;
         private fFormula m_fFormula;
         private fGroup m_fGroup;
-        private fToolbox m_fToolBox;
-        private fControls m_fControls;
         private fConnectsAux m_fConnectsAux;
         private fSearch m_fSearch;
 
@@ -451,23 +449,10 @@ namespace CSReportEditor
             */
         }
 
-        private void m_fControls_EditCtrl(String ctrlKey) {
-            try {
-
-                pSelectCtrl(ctrlKey);
-                showProperties();
-                m_fControls.clear();
-                m_fControls.addCtrls(m_report);
-
-            } catch (Exception ex) {
-                cError.mngError(ex, "m_fControls_EditCtrl", C_MODULE, "");
-            }
-        }
-
         private void m_fSearch_EditCtrl(String ctrlKey) {
             try {
 
-                pSelectCtrl(ctrlKey);
+                selectCtrl(ctrlKey);
                 showProperties();
 
             } catch (Exception ex) {
@@ -488,7 +473,7 @@ namespace CSReportEditor
         private void editCtrl(String ctrlKey) {
             try {
 
-                pSelectCtrl(ctrlKey);
+                selectCtrl(ctrlKey);
                 showProperties();
             } catch (Exception ex) {
                 cError.mngError(ex, "editCtrl", C_MODULE, "");
@@ -516,7 +501,7 @@ namespace CSReportEditor
         public void setFocusCtrl(String ctrlKey) {
             try {
 
-                pSelectCtrl(ctrlKey);
+                selectCtrl(ctrlKey);
 
             } catch (Exception ex) {
                 cError.mngError(ex, "setFocusCtrl", C_MODULE, "");
@@ -533,7 +518,7 @@ namespace CSReportEditor
             }
         }
 
-        private void pSelectCtrl(String ctrlKey) {
+        public void selectCtrl(String ctrlKey) {
             bool bWasRemoved = false;
             String sKey = "";
 
@@ -660,13 +645,19 @@ namespace CSReportEditor
             
             f = new cReportFormula();
             
-            if (m_fProperties != null) {
+            if (m_fProperties != null) 
+            {
                 f.setName(m_fProperties.getFormulaName());
-            } 
-            else {
+            }
+            else if (m_fSecProperties != null)
+            {
                 f.setName(m_fSecProperties.getFormulaName());
             }
-            
+            else 
+            {
+                f.setName(cMainEditor.getCtrlTreeBox().getFormulaName());
+            }
+
             f.setText(code);
 			
             return m_report.getCompiler().checkSyntax(f);
@@ -2034,7 +2025,7 @@ namespace CSReportEditor
                     cGlobals.setParametersAux(connect, rptConnect);
                 }
 
-                if (cGlobals.getToolBox(this) != null) { showToolBox(); }
+                if (cMainEditor.getToolbox(this) != null) { showToolbox(); }
 
                 return true;
 
@@ -3708,6 +3699,12 @@ namespace CSReportEditor
             return sec;
         }
 
+        public void showProperties(string key)
+        {
+            selectCtrl(key);
+            showProperties();
+        }
+
         public void showProperties() {
             if (m_keyFocus == "") { return; }
 
@@ -4109,46 +4106,49 @@ namespace CSReportEditor
             m_picReport.Cursor = Cursors.Default;
         }
 
-        public void showToolBox() {
+        public void showToolbox() {
 
-            m_fToolBox = cGlobals.getToolBox(this);
+            fToolbox f = cMainEditor.getToolbox(this);
 
             cGlobals.clearToolBox(this);
 
-            pAddColumnsToToolbox(m_report.getConnect().getDataSource(), m_report.getConnect().getColumns());
+            pAddColumnsToToolbox(m_report.getConnect().getDataSource(), m_report.getConnect().getColumns(), f);
             cReportConnect connect = null;
 
             for (int _i = 0; _i < m_report.getConnectsAux().count(); _i++) {
                 cReportConnect Connect = m_report.getConnectsAux().item(_i);
-                pAddColumnsToToolbox(connect.getDataSource(), connect.getColumns());
+                pAddColumnsToToolbox(connect.getDataSource(), connect.getColumns(), f);
             }
 
             for (int _i = 0; _i < m_report.getControls().count(); _i++) {
                 cReportControl ctrl = m_report.getControls().item(_i);
                 if (cGlobals.isNumberField(ctrl.getField().getFieldType())) {
-                    m_fToolBox.addLbFormula(ctrl.getField().getName());
+                    f.addLbFormula(ctrl.getField().getName());
 
                     // TODO: refactor this to a better way to suggest the 
                     //       list of formulas applicable to the type of 
                     //       the database field
                     //
-                    m_fToolBox.addFormula("Suma", ctrl.getName(), "_Sum");
-                    m_fToolBox.addFormula("Máximo", ctrl.getName(), "_Max");
-                    m_fToolBox.addFormula("Minimo", ctrl.getName(), "_Min");
-                    m_fToolBox.addFormula("Promedio", ctrl.getName(), "_Average");
+                    f.addFormula("Suma", ctrl.getName(), "_Sum");
+                    f.addFormula("Máximo", ctrl.getName(), "_Max");
+                    f.addFormula("Minimo", ctrl.getName(), "_Min");
+                    f.addFormula("Promedio", ctrl.getName(), "_Average");
                 }
             }
-            m_fToolBox.Show(m_fmain);
+            if (!f.Visible)
+            {
+                f.Show(m_fmain);
+            }
         }
 
-        public void pAddColumnsToToolbox(String dataSource, cColumnsInfo columns) { 
+        public void pAddColumnsToToolbox(String dataSource, cColumnsInfo columns, fToolbox f) {
             for (int _i = 0; _i < columns.count(); _i++) {
                 cColumnInfo col = columns.item(_i);
-                m_fToolBox.addField(
+                f.addField(
                     cGlobals.getDataSourceStr(dataSource) + col.getName(), 
                     (int)col.getColumnType(), 
                     col.getPosition());
-                m_fToolBox.addLabels(col.getName());
+                f.addLabels(col.getName());
             }
         }
 
@@ -6241,14 +6241,13 @@ namespace CSReportEditor
 
         public void showControls() {
             try {
-
-                Application.DoEvents();
-
-                m_fControls = cGlobals.getCtrlBox(this);
-                cGlobals.clearCtrlBox(this);
-                m_fControls.addCtrls(m_report);
-                m_fControls.Show(m_fmain);
-
+                fControls f = cMainEditor.getCtrlBox(this);
+                f.clear();
+                f.addCtrls(m_report);
+                if (!f.Visible)
+                {
+                    f.Show(m_fmain);
+                }
             } catch (Exception ex) {
                 cError.mngError(ex, "showControls", C_MODULE, "");
             }
@@ -6264,7 +6263,7 @@ namespace CSReportEditor
                     f.Show(m_fmain);
                 }
             } catch (Exception ex) {
-                cError.mngError(ex, "ShowControlsTree", C_MODULE, "");
+                cError.mngError(ex, "showControlsTree", C_MODULE, "");
             }
         }
 
@@ -6417,16 +6416,6 @@ namespace CSReportEditor
                 _rtn = formulaText.Replace(currentName, newName);
             }
             return _rtn;
-        }
-
-        private void form_Activate() {
-            cMainEditor.setDocActive(this);
-            if (fToolbox.getLoaded()) {
-                if (cGlobals.getToolBox(this) != null) { showToolBox(); }
-            }
-            if (fControls.getLoaded()) {
-                if (cGlobals.getCtrlBox(this) != null) { showControls(); }
-            }
         }
 
         private void form_Deactivate() {

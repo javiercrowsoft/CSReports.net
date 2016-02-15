@@ -166,7 +166,7 @@ namespace CSReportEditor
             {
                 var info = tv_formulas.SelectedNode.Tag as string;
                 tx_descrip.Text = cUtil.getInfoString(info, C_FUNDESCRIP, "");
-            } 
+            }
         }
     }
 }
