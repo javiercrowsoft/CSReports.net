@@ -33,9 +33,6 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.Label1 = new System.Windows.Forms.Label();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.cmd_close = new System.Windows.Forms.Button();
-            this.cmd_edit = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -50,7 +47,6 @@
             this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -64,15 +60,13 @@
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.panel2, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.tabControl1, 0, 1);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 73F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(364, 695);
             this.tableLayoutPanel1.TabIndex = 3;
@@ -98,36 +92,6 @@
             this.Label1.TabIndex = 2;
             this.Label1.Text = "Toolbox";
             // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.cmd_close);
-            this.panel2.Controls.Add(this.cmd_edit);
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(3, 649);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(358, 43);
-            this.panel2.TabIndex = 4;
-            // 
-            // cmd_close
-            // 
-            this.cmd_close.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmd_close.Location = new System.Drawing.Point(274, 11);
-            this.cmd_close.Name = "cmd_close";
-            this.cmd_close.Size = new System.Drawing.Size(75, 23);
-            this.cmd_close.TabIndex = 1;
-            this.cmd_close.Text = "Close";
-            this.cmd_close.UseVisualStyleBackColor = true;
-            // 
-            // cmd_edit
-            // 
-            this.cmd_edit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.cmd_edit.Location = new System.Drawing.Point(193, 11);
-            this.cmd_edit.Name = "cmd_edit";
-            this.cmd_edit.Size = new System.Drawing.Size(75, 23);
-            this.cmd_edit.TabIndex = 0;
-            this.cmd_edit.Text = "Edit";
-            this.cmd_edit.UseVisualStyleBackColor = true;
-            // 
             // pictureBox1
             // 
             this.pictureBox1.Image = global::CSReportEditor.Properties.Resources.config_page;
@@ -146,7 +110,7 @@
             this.tabControl1.Location = new System.Drawing.Point(3, 76);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(358, 567);
+            this.tabControl1.Size = new System.Drawing.Size(358, 616);
             this.tabControl1.TabIndex = 5;
             // 
             // tabPage1
@@ -155,7 +119,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(350, 541);
+            this.tabPage1.Size = new System.Drawing.Size(350, 590);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Controls";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -180,7 +144,7 @@
             this.lv_controls.Location = new System.Drawing.Point(3, 3);
             this.lv_controls.MultiSelect = false;
             this.lv_controls.Name = "lv_controls";
-            this.lv_controls.Size = new System.Drawing.Size(344, 535);
+            this.lv_controls.Size = new System.Drawing.Size(344, 584);
             this.lv_controls.SmallImageList = this.imageList;
             this.lv_controls.TabIndex = 8;
             this.lv_controls.UseCompatibleStateImageBehavior = false;
@@ -261,7 +225,6 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
@@ -278,9 +241,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label Label1;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Button cmd_close;
-        private System.Windows.Forms.Button cmd_edit;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.ListView lv_controls;

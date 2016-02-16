@@ -399,5 +399,24 @@ namespace CSReportEditor
                 editor.showToolbox();
             }
         }
+
+        private void tsbSearch_Click(object sender, EventArgs e)
+        {
+            search();
+        }
+
+        private void mnuEditSearch_Click(object sender, EventArgs e)
+        {
+            search();
+        }
+
+        private void search() 
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.search();
+            }
+        }
     }
 }

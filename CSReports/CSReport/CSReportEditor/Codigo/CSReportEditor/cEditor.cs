@@ -110,7 +110,6 @@ namespace CSReportEditor
         private fFormula m_fFormula;
         private fGroup m_fGroup;
         private fConnectsAux m_fConnectsAux;
-        private fSearch m_fSearch;
 
         // names
         private int m_nextNameCtrl = 0;
@@ -252,8 +251,19 @@ namespace CSReportEditor
         }
 
         public void search() {
-            m_fSearch = new fSearch();
-            m_fSearch.ShowDialog();
+            try
+            {
+                fSearch f = cMainEditor.getSearch(this);
+                f.clear();
+                if (!f.Visible)
+                {
+                    f.Show(m_fmain);
+                }
+            }
+            catch (Exception ex)
+            {
+                cError.mngError(ex, "showControls", C_MODULE, "");
+            }
         }
 
         public void moveVertical() {

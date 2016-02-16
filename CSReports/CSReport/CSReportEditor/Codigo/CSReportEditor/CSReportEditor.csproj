@@ -177,6 +177,9 @@
     <EmbeddedResource Include="fProperties.resx">
       <DependentUpon>fProperties.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="fSearch.resx">
+      <DependentUpon>fSearch.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="fSecProperties.resx">
       <DependentUpon>fSecProperties.cs</DependentUpon>
     </EmbeddedResource>

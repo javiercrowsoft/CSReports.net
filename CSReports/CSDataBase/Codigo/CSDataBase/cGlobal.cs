@@ -3,6 +3,12 @@
 
 namespace CSDataBase
 {
+    //
+    // TODO: has a function to translate from Ado.net to csAdoDataType which is the value
+    //       we use to save in csr files
+    //
+    //       use the table here http://www.frentonline.com/Knowledgebase/MSSQLServer/Datatype/tabid/362/Default.aspx
+    //
 
     public static class cDatabaseGlobals
     {

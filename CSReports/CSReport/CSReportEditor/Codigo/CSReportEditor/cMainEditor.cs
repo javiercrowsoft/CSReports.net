@@ -33,6 +33,7 @@ namespace CSReportEditor
         private static fToolbox m_fToolbox = null;
         private static fControls m_fControls = null;
         private static fTreeViewCtrls m_fTreeViewCtrls = null;
+        private static fSearch m_fSearch = null;
 
 		public static int gBackColor = 0;
 	    public static int gLeftBarColor = 0;
@@ -163,6 +164,21 @@ namespace CSReportEditor
 
         private static string pGetStatus() {
             return "";
+        }
+
+        internal static fSearch getSearch()
+        {
+            return m_fSearch;
+        }
+
+        internal static fSearch getSearch(cEditor editor)
+        {
+            if (m_fSearch == null || m_fSearch.IsDisposed)
+            {
+                m_fSearch = new fSearch();
+            }
+            m_fSearch.setHandler(editor);
+            return m_fSearch;
         }
 
         internal static fToolbox getToolbox()
