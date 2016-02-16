@@ -46,6 +46,7 @@
             // 
             this.txMsg.BackColor = System.Drawing.SystemColors.Control;
             this.txMsg.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.txMsg.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txMsg.Location = new System.Drawing.Point(104, 22);
             this.txMsg.Multiline = true;
             this.txMsg.Name = "txMsg";
@@ -57,7 +58,7 @@
             this.cmdOk.Location = new System.Drawing.Point(228, 99);
             this.cmdOk.Name = "cmdOk";
             this.cmdOk.Size = new System.Drawing.Size(107, 26);
-            this.cmdOk.TabIndex = 3;
+            this.cmdOk.TabIndex = 0;
             this.cmdOk.Text = "Ok";
             this.cmdOk.UseVisualStyleBackColor = true;
             this.cmdOk.Click += new System.EventHandler(this.cmdOk_Click);
@@ -71,8 +72,11 @@
             this.Controls.Add(this.txMsg);
             this.Controls.Add(this.picIcon);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "fMsg";
             this.Text = "fMsg";
+            this.Load += new System.EventHandler(this.fMsg_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picIcon)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

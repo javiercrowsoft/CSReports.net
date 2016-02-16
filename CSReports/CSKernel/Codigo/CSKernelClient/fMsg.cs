@@ -39,23 +39,30 @@ namespace CSKernelClient
         }
         public void setErrorIcon()
         {
-            picIcon.Image = new Bitmap(System.Reflection.Assembly.GetEntryAssembly().GetManifestResourceStream("Status-dialog-error-icon.png"));
-
+            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            picIcon.Image = new Bitmap(assembly.GetManifestResourceStream(assembly.GetName().Name + ".Resources.error.png"));
         }
         public void setErrorInfo()
         {
-            picIcon.Image = new Bitmap(System.Reflection.Assembly.GetEntryAssembly().GetManifestResourceStream("Status-dialog-information-icon.png"));
-
+            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            picIcon.Image = new Bitmap(assembly.GetManifestResourceStream(assembly.GetName().Name + ".Resources.information.png"));
         }
         public void setErrorWarning()
         {
-            picIcon.Image = new Bitmap(System.Reflection.Assembly.GetEntryAssembly().GetManifestResourceStream("Warning-icon.png"));
-
+            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            picIcon.Image = new Bitmap(assembly.GetManifestResourceStream(assembly.GetName().Name + ".Resources.warning.png"));
         }
 
         private void cmdOk_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void fMsg_Load(object sender, EventArgs e)
+        {
+            cWindow.centerForm(this);
+            txMsg.SelectionStart = 0;
+            txMsg.SelectionLength = 0;
         }
     }
 }

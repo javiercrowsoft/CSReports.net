@@ -8,7 +8,7 @@ namespace CSKernelClient
 {
     public static class cWindow
     {
-        private static String m_title;
+        private static String m_title = "Message";
 
         public static void setTitle(String value) 
         {
@@ -17,12 +17,12 @@ namespace CSKernelClient
 
         public static void msgError(String msg, String title, String details)
         {
+            if (title == "@@@@@") { title = m_title; }
             pMsgAux(msg, CSMSGICONS.Error, title, details);
         }
 
         public static void msgError(String msg, String title)
         {
-            if (title == "@@@@@") { title = m_title; }
             msgError(msg, title, "");
         }
 
@@ -33,12 +33,12 @@ namespace CSKernelClient
 
         public static void msgWarning(String msg, String title, String details)
         {
+            if (title == "@@@@@") { title = m_title; }
             pMsgAux(msg, CSMSGICONS.Exclamation, title, details);
         }
 
         public static void msgWarning(String msg, String title)
         {
-            if (title == "@@@@@") { title = m_title; }
             msgWarning(msg, title, "");
         }
 

@@ -46,7 +46,7 @@ namespace CSDataBase
         CSTDLONGVARWCHAR = System.TypeCode.String,
         CSTDWCHAR = System.TypeCode.String,
         CSTDVARWCHAR = System.TypeCode.String,
-        CSTDDECIMAL = System.TypeCode.String,
+        CSTDDECIMAL = System.TypeCode.Decimal,
         CSTDNUMERIC = System.TypeCode.Decimal,
         CSTDDOUBLE = System.TypeCode.Double,
         CSTDSINGLE = System.TypeCode.Single,

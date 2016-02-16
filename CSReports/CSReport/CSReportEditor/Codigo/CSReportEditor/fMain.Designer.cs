@@ -82,15 +82,15 @@
             this.mnuViewGridMain = new System.Windows.Forms.ToolStripMenuItem();
             this.mnDatabase = new System.Windows.Forms.ToolStripMenuItem();
             this.connectionSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewParametersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuParametersSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuDataBaseConnectsAuxCfg = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator16 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuDataBaseSetDisconnected = new System.Windows.Forms.ToolStripMenuItem();
             this.manualSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuDataBaseEditStrConnect = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuDataBaseSQLServerConnection = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuDataBaseConnectConfig = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuDataBaseEditEx = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuDataBaseEditDataSource = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuDataBaseSetToMainConnect = new System.Windows.Forms.ToolStripMenuItem();
             this.mnTool = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -305,6 +305,7 @@
             this.mnuExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
             this.mnuExit.Size = new System.Drawing.Size(180, 22);
             this.mnuExit.Text = "Exit";
+            this.mnuExit.Click += new System.EventHandler(this.mnuExit_Click);
             // 
             // mnEdit
             // 
@@ -353,7 +354,7 @@
             // 
             this.mnuEditSearch.Name = "mnuEditSearch";
             this.mnuEditSearch.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
-            this.mnuEditSearch.Size = new System.Drawing.Size(152, 22);
+            this.mnuEditSearch.Size = new System.Drawing.Size(149, 22);
             this.mnuEditSearch.Text = "Search";
             this.mnuEditSearch.Click += new System.EventHandler(this.mnuEditSearch_Click);
             // 
@@ -561,7 +562,7 @@
             // 
             this.mnDatabase.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.connectionSettingsToolStripMenuItem,
-            this.viewParametersToolStripMenuItem,
+            this.mnuParametersSettings,
             this.toolStripSeparator15,
             this.mnuDataBaseConnectsAuxCfg,
             this.toolStripSeparator16,
@@ -578,11 +579,12 @@
             this.connectionSettingsToolStripMenuItem.Size = new System.Drawing.Size(328, 22);
             this.connectionSettingsToolStripMenuItem.Text = "Connection Settings";
             // 
-            // viewParametersToolStripMenuItem
+            // mnuParametersSettings
             // 
-            this.viewParametersToolStripMenuItem.Name = "viewParametersToolStripMenuItem";
-            this.viewParametersToolStripMenuItem.Size = new System.Drawing.Size(328, 22);
-            this.viewParametersToolStripMenuItem.Text = "View Parameters";
+            this.mnuParametersSettings.Name = "mnuParametersSettings";
+            this.mnuParametersSettings.Size = new System.Drawing.Size(328, 22);
+            this.mnuParametersSettings.Text = "Parameters Settings";
+            this.mnuParametersSettings.Click += new System.EventHandler(this.mnuParametersSettings_Click);
             // 
             // toolStripSeparator15
             // 
@@ -609,30 +611,33 @@
             // manualSettingsToolStripMenuItem
             // 
             this.manualSettingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnuDataBaseEditStrConnect,
+            this.mnuDataBaseSQLServerConnection,
             this.mnuDataBaseConnectConfig,
-            this.mnuDataBaseEditEx});
+            this.mnuDataBaseEditDataSource});
             this.manualSettingsToolStripMenuItem.Name = "manualSettingsToolStripMenuItem";
             this.manualSettingsToolStripMenuItem.Size = new System.Drawing.Size(328, 22);
             this.manualSettingsToolStripMenuItem.Text = "Manual Settings";
             // 
-            // mnuDataBaseEditStrConnect
+            // mnuDataBaseSQLServerConnection
             // 
-            this.mnuDataBaseEditStrConnect.Name = "mnuDataBaseEditStrConnect";
-            this.mnuDataBaseEditStrConnect.Size = new System.Drawing.Size(195, 22);
-            this.mnuDataBaseEditStrConnect.Text = "SQL Server Connection";
+            this.mnuDataBaseSQLServerConnection.Name = "mnuDataBaseSQLServerConnection";
+            this.mnuDataBaseSQLServerConnection.Size = new System.Drawing.Size(195, 22);
+            this.mnuDataBaseSQLServerConnection.Text = "SQL Server Connection";
+            this.mnuDataBaseSQLServerConnection.Click += new System.EventHandler(this.mnuDataBaseSQLServerConnection_Click);
             // 
             // mnuDataBaseConnectConfig
             // 
             this.mnuDataBaseConnectConfig.Name = "mnuDataBaseConnectConfig";
             this.mnuDataBaseConnectConfig.Size = new System.Drawing.Size(195, 22);
             this.mnuDataBaseConnectConfig.Text = "Connection String";
+            this.mnuDataBaseConnectConfig.Click += new System.EventHandler(this.mnuDataBaseConnectConfig_Click);
             // 
-            // mnuDataBaseEditEx
+            // mnuDataBaseEditDataSource
             // 
-            this.mnuDataBaseEditEx.Name = "mnuDataBaseEditEx";
-            this.mnuDataBaseEditEx.Size = new System.Drawing.Size(195, 22);
-            this.mnuDataBaseEditEx.Text = "Data Source";
+            this.mnuDataBaseEditDataSource.Name = "mnuDataBaseEditDataSource";
+            this.mnuDataBaseEditDataSource.Size = new System.Drawing.Size(195, 22);
+            this.mnuDataBaseEditDataSource.Text = "Data Source";
+            this.mnuDataBaseEditDataSource.Click += new System.EventHandler(this.mnuDataBaseEditDataSource_Click);
             // 
             // mnuDataBaseSetToMainConnect
             // 
@@ -704,7 +709,7 @@
             this.tsbNew.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbNew.Name = "tsbNew";
             this.tsbNew.Size = new System.Drawing.Size(23, 22);
-            this.tsbNew.Text = "toolStripButton1";
+            this.tsbNew.Text = "New report";
             this.tsbNew.Click += new System.EventHandler(this.tsbNew_Click);
             // 
             // tsbOpen
@@ -714,7 +719,7 @@
             this.tsbOpen.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbOpen.Name = "tsbOpen";
             this.tsbOpen.Size = new System.Drawing.Size(23, 22);
-            this.tsbOpen.Text = "toolStripButton2";
+            this.tsbOpen.Text = "Open a report";
             this.tsbOpen.Click += new System.EventHandler(this.tsbOpen_Click);
             // 
             // tsbSave
@@ -724,7 +729,7 @@
             this.tsbSave.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbSave.Name = "tsbSave";
             this.tsbSave.Size = new System.Drawing.Size(23, 22);
-            this.tsbSave.Text = "toolStripButton3";
+            this.tsbSave.Text = "Save";
             // 
             // tsbSaveAs
             // 
@@ -733,7 +738,7 @@
             this.tsbSaveAs.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbSaveAs.Name = "tsbSaveAs";
             this.tsbSaveAs.Size = new System.Drawing.Size(23, 22);
-            this.tsbSaveAs.Text = "toolStripButton14";
+            this.tsbSaveAs.Text = "Save as";
             // 
             // toolStripSeparator1
             // 
@@ -747,7 +752,7 @@
             this.tsbDatabase.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbDatabase.Name = "tsbDatabase";
             this.tsbDatabase.Size = new System.Drawing.Size(23, 22);
-            this.tsbDatabase.Text = "toolStripButton4";
+            this.tsbDatabase.Text = "Edit connection settings";
             // 
             // toolStripSeparator2
             // 
@@ -761,7 +766,7 @@
             this.tsbPreview.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbPreview.Name = "tsbPreview";
             this.tsbPreview.Size = new System.Drawing.Size(23, 22);
-            this.tsbPreview.Text = "toolStripButton5";
+            this.tsbPreview.Text = "Execute this report";
             // 
             // tsbPrint
             // 
@@ -770,7 +775,7 @@
             this.tsbPrint.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbPrint.Name = "tsbPrint";
             this.tsbPrint.Size = new System.Drawing.Size(23, 22);
-            this.tsbPrint.Text = "toolStripButton6";
+            this.tsbPrint.Text = "Print";
             // 
             // toolStripSeparator3
             // 
@@ -784,7 +789,8 @@
             this.tsbProperties.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbProperties.Name = "tsbProperties";
             this.tsbProperties.Size = new System.Drawing.Size(23, 22);
-            this.tsbProperties.Text = "toolStripButton7";
+            this.tsbProperties.Text = "Edit properties";
+            this.tsbProperties.Click += new System.EventHandler(this.tsbProperties_Click);
             // 
             // tsbControls
             // 
@@ -793,7 +799,7 @@
             this.tsbControls.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbControls.Name = "tsbControls";
             this.tsbControls.Size = new System.Drawing.Size(23, 22);
-            this.tsbControls.Text = "toolStripButton8";
+            this.tsbControls.Text = "Show toolbox";
             this.tsbControls.Click += new System.EventHandler(this.tsbControls_Click);
             // 
             // toolStripSeparator4
@@ -808,7 +814,7 @@
             this.tsbAlignLeft.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbAlignLeft.Name = "tsbAlignLeft";
             this.tsbAlignLeft.Size = new System.Drawing.Size(23, 22);
-            this.tsbAlignLeft.Text = "toolStripButton9";
+            this.tsbAlignLeft.Text = "Align left";
             // 
             // tsbAligntCenter
             // 
@@ -817,7 +823,7 @@
             this.tsbAligntCenter.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbAligntCenter.Name = "tsbAligntCenter";
             this.tsbAligntCenter.Size = new System.Drawing.Size(23, 22);
-            this.tsbAligntCenter.Text = "toolStripButton10";
+            this.tsbAligntCenter.Text = "Center";
             // 
             // tsbAlignRight
             // 
@@ -826,7 +832,7 @@
             this.tsbAlignRight.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbAlignRight.Name = "tsbAlignRight";
             this.tsbAlignRight.Size = new System.Drawing.Size(23, 22);
-            this.tsbAlignRight.Text = "toolStripButton11";
+            this.tsbAlignRight.Text = "Align right";
             // 
             // toolStripSeparator5
             // 
@@ -840,7 +846,7 @@
             this.tsbBold.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbBold.Name = "tsbBold";
             this.tsbBold.Size = new System.Drawing.Size(23, 22);
-            this.tsbBold.Text = "toolStripButton12";
+            this.tsbBold.Text = "Bold";
             // 
             // toolStripSeparator6
             // 
@@ -854,7 +860,7 @@
             this.tsbSearch.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbSearch.Name = "tsbSearch";
             this.tsbSearch.Size = new System.Drawing.Size(23, 22);
-            this.tsbSearch.Text = "toolStripButton13";
+            this.tsbSearch.Text = "Search a text in this report";
             this.tsbSearch.Click += new System.EventHandler(this.tsbSearch_Click);
             // 
             // sbMain
@@ -1318,15 +1324,15 @@
         private System.Windows.Forms.ToolStripMenuItem mnTool;
         private System.Windows.Forms.ToolStripMenuItem mnHelp;
         private System.Windows.Forms.ToolStripMenuItem connectionSettingsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem viewParametersToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mnuParametersSettings;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator15;
         private System.Windows.Forms.ToolStripMenuItem mnuDataBaseConnectsAuxCfg;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator16;
         private System.Windows.Forms.ToolStripMenuItem mnuDataBaseSetDisconnected;
         private System.Windows.Forms.ToolStripMenuItem manualSettingsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem mnuDataBaseEditStrConnect;
+        private System.Windows.Forms.ToolStripMenuItem mnuDataBaseSQLServerConnection;
         private System.Windows.Forms.ToolStripMenuItem mnuDataBaseConnectConfig;
-        private System.Windows.Forms.ToolStripMenuItem mnuDataBaseEditEx;
+        private System.Windows.Forms.ToolStripMenuItem mnuDataBaseEditDataSource;
         private System.Windows.Forms.ToolStripMenuItem mnuDataBaseSetToMainConnect;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;

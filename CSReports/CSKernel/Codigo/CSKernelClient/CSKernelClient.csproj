@@ -57,6 +57,12 @@
     <Compile Include="fErrors.Designer.cs">
       <DependentUpon>fErrors.cs</DependentUpon>
     </Compile>
+    <Compile Include="fInput.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fInput.Designer.cs">
+      <DependentUpon>fInput.cs</DependentUpon>
+    </Compile>
     <Compile Include="fMsg.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -66,19 +72,34 @@
     <Compile Include="G.cs" />
     <Compile Include="KernelException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="fErrors.resx">
       <DependentUpon>fErrors.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fInput.resx">
+      <DependentUpon>fInput.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="fMsg.resx">
       <DependentUpon>fMsg.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\error.png" />
     <EmbeddedResource Include="Resources\information.png" />
     <EmbeddedResource Include="Resources\warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\config_page.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

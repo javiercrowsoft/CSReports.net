@@ -13,7 +13,28 @@ namespace CSKernelClient
 
         public static string getToken(string token, string source)
         {
-            return "";
+              int i = 0;
+              string s = "";
+              string c;
+              int l;
+
+              if (token.Substring(token.Length-1, 1) != "=") token += "=";
+
+              l = source.Length;
+              i = source.IndexOf(token);
+              if (i == -1) return "";
+              i += token.Length - 1;
+  
+              while(true)
+              {
+                i++;
+                if (i > l) break;
+                c = source.Substring(i, 1);
+                if (c != ";") s += c;
+                else break;
+              }
+
+              return s;
         }
 
         public static int tp(int twips) 
@@ -449,10 +470,21 @@ namespace CSKernelClient
         }
 
         //--------------------------------------------------------------------------------------------------------------------
-        public static bool getInput(out string value, String descrip) {
-            // TODO: implement
-			value = "";
-            return false;
+        public static bool getInput(ref string value, String descrip, String title) {
+            fInput f = new fInput();
+            f.setTitle(title);
+            f.setDescrip(descrip);
+            f.setText(value);
+            f.ShowDialog();
+            if (f.getOk())
+            {
+                value = f.getText();
+                return true;
+            }
+            else 
+            {
+                return false;
+            }
         }
         /*
         public bool getInputEx(String value, String descrip) { // TODO: Use of ByRef founded Public Function GetInputEx(ByRef Value As String, Optional ByVal Descrip As String) As Boolean

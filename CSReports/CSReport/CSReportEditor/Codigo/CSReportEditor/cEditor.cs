@@ -1961,9 +1961,9 @@ namespace CSReportEditor
 
 			for (int _i = 0; _i < m_report.getConnect().getParameters().count(); _i++) {
 				param = m_report.getConnect().getParameters().item(_i);
-				CSConnect.cParameter connectParam = connect.getParameters().add();
+				CSConnect.cParameter connectParam = connect.getParameters().add(null, "");
 				connectParam.setName(param.getName());
-					connectParam.setValue(param.getValue());
+				connectParam.setValue(param.getValue());
             }
 
 			if (m_report.getConnect().getDataSource() == "") {
@@ -6433,6 +6433,24 @@ namespace CSReportEditor
         private void form_Deactivate() {
             cMainEditor.setDocInacActive(this);
             cMainEditor.clearToolbox(this);
+        }
+
+        public void editConnectionString()
+        {
+            string stringConnection = m_report.getConnect().getStrConnect();
+            if (cUtil.getInput(ref stringConnection, "You can modify the string connection of this report", "String connection"))
+            {
+                m_report.getConnect().setStrConnect(stringConnection);
+            }
+        }
+
+        internal void editDataSource()
+        {
+            string dataSource = m_report.getConnect().getDataSource();
+            if (cUtil.getInput(ref dataSource, "You can modify the data source of this report", "Data Source"))
+            {
+                m_report.getConnect().setDataSource(dataSource);
+            }
         }
     }
 

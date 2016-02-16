@@ -8,44 +8,86 @@ namespace CSConnect
 {
     public class cConnect
     {
-		public cParameters getParameters ()
+        private cParameters m_parameters = new cParameters();
+
+        private string m_strConnect = "";
+        private string m_dataSource = "";
+        private csDataSourceType m_dataSourceType;
+
+		public cParameters getParameters()
+		{
+            return m_parameters;
+		}
+
+        public bool fillParameters(string dataSource)
+        {
+            return true;
+        }
+
+		public bool getDataSourceColumnsInfo(string str, csDataSourceType csDataSourceType)
+		{
+            string sqlstmt;
+
+            if(m_dataSourceType == csDataSourceType.CDDTPROCEDURE)
+            {
+                if(! fillParameters(m_dataSource))
+                {
+                    return false;
+                }
+
+                fParameters f = new fParameters();
+                f.setParameters(m_parameters);
+                f.ShowDialog();
+                if (f.getOk())
+                {
+                    sqlstmt = "[" + m_dataSource + "] " + f.getSqlParameters();
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                sqlstmt = "select * from [" + m_dataSource + "]";
+            }
+
+            return fillColumns(sqlstmt);
+		}
+
+        private bool fillColumns(string sqlstmt)
+        {
+            return true;
+        }
+
+		public void setStrConnect(string strConnect)
+		{
+			m_strConnect = strConnect;
+		}
+
+		public void setDataSource(string dataSource)
+		{
+			m_dataSource = dataSource;
+		}
+
+		public void setDataSourceType(csDataSourceType dataSourceType)
+		{
+            m_dataSourceType = dataSourceType;
+		}
+
+		public bool showOpenConnection()
 		{
 			throw new NotImplementedException ();
 		}
 
-		public bool getDataSourceColumnsInfo (string str, csDataSourceType csDataSourceType)
+		public string getDataSource()
 		{
-			throw new NotImplementedException ();
-		}
-
-		public void setStrConnect (object strConnect)
-		{
-			throw new NotImplementedException ();
-		}
-
-		public void setDataSource (string str)
-		{
-			throw new NotImplementedException ();
-		}
-
-		public void setDataSourceType (csDataSourceType csDataSourceType)
-		{
-			throw new NotImplementedException ();
-		}
-
-		public bool showOpenConnection ()
-		{
-			throw new NotImplementedException ();
-		}
-
-		public string getDataSource ()
-		{
-			throw new NotImplementedException ();
+            return m_dataSource;
 		}
 
 		public csDataSourceType getDataSourceType ()
 		{
-			throw new NotImplementedException ();
+            return m_dataSourceType;
 		}
     }
 }

@@ -122,16 +122,16 @@ namespace CSReportEditor
             this.mnuEditAddLine.Enabled = enabled;
             this.mnuEditAddSec.Enabled = enabled;
             this.mnuEditMove.Enabled = enabled;
-            this.mnuDataBaseEditEx.Enabled = enabled;
+            this.mnuDataBaseEditDataSource.Enabled = enabled;
             this.mnuPreviewReport.Enabled = enabled;
             this.mnuPrintReport.Enabled = enabled;
             this.mnuSaveReport.Enabled = enabled;
             this.mnuReportSaveAs.Enabled = enabled;
             this.mnuDataBaseSetDisconnected.Enabled = enabled;
             this.mnuEditSearch.Enabled = enabled;
-            this.mnuDataBaseEditStrConnect.Enabled = enabled;
+            this.mnuDataBaseSQLServerConnection.Enabled = enabled;
             this.mnuDataBaseSetToMainConnect.Enabled = enabled;
-            this.mnuDataBaseEditEx.Enabled = enabled;
+            this.mnuDataBaseEditDataSource.Enabled = enabled;
             this.mnuDataBaseConnectsAuxCfg.Enabled = enabled;
             this.mnuViewGridMain.Enabled = enabled;
             this.mnuViewToolbar.Enabled = enabled;
@@ -416,6 +416,56 @@ namespace CSReportEditor
             if (editor != null)
             {
                 editor.search();
+            }
+        }
+
+        private void tsbProperties_Click(object sender, EventArgs e)
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.showProperties();
+            }
+        }
+
+        private void mnuDataBaseSQLServerConnection_Click(object sender, EventArgs e)
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.setSimpleConnection();
+            }
+        }
+
+        private void mnuDataBaseConnectConfig_Click(object sender, EventArgs e)
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.editConnectionString();
+            }
+        }
+
+        private void mnuDataBaseEditDataSource_Click(object sender, EventArgs e)
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.editDataSource();
+            }
+        }
+
+        private void mnuExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void mnuParametersSettings_Click(object sender, EventArgs e)
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.setParameters();
             }
         }
     }
