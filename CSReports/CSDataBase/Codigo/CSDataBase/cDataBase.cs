@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Data.SqlClient;
 using System.Data.OracleClient;
 using CSKernelClient;
 using System.Globalization;
@@ -23,11 +24,11 @@ namespace CSDataBase
         private const string c_module = "cDataBase";
         private const string c_ErrorSqlInfoAdd = "@@ErrorSqlInfoAdd@@";
 
-        private OracleConnection m_ocn = null;
-        private OracleTransaction m_otxn = null;
+        private DbConnection m_ocn = null;
+        private DbTransaction m_otxn = null;
         private string m_connect = "";
 
-        private OracleDataReader m_ors = null;
+        private DbDataReader m_ors = null;
         private bool m_eofField = false;
         private int m_nextField = 0;
         private eFieldType m_fieldType;
@@ -53,6 +54,8 @@ namespace CSDataBase
         private string m_lastDbError = "";
 
         private bool m_eof = false;
+
+        private csDatabaseEngine m_databaseEngine = csDatabaseEngine.SQL_SERVER;
 
         public event OpenRsProgress openRsProgress;
 
@@ -127,7 +130,7 @@ namespace CSDataBase
             get { return m_transactionLevel; }
         }
 
-        public OracleDataReader ors
+        public DbDataReader ors
         {
             set
             {
@@ -250,13 +253,13 @@ namespace CSDataBase
         }
 
         public bool saveSp(string sqlstmt,
-                           out OracleDataReader ors)
+                           out DbDataReader ors)
         {
             return saveSp(sqlstmt, out ors, -1, "", "", "Error", 0);
         }
 
         public bool saveSp(string sqlstmt,
-                           out OracleDataReader ors,
+                           out DbDataReader ors,
                            int timeout,
                            string function,
                            string module,
@@ -274,6 +277,12 @@ namespace CSDataBase
             return rtn;
         }
 
+        // list of sql schema names
+        // https://msdn.microsoft.com/en-us/library/ms254969(v=vs.110).aspx
+        //
+        // how to create restriction array
+        // https://msdn.microsoft.com/en-us/library/ms136366(v=vs.110).aspx
+        //
         public DataTable openSchema()
         {
             return m_ocn.GetSchema();
@@ -316,7 +325,7 @@ namespace CSDataBase
                 closeDb();
                 if (m_ocn == null)
                 {
-                    m_ocn = new OracleConnection();
+                    m_ocn = createConnection();
                 }
                 m_originalStrConnect = connect;
                 if (connect == "")
@@ -365,7 +374,7 @@ namespace CSDataBase
             }
         }
 
-        public bool update(DataRow dr, DataTable dt, OracleDataAdapter da)
+        public bool update(DataRow dr, DataTable dt, DbDataAdapter da)
         {
             try
             {
@@ -380,7 +389,7 @@ namespace CSDataBase
             }
         }
 
-        public bool delete(DataRow dr, DataTable dt, OracleDataAdapter da)
+        public bool delete(DataRow dr, DataTable dt, DbDataAdapter da)
         {
             try
             {
@@ -399,7 +408,7 @@ namespace CSDataBase
                              bool raiseProgressEvent,
                              bool showModal,
                              string sqlstmt,
-                             out OracleDataReader ors)
+                             out DbDataReader ors)
         {
             return openRsEx(showWindowCancel,
                             raiseProgressEvent,
@@ -420,7 +429,7 @@ namespace CSDataBase
                                      string module,
                                      string title)
         {
-            OracleDataReader ors;
+            DbDataReader ors;
             if (openRsEx(showWindowCancel,
                             raiseProgressEvent,
                             showModal,
@@ -452,7 +461,7 @@ namespace CSDataBase
                                      string module,
                                      string title)
         {
-            OracleDataReader ors;
+            DbDataReader ors;
             if (openRsEx(showWindowCancel,
                             raiseProgressEvent,
                             showModal,
@@ -479,7 +488,7 @@ namespace CSDataBase
                              bool raiseProgressEvent,
                              bool showModal,
                              string sqlstmt,
-                             out OracleDataReader ors,
+                             out DbDataReader ors,
                              string function,
                              string module,
                              string title)
@@ -566,9 +575,9 @@ namespace CSDataBase
             }
         }
 
-        public OracleDataReader asyncOpenRsEx(string sqlstmt)
+        public DbDataReader asyncOpenRsEx(string sqlstmt)
         {
-            OracleCommand ocmd = new OracleCommand();
+            DbCommand ocmd = new OracleCommand();
             ocmd.Connection = m_ocn;
             ocmd.CommandText = sqlstmt;
             ocmd.CommandType = CommandType.Text;
@@ -576,7 +585,7 @@ namespace CSDataBase
         }
 
         public bool openRs(string sqlstmt,
-                           out OracleDataReader ors,
+                           out DbDataReader ors,
                            string function,
                            string module,
                            string title,
@@ -602,7 +611,7 @@ namespace CSDataBase
         }
 
         private bool pOpenRs(string sqlstmt,
-                             out OracleDataReader ors,
+                             out DbDataReader ors,
                              string function,
                              string module,
                              string title,
@@ -612,7 +621,7 @@ namespace CSDataBase
             ors = null;
             try
             {
-                OracleCommand ocmd = new OracleCommand(sqlstmt, m_ocn);
+                DbCommand ocmd = new OracleCommand(sqlstmt, m_ocn as OracleConnection);
                 ors = ocmd.ExecuteReader();
                 return true;
             }
@@ -631,10 +640,10 @@ namespace CSDataBase
             dt = null;
             try
             {
-                OracleCommand ocmd = new OracleCommand();
+                DbCommand ocmd = new OracleCommand();
                 ocmd.Connection = m_ocn;
                 ocmd.CommandText = sqlstmt;
-                OracleDataAdapter oda = new OracleDataAdapter(ocmd);
+                DbDataAdapter oda = new OracleDataAdapter(ocmd as OracleCommand);
                 dt = new DataTable();
                 oda.Fill(dt);
                 return true;
@@ -827,7 +836,7 @@ namespace CSDataBase
         {
             try
             {
-                OracleCommand ocmd = new OracleCommand(sqlstmt, m_ocn);
+                DbCommand ocmd = new OracleCommand(sqlstmt, m_ocn as OracleConnection);
                 ocmd.ExecuteNonQuery();
                 return true;
             }
@@ -905,7 +914,7 @@ namespace CSDataBase
                     m_ocn.Dispose();
                     m_ocn = null;
                 }
-                m_ocn = new OracleConnection();
+                m_ocn = createConnection();
             }
             catch (Exception ex)
             {
@@ -1027,7 +1036,7 @@ namespace CSDataBase
                             string title,
                             eErrorLevel level)
         {
-            OracleDataReader ors;
+            DbDataReader ors;
 
             data = "";
 
@@ -1053,7 +1062,7 @@ namespace CSDataBase
                             string title,
                             eErrorLevel level)
         {
-            OracleDataReader ors;
+            DbDataReader ors;
 
             data = 0;
 
@@ -1079,7 +1088,7 @@ namespace CSDataBase
                             string title,
                             eErrorLevel level)
         {
-            OracleDataReader ors;
+            DbDataReader ors;
 
             data = 0;
 
@@ -1105,7 +1114,7 @@ namespace CSDataBase
                             string title,
                             eErrorLevel level)
         {
-            OracleDataReader ors;
+            DbDataReader ors;
 
             data = cConstants.C_NO_DATE;
 
@@ -1125,7 +1134,7 @@ namespace CSDataBase
                               string fieldId,
                               string id,
                               string field,
-                              out OracleDataReader ors,
+                              out DbDataReader ors,
                               string function,
                               string module,
                               string title,
@@ -1191,14 +1200,14 @@ namespace CSDataBase
             {
 
                 string sqlstmt;
-                OracleDataReader ors;
-                OracleCommand ocmd;
+                DbDataReader ors;
+                DbCommand ocmd;
 
                 sqlstmt = "sp_dbgetnewid "
                                 + sqlString(table) + ","
                                 + sqlString(fieldId) + ",0";
 
-                ocmd = new OracleCommand(sqlstmt, m_ocn);
+                ocmd = new OracleCommand(sqlstmt, m_ocn as OracleConnection);
                 ors = ocmd.ExecuteReader();
                 if (ors.Read())
                 {
@@ -1561,13 +1570,84 @@ namespace CSDataBase
 
         private void pConnect()
         {
-            m_ocn.ConnectionString = m_connect;
+            m_ocn.ConnectionString = translateFromAdoIfNeeded(m_connect);
             m_ocn.Open();
         }
 
-        public cDataBase()
+        public cDataBase(csDatabaseEngine databaseEngine)
         {
-
+            m_databaseEngine = databaseEngine;
         }
+
+        private DbConnection createConnection()
+        {
+            switch (m_databaseEngine)
+            { 
+                case csDatabaseEngine.SQL_SERVER:
+                    return new SqlConnection();
+                case csDatabaseEngine.POSTGRESQL:
+                    throw new NotImplementedException();
+                case csDatabaseEngine.ORACLE:
+                    return new OracleConnection();
+            }
+            throw new Exception("The database engine is not supported " + m_databaseEngine.ToString());
+        }
+
+        /*
+            
+         * // .NET DataProvider -- Standard Connection with username and password
+
+            SqlConnection conn = new SqlConnection();
+            conn.ConnectionString =
+            "Data Source=ServerName;" +
+            "Initial Catalog=DataBaseName;" +
+            "User id=UserName;" +
+            "Password=Secret;";
+            conn.Open();
+
+         * // .NET DataProvider -- Trusted Connection
+            SqlConnection conn = new SqlConnection();
+            conn.ConnectionString =
+            "Data Source=ServerName;" +
+            "Initial Catalog=DataBaseName;" +
+            "Integrated Security=SSPI;";
+            conn.Open();
+         
+         * ADO
+         * "Provider=SQLOLEDB.1;Integrated Security=SSPI;Persist Security Info=False;Initial Catalog=cairo;Data Source=daimaku;"
+         * 
+         */
+        private string translateFromAdoIfNeeded(string strConnect)
+        {
+            if (m_databaseEngine == csDatabaseEngine.SQL_SERVER)
+            {
+
+                if (strConnect.IndexOf("Provider=") > -1)
+                {
+                    var dataSource = cUtil.getToken("Data Source", strConnect);
+                    var initialCatalog = cUtil.getToken("Initial Catalog", strConnect);
+                    var trusted = cUtil.getToken("Integrated Security", strConnect);
+                    var userId = cUtil.getToken("User ID", strConnect);
+                    var password = cUtil.getToken("Password", strConnect);
+                    if (trusted == "SSPI")
+                    {
+                        strConnect = String.Format("Data Source={0};Initial Catalog={1};Integrated Security=SSPI;", dataSource, initialCatalog);
+                    }
+                    else
+                    {
+                        strConnect = String.Format("Data Source={0};Initial Catalog={1};User id={2};Password={3};", dataSource, initialCatalog, userId, password);
+                    }
+                }
+            }
+            return strConnect;
+        }
+
+    }
+
+    public enum csDatabaseEngine
+    { 
+        SQL_SERVER = 1,
+        POSTGRESQL = 2,
+        ORACLE = 3
     }
 }

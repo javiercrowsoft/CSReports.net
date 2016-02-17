@@ -84,7 +84,7 @@ namespace CSReportEditor
 
         private void cmd_apply_Click(object sender, EventArgs e)
         {
-            if (tx_user.Text == "")
+            if (op_sqlConnection.Checked && tx_user.Text == "")
             {
                 cWindow.msgWarning("You must indicate a user");
             }

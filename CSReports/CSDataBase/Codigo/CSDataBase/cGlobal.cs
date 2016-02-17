@@ -1,5 +1,5 @@
 ﻿using System;
-
+using CSKernelClient;
 
 namespace CSDataBase
 {
@@ -36,6 +36,47 @@ namespace CSDataBase
             }
             return false;
         }
+
+        public static csDataType getDataTypeFromString(string dataType)
+        {
+            switch (dataType)
+            { 
+                case "datetime":
+                case "datetime2":
+                case "date":
+                    return csDataType.CSTDDBDATE;
+                case "tinyint":
+                    return csDataType.CSTDTINYINT;
+                case "smallint":
+                    return csDataType.CSTDSMALLINT;
+                case "int":
+                    return csDataType.CSTDINTEGER;
+                case "bigint":
+                    return csDataType.CSTDBIGINT;
+                case "char":
+                case "varchar":
+                case "text":
+                case "nchar":
+                case "nvarchar":
+                case "ntext": 
+                    return csDataType.CSTDVARCHAR;
+                case "smallmoney":
+                case "money":
+                case "decimal":
+                case "numeric":
+                    return csDataType.CSTDDECIMAL;
+                case "real":
+                case "float":
+                    return csDataType.CSTDDOUBLE;
+                
+                // TODO: remove me
+                default:
+                    cWindow.msgWarning("The data type [" + dataType + "] is not matched in CSDatabase.cDatabaseGlobals.getDataTypeFromString");
+                    return csDataType.CSTDVARCHAR;
+            }
+            throw new Exception("The data type [" + dataType + "] is not matched in CSDatabase.cDatabaseGlobals.getDataTypeFromString");
+        }
+
     }
 
     public enum csDataType

@@ -61,7 +61,7 @@ namespace CSConnect
 
             for (int j = 0; j < m_parameters.count(); j++) 
             {
-                cParameter parameter = m_parameters.item(j);
+                cParameter parameter = m_parameters.getByPosition(j+1);
 
                 System.Windows.Forms.Label label = new System.Windows.Forms.Label();
                 label.AutoSize = true;
@@ -74,7 +74,7 @@ namespace CSConnect
                 input.Text = parameter.getValue();
                 input.Tag = parameter.getKey();
 
-                switch(parameter.getTypeColumn())
+                switch(parameter.getColumnType())
                 {
                     case csDataType.CSTDLONGVARCHAR:
                     case csDataType.CSTDCHAR:

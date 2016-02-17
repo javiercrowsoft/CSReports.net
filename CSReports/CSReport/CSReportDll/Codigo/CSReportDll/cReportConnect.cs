@@ -125,7 +125,7 @@ namespace CSReportDll
             for (int _i = 0; _i < m_parameters.count(); _i++)
             {
                 param = m_parameters.item(_i);
-                switch (param.getTypeColumn())
+                switch (param.getColumnType())
                 {
                     case CSDataBase.csDataType.CSTDWCHAR:
                         /*
@@ -162,7 +162,7 @@ namespace CSReportDll
                         break;
                     default:
                         cWindow.msgWarning("This data type is not codified "
-                                            + param.getTypeColumn()
+                                            + param.getColumnType()
                                             + ". Parameter: " + param.getName()
                                             + ". Function: sqlParameters.");
                         break;

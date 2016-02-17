@@ -9,6 +9,7 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.Data.Common;
 using System.Data.OracleClient;
 using CSKernelClient;
 
@@ -20,10 +21,10 @@ namespace CSDataBase
     {
         private const string c_module = "cDataBase";
 
-        private delegate OracleDataReader delegateAsyncOpenRsEx(string sqlstmt);
+        private delegate DbDataReader delegateAsyncOpenRsEx(string sqlstmt);
 
         private delegateAsyncOpenRsEx m_invoke = null;
-        private OracleDataReader m_ors = null;
+        private DbDataReader m_ors = null;
         private string m_sqlstmt = "";
         private bool m_done = false;
 
@@ -37,7 +38,7 @@ namespace CSDataBase
             get { return m_ors != null; }
         }
 
-        public OracleDataReader ors
+        public DbDataReader ors
         {
             get { return m_ors; }
         }

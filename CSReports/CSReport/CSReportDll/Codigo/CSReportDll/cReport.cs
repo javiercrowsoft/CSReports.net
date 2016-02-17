@@ -11,6 +11,7 @@ using System.IO;
 using CSKernelClient;
 using CSReportGlobals;
 using CSKernelFile;
+using CSDataBase;
 
 namespace CSReportDll
 {
@@ -4808,7 +4809,7 @@ namespace CSReportDll
                     return false;
                 }
 
-                cn = new CSDataBase.cDataBase();
+                cn = new cDataBase(csDatabaseEngine.SQL_SERVER);
 
                 if (m_isForWeb)
                 {
@@ -5229,7 +5230,7 @@ namespace CSReportDll
                 // get the datasource's name
                 //
                 String fileName = "";
-                fileName = getToken(connectString, "Data Source");
+                fileName = cUtil.getToken(connectString, "Data Source");
 
                 // ask to the user if he wan to search for the database file
                 //
@@ -5288,6 +5289,7 @@ namespace CSReportDll
             }
         }
 
+        /* TODO: remove me
         private String getToken(String source, String token)
         {
             token = token.Trim();
@@ -5309,7 +5311,7 @@ namespace CSReportDll
             p2 = p2 + token.Length - 1;
             p = p - p2;
             return source.Substring(p2, p);
-        }
+        }*/
 
         private void pSortControlsByLeft()
         {

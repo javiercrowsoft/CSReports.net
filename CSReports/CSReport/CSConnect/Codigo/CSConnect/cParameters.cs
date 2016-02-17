@@ -174,6 +174,19 @@ namespace CSConnect
             }
         }
 
+        public cParameter getByPosition(int position)
+        {
+            for (var i = 0; i < count(); i++)
+            {
+                cParameter p = item(i);
+                if (p.getPosition() == position) 
+                {
+                    return p;
+                }
+            }
+            throw new Exception("This parameters collection doesn't contain a parameter with a position = " + position.ToString());
+        }
+
         public cParameter item(int index)
         {
             try

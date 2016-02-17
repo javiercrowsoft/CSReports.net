@@ -10,13 +10,13 @@ namespace CSConnect
         private const String C_MODULE = "cParameter";
 
         private String m_name = "";
-        private CSDataBase.csDataType m_typeColumn;
+        private CSDataBase.csDataType m_columnType;
         private String m_value = "";
         private int m_position = 0;
         private String m_key = "";
         private bool m_hasDefault;
         private String m_default = "";
-        private bool m_isNullable;
+        private bool m_isNullable = true;
         private int m_maxLength = 0;
 
         public String getKey()
@@ -39,14 +39,14 @@ namespace CSConnect
             m_name = rhs;
         }
 
-        public CSDataBase.csDataType getTypeColumn()
+        public CSDataBase.csDataType getColumnType()
         {
-            return m_typeColumn;
+            return m_columnType;
         }
 
-        public void setTypeColumn(CSDataBase.csDataType rhs)
+        public void setColumnType(CSDataBase.csDataType rhs)
         {
-            m_typeColumn = rhs;
+            m_columnType = rhs;
         }
 
         public String getValue()

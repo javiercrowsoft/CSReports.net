@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Data;
 using CSReportGlobals;
+using CSDataBase;
 
 namespace CSConnect
 {
@@ -21,7 +23,46 @@ namespace CSConnect
 
         public bool fillParameters(string dataSource)
         {
-            return true;
+            cDataBase db = new cDataBase(csDatabaseEngine.SQL_SERVER);
+            if (db.initDb(m_strConnect))
+            {
+                string[] restrictions = new string[4];
+                restrictions[2] = dataSource;
+                DataTable dt = db.openSchema("ProcedureParameters", restrictions);
+
+                if (m_parameters == null) m_parameters = new cParameters();
+
+                cParameters parameters = new cParameters();
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    if (row["parameter_mode"].ToString() != "OUT") 
+                    {
+                        cParameter p = null;
+                        bool found = false;
+                        for (var i = 0; i < m_parameters.count(); i++)
+                        { 
+                            p = m_parameters.item(i);
+                            if (p.getName() == row["parameter_name"].ToString())
+                            {
+                                found = true;
+                                break;
+                            }
+                        }
+                        if (!found) p = null;
+                        p = parameters.add(p, "");
+                        p.setName(row["parameter_name"].ToString());
+                        p.setPosition((int)row["ordinal_position"]);
+                        p.setColumnType(cDatabaseGlobals.getDataTypeFromString(row["data_type"].ToString()));
+                    }
+                }
+
+                m_parameters = parameters;
+                
+                return true;
+            }
+
+            return false;
         }
 
 		public bool getDataSourceColumnsInfo(string str, csDataSourceType csDataSourceType)

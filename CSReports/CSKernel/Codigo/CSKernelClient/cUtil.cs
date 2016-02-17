@@ -160,6 +160,7 @@ namespace CSKernelClient
             return File.Exists(pathYName);
         }
 
+        /* TODO: remove me
         public static String getGetToken(String token, String source)
         {
             int i = 0;
@@ -197,6 +198,7 @@ namespace CSKernelClient
 
             return s;
         }
+        */
 
         public static void setSepDecimal()
         {
