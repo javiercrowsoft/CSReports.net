@@ -43,6 +43,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\CSDataBase\Codigo\CSDataBase\CSDataBase.csproj">
+      <Project>{A02FE16D-0B24-467E-BA97-6E1C1213AD46}</Project>
+      <Name>CSDataBase</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\CSKernel\Codigo\CSKernelClient\CSKernelClient.csproj">
       <Project>{B3932376-5FEA-4C07-9709-663989C7ECF2}</Project>
       <Name>CSKernelClient</Name>

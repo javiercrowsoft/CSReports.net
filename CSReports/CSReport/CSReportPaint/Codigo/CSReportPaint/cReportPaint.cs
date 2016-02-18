@@ -165,7 +165,7 @@ namespace CSReportPaint
         */
         public cReportPaintObject getPaintObject(String sKey)
         {
-            if (sKey.Substring(0, C_KEY_PAINT_OBJ.Length) == C_KEY_PAINT_OBJ)
+            if (cUtil.subString(sKey, 0, C_KEY_PAINT_OBJ.Length) == C_KEY_PAINT_OBJ)
             {
                 return m_paintObjects.item(sKey);
             }

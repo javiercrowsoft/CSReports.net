@@ -9,9 +9,6 @@ namespace CSReportGlobals
 {
     public static class cReportGlobals
     {
-        public const String C_SQL_DATE_STRING = "\'yyyymmdd HH:nn:ss\'";
-        public readonly static DateTime C_NO_DATE = DateTime.ParseExact("01/01/1900", "dd/mm/yyyy", CultureInfo.InvariantCulture);
-
         public const String C_KEYINDEXCOL = "indexcol";
         public const String C_KEYINDEXCOL2 = "indexcol2";
         public const String C_KEYINDEXGROUP = "indexgroup";
@@ -69,7 +66,7 @@ namespace CSReportGlobals
         {
             if (value == null)
             {
-                return C_NO_DATE;
+                return CSDataBase.cConstants.C_NO_DATE;
             }
             else
             {
@@ -80,7 +77,7 @@ namespace CSReportGlobals
                 }
                 else
                 {
-                    return C_NO_DATE;
+                    return CSDataBase.cConstants.C_NO_DATE;
                 }
             }
 
@@ -113,7 +110,7 @@ namespace CSReportGlobals
                     case System.TypeCode.UInt64:
                         return 0;
                     case System.TypeCode.DateTime:
-                        return C_NO_DATE;
+                        return CSDataBase.cConstants.C_NO_DATE;
                     case System.TypeCode.Boolean:
                         return false;
                     default:
@@ -131,7 +128,7 @@ namespace CSReportGlobals
             System.TypeCode typeCode = System.Type.GetTypeCode(expression.GetType());
             if (typeCode == System.TypeCode.DateTime)
             {
-                if ((DateTime)expression == C_NO_DATE)
+                if ((DateTime)expression == CSDataBase.cConstants.C_NO_DATE)
                 {
                     return "";
                 }

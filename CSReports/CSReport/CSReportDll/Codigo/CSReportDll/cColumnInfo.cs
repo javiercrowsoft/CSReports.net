@@ -16,7 +16,8 @@ namespace CSReportDll
         private String m_name = "";
         private CSDataBase.csDataType m_columnType;
 
-        private String m_value = "";
+        // TODO: remove me
+        //private String m_value = "";
         private int m_position = 0;
         private String m_key = "";
 
@@ -50,6 +51,8 @@ namespace CSReportDll
             m_columnType = rhs;
         }
 
+        // TODO: remove me
+        /*
         public String getValue()
         {
             return m_value;
@@ -59,7 +62,7 @@ namespace CSReportDll
         {
             m_value = rhs;
         }
-
+        */
         public int getPosition()
         {
             return m_position;
@@ -73,7 +76,8 @@ namespace CSReportDll
         internal bool load(CSXml.cXml xDoc, XmlNode nodeObj)
         {
             m_columnType = (CSDataBase.csDataType)xDoc.getNodeProperty(nodeObj, "TypeColumn").getValueInt(eTypes.eInteger);
-            m_value = xDoc.getNodeProperty(nodeObj, "Value").getValueString(eTypes.eText);
+            // TODO: remove me
+            //m_value = xDoc.getNodeProperty(nodeObj, "Value").getValueString(eTypes.eText);
             m_position = xDoc.getNodeProperty(nodeObj, "Position").getValueInt(eTypes.eInteger);
             m_name = xDoc.getNodeProperty(nodeObj, "Name").getValueString(eTypes.eText);
             m_key = xDoc.getNodeProperty(nodeObj, "Key").getValueString(eTypes.eText);
@@ -106,10 +110,12 @@ namespace CSReportDll
             xProperty.setValue(eTypes.eInteger, m_columnType);
             xDoc.addPropertyToNode(nodeObj, xProperty);
 
+            // TODO: remove me
+            /*
             xProperty.setName("Value");
             xProperty.setValue(eTypes.eText, m_value);
             xDoc.addPropertyToNode(nodeObj, xProperty);
-
+            */
             return true;
         }
 

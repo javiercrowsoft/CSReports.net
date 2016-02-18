@@ -79,6 +79,9 @@ namespace CSReportEditor
                 {
                     if (getCtrlTreeBox(editor) != null) { editor.showControlsTree(); }
                 }
+                fmain.showControls(editor);
+                fmain.showControlsTree(editor);
+                fmain.showFields(editor);
             }
 	    }
 
@@ -166,12 +169,12 @@ namespace CSReportEditor
             return "";
         }
 
-        internal static fSearch getSearch()
+        public static fSearch getSearch()
         {
             return m_fSearch;
         }
 
-        internal static fSearch getSearch(cEditor editor)
+        public static fSearch getSearch(cEditor editor)
         {
             if (m_fSearch == null || m_fSearch.IsDisposed)
             {
@@ -181,12 +184,12 @@ namespace CSReportEditor
             return m_fSearch;
         }
 
-        internal static fToolbox getToolbox()
+        public static fToolbox getToolbox()
         {
             return m_fToolbox;
         }
 
-        internal static fToolbox getToolbox(cEditor editor)
+        public static fToolbox getToolbox(cEditor editor)
         {
             if (m_fToolbox == null || m_fToolbox.IsDisposed)
             {
@@ -196,12 +199,12 @@ namespace CSReportEditor
             return m_fToolbox;
         }
 
-        internal static fControls getCtrlBox()
+        public static fControls getCtrlBox()
         {
             return m_fControls;
         }
 
-        internal static fControls getCtrlBox(cEditor editor)
+        public static fControls getCtrlBox(cEditor editor)
         {
             if (m_fControls == null || m_fControls.IsDisposed)
             {
@@ -211,12 +214,12 @@ namespace CSReportEditor
             return m_fControls;
         }
 
-        internal static fTreeViewCtrls getCtrlTreeBox()
+        public static fTreeViewCtrls getCtrlTreeBox()
         {
             return m_fTreeViewCtrls;
         }
 
-        internal static fTreeViewCtrls getCtrlTreeBox(cEditor editor)
+        public static fTreeViewCtrls getCtrlTreeBox(cEditor editor)
         {
             if (m_fTreeViewCtrls == null || m_fTreeViewCtrls.IsDisposed)
             {
@@ -226,7 +229,7 @@ namespace CSReportEditor
             return m_fTreeViewCtrls;
         }
 
-        internal static void clearToolbox(cEditor editor)
+        public static void clearToolbox(cEditor editor)
         {
             if (m_editor == editor)
             {
@@ -235,6 +238,11 @@ namespace CSReportEditor
                     m_fToolbox.clear();
                 }
             }
+        }
+
+        public static void showProperties(string key)
+        {
+            fmain.showProperties(m_editor, key);            
         }
     }
 

@@ -48,7 +48,7 @@ namespace CSReportEditor
             //
             // se me cae un lagrimon :(
             //
-            m_picReport.MouseEnter += (s, e) => { editor.Focus(); };
+            m_picReport.Click += (s, e) => { editor.Focus(); };
 
             // tab
             //
@@ -519,13 +519,57 @@ namespace CSReportEditor
             }
         }
 
-        private void m_fTreeCtrls_SetFocusSec(String secKey) {
+        public object getSectionOrSectionLineFromKey(string key)
+        {
+            object sec = getSectionOrSectionLineFromKey(key, m_report.getHeaders());
+            if (sec == null) 
+            {
+                sec = getSectionOrSectionLineFromKey(key, m_report.getGroupsHeaders());
+                if (sec == null)
+                {
+                    sec = getSectionOrSectionLineFromKey(key, m_report.getDetails());
+                    if (sec == null)
+                    {
+                        sec = getSectionOrSectionLineFromKey(key, m_report.getGroupsFooters());
+                        if (sec == null)
+                        {
+                            sec = getSectionOrSectionLineFromKey(key, m_report.getFooters());
+                        }
+                    }
+                }
+            }
+            
+            return sec;
+        }
+
+        private object getSectionOrSectionLineFromKey(string key, cIReportGroupSections sections)
+        {
+            for (int i = 0; i < sections.count(); i++)
+            {
+                var sec = sections.item(i);
+                if (sec.getKey() == key)
+                {
+                    return sec;
+                }
+                else {
+                    var secLn = sec.getSectionLines().item(key);
+                    if (secLn != null)
+                    {
+                        return secLn;
+                    }
+                }
+            }
+            return null;
+        }
+
+        public void selectSection(String secKey)
+        {
             try {
 
                 pSelectSection(secKey);
 
             } catch (Exception ex) {
-                cError.mngError(ex, "m_fTreeCtrls_SetFocusSec", C_MODULE, "");
+                cError.mngError(ex, "setelectSection", C_MODULE, "");
             }
         }
 
@@ -542,12 +586,13 @@ namespace CSReportEditor
             m_keyFocus = sKey;
             m_keyObj = sKey;
             m_paint.setFocus(m_keyFocus, m_picReport.CreateGraphics(), true);
+            cMainEditor.showProperties(ctrlKey);
         }
 
 		private void pSelectSection(String secKey) 
 		{
 			bool bIsSecLn = false;
-			pSelectSection (secKey, out bIsSecLn);
+			pSelectSection(secKey, out bIsSecLn);
 		}
 
         private void pSelectSection(String secKey, out bool bIsSecLn) {
@@ -632,6 +677,7 @@ namespace CSReportEditor
             m_keyFocus = sKey;
             m_keyObj = sKey;
             m_paint.setFocus(m_keyFocus, m_picReport.CreateGraphics(), true);
+            cMainEditor.showProperties("S" + secKey);
         }
 
         private cReportSectionLine pGetSecLnFromKey(
@@ -1129,8 +1175,8 @@ namespace CSReportEditor
 
                                     m_moveType = csRptEditorMoveType.CSRPTEDMOVTVERTICAL;
                                     m_picReport.Cursor = Cursors.SizeNS;
-
                                     break;
+
                                 default:
                                     if (po.getRptType() == csRptTypeSection.DETAIL
                                         || po.getRptType() == csRptTypeSection.HEADER
@@ -1207,10 +1253,17 @@ namespace CSReportEditor
                     m_keyObj = sKey;
                     m_paint.setFocus(m_keyFocus, m_picReport.CreateGraphics(), bClearSelected);
 
+                    CSReportPaint.cReportPaintObject poSelected = m_paint.getPaintObject(sKey);
+                    if (poSelected != null)
+                    {
+                        cMainEditor.showProperties(
+                            poSelected.getIsSection()
+                            ? "S" + poSelected.getTag() 
+                            : poSelected.getTag());
+                    }                    
                 }
                 else if (button == MouseButtons.Right)
                 {
-
                     m_keySizing = "";
                     m_keyMoving = "";
                     m_keyObj = "";
@@ -1253,10 +1306,14 @@ namespace CSReportEditor
                             if (isSecLn) { noDelete = true; }
 
                             showPopMenuSection(noDelete, isGroup, x, y);
+
+                            cMainEditor.showProperties("S" + po.getTag());
                         }
                         else
                         {
                             showPopMenuControl(true, x, y);
+                            
+                            cMainEditor.showProperties(po.getTag());
                         }
                     }
                     else
@@ -3503,7 +3560,7 @@ namespace CSReportEditor
             if (secLn == null) { return; }
             if (!isSecLn) { return; }
 
-            pShowSecProperties(secLn, sec.getName() + " - line " + secLn.getIndex().ToString());
+            pShowSecProperties(secLn, sec.getName() + " - line " + secLn.getRealIndex().ToString());
 
             refreshAll();
         }
@@ -3531,7 +3588,7 @@ namespace CSReportEditor
                     m_fSecProperties.txName.Enabled = false;
                 }
 
-                m_fSecProperties.txName.Text = sec.getName();
+                m_fSecProperties.txName.Text = sec is cReportSectionLine ? secLnName : sec.getName();
 
                 m_fSecProperties.lbSectionName.Text = "Section: " + (sec is cReportSectionLine ? secLnName : sec.getName());
 
@@ -3713,8 +3770,25 @@ namespace CSReportEditor
 
         public void showProperties(string key)
         {
-            selectCtrl(key);
-            showProperties();
+            if ("SL".IndexOf(cUtil.subString(key, 0, 1)) != -1)
+            {
+                bool bIsSecLn = false;
+                pSelectSection(key.Substring(1), out bIsSecLn);
+
+                if (bIsSecLn)
+                {
+                    showSecLnProperties();
+                }
+                else
+                {
+                    showProperties();
+                }
+            }
+            else
+            {
+                selectCtrl(key);
+                showProperties();
+            }                        
         }
 
         public void showProperties() {
@@ -6444,7 +6518,7 @@ namespace CSReportEditor
             }
         }
 
-        internal void editDataSource()
+        public void editDataSource()
         {
             string dataSource = m_report.getConnect().getDataSource();
             if (cUtil.getInput(ref dataSource, "You can modify the data source of this report", "Data Source"))

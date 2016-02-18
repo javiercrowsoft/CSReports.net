@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="cColumnInfo.cs" />
+    <Compile Include="cColumnsInfo.cs" />
     <Compile Include="cConnect.cs" />
     <Compile Include="cParameter.cs" />
     <Compile Include="cParameters.cs" />

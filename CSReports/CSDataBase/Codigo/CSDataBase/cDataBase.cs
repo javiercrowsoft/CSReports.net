@@ -45,11 +45,11 @@ namespace CSDataBase
         private bool m_openRsCancel = false;
         private string m_openRsExDescript = "";
 
-        private int m_commandTimeout = 0;
-        private int m_connectionTimeout = 0;
+        private int m_commandTimeout = 180;
+        private int m_connectionTimeout = 180;
 
-        private int m_maxTryOpenRs = 0;
-        private int m_maxTryExecute = 0;
+        private int m_maxTryOpenRs = 2;
+        private int m_maxTryExecute = 2;
 
         private string m_lastDbError = "";
 
@@ -577,10 +577,7 @@ namespace CSDataBase
 
         public DbDataReader asyncOpenRsEx(string sqlstmt)
         {
-            DbCommand ocmd = new OracleCommand();
-            ocmd.Connection = m_ocn;
-            ocmd.CommandText = sqlstmt;
-            ocmd.CommandType = CommandType.Text;
+            DbCommand ocmd = createCommand(sqlstmt);
             return ocmd.ExecuteReader(CommandBehavior.Default);
         }
 
@@ -621,7 +618,7 @@ namespace CSDataBase
             ors = null;
             try
             {
-                DbCommand ocmd = new OracleCommand(sqlstmt, m_ocn as OracleConnection);
+                DbCommand ocmd = createCommand(sqlstmt);
                 ors = ocmd.ExecuteReader();
                 return true;
             }
@@ -640,9 +637,7 @@ namespace CSDataBase
             dt = null;
             try
             {
-                DbCommand ocmd = new OracleCommand();
-                ocmd.Connection = m_ocn;
-                ocmd.CommandText = sqlstmt;
+                DbCommand ocmd = createCommand(sqlstmt);
                 DbDataAdapter oda = new OracleDataAdapter(ocmd as OracleCommand);
                 dt = new DataTable();
                 oda.Fill(dt);
@@ -836,7 +831,7 @@ namespace CSDataBase
         {
             try
             {
-                DbCommand ocmd = new OracleCommand(sqlstmt, m_ocn as OracleConnection);
+                DbCommand ocmd = createCommand(sqlstmt);
                 ocmd.ExecuteNonQuery();
                 return true;
             }
@@ -857,7 +852,15 @@ namespace CSDataBase
 
         public string sqlDate(string val)
         {
-            return String.Format(cConstants.C_SQL_DATE_STRING, val);
+            DateTime dt;
+            if (DateTime.TryParseExact(val, "MM/dd/yyyy", null, DateTimeStyles.None, out dt)) { }
+            else if (DateTime.TryParseExact(val, "dd/MM/yyyy", null, DateTimeStyles.None, out dt)) { }
+            else if (DateTime.TryParseExact(val, "MM-dd-yyyy", null, DateTimeStyles.None, out dt)) { }
+            else if (DateTime.TryParseExact(val, "dd-MM-yyyy", null, DateTimeStyles.None, out dt)) { }
+            else if (DateTime.TryParseExact(val, "MM.dd.yyyy", null, DateTimeStyles.None, out dt)) { }
+            else if (DateTime.TryParseExact(val, "dd.MM.yyyy", null, DateTimeStyles.None, out dt)) { }
+            else throw new Exception("Invalid date " + val);
+            return "'" + dt.ToString(cConstants.C_SQL_DATE_STRING, CultureInfo.InvariantCulture) + "'";                        
         }
 
         public string sqlNumber(string val)
@@ -1207,7 +1210,7 @@ namespace CSDataBase
                                 + sqlString(table) + ","
                                 + sqlString(fieldId) + ",0";
 
-                ocmd = new OracleCommand(sqlstmt, m_ocn as OracleConnection);
+                ocmd = createCommand(sqlstmt);
                 ors = ocmd.ExecuteReader();
                 if (ors.Read())
                 {
@@ -1591,6 +1594,31 @@ namespace CSDataBase
                     return new OracleConnection();
             }
             throw new Exception("The database engine is not supported " + m_databaseEngine.ToString());
+        }
+
+        private DbCommand createCommand(string sqlstmt)
+        {
+            DbCommand ocmd = null;
+            
+            switch (m_databaseEngine)
+            {
+                case csDatabaseEngine.SQL_SERVER:
+                    ocmd = new SqlCommand(sqlstmt, m_ocn as SqlConnection);
+                    break;
+                case csDatabaseEngine.POSTGRESQL:
+                    throw new NotImplementedException();
+                case csDatabaseEngine.ORACLE:
+                    ocmd = new OracleCommand(sqlstmt, m_ocn as OracleConnection);
+                    break;
+            }
+            
+            if(ocmd == null)
+                throw new Exception("The database engine is not supported " + m_databaseEngine.ToString());
+            
+            ocmd.CommandTimeout = m_commandTimeout;
+            ocmd.CommandType = CommandType.Text;
+            
+            return ocmd;
         }
 
         /*

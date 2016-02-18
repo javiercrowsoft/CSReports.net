@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
+using System.Data.Common;
 using CSReportGlobals;
 using CSDataBase;
 
@@ -11,6 +12,7 @@ namespace CSConnect
     public class cConnect
     {
         private cParameters m_parameters = new cParameters();
+        private cColumnsInfo m_columnsInfo = new cColumnsInfo();
 
         private string m_strConnect = "";
         private string m_dataSource = "";
@@ -20,6 +22,11 @@ namespace CSConnect
 		{
             return m_parameters;
 		}
+
+        public cColumnsInfo getColumnsInfo()
+        {
+            return m_columnsInfo;
+        }
 
         public bool fillParameters(string dataSource)
         {
@@ -98,6 +105,26 @@ namespace CSConnect
 
         private bool fillColumns(string sqlstmt)
         {
+            var db = new cDataBase(csDatabaseEngine.SQL_SERVER);
+            if (db.initDb(m_strConnect))
+            {
+                DbDataReader rs;
+                if (db.openRs(sqlstmt, out rs, "fillColumns", "cConnect", "Update columns's definition", CSKernelClient.eErrorLevel.eErrorInformation))
+                {
+                    for (int i = 0; i < rs.FieldCount; i++)
+                    {
+                        var column = new cColumnInfo();
+                        column.setName(rs.GetName(i));
+                        column.setPosition(i);
+                        column.setColumnType((csDataType)System.Type.GetTypeCode((rs.GetFieldType(i))));
+                        m_columnsInfo.add(column, "");
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
             return true;
         }
 

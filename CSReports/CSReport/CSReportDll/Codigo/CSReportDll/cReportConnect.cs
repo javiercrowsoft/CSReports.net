@@ -158,7 +158,7 @@ namespace CSReportDll
                         case  CSDataBase.csDataType.CSTDDBDATE:
                         case  CSDataBase.csDataType.CSTDDATE:
                         */
-                        s = s + cReportGlobals.format(param.getValue(), cReportGlobals.C_SQL_DATE_STRING) + ",";
+                        s = s + "'" + cReportGlobals.format(param.getValue(), CSDataBase.cConstants.C_SQL_DATE_STRING) + "',";
                         break;
                     default:
                         cWindow.msgWarning("This data type is not codified "

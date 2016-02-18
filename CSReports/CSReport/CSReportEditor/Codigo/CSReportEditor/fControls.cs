@@ -33,54 +33,7 @@ namespace CSReportEditor
 
 		public void addCtrls(cReport report)
 		{
-            for(int i = 0; i < report.getControls().count(); i++)
-            {
-                var ctrl = report.getControls().item(i);
-                var ctrlName = ctrl.getName();
-                var ctrlInfo = "";
-                var ctrlField = "";
-
-                switch(ctrl.getControlType()) 
-                {
-                    case csRptControlType.CSRPTCTFIELD:
-                        ctrlField = ctrl.getField().getName();
-                        break;
-                    case csRptControlType.CSRPTCTDBIMAGE:
-                        ctrlInfo = ctrl.getField().getName();
-                        break;
-                    case csRptControlType.CSRPTCTIMAGE:
-                        ctrlInfo = " (Image)";
-                        break;
-                    case csRptControlType.CSRPTCTLABEL:
-                        ctrlInfo = ctrl.getLabel().getText();
-                        break;
-                }
-
-                if (ctrlInfo.Length > 0) 
-                {
-                    ctrlName += " (" + ctrlInfo + ")";
-                }
-
-                var item = lv_controls.Items.Add(ctrlName, C_CTRL_IMAGE);
-                item.Tag = ctrl.getKey();
-                item.SubItems.Add("");
-                item.SubItems.Add("");
-                item.SubItems.Add("");
-
-                if (ctrl.getHasFormulaValue()) item.SubItems[1].Text = "*";
-                if (ctrl.getHasFormulaHide()) item.SubItems[2].Text = "*";
-
-                if (ctrlField.Length > 0) 
-                {
-                    item.SubItems[3].Text = ctrlField;
-                    item.SubItems[3].ForeColor = Color.Blue;
-                    item.ImageIndex = C_DB_IMAGE;
-                }
-                if(ctrl.getName().Length > 4 && ctrl.getName().Substring(0,4) == "lnk_") 
-                {
-                    item.ForeColor = Color.Red;
-                }
-            }            
+            cGlobals.addCtrls(report, lv_controls, C_CTRL_IMAGE, C_DB_IMAGE);          
 		}
 
         public void setHandler(cEditor editor)
@@ -96,6 +49,7 @@ namespace CSReportEditor
             // to the ListView control.
             lvwColumnSorter = new cListViewColumnSorter();
             lv_controls.ListViewItemSorter = lvwColumnSorter;
+            lv_controls_ColumnClick(this, new ColumnClickEventArgs(0));
         }
 
         private void lv_controls_ColumnClick(object sender, ColumnClickEventArgs e)

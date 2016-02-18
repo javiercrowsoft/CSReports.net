@@ -47,6 +47,8 @@ namespace CSReportEditor
 
         internal void fillColumns(string dataSource, cColumnsInfo columns)
         {
+            cGlobals.fillColumns(dataSource, columns, lv_columns, C_INDEX, C_FIELDTYPE);
+            /*
             foreach (cColumnInfo column in columns) 
             {
                 var item = lv_columns.Items.Add(String.Format("{{{0}}}.{1}", dataSource, column.getName()));
@@ -55,6 +57,7 @@ namespace CSReportEditor
                 info = cUtil.setInfoString(info, C_FIELDTYPE, column.getColumnType().ToString());
                 item.Tag = info;
             }
+             */ 
         }
 
         internal void setField(string field)

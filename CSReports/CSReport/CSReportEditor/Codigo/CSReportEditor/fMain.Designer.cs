@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(fMain));
             this.mnMain = new System.Windows.Forms.MenuStrip();
             this.mnFile = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuNewReport = new System.Windows.Forms.ToolStripMenuItem();
@@ -120,15 +121,21 @@
             this.sbMain = new System.Windows.Forms.StatusStrip();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.tabControl2 = new System.Windows.Forms.TabControl();
+            this.tab_sidebar = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.listView2 = new System.Windows.Forms.ListView();
+            this.lv_controls = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.imageList = new System.Windows.Forms.ImageList(this.components);
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.lv_fields = new System.Windows.Forms.ListView();
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.treeView1 = new System.Windows.Forms.TreeView();
+            this.tv_controls = new System.Windows.Forms.TreeView();
+            this.imageListTree = new System.Windows.Forms.ImageList(this.components);
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.lv_properties = new System.Windows.Forms.ListView();
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabReports = new System.Windows.Forms.TabControl();
             this.tbpEditor = new System.Windows.Forms.TabPage();
             this.pnEditor = new System.Windows.Forms.Panel();
@@ -168,12 +175,11 @@
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.tabControl2.SuspendLayout();
+            this.tab_sidebar.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabPage5.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabReports.SuspendLayout();
             this.tbpEditor.SuspendLayout();
             this.pnEditor.SuspendLayout();
@@ -891,29 +897,29 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.tabControl2);
+            this.panel1.Controls.Add(this.tab_sidebar);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(226, 261);
             this.panel1.TabIndex = 0;
             // 
-            // tabControl2
+            // tab_sidebar
             // 
-            this.tabControl2.Controls.Add(this.tabPage3);
-            this.tabControl2.Controls.Add(this.tabPage4);
-            this.tabControl2.Controls.Add(this.tabPage5);
-            this.tabControl2.Controls.Add(this.tabPage1);
-            this.tabControl2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl2.Location = new System.Drawing.Point(0, 0);
-            this.tabControl2.Name = "tabControl2";
-            this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(226, 261);
-            this.tabControl2.TabIndex = 0;
+            this.tab_sidebar.Controls.Add(this.tabPage5);
+            this.tab_sidebar.Controls.Add(this.tabPage3);
+            this.tab_sidebar.Controls.Add(this.tabPage4);
+            this.tab_sidebar.Controls.Add(this.tabPage1);
+            this.tab_sidebar.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tab_sidebar.Location = new System.Drawing.Point(0, 0);
+            this.tab_sidebar.Name = "tab_sidebar";
+            this.tab_sidebar.SelectedIndex = 0;
+            this.tab_sidebar.Size = new System.Drawing.Size(226, 261);
+            this.tab_sidebar.TabIndex = 0;
             // 
             // tabPage3
             // 
-            this.tabPage3.Controls.Add(this.listView2);
+            this.tabPage3.Controls.Add(this.lv_controls);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
@@ -922,18 +928,39 @@
             this.tabPage3.Text = "Controls";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // listView2
+            // lv_controls
             // 
-            this.listView2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listView2.Location = new System.Drawing.Point(3, 3);
-            this.listView2.Name = "listView2";
-            this.listView2.Size = new System.Drawing.Size(212, 229);
-            this.listView2.TabIndex = 0;
-            this.listView2.UseCompatibleStateImageBehavior = false;
+            this.lv_controls.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1});
+            this.lv_controls.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lv_controls.FullRowSelect = true;
+            this.lv_controls.Location = new System.Drawing.Point(3, 3);
+            this.lv_controls.Name = "lv_controls";
+            this.lv_controls.Size = new System.Drawing.Size(212, 229);
+            this.lv_controls.SmallImageList = this.imageList;
+            this.lv_controls.TabIndex = 0;
+            this.lv_controls.UseCompatibleStateImageBehavior = false;
+            this.lv_controls.View = System.Windows.Forms.View.Details;
+            this.lv_controls.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lv_controls_ColumnClick);
+            this.lv_controls.KeyUp += new System.Windows.Forms.KeyEventHandler(this.lv_controls_KeyUp);
+            this.lv_controls.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lv_controls_MouseClick);
+            this.lv_controls.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lv_controls_MouseDoubleClick);
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Name";
+            this.columnHeader1.Width = 170;
+            // 
+            // imageList
+            // 
+            this.imageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList.ImageStream")));
+            this.imageList.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList.Images.SetKeyName(0, "base002.ico");
+            this.imageList.Images.SetKeyName(1, "property.ico");
             // 
             // tabPage4
             // 
-            this.tabPage4.Controls.Add(this.listView1);
+            this.tabPage4.Controls.Add(this.lv_fields);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
@@ -942,18 +969,28 @@
             this.tabPage4.Text = "Database";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
-            // listView1
+            // lv_fields
             // 
-            this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listView1.Location = new System.Drawing.Point(3, 3);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(212, 229);
-            this.listView1.TabIndex = 0;
-            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.lv_fields.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader2});
+            this.lv_fields.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lv_fields.FullRowSelect = true;
+            this.lv_fields.Location = new System.Drawing.Point(3, 3);
+            this.lv_fields.Name = "lv_fields";
+            this.lv_fields.Size = new System.Drawing.Size(212, 229);
+            this.lv_fields.SmallImageList = this.imageList;
+            this.lv_fields.TabIndex = 0;
+            this.lv_fields.UseCompatibleStateImageBehavior = false;
+            this.lv_fields.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Name";
+            this.columnHeader2.Width = 230;
             // 
             // tabPage5
             // 
-            this.tabPage5.Controls.Add(this.treeView1);
+            this.tabPage5.Controls.Add(this.tv_controls);
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Size = new System.Drawing.Size(218, 235);
@@ -961,17 +998,35 @@
             this.tabPage5.Text = "Report";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
-            // treeView1
+            // tv_controls
             // 
-            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeView1.Location = new System.Drawing.Point(0, 0);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(218, 235);
-            this.treeView1.TabIndex = 0;
+            this.tv_controls.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tv_controls.ImageIndex = 0;
+            this.tv_controls.ImageList = this.imageListTree;
+            this.tv_controls.Location = new System.Drawing.Point(0, 0);
+            this.tv_controls.Name = "tv_controls";
+            this.tv_controls.SelectedImageIndex = 0;
+            this.tv_controls.Size = new System.Drawing.Size(218, 235);
+            this.tv_controls.TabIndex = 0;
+            this.tv_controls.BeforeCollapse += new System.Windows.Forms.TreeViewCancelEventHandler(this.tv_controls_BeforeCollapse);
+            this.tv_controls.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.tv_controls_BeforeExpand);
+            this.tv_controls.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tv_controls_NodeMouseClick);
+            this.tv_controls.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tv_controls_KeyUp);
+            this.tv_controls.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.tv_controls_MouseDoubleClick);
+            this.tv_controls.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tv_controls_MouseDown);
+            // 
+            // imageListTree
+            // 
+            this.imageListTree.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageListTree.ImageStream")));
+            this.imageListTree.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageListTree.Images.SetKeyName(0, "xtratabcontrol.gif");
+            this.imageListTree.Images.SetKeyName(1, "base002.ico");
+            this.imageListTree.Images.SetKeyName(2, "property.ico");
+            this.imageListTree.Images.SetKeyName(3, "aspxroundpanel.gif");
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.pictureBox1);
+            this.tabPage1.Controls.Add(this.lv_properties);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Size = new System.Drawing.Size(218, 235);
@@ -979,14 +1034,30 @@
             this.tabPage1.Text = "Properties";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // pictureBox1
+            // lv_properties
             // 
-            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(218, 235);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            this.lv_properties.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader3,
+            this.columnHeader4});
+            this.lv_properties.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lv_properties.FullRowSelect = true;
+            this.lv_properties.Location = new System.Drawing.Point(0, 0);
+            this.lv_properties.Name = "lv_properties";
+            this.lv_properties.Size = new System.Drawing.Size(218, 235);
+            this.lv_properties.SmallImageList = this.imageListTree;
+            this.lv_properties.TabIndex = 1;
+            this.lv_properties.UseCompatibleStateImageBehavior = false;
+            this.lv_properties.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Name";
+            this.columnHeader3.Width = 100;
+            // 
+            // columnHeader4
+            // 
+            this.columnHeader4.Text = "Value";
+            this.columnHeader4.Width = 80;
             // 
             // tabReports
             // 
@@ -1230,12 +1301,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
-            this.tabControl2.ResumeLayout(false);
+            this.tab_sidebar.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
             this.tabPage5.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabReports.ResumeLayout(false);
             this.tbpEditor.ResumeLayout(false);
             this.pnEditor.ResumeLayout(false);
@@ -1339,13 +1409,13 @@
         private System.Windows.Forms.StatusStrip sbMain;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.TabControl tabControl2;
+        private System.Windows.Forms.TabControl tab_sidebar;
         private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.ListView listView2;
+        private System.Windows.Forms.ListView lv_controls;
         private System.Windows.Forms.TabPage tabPage4;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ListView lv_fields;
         private System.Windows.Forms.TabPage tabPage5;
-        private System.Windows.Forms.TreeView treeView1;
+        private System.Windows.Forms.TreeView tv_controls;
         private System.Windows.Forms.TabControl tabReports;
         private System.Windows.Forms.TabPage tbpEditor;
         private System.Windows.Forms.Panel pnEditor;
@@ -1355,7 +1425,6 @@
         private System.Windows.Forms.OpenFileDialog openFileDlg;
         private System.Windows.Forms.SaveFileDialog saveFielDlg;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ContextMenuStrip cmnControl;
         private System.Windows.Forms.ToolStripMenuItem cmCtrlProperties;
         private System.Windows.Forms.ToolStripMenuItem cmCtrlCopy;
@@ -1382,6 +1451,13 @@
         private System.Windows.Forms.ToolStripSeparator cmSectionGroupSeparator;
         private System.Windows.Forms.ToolStripMenuItem cmSectionMoveGroup;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator23;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ImageList imageList;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ListView lv_properties;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.ColumnHeader columnHeader4;
+        private System.Windows.Forms.ImageList imageListTree;
 
     }
 }

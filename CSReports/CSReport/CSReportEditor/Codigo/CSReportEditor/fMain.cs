@@ -6,14 +6,17 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Reflection;
 using CSKernelClient;
+using CSReportGlobals;
 using CSReportDll;
 
 namespace CSReportEditor
 {
     public partial class fMain : Form
     {
-        static fMain instance;
+        // TODO: remove me
+        //static fMain instance;
 
         private const String C_MODULE = "fMain";
 
@@ -25,7 +28,22 @@ namespace CSReportEditor
         private string m_driverName = "";
         private string m_port = "";
 
+        private bool m_wasDoubleClick = false;
+
+        private const int C_CTRL_IMAGE = 1;
+        private const int C_DB_IMAGE = 0;
+
+        private const int C_IMG_FOLDER = 0;
+        private const int C_IMG_FORMULA = 3;
+        private const int C_IMG_CONTROL = 2;
+        private const int C_IMG_DATBASE_FIELD = 1;
+
+        private const String C_FIELDTYPE = "t";
+        private const String C_INDEX = "i";
+
         private cEditor m_contextMenuEditor;
+
+        private cListViewColumnSorter lvwColumnSorter;
 
         public fMain()
         {
@@ -51,10 +69,6 @@ namespace CSReportEditor
         public cEditor getReportCopySource()
         {
             return null;
-        }
-
-        public PictureBox pic1() {
-            return pictureBox1;
         }
 
         private cEditor createEditor() 
@@ -299,6 +313,12 @@ namespace CSReportEditor
             this.Width = 1200;
             this.Height = 900;
             cWindow.centerForm(this);
+
+            // Create an instance of a ListView column sorter and assign it 
+            // to the ListView control.
+            lvwColumnSorter = new cListViewColumnSorter();
+            lv_controls.ListViewItemSorter = lvwColumnSorter;
+            lv_controls_ColumnClick(this, new ColumnClickEventArgs(0));
         }
 
         private void cmCtrlProperties_Click(object sender, EventArgs e)
@@ -466,6 +486,238 @@ namespace CSReportEditor
             if (editor != null)
             {
                 editor.setParameters();
+            }
+        }
+
+        public void showControls(cEditor editor)
+        {
+            cGlobals.addCtrls(editor.getReport(), lv_controls, C_CTRL_IMAGE, C_DB_IMAGE);
+        }
+
+        public void showControlsTree(cEditor editor)
+        {
+            m_wasDoubleClick = false;
+            cGlobals.addCtrls(editor.getReport(), tv_controls, C_IMG_FOLDER, C_IMG_FORMULA, C_IMG_CONTROL, C_IMG_DATBASE_FIELD);
+        }
+
+        public void showProperties(cEditor editor, string key)
+        {
+            lv_properties.Items.Clear();
+            if (editor != null)
+            {
+                setObjectDescription(getControlOrSection(editor, key));
+            }
+        }
+
+        private object getControlOrSection(cEditor editor, string key)
+        {
+            if (key.Length > 1)
+            {
+                if (key.Substring(0, 1) == "S")
+                {
+                    return editor.getSectionOrSectionLineFromKey(key.Substring(1));
+                }
+                else 
+                {
+                    return editor.getReport().getControls().item(key);
+                }
+            }
+            else 
+            {
+                return null;
+            }
+        }
+
+        private void setObjectDescription(object anObject)
+        {
+            setObjectDescription(anObject, 0);
+        }
+
+        private void setObjectDescription(object anObject, int n)
+        {
+            if (anObject == null) return;
+
+            var tabs = new String(' ', n*2);
+            var methods = getMethods(anObject);
+            foreach (var m in methods)
+            {
+                if (m.IsPublic
+                    && m.Name.Length > 3
+                    && m.Name.Substring(0, 3) == "get"
+                    && m.Name.Substring(0, 4) != "get_"
+                    && m.GetParameters().Length == 0
+                    && m.Name != "getSectionLine"
+                    )
+                {
+                    var item = lv_properties.Items.Add(tabs + m.Name.Substring(3));
+                    item.ImageIndex = C_IMG_CONTROL;
+                    item.SubItems.Add(getValue(m.Invoke(anObject, null), n));
+                    if (item.SubItems[1].Text == "...") item.ImageIndex = C_IMG_FOLDER;
+                }
+            }
+        }
+
+        private string getValue(object value, int n)
+        {
+            if (n > 10) return "";
+
+            if (value == null)
+            {
+                return "NULL";
+            }
+            else
+            {
+                var t = value.GetType();
+                if (t.IsPrimitive || t == typeof(Decimal) || t == typeof(String))
+                {
+                    return value.ToString();
+                }
+                else
+                {
+                    setObjectDescription(value, n + 1);
+                    return "...";
+                }
+            }
+        }
+
+        private static MethodInfo[] getMethods(object obj)
+        {
+            return obj.GetType().GetMethods();
+        }
+
+        public void showFields(cEditor editor)
+        {
+            var connect = editor.getReport().getConnect();
+            cGlobals.fillColumns(
+                connect.getDataSource(), 
+                connect.getColumns(), lv_fields, C_INDEX, C_FIELDTYPE);
+        }
+
+        private void lv_controls_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            // Determine if clicked column is already the column that is being sorted.
+            if (e.Column == lvwColumnSorter.SortColumn)
+            {
+                // Reverse the current sort direction for this column.
+                if (lvwColumnSorter.Order == SortOrder.Ascending)
+                {
+                    lvwColumnSorter.Order = SortOrder.Descending;
+                }
+                else
+                {
+                    lvwColumnSorter.Order = SortOrder.Ascending;
+                }
+            }
+            else
+            {
+                // Set the column number that is to be sorted; default to ascending.
+                lvwColumnSorter.SortColumn = e.Column;
+                lvwColumnSorter.Order = SortOrder.Ascending;
+            }
+
+            // Perform the sort with these new sort options.
+            lv_controls.Sort();
+        }
+
+        private void lv_controls_MouseClick(object sender, MouseEventArgs e)
+        {
+            selectControl();
+        }
+
+        private void lv_controls_KeyUp(object sender, KeyEventArgs e)
+        {
+            selectControl();
+        }
+
+        private void selectControl()
+        {
+            cEditor editor = cMainEditor.getDocActive();
+
+            if (lv_controls.SelectedItems.Count > 0 && editor != null)
+            {
+                var info = lv_controls.SelectedItems[0].Tag.ToString();
+                editor.selectCtrl(info);
+            }
+        }
+
+        private void tv_controls_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            selectControl(e.Node);
+        }
+
+        private void selectControl(TreeNode node)
+        {
+            cEditor editor = cMainEditor.getDocActive();
+
+            if (node != null && node.Tag != null && editor != null)
+            {
+                var info = node.Tag.ToString();
+                if (info.Length > 0)
+                {
+                    var infoType = info.Substring(0, 1);
+                    if ("@SL".IndexOf(infoType) == -1)
+                    {
+                        editor.selectCtrl(info);
+                    }
+                    else if (infoType == "S" || infoType == "L")
+                    {
+                        editor.selectSection(info.Substring(1));
+                    }
+                }
+            }
+        }
+
+        private void tv_controls_KeyUp(object sender, KeyEventArgs e)
+        {
+            selectControl(tv_controls.SelectedNode);
+        }
+
+        private void tv_controls_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            cEditor editor = cMainEditor.getDocActive();
+
+            if (tv_controls.SelectedNode != null && editor != null)
+            {
+                if (tv_controls.SelectedNode.Tag != null)
+                {
+                    var info = tv_controls.SelectedNode.Tag.ToString();
+                    if (info.Length > 0)
+                    {
+                        var infoType = info.Substring(0, 1);
+                        if ("@".IndexOf(infoType) == -1)
+                        {
+                            editor.showProperties(info);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void tv_controls_MouseDown(object sender, MouseEventArgs e)
+        {
+            m_wasDoubleClick = e.Clicks > 1;
+        }
+
+        private void tv_controls_BeforeCollapse(object sender, TreeViewCancelEventArgs e)
+        {
+            if (m_wasDoubleClick == true && e.Action == TreeViewAction.Collapse)
+                e.Cancel = true;
+        }
+
+        private void tv_controls_BeforeExpand(object sender, TreeViewCancelEventArgs e)
+        {
+            if (m_wasDoubleClick == true && e.Action == TreeViewAction.Expand)
+                e.Cancel = true;
+        }
+
+        private void lv_controls_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            cEditor editor = cMainEditor.getDocActive();
+
+            if (lv_controls.SelectedItems.Count > 0 && editor != null)
+            {
+                var info = lv_controls.SelectedItems[0].Tag.ToString();
+                editor.showProperties(info);
             }
         }
     }
