@@ -1,6 +1,14 @@
 CSReports.net
 =============
 
+Report editor tool written in C#. It runs in Windows and Mac (using mono).
+
+![screen1](https://cloud.githubusercontent.com/assets/1075455/13089213/6c69df88-d4ce-11e5-80a6-bef3bebd860f.png)
+
+![screen1](https://cloud.githubusercontent.com/assets/1075455/13089239/8612ddd6-d4ce-11e5-88e0-fb7465a35a06.png)
+
+![screen1](https://cloud.githubusercontent.com/assets/1075455/13089263/96e17e74-d4ce-11e5-9bd8-81519e223ae1.png)
+
 A report editor tool.
 
 Copyright (C) 2002-2014 Javier Mariano Alvarez
