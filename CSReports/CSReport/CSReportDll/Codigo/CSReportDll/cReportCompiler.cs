@@ -872,7 +872,7 @@ namespace CSReportDll
             parameters = code.Trim();
             if (parameters.Length > 2)
             {
-                parameters = parameters.Substring(2, parameters.Length - 2);
+                parameters = parameters.Substring(1, parameters.Length - 2);
             }
 
             // we need to replace in m_formula.getTextC() the function name by its key
@@ -2119,7 +2119,7 @@ namespace CSReportDll
             for (int _i = 0; _i < m_formulaTypes.count(); _i++)
             {
                 f = m_formulaTypes.item(_i);
-                if (name == f.getName())
+                if (name == f.getName().ToLower())
                 {
                     return f.getId();
                 }
@@ -2201,7 +2201,7 @@ namespace CSReportDll
                 if (pIsFunctionAux(word, ref functionName))
                 {
 
-                    codeCallFunction = pGetCallFunction(code, nStart);
+                    codeCallFunction = pGetCallFunction(code, ref nStart);
 
                     if (!pCompileAux(codeCallFunction, out codeCallFunctionC))
                     {
@@ -2234,7 +2234,7 @@ namespace CSReportDll
                 word += c;
                 nStart += 1;
                 if (pIsSeparator(c)) break;
-                c = code.Substring(nStart, 1);
+                c = cUtil.subString(code, nStart, 1);
             } while (!pIsSeparator(c) && nStart < nLenCode);
 
             return word;
@@ -2247,7 +2247,7 @@ namespace CSReportDll
             return true;
         }
 
-        private String pGetCallFunction(String code, int nStart)
+        private String pGetCallFunction(String code, ref int nStart)
         {
             String c = "";
             int nLenCode = 0;

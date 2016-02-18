@@ -286,6 +286,7 @@
             this.mnuPreviewReport.Name = "mnuPreviewReport";
             this.mnuPreviewReport.Size = new System.Drawing.Size(180, 22);
             this.mnuPreviewReport.Text = "Preview";
+            this.mnuPreviewReport.Click += new System.EventHandler(this.mnuPreviewReport_Click);
             // 
             // toolStripSeparator9
             // 
@@ -773,6 +774,7 @@
             this.tsbPreview.Name = "tsbPreview";
             this.tsbPreview.Size = new System.Drawing.Size(23, 22);
             this.tsbPreview.Text = "Execute this report";
+            this.tsbPreview.Click += new System.EventHandler(this.tsbPreview_Click);
             // 
             // tsbPrint
             // 

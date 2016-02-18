@@ -720,5 +720,24 @@ namespace CSReportEditor
                 editor.showProperties(info);
             }
         }
+
+        private void mnuPreviewReport_Click(object sender, EventArgs e)
+        {
+            previewReport();
+        }
+
+        private void tsbPreview_Click(object sender, EventArgs e)
+        {
+            previewReport();
+        }
+
+        private void previewReport()
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.preview();
+            }        
+        }
     }
 }
