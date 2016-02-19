@@ -298,9 +298,9 @@ namespace CSReportDll
                 m_collByLeft[i] = i;
             }
 
-            for (i = 0; i < this.Count; i++)
+            for (i = 0; i < this.Count-1; i++)
             {
-                for (j = i; j < this.Count; j++)
+                for (j = i; j < this.Count-1; j++)
                 {
                     ctl1 = item(m_collByLeft[j]);
                     ctl2 = item(m_collByLeft[j + 1]);

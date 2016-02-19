@@ -1454,7 +1454,7 @@ namespace CSReportDll
             // the next group in a future call to getLine()
             // only if there are more group
             //
-            if (i < m_groupCount)
+            if (i < m_groupCount - 1)
             {
                 m_vGroups[i + 1].changed = true;
             }
@@ -1781,7 +1781,7 @@ namespace CSReportDll
                                 {
                                     case csRptControlType.CSRPTCTFIELD:
 
-                                        pGetIndexRows(indexRows, indexRow, indexField, ctrl);
+                                        pGetIndexRows(out indexRows, out indexRow, out indexField, ctrl);
 
                                         if (m_collRows[indexRows] != null)
                                         {
@@ -1815,7 +1815,7 @@ namespace CSReportDll
                                         break;
 
                                     case csRptControlType.CSRPTCTDBIMAGE:
-                                        pGetIndexRows(indexRows, indexRow, indexField, ctrl);
+                                        pGetIndexRows(out indexRows, out indexRow, out indexField, ctrl);
                                         if (m_collRows[indexRows] != null)
                                         {
                                             field.setImage(pGetImage(indexRows, indexField, indexRow));
@@ -1823,7 +1823,7 @@ namespace CSReportDll
                                         break;
 
                                     case csRptControlType.CSRPTCTCHART:
-                                        pGetIndexRows(indexRows, indexRow, indexField, ctrl);
+                                        pGetIndexRows(out indexRows, out indexRow, out indexField, ctrl);
                                         field.setImage(pGetChartImage(indexRows, indexField, indexRow, ctrl));
                                         break;
                                 }
@@ -1850,8 +1850,8 @@ namespace CSReportDll
         // indexRows     define the datasource
         // indexRow      define the row in the datasource
         //
-        private void pGetIndexRows(int indexRows, int indexRow, int indexField, cReportControl ctrl)
-        { // TODO: Use of ByRef founded Private Sub pGetIndexRows(ByRef IndexRows As Long, ByRef IndexRow As Long, ByRef IndexField As Long, ByRef ctrl As cReportControl)
+        private void pGetIndexRows(out int indexRows, out int indexRow, out int indexField, cReportControl ctrl)
+        {
             // the datasource index have an offset of 1000 between each other
             //
             indexRows = (int)(ctrl.getField().getIndex() / 1000);
@@ -1898,6 +1898,7 @@ namespace CSReportDll
                 int errHelpcontext = 0;
 
                 List<object[]> recordsets = null;
+                DataTable rs = null;
 
                 m_compiler.setReport(this);
                 m_compiler.initGlobalObject();
@@ -1957,11 +1958,11 @@ namespace CSReportDll
 
                 recordsets = new List<object[]>();
 
-                G.redim(ref m_collRows, 0);
+                m_collRows = new DataTable[1];
 
                 // get the main recordset
                 //
-                if (!pGetData(ref m_rows, m_connect, true, recordsets))
+                if (!pGetData(ref m_rows, ref rs, m_connect, true, recordsets))
                 {
                     return false;
                 }
@@ -1979,7 +1980,7 @@ namespace CSReportDll
                     return false;
                 }
 
-                if (!initGroups(m_rows, pGetMainDataSource(recordsets)))
+                if (!initGroups(rs, pGetMainDataSource(recordsets)))
                 {
                     return false;
                 }
@@ -2671,29 +2672,24 @@ namespace CSReportDll
         }
 
         private bool pInitCtrls(cReportControl ctrl, int idx, List<object[]> recordsets, String fieldName)
-        { // TODO: Use of ByRef founded Private Function pInitCtrls(ByRef ctrl As cReportControl, ByRef Idx As Long, ByRef Recordsets As Collection, ByVal FieldName As String) As Boolean
+        {
             bool found = false;
             int j = 0;
+            bool bIsDBImage = false;
+
+            string dataSource = pGetDataSource(fieldName);
+
             // index of the group which contains the control
             //
             int k = 0;
-            bool bIsDBImage = false;
-            object[] varRs = null;
-            DataTable rs = null;
-            String dataSource = "";
 
-            bIsDBImage = false;
-
-            found = false;
-            k = 0;
             for (int _i = 0; _i < recordsets.Count; _i++)
             {
-                varRs = recordsets[_i];
-                dataSource = pGetDataSource(fieldName);
+                object[] varRs = recordsets[_i];                
                 String rsDataSource = (String)varRs[1];
                 if (rsDataSource.ToUpper() == dataSource.ToUpper() || dataSource == "")
                 {
-                    rs = (DataTable)varRs[0];
+                    DataTable rs = (DataTable)varRs[0];
 
                     for (j = 0; j < rs.Columns.Count; j++)
                     {
@@ -2737,13 +2733,16 @@ namespace CSReportDll
         private String pGetDataSource(String name)
         {
             int n = 0;
-            n = name.IndexOf("}.", 1);
-            if (n == 0) 
-            { 
-                return ""; 
+            n = name.IndexOf("}.", 0);
+            if (n == -1)
+            {
+                return "";
             }
-            n = n - 2;
-            return name.Substring(2, n);
+            else
+            {
+                n = n - 1;
+                return name.Substring(1, n);
+            }
         }
 
         private void pInitImages()
@@ -2793,18 +2792,18 @@ namespace CSReportDll
             String fileInTMP = "";
 
             key = "k" + indexRows.ToString() + indexField.ToString() + indexRow.ToString();
-            try
+            if(m_images.ContainsKey(key))
             {
                 image = m_images[key];
             }
-            catch
+            else
             {
                 // we are optimistic. if I don't get a picture
                 // we return null but don't complaint
                 //
                 byte[] bytes = null;
 
-                // it looks ugly, dont think you?
+                // it looks ugly, don't you think?
                 //
                 // maybe this help a litle:
                 //
@@ -3504,6 +3503,10 @@ namespace CSReportDll
             else
             {
                 m_vGroups = new T_Groups[m_groupCount];
+                for (var t = 0; t < m_groupCount; t++)
+                {
+                    m_vGroups[t] = new T_Groups();
+                }
             }
 
             if (!OnProgress("Ordenando el reporte", 0, 0, 0))
@@ -3576,10 +3579,10 @@ namespace CSReportDll
             }
 
             int recordCount = 0;
-            double percent = 0;
             int q = 0;
 
-            m_vGroups[1].groups = new T_Group[0];
+            m_vGroups[0].groups = new T_Group[1];
+            m_vGroups[0].groups[0] = new T_Group();
             recordCount = m_vRowsIndex.Length;
             m_vGroups[0].groups[0].first = 0;
             m_vGroups[0].groups[0].last = recordCount-1;
@@ -3662,7 +3665,7 @@ namespace CSReportDll
 
                 // after sorting we need to prepare the next group
                 //
-                if (i < m_groupCount)
+                if (i < m_groupCount - 1)
                 {
                     for (k = 0; k < m_vGroups[i].groups.Length; k++)
                     {
@@ -4553,7 +4556,7 @@ namespace CSReportDll
                                     {
                                         case csRptControlType.CSRPTCTFIELD:
 
-                                            pGetIndexRows(indexRows, indexRow, indexField, ctrl);
+                                            pGetIndexRows(out indexRows, out indexRow, out indexField, ctrl);
 
                                             if (m_collRows[indexRows] != null)
                                             {
@@ -4592,7 +4595,7 @@ namespace CSReportDll
 
                                         case csRptControlType.CSRPTCTDBIMAGE:
 
-                                            pGetIndexRows(indexRows, indexRow, indexField, ctrl);
+                                            pGetIndexRows(out indexRows, out indexRow, out indexField, ctrl);
 
                                             if (m_collRows[indexRows] != null)
                                             {
@@ -4602,7 +4605,7 @@ namespace CSReportDll
 
                                         case csRptControlType.CSRPTCTCHART:
 
-                                            pGetIndexRows(indexRows, indexRow, indexField, ctrl);
+                                            pGetIndexRows(out indexRows, out indexRow, out indexField, ctrl);
                                             field.setImage(pGetChartImage(indexRows, indexField, indexRow, ctrl));
                                             break;
                                     }
@@ -4776,6 +4779,17 @@ namespace CSReportDll
             bool createIndexVector,
             List<object[]> recordsets)
         {
+            DataTable dummy = null;
+            return pGetData(ref vRows, ref dummy, connect, createIndexVector, recordsets);
+        }
+
+        private bool pGetData(
+            ref DataTable vRows,
+            ref DataTable rs,
+            cReportConnect connect,
+            bool createIndexVector,
+            List<object[]> recordsets)
+        {
             String strConnect = "";
             bool saveInReport = false;
             CSDataBase.cDataBase cn = null;
@@ -4868,7 +4882,7 @@ namespace CSReportDll
                                         false,
                                         false,
                                         sqlstmt,
-                                        out vRows,
+                                        out rs,
                                         out dr,
                                         "GetData",
                                         C_MODULE,
@@ -4877,7 +4891,7 @@ namespace CSReportDll
                     return false;
                 }
 
-                if (vRows.Rows.Count == 0)
+                if (rs.Rows.Count == 0)
                 {
                     vRows = null;
                     if (createIndexVector)
@@ -4887,6 +4901,7 @@ namespace CSReportDll
                 }
                 else
                 {
+                    vRows = rs;
                     if (createIndexVector)
                     {
                         G.redim(ref m_vRowsIndex, vRows.Rows.Count);
@@ -4898,8 +4913,8 @@ namespace CSReportDll
                     }
                 }
 
-                G.redim(ref varRs, 1);
-                varRs[0] = vRows;
+                varRs = new object[2];
+                varRs[0] = rs;
                 varRs[1] = connect.getDataSource();
                 recordsets.Add(varRs);
 
@@ -4907,15 +4922,22 @@ namespace CSReportDll
                 // in the recordset collection (this code suport multiples
                 // recordset in the same reader)
                 //
-                while (dr.NextResult())
+                while (!dr.IsClosed && dr.NextResult())
                 {
                     rsAux = new DataTable();
                     rsAux.Load(dr);
-                    G.redimPreserve(ref m_collRows, m_collRows.Length + 1);
-                    G.redim(ref varRs, 1);
+                    
+                    varRs = new object[2];
                     varRs[0] = rsAux;
                     varRs[1] = connect.getDataSource();
                     recordsets.Add(varRs);
+
+                    // TODO: check if this works
+                    //
+                    // we add an empty element to m_collRows to avoid
+                    // index of bounds exception
+                    //
+                    G.redimPreserve(ref m_collRows, m_collRows.Length + 1);
                 }
 
                 cn.closeDb();
@@ -4947,10 +4969,10 @@ namespace CSReportDll
         {
             int i = 0;
 
-            G.redim(ref m_lastRowPreEvalued, 2);
-            G.redim(ref m_lastRowPostEvalued, 2);
+            m_lastRowPreEvalued = new int[3];
+            m_lastRowPostEvalued = new int[3];
 
-            for (i = 0; i <= 2; i++)
+            for (i = 0; i < 3; i++)
             {
                 m_lastRowPreEvalued[i] = -1;
                 m_lastRowPostEvalued[i] = -1;
@@ -5553,6 +5575,10 @@ namespace CSReportDll
                 {
                     T_Group[] newArray = new T_Group[size];
                     Array.Copy(groups, newArray, groups.Length);
+                    for (var t = groups.Length; t < newArray.Length; t++)
+                    {
+                        newArray[t] = new T_Group();
+                    }
                     groups = newArray;
                 }
             }

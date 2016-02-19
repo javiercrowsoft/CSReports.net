@@ -37,6 +37,7 @@
             this.ClientSize = new System.Drawing.Size(313, 179);
             this.Name = "fProgress";
             this.Text = "fProgress";
+            this.Load += new System.EventHandler(this.fProgress_Load);
             this.ResumeLayout(false);
 
         }

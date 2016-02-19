@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using System.Globalization;
 using CSKernelClient;
 using CSReportGlobals;
+using CSDataBase;
 
 namespace CSReportDll
 {
@@ -125,40 +127,40 @@ namespace CSReportDll
             for (int _i = 0; _i < m_parameters.count(); _i++)
             {
                 param = m_parameters.item(_i);
-                switch (param.getColumnType())
+                switch (cDatabaseGlobals.getDataTypeFromAdo((int)param.getColumnType()))
                 {
-                    case CSDataBase.csDataType.CSTDWCHAR:
+                    case csDataType.CSTDWCHAR:
                         /*
-                            case  CSDataBase.csDataType.CSTDVARWCHAR:
-                            case  CSDataBase.csDataType.CSTDVARCHAR:
-                            case  CSDataBase.csDataType.CSTDLONGVARWCHAR:
-                            case  CSDataBase.csDataType.CSTDLONGVARCHAR:
-                            case  CSDataBase.csDataType.CSTDCHAR:
+                            case  csDataType.CSTDVARWCHAR:
+                            case  csDataType.CSTDVARCHAR:
+                            case  csDataType.CSTDLONGVARWCHAR:
+                            case  csDataType.CSTDLONGVARCHAR:
+                            case  csDataType.CSTDCHAR:
                          */
-                        s = s + "'" + param.getValue().Replace("'", "''") + "',";
+                        s +=  cDataBase.sqlString(param.getValue()) + ",";
                         break;
-                    case CSDataBase.csDataType.CSTDTINYINT:
-                    case CSDataBase.csDataType.CSTDUNSIGNEDTINYINT:
-                    case CSDataBase.csDataType.CSTDSMALLINT:
-                    case CSDataBase.csDataType.CSTDSINGLE:
-                    case CSDataBase.csDataType.CSTDNUMERIC:
-                    case CSDataBase.csDataType.CSTDINTEGER:
-                    case CSDataBase.csDataType.CSTDDOUBLE:
+                    case csDataType.CSTDTINYINT:
+                    case csDataType.CSTDUNSIGNEDTINYINT:
+                    case csDataType.CSTDSMALLINT:
+                    case csDataType.CSTDSINGLE:
+                    case csDataType.CSTDNUMERIC:
+                    case csDataType.CSTDINTEGER:
+                    case csDataType.CSTDDOUBLE:
                     /*
-                        case  CSDataBase.csDataType.CSTDDECIMAL:
-                        case  CSDataBase.csDataType.CSTDCURRENCY:
+                        case  csDataType.CSTDDECIMAL:
+                        case  csDataType.CSTDCURRENCY:
                     */
-                    case CSDataBase.csDataType.CSTDBOOLEAN:
-                    case CSDataBase.csDataType.CSTDBIGINT:
-                        s = s + getNumberSql(param.getValue()) + ",";
+                    case csDataType.CSTDBOOLEAN:
+                    case csDataType.CSTDBIGINT:
+                        s +=  cDataBase.sqlNumber(param.getValue()) + ",";
                         break;
-                    case CSDataBase.csDataType.CSTDDBTIMESTAMP:
+                    case csDataType.CSTDDBTIMESTAMP:
                         /*
-                        case  CSDataBase.csDataType.CSTDDBTIME:
-                        case  CSDataBase.csDataType.CSTDDBDATE:
-                        case  CSDataBase.csDataType.CSTDDATE:
+                        case  csDataType.CSTDDBTIME:
+                        case  csDataType.CSTDDBDATE:
+                        case  csDataType.CSTDDATE:
                         */
-                        s = s + "'" + cReportGlobals.format(param.getValue(), CSDataBase.cConstants.C_SQL_DATE_STRING) + "',";
+                        s +=  cDataBase.sqlDate(param.getValue()) + ",";                        
                         break;
                     default:
                         cWindow.msgWarning("This data type is not codified "
@@ -282,24 +284,6 @@ namespace CSReportDll
             }
 
             return true;
-        }
-
-        private String getNumberSql(String number)
-        {
-            if (!G.isNumeric(number))
-            {
-                return "0";
-            }
-            else
-            {
-                number = cReportGlobals.format(number, (new String('#', 27)) + "0." + (new String('#', 28)));
-                number = number.Replace(",", ".");
-                if (number.Substring(number.Length - 1) == ".")
-                {
-                    number = number.Substring(0, number.Length - 1);
-                }
-                return number;
-            }
         }
 
         private String getXFromStrConnect(String strConnect, String x)

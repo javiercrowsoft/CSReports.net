@@ -84,7 +84,7 @@ namespace CSReportDll
         private String m_ctrlName = "";
 
         private bool m_bCompile;
-        private int m_idxFormula = 0;
+        private int m_idxFormula = -1;
 
         internal cReport getReport()
         {
@@ -251,13 +251,11 @@ namespace CSReportDll
             vResult = new object[formula.getFormulasInt().count()];
 
             cReportFormulaInt fint = null;
-            int i = 0;
 
             for (int _i = 0; _i < formula.getFormulasInt().count(); _i++)
             {
                 fint = formula.getFormulasInt().item(_i);
-                i = i + 1;
-                vResult[i] = pResultFunctionInt(fint);
+                vResult[_i] = pResultFunctionInt(fint);
             }
 
             // we check if the code has scripting or is only 
@@ -273,7 +271,7 @@ namespace CSReportDll
             {
                 if (vResult.Length > 0)
                 {
-                    formula.setLastResult(vResult[1]);
+                    formula.setLastResult(vResult[0]);
                     formula.setHaveToEval(false);
                     return formula.getLastResult();
                 }
@@ -288,7 +286,7 @@ namespace CSReportDll
             {
                 code = formula.getTextC();
 
-                for (i = 0; i < vResult.Length; i++)
+                for (int i = 0; i < vResult.Length; i++)
                 {
                     // if one argument is null it means we don't have a row for this formula
                     // so we don't need to compile the code
@@ -369,7 +367,7 @@ namespace CSReportDll
                 }
                 else
                 {
-                    if (codeC.Trim().Substring(0, 8).ToLower() == "function")
+                    if (cUtil.subString(codeC.Trim(), 0, 8).ToLower() == "function")
                     {
                         pEvalSyntax("", codeC, false);
                     }
@@ -385,7 +383,7 @@ namespace CSReportDll
         private bool pCompile(String code, bool bCompile, String codeC)
         {
             m_bCompile = bCompile;
-            m_idxFormula = 0;
+            m_idxFormula = -1;
 
             code = pColonToPipe(code);
 
@@ -518,75 +516,57 @@ namespace CSReportDll
             {
                 case csRptFormulaType.CSRPTFAVERAGE:
                     return resultAverage(fint);
-                    break;
 
                 case csRptFormulaType.CSRPTFSUM:
                     return resultSum(fint);
-                    break;
 
                 case csRptFormulaType.CSRPTFGETSTRING:
                     return resultGetString(fint);
-                    break;
 
                 case csRptFormulaType.CSRPTFSUMTIME:
                     return resultSumTime(fint);
-                    break;
 
                 case csRptFormulaType.CSRPTMAX:
                     return resultMax(fint);
-                    break;
 
                 case csRptFormulaType.CSRPTMIN:
                     return resultMin(fint);
-                    break;
 
                 case csRptFormulaType.CSRPTCOUNT:
                     return resultCount(fint);
-                    break;
 
                 case csRptFormulaType.CSRPTFNUMBERTOSTRING:
                     return resultNumberToString(fint);
-                    break;
 
                 case csRptFormulaType.CSRPTISEQUAL:
                     return resultIsEqual(fint);
-                    break;
 
                 case csRptFormulaType.CSRPTISNOTEQUAL:
                     return resultIsNotEqual(fint);
-                    break;
 
                 case csRptFormulaType.CSRPTISGREATERTHAN:
                     return resultIsGreaterThan(fint);
-                    break;
 
                 case csRptFormulaType.CSRPTISLESSTHAN:
                     return resultIsLessThan(fint);
-                    break;
 
                 case csRptFormulaType.CSRPTFPAGENUMBER:
                     return resultPageNumber();
-                    break;
 
                 case csRptFormulaType.CSRPTFTOTALPAGES:
                     return resultTotalPages();
-                    break;
 
                 case csRptFormulaType.CSRPTFVAL:
                     return resultValue(fint);
-                    break;
 
                 case csRptFormulaType.CSRPTLENGTH:
                     return resultLength(fint);
-                    break;
 
                 case csRptFormulaType.CSRPTTEXTREPLACE:
                     return resultTextReplace(fint);
-                    break;
 
                 case csRptFormulaType.CSRPTFCALCULO:
                     return resultCalculo(fint);
-                    break;
 
                 case csRptFormulaType.CSRPTDECLAREVAR:
                     // nothing to do
@@ -594,11 +574,9 @@ namespace CSReportDll
 
                 case csRptFormulaType.CSRPTGETVAR:
                     return resultGetVar(fint);
-                    break;
 
                 case csRptFormulaType.CSRPTGETPARAM:
                     return resultGetParam(fint);
-                    break;
 
                 case csRptFormulaType.CSRPTSETVAR:
                     // nothing to do
@@ -610,43 +588,33 @@ namespace CSReportDll
 
                 case csRptFormulaType.CSRPTGETDATAFROMRSAD:
                     return resultGetDataFromRsAd(fint);
-                    break;
 
                 case csRptFormulaType.CSRPTGETDATAFROMRS:
                     return resultGetDataFromRs(fint);
-                    break;
 
                 case csRptFormulaType.CSRPTGROUPTOTAL:
                     return resultGroupTotal(fint);
-                    break;
 
                 case csRptFormulaType.CSRPTGROUPMAX:
                     return resultGroupMax(fint);
-                    break;
 
                 case csRptFormulaType.CSRPTGROUPMIN:
                     return resultGroupMin(fint);
-                    break;
 
                 case csRptFormulaType.CSRPTGROUPAVERAGE:
                     return resultGroupAverage(fint);
-                    break;
 
                 case csRptFormulaType.CSRPTGROUPPERCENT:
                     return resultGroupPercent(fint);
-                    break;
 
                 case csRptFormulaType.CSRPTGROUPCOUNT:
                     return resultGroupCount(fint);
-                    break;
 
                 case csRptFormulaType.CSRPTGROUPLINENUMBER:
                     return resultGroupLineNumber(fint);
-                    break;
 
                 case csRptFormulaType.CSRPTISINRS:
                     return resultIsInRs(fint);
-                    break;
             }
             return null;
         }
@@ -2290,10 +2258,9 @@ namespace CSReportDll
 
         private String pExecFunction(String functionName, String parameters)
         {
-            String _rtn = "";
             if (m_bCompile)
             {
-                _rtn = pAddFormulaInt(functionName, parameters).ToString();
+                return pAddFormulaInt(functionName, parameters).ToString();
             }
             else
             {
@@ -2302,27 +2269,33 @@ namespace CSReportDll
                 fint = m_formula.getFormulasInt().item(m_idxFormula);
                 pSetParams(fint, parameters);
                 pEvalFunctionInt(fint);
-                _rtn = getNumericVal(pResultFunctionInt(fint).ToString());
+                object value = pResultFunctionInt(fint);
+                if (value != null)
+                {
+                    return getNumericVal(value.ToString());
+                }
+                else
+                {
+                    return "";
+                }
             }
-            return _rtn;
         }
 
         private void pSetParams(cReportFormulaInt fint, String parameters)
         {
             String[] vParams = null;
-            String rtn = "";
             int i = 0;
 
             parameters = parameters.Trim();
             if (parameters.Length > 2)
             {
-                parameters = parameters.Substring(2, parameters.Length - 2);
+                parameters = parameters.Substring(1, parameters.Length - 2);
                 parameters = parameters.Trim();
                 vParams = parameters.Split('|');
 
                 for (i = 0; i < vParams.Length; i++)
                 {
-                    fint.getParameters().item(i + 1).setValue(vParams[i].Trim());
+                    fint.getParameters().item(i).setValue(vParams[i].Trim());
                 }
             }
         }
@@ -2330,7 +2303,7 @@ namespace CSReportDll
         private String getNumericVal(String value)
         {
             int decimalDigit = 0;
-            decimalDigit = value.IndexOf(",", 1);
+            decimalDigit = value.IndexOf(",", 0);
             if (decimalDigit > 0)
             {
                 value = value.Replace(",", ".");

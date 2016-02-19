@@ -52,24 +52,6 @@ namespace CSConnect
             m_parameters = value;
         }
 
-        private string getNumberSql(string number)
-        {
-            if (! G.isNumeric(number)) 
-            {
-                return "0";
-            }
-            else
-            {
-                var s = cUtil.val(number).ToString(new String('#', 27) + "0." + new String('#', 28), CultureInfo.InvariantCulture);
-                s = s.Replace(",", ".");
-                if (s.Substring(s.Length - 1, 0) == ".")
-                {
-                    s = s.Substring(0, s.Length - 1);
-                }
-                return s;
-            }
-
-        }
         public string getSqlParameters()
         {
             var parameters = "";
@@ -82,21 +64,13 @@ namespace CSConnect
                 switch(input.Tag.ToString())
                 {
                     case "T":
-                        value = "'" + input.Text.Replace("'", "''") + "'";
+                        value = cDataBase.sqlString(input.Text);
                         break;
                     case "N":
-                        value = getNumberSql(input.Text);
+                        value = cDataBase.sqlNumber(input.Text);
                         break;
                     case "F":
-                        DateTime dt;
-                        if (DateTime.TryParseExact(input.Text, "MM/dd/yyyy", null, DateTimeStyles.None, out dt)) {}
-                        else if (DateTime.TryParseExact(input.Text, "dd/MM/yyyy", null, DateTimeStyles.None, out dt)) {}
-                        else if (DateTime.TryParseExact(input.Text, "MM-dd-yyyy", null, DateTimeStyles.None, out dt)) { }
-                        else if (DateTime.TryParseExact(input.Text, "dd-MM-yyyy", null, DateTimeStyles.None, out dt)) {}                        
-                        else if (DateTime.TryParseExact(input.Text, "MM.dd.yyyy", null, DateTimeStyles.None, out dt)) {}
-                        else if (DateTime.TryParseExact(input.Text, "dd.MM.yyyy", null, DateTimeStyles.None, out dt)) { }
-                        else throw new Exception("Invalid date " + input.Text);
-                        value =  "'" + dt.ToString(CSDataBase.cConstants.C_SQL_DATE_STRING, CultureInfo.InvariantCulture) + "'";                        
+                        value = cDataBase.sqlDate(input.Text);
                         break;
                 }
                 m_parameters.item(i).setValue(value);

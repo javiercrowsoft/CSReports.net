@@ -45,6 +45,7 @@ namespace CSKernelClient
                 throw new Exception(c_error_1);
             }
         }
+
         public static string decimalPoint
         {
             get

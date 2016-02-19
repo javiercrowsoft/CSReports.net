@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using CSKernelClient;
 
 namespace CSReportEditor
 {
@@ -14,6 +15,11 @@ namespace CSReportEditor
         public fProgress()
         {
             InitializeComponent();
+        }
+
+        private void fProgress_Load(object sender, EventArgs e)
+        {
+            cWindow.centerForm(this);
         }
     }
 }

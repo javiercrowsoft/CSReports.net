@@ -125,34 +125,41 @@ namespace CSReportGlobals
 
         public static String format(object expression, String strFormat)
         {
-            System.TypeCode typeCode = System.Type.GetTypeCode(expression.GetType());
-            if (typeCode == System.TypeCode.DateTime)
+            if (expression == null)
             {
-                if ((DateTime)expression == CSDataBase.cConstants.C_NO_DATE)
-                {
-                    return "";
-                }
-            }
-            if (strFormat == "")
-            {
-                return expression.ToString();
+                return "";
             }
             else
             {
-                return String.Format(strFormat, expression);
+                System.TypeCode typeCode = System.Type.GetTypeCode(expression.GetType());
+                if (typeCode == System.TypeCode.DateTime)
+                {
+                    if ((DateTime)expression == CSDataBase.cConstants.C_NO_DATE)
+                    {
+                        return "";
+                    }
+                }
+                if (strFormat == "")
+                {
+                    return expression.ToString();
+                }
+                else
+                {
+                    return String.Format(strFormat, expression);
+                }
             }
         }
 
         public static String getRealName(String name)
         {
             int n = name.IndexOf("}.", 1);
-            if (n > 0)
+            if (n > -1)
             {
                 n = n + 2;
             }
             else
             {
-                n = 1;
+                n = 0;
             }
             return name.Substring(n);
         }

@@ -60,9 +60,18 @@ namespace CSKernelClient
 
         private void fMsg_Load(object sender, EventArgs e)
         {
-            cWindow.centerForm(this);
             txMsg.SelectionStart = 0;
             txMsg.SelectionLength = 0;
+
+            var height = txMsg.Lines.Length * 10;
+            if (height > this.Height - 100)
+            {
+                this.Height = height + 100;
+                txMsg.Height = height;
+                cmdOk.Top = this.Height - 40;
+            }            
+
+            cWindow.centerForm(this);
         }
     }
 }

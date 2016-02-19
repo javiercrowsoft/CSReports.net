@@ -56,5 +56,10 @@ namespace CSKernelClient
             System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
             picIcon.Image = new Bitmap(assembly.GetManifestResourceStream(assembly.GetName().Name + ".Resources.warning.png"));
         }
+
+        private void fErrors_Load(object sender, EventArgs e)
+        {
+            cWindow.centerForm(this);
+        }
     }
 }

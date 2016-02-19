@@ -1031,7 +1031,8 @@ namespace CSReportPaint
 
         private void printerSetSizeAndOrient(string p, csReportPaperType csReportPaperType, int p_2)
         {
-            throw new NotImplementedException();
+            // TODO: implement this
+            // throw new NotImplementedException();
         }
 
         private bool pNewPage(float top, float detailHeight)

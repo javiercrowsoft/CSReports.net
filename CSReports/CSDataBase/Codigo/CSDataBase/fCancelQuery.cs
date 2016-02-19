@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using CSKernelClient;
 
 namespace CSDataBase
 {
@@ -20,7 +21,8 @@ namespace CSDataBase
         {
             InitializeComponent();
 
-            picIcon.Image = new Bitmap(System.Reflection.Assembly.GetEntryAssembly().GetManifestResourceStream("Database.png"));
+            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            picIcon.Image = new Bitmap(assembly.GetManifestResourceStream(assembly.GetName().Name + ".Resources.Database.png"));
             m_timer = new Timer();
             m_timer.Tick += new EventHandler(timer_tick);
             m_timer.Interval = 1000;
@@ -53,6 +55,11 @@ namespace CSDataBase
             m_seconds++;
             m_minutes = m_minutes + m_seconds / 60;
             m_seconds = m_seconds % 60;            
+        }
+
+        private void fCancelQuery_Load(object sender, EventArgs e)
+        {
+            cWindow.centerForm(this);
         }
     }
 }

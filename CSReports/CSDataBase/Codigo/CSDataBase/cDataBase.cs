@@ -18,7 +18,6 @@ public delegate void OpenRsProgress();
 namespace CSDataBase
 {
 
-
     public class cDataBase
     {
         private const string c_module = "cDataBase";
@@ -845,12 +844,12 @@ namespace CSDataBase
             }
         }
 
-        public string sqlString(string val)
+        public static string sqlString(string val)
         {
             return "'" + val.Replace("'", "''") + "'";
         }
 
-        public string sqlDate(string val)
+        public static string sqlDate(string val)
         {
             DateTime dt;
             if (DateTime.TryParseExact(val, "MM/dd/yyyy", null, DateTimeStyles.None, out dt)) { }
@@ -859,11 +858,84 @@ namespace CSDataBase
             else if (DateTime.TryParseExact(val, "dd-MM-yyyy", null, DateTimeStyles.None, out dt)) { }
             else if (DateTime.TryParseExact(val, "MM.dd.yyyy", null, DateTimeStyles.None, out dt)) { }
             else if (DateTime.TryParseExact(val, "dd.MM.yyyy", null, DateTimeStyles.None, out dt)) { }
+            
+            else if (DateTime.TryParseExact(val, "M/dd/yyyy", null, DateTimeStyles.None, out dt)) { }
+            else if (DateTime.TryParseExact(val, "dd/M/yyyy", null, DateTimeStyles.None, out dt)) { }
+            else if (DateTime.TryParseExact(val, "M-dd-yyyy", null, DateTimeStyles.None, out dt)) { }
+            else if (DateTime.TryParseExact(val, "dd-M-yyyy", null, DateTimeStyles.None, out dt)) { }
+            else if (DateTime.TryParseExact(val, "M.dd.yyyy", null, DateTimeStyles.None, out dt)) { }
+            else if (DateTime.TryParseExact(val, "dd.M.yyyy", null, DateTimeStyles.None, out dt)) { }
+            
+            else if (DateTime.TryParseExact(val, "M/d/yyyy", null, DateTimeStyles.None, out dt)) { }
+            else if (DateTime.TryParseExact(val, "d/M/yyyy", null, DateTimeStyles.None, out dt)) { }
+            else if (DateTime.TryParseExact(val, "M-d-yyyy", null, DateTimeStyles.None, out dt)) { }
+            else if (DateTime.TryParseExact(val, "d-M-yyyy", null, DateTimeStyles.None, out dt)) { }
+            else if (DateTime.TryParseExact(val, "M.d.yyyy", null, DateTimeStyles.None, out dt)) { }
+            else if (DateTime.TryParseExact(val, "d.M.yyyy", null, DateTimeStyles.None, out dt)) { }
+
             else throw new Exception("Invalid date " + val);
-            return "'" + dt.ToString(cConstants.C_SQL_DATE_STRING, CultureInfo.InvariantCulture) + "'";                        
+            return "'" + dt.ToString(cConstants.C_SQL_DATE_STRING, CultureInfo.InvariantCulture) + "'";
         }
 
-        public string sqlNumber(string val)
+        /* TODO: remove me
+        private string getNumberSql(string number)
+        {
+            if (! G.isNumeric(number)) 
+            {
+                return "0";
+            }
+            else
+            {
+                var s = cUtil.val(number).ToString(new String('#', 27) + "0." + new String('#', 28), CultureInfo.InvariantCulture);
+                s = s.Replace(",", ".");
+                if (s.Substring(s.Length - 1, 0) == ".")
+                {
+                    s = s.Substring(0, s.Length - 1);
+                }
+                return s;
+            }
+
+        } 
+        private string getNumberSql(string number)
+        {
+            if (!G.isNumeric(number))
+            {
+                return "0";
+            }
+            else
+            {
+                var s = cUtil.val(number).ToString(new String('#', 27) + "0." + new String('#', 28), CultureInfo.InvariantCulture);
+                s = s.Replace(",", ".");
+                if (s.Substring(s.Length - 1, 0) == ".")
+                {
+                    s = s.Substring(0, s.Length - 1);
+                }
+                return s;
+            }
+
+        }
+         
+         */
+        public static string sqlNumber(string number)
+        {
+            if (!G.isNumeric(number))
+            {
+                return "0";
+            }
+            else
+            {
+                var s = cUtil.val(number).ToString(new String('#', 27) + "0." + new String('#', 28), CultureInfo.InvariantCulture);
+                s = s.Replace(",", ".");
+                if (s.Substring(s.Length - 1, 0) == ".")
+                {
+                    s = s.Substring(0, s.Length - 1);
+                }
+                return s;
+            }
+        }
+
+        /* TODO: remove me 
+        public static string sqlNumber(string val)
         {
             double ival;
             NumberStyles style = (NumberStyles)
@@ -894,6 +966,7 @@ namespace CSDataBase
                 }
             }
         }
+        */
 
         public void closeDb()
         {

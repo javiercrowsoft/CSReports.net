@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using System.CodeDom.Compiler;
+using CSKernelClient;
 
 namespace CSReportDll
 {
@@ -13,7 +14,17 @@ namespace CSReportDll
             // This class implements the 'CodeDomProvider' class as its base. All of the current .Net languages (at least Microsoft ones)
             // come with thier own implemtation, thus you can allow the user to use the language of thier choice (though i recommend that
             // you don't allow the use of c++, which is too volatile for scripting use - memory leaks anyone?)
-            Microsoft.CSharp.CSharpCodeProvider csProvider = new Microsoft.CSharp.CSharpCodeProvider();
+
+            CodeDomProvider provider;
+
+            if (cUtil.subString(code, 0, 8).ToLower() == "function")
+            {
+                provider = new Microsoft.VisualBasic.VBCodeProvider();                
+            }
+            else 
+            {
+                provider = new Microsoft.CSharp.CSharpCodeProvider();
+            }
 
             // Setup our options
             CompilerParameters options = new CompilerParameters();
@@ -32,11 +43,20 @@ namespace CSReportDll
 
             // Compile our code
             CompilerResults result;
-            result = csProvider.CompileAssemblyFromSource(options, code);
+            result = provider.CompileAssemblyFromSource(options, code);
 
             if (result.Errors.HasErrors)
             {
+                var errors = "";
+
                 // TODO: report back to the user that the script has errored
+                for (int i = 0; i < result.Errors.Count; i++)
+                {
+                    errors += result.Errors[0].ErrorText + "\r\n\r\nSource code:\r\n\r\n" + code + "\r\n\r\n";
+                }
+
+                cWindow.msgError(errors);
+
                 return null;
             }
 

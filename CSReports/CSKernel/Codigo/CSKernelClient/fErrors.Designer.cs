@@ -92,8 +92,11 @@
             this.Controls.Add(this.lbError);
             this.Controls.Add(this.picIcon);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "fErrors";
             this.Text = "Error";
+            this.Load += new System.EventHandler(this.fErrors_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picIcon)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

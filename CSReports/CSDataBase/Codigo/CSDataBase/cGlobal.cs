@@ -77,6 +77,78 @@ namespace CSDataBase
             throw new Exception("The data type [" + dataType + "] is not matched in CSDatabase.cDatabaseGlobals.getDataTypeFromString");
         }
 
+        public static csDataType getDataTypeFromAdo(int adoDBType) 
+        {
+            switch ((csAdoDataType)adoDBType)
+            {
+                case csAdoDataType.adBigInt:
+                case csAdoDataType.adUnsignedBigInt:
+                    return csDataType.CSTDBIGINT;
+                
+                case csAdoDataType.adBinary:
+                case csAdoDataType.adVarBinary:
+                case csAdoDataType.adLongVarBinary:
+                    return csDataType.CSTDBINARY;
+
+                case csAdoDataType.adBSTR:
+                case csAdoDataType.adChapter:
+                case csAdoDataType.adVarChar:
+                case csAdoDataType.adLongVarChar:
+                case csAdoDataType.adChar:
+                    return csDataType.CSTDVARCHAR;
+                
+                case csAdoDataType.adCurrency:
+                    return csDataType.CSTDCURRENCY;
+
+                case csAdoDataType.adDate:
+                case csAdoDataType.adDBDate:
+                case csAdoDataType.adDBTime:
+                case csAdoDataType.adDBTimeStamp:
+                case csAdoDataType.adDBFileTime:
+                    return csDataType.CSTDDATE;
+                
+                case csAdoDataType.adDecimal:
+                case csAdoDataType.adDouble:
+                case csAdoDataType.adNumeric:                
+                case csAdoDataType.adVarNumeric:
+                    return csDataType.CSTDDOUBLE;
+
+                case csAdoDataType.adInteger:
+                case csAdoDataType.adUnsignedInt:
+                    return csDataType.CSTDINTEGER;
+                
+                case csAdoDataType.adSingle:
+                    return csDataType.CSTDSINGLE;
+                
+                case csAdoDataType.adSmallInt:
+                case csAdoDataType.adUnsignedSmallInt:
+                    return csDataType.CSTDSMALLINT;
+
+                case csAdoDataType.adTinyInt:
+                case csAdoDataType.adUnsignedTinyInt:
+                case csAdoDataType.adBoolean:
+                    return csDataType.CSTDTINYINT;
+
+                case csAdoDataType.adVarWChar:
+                case csAdoDataType.adWChar:
+                case csAdoDataType.adLongVarWChar:
+                    return csDataType.CSTDVARCHAR;
+
+                case csAdoDataType.adEmpty:
+                case csAdoDataType.adError:
+                case csAdoDataType.adFileTime:
+                case csAdoDataType.adGUID:
+                case csAdoDataType.adIDispatch:
+                case csAdoDataType.adIUnknown:
+                case csAdoDataType.adVariant:
+                case csAdoDataType.adPropVariant:
+                case csAdoDataType.adUserDefined:
+                    break;
+            }
+
+            throw new Exception("This datatype is not supported [" + adoDBType.ToString() + "]");
+        }
+
     }
 
     public enum csDataType

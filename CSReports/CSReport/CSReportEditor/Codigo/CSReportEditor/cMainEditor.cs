@@ -1,10 +1,10 @@
 using System;
 using System.Globalization;
+using System.Collections.Generic;
+using System.Windows.Forms;
 using CSReportGlobals;
 using CSKernelClient;
-using System.Collections.Generic;
 using CSReportDll;
-using System.Windows.Forms;
 
 namespace CSReportEditor
 {
@@ -44,6 +44,9 @@ namespace CSReportEditor
         private static fMain fmain;
 
         public static fMain initEditor() {
+            
+            cRegionalCfg.init();
+
             if (fmain == null) {
                 fmain = new fMain();
                 fmain.init();
