@@ -8,6 +8,40 @@ namespace CSReportDll
     internal static class cReportScriptEngine
     {
 
+        private static string getFunctionName(string code)
+        { 
+            int n = code.IndexOf("(");
+            return cUtil.subString(code, 8, n-8);
+        }
+
+        private static string putCodeInClass(string code)
+        {
+            if (cUtil.subString(code, 0, 8).ToLower() == "function")
+            {
+                return "Public Class util\r\n"
+                     + "Implements CSReportDll.cIReportScriptType\r\n"
+                     + code + "\r\n"
+                     + "Public Function RunScript(globals As CSReportDll.cReportCompilerGlobals) As String Implements CSReportDll.cIReportScriptType.RunScript\r\n"
+                     + "  dim value__ = " + getFunctionName(code) + "()\r\n"
+                     + "  Select Case Microsoft.VisualBasic.Information.VarType(value__)\r\n"
+                     + "    Case 11\r\n"
+                     + "      RunScript = System.Convert.ToInt32(value__)\r\n"
+                     + "    Case 7\r\n"
+                     + "      RunScript = String.Format(\"{0:MM/dd/yyyy}\", value__)\r\n"
+                     + "    Case Else\r\n"
+                     + "      RunScript = value__\r\n"
+                     + "  End Select\r\n"
+                     + "End Function\r\n"
+                     + "End Class";
+            }
+            else
+            {
+                // TODO: implement c# scripting
+                //
+                return "public class util: cIReportScriptType { public " + code + "}";
+            }            
+        }
+
         internal static Assembly compileCode(string code)
         {
             // Create a code provider
@@ -39,23 +73,29 @@ namespace CSReportDll
             // Just to avoid bloatin this example to much, we will just add THIS program to its references, that way we don't need another
             // project to store the interfaces that both this class and the other uses. Just remember, this will expose ALL public classes to
             // the "script"
+
+            // TODO: create a new project and put there the interface
+            //       then learn how to get a refence to the Assembly of
+            //       that project
+            //
+
             options.ReferencedAssemblies.Add(Assembly.GetExecutingAssembly().Location);
 
             // Compile our code
             CompilerResults result;
-            result = provider.CompileAssemblyFromSource(options, code);
+            string classCode = putCodeInClass(code);
+            result = provider.CompileAssemblyFromSource(options, classCode);
 
             if (result.Errors.HasErrors)
             {
                 var errors = "";
 
-                // TODO: report back to the user that the script has errored
                 for (int i = 0; i < result.Errors.Count; i++)
                 {
-                    errors += result.Errors[0].ErrorText + "\r\n\r\nSource code:\r\n\r\n" + code + "\r\n\r\n";
+                    errors += result.Errors[0].ErrorText + "\r\n";
                 }
 
-                cWindow.msgError(errors);
+                cWindow.msgError(errors + "\r\n\r\nSource code:\r\n\r\n" + classCode + "\r\n\r\n");
 
                 return null;
             }

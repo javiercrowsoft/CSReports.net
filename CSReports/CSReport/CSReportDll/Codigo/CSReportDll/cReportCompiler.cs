@@ -296,7 +296,7 @@ namespace CSReportDll
                         return null; 
                     }
 
-                    code = code.Replace(C_KEYFUNCINT + cReportGlobals.format(i, "000"), 
+                    code = code.Replace(C_KEYFUNCINT + cReportGlobals.format(i + 1, "000"), 
                                             getNumericVal(vResult[i].ToString()));
                 }
 
@@ -852,7 +852,7 @@ namespace CSReportDll
 
             m_formula.setTextC((tc.Substring(0, r)).ToString()
                                 + C_KEYFUNCINT
-                                + cReportGlobals.format(m_formula.getFormulasInt().count(), "{0:D3}")
+                                + cReportGlobals.format(m_formula.getFormulasInt().count(), "000")
                                 + tc.Substring(q));
 
             idFunction = pGetIdFunction(name);

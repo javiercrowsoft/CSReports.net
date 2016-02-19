@@ -131,6 +131,8 @@ namespace CSReportGlobals
             }
             else
             {
+                bool isDate = false;
+
                 System.TypeCode typeCode = System.Type.GetTypeCode(expression.GetType());
                 if (typeCode == System.TypeCode.DateTime)
                 {
@@ -138,6 +140,7 @@ namespace CSReportGlobals
                     {
                         return "";
                     }
+                    isDate = true;
                 }
                 if (strFormat == "")
                 {
@@ -145,7 +148,14 @@ namespace CSReportGlobals
                 }
                 else
                 {
-                    return String.Format(strFormat, expression);
+                    if (isDate)
+                    {
+                        return ((DateTime)expression).ToString(strFormat);
+                    }
+                    else
+                    {
+                        return cUtil.val(expression).ToString(strFormat);
+                    }                    
                 }
             }
         }

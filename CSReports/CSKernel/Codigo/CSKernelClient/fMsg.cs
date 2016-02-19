@@ -63,12 +63,12 @@ namespace CSKernelClient
             txMsg.SelectionStart = 0;
             txMsg.SelectionLength = 0;
 
-            var height = txMsg.Lines.Length * 10;
+            var height = txMsg.Lines.Length * 20;
             if (height > this.Height - 100)
             {
                 this.Height = height + 100;
                 txMsg.Height = height;
-                cmdOk.Top = this.Height - 40;
+                cmdOk.Top = this.Height - 80;
             }            
 
             cWindow.centerForm(this);
