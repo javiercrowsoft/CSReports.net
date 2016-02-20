@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Reflection;
+using System.IO;
 using CSKernelClient;
 using CSReportGlobals;
 using CSReportDll;
@@ -19,6 +20,8 @@ namespace CSReportEditor
         //static fMain instance;
 
         private const String C_MODULE = "fMain";
+
+        private const string MRU_FILE = "mru.settings";
 
         private int m_paperSize = 0;
         private int m_paperSizeWidth = 0;
@@ -179,7 +182,7 @@ namespace CSReportEditor
                 }
             }
 
-            if (menuItems.Count < cGlobals.C_TOTINRECENTLIST && found == false)
+            if (menuItems.Count < cGlobals.C_TOTINRECENTLIST && !found)
             {
                 var menu = this.mnuFileRecentList.DropDownItems.Add("");
                 menu.Visible = true;
@@ -193,9 +196,27 @@ namespace CSReportEditor
             }
 
             menuItems[0].Text = fileName;
+
+            saveRecentList();
         }
 
-        public void loadRecentList(List<String> recentList)
+        private string getMRUFileName()
+        { 
+            var path = System.Environment.SpecialFolder.LocalApplicationData;
+            return Environment.GetFolderPath(path) + Path.DirectorySeparatorChar + MRU_FILE;
+        }
+
+        private void loadRecentListFromUserSettings()
+        {
+            var fileName = getMRUFileName();
+            if (File.Exists(fileName))
+            {
+                var lines = File.ReadAllLines(fileName);
+                loadRecentList(lines.ToList());
+            }
+        }
+
+        private void loadRecentList(List<String> recentList)
         {
             int i = 0;
             String recent = "";
@@ -205,22 +226,34 @@ namespace CSReportEditor
                 recent = recentList[i];
                 var menu = this.mnuFileRecentList.DropDownItems.Add(recent);
                 menu.Visible = true;
+                menu.Click += (s, e) => { 
+                    cEditor editor = createEditor();
+                    editor.init();
+                    if (editor.openDocument(recent))
+                    {
+                        addToRecentList(editor.getFileName());
+                    }
+                };
             }
 
-            if (this.mnuFileRecentList.DropDownItems.Count > 1)
+            if (this.mnuFileRecentList.DropDownItems.Count > 0)
             {
                 this.mnuFileRecentList.Visible = true;
             }
         }
 
-        public void saveRecentList()
+        private void saveRecentList()
         {
             int i = 0;
+            string mruList = "";
 
-            for (i = 0; i < this.mnuFileRecentList.DropDownItems.Count; i++)
+            for (i = 0; i < mnuFileRecentList.DropDownItems.Count; i++)
             {
-                // TODO: implement
+                mruList += mnuFileRecentList.DropDownItems[i].Text + Environment.NewLine;
             }
+
+            var fileName = getMRUFileName();
+            File.WriteAllText(fileName, mruList);
         }
 
         public void setStatus(String status)
@@ -266,9 +299,9 @@ namespace CSReportEditor
 
                 editor.init();
 
-                if(editor.openDocument()) {
+                if (editor.openDocument())
+                {
                     addToRecentList(editor.getFileName());
-                    saveRecentList();
                 }
 
             } catch (Exception ex) {
@@ -305,7 +338,10 @@ namespace CSReportEditor
 
         private void fMain_Load(object sender, EventArgs e)
         {
-            cPrintAPI.getDefaultPrinter(out m_printerName, out m_driverName, out m_port, out m_paperSize, out m_orientation, out m_paperSizeWidth, out m_paperSizeHeight);
+            cPrintAPI.getDefaultPrinter(
+                out m_printerName, out m_driverName, out m_port, 
+                out m_paperSize, out m_orientation, out m_paperSizeWidth, 
+                out m_paperSizeHeight);
             
             //
             // remove me and implement a better window position code
@@ -319,6 +355,8 @@ namespace CSReportEditor
             lvwColumnSorter = new cListViewColumnSorter();
             lv_controls.ListViewItemSorter = lvwColumnSorter;
             lv_controls_ColumnClick(this, new ColumnClickEventArgs(0));
+
+            loadRecentListFromUserSettings();
         }
 
         private void cmCtrlProperties_Click(object sender, EventArgs e)

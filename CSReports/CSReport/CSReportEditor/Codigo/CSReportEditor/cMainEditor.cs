@@ -137,14 +137,6 @@ namespace CSReportEditor
             fmain.addToRecentList(fileName);
         }
 
-        public static void loadRecentList() {
-            // TODO: implement
-            fmain.loadRecentList(new List<String>());
-        }
-
-        public static void saveRecentList() {
-            fmain.saveRecentList();
-        }
 	    public static void setEditFontBoldValue(int bBold) {
 			// TODO: implement
 	    }
