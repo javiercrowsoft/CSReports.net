@@ -90,14 +90,4 @@ namespace CSKernelClient
         Error
     }
 
-    public enum VbMsgBoxResult
-    {
-        vbAbort = 3,
-        vbCancel = 2,
-        vbIgnore = 5,
-        vbNo = 7,
-        vbOK = 1,
-        vbRetry = 4,
-        vbYes = 6
-    }
 }

@@ -996,7 +996,7 @@ namespace CSReportDll
 
                     // we process the line
                     //
-                    csRptGetLineResult rslt = pGetLineWork(fields, out bGetNewPage);
+                    csRptGetLineResult rslt = pGetLineWork(ref fields, out bGetNewPage);
                     if (bGetNewPage)
                     {
                         return csRptGetLineResult.CSRPTGLNEWPAGE;
@@ -1031,7 +1031,7 @@ namespace CSReportDll
             }
         }
 
-        private csRptGetLineResult pGetLineWork(cReportPageFields fields, out bool bGetNewPage)
+        private csRptGetLineResult pGetLineWork(ref cReportPageFields fields, out bool bGetNewPage)
         {
             bGetNewPage = false;
 

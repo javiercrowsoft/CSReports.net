@@ -54,10 +54,25 @@ namespace CSReportEditor
             //
             m_editorTab = editorTab;
 
-            m_editorTab.Enter += (s, e) => { cMainEditor.setDocActive(this); };            
+            m_editorTab.Enter += (s, e) => { cMainEditor.setDocActive(this); };
+
+            m_editorTab.Tag = this;
         }
         
         private cEditor() {}
+
+        public bool close() 
+        {
+            if (!saveChanges())
+            {
+                return false;
+            }
+            else { 
+            
+                // TODO: dispose all objects
+                return true;
+            }
+        }
 
         private const String C_MODULE = "cEditor";
         private const int C_TOPBODY = 10;
@@ -2160,8 +2175,9 @@ namespace CSReportEditor
                     what = "the section";
                 }
 
-                if (!cWindow.ask("Are yuo sure you want to delete " 
-                            + what + " and all the controls it contains? ", VbMsgBoxResult.vbNo)) {
+                if (!cWindow.ask("Are yuo sure you want to delete "
+                            + what + " and all the controls it contains? ", MessageBoxDefaultButton.Button2))
+                {
                     return;
                 }
 
@@ -2283,7 +2299,7 @@ namespace CSReportEditor
                 paintObj = m_paint.getPaintObjects().item(m_keyFocus);
                 if (paintObj == null) { return; }
 
-                if (!cWindow.ask("Confirm you want to delete the control? ", VbMsgBoxResult.vbNo)) { return; }
+                if (!cWindow.ask("Confirm you want to delete the control? ", MessageBoxDefaultButton.Button2)) { return; }
 
                 for (int i = 0; i < m_vSelectedKeys.Length; i++) {
                     paintObj = m_paint.getPaintObjects().item(m_vSelectedKeys[i]);
@@ -3960,7 +3976,8 @@ namespace CSReportEditor
                     if (!bMultiSelect) {
                         if (rptCtrl.getName() != m_fProperties.txName.Text) {
                             if (rptCtrl.getName() != "") {
-                                if (cWindow.ask("You have changed the name of this control.;;Do you want to update all references to this control in all formulas of this report?", VbMsgBoxResult.vbYes)) {
+                                if (cWindow.ask("You have changed the name of this control.;;Do you want to update all references to this control in all formulas of this report?", MessageBoxDefaultButton.Button2))
+                                {
                                     pUpdateFormulas(rptCtrl.getName(), m_fProperties.txName.Text);
                                 }
                             }
@@ -4929,7 +4946,7 @@ namespace CSReportEditor
             m_paint.initGrid(m_picReport.CreateGraphics(), m_typeGrid);
 
             if (m_report.getName() != "") {
-                m_editorTab.Text = m_report.getPath() + m_report.getName();
+                m_editorTab.Text = m_report.getName() + "   [X]";
             }
 
             cReportSection sec = null;

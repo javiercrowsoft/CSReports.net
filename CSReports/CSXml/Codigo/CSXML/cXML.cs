@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Xml;
 using System.IO;
+using System.Windows.Forms;
 using CSKernelClient;
 
 namespace CSXml
@@ -160,7 +161,7 @@ namespace CSXml
 
                 if (msg != "")
                 {
-                    if (!cWindow.ask(msg, VbMsgBoxResult.vbNo, "Saving")) 
+                    if (!cWindow.ask(msg, MessageBoxDefaultButton.Button2, "Saving")) 
                     { 
                         return false; 
                     }

@@ -1062,6 +1062,7 @@
             this.tabReports.SelectedIndex = 0;
             this.tabReports.Size = new System.Drawing.Size(452, 261);
             this.tabReports.TabIndex = 0;
+            this.tabReports.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tabReports_MouseClick);
             // 
             // tbpEditor
             // 

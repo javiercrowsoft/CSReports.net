@@ -186,6 +186,7 @@ namespace CSReportEditor
             {
                 var menu = this.mnuFileRecentList.DropDownItems.Add("");
                 menu.Visible = true;
+                menu.Click += mnuRecentClick;
             }
 
             if (!found) { j = menuItems.Count - 1; }
@@ -226,19 +227,23 @@ namespace CSReportEditor
                 recent = recentList[i];
                 var menu = this.mnuFileRecentList.DropDownItems.Add(recent);
                 menu.Visible = true;
-                menu.Click += (s, e) => { 
-                    cEditor editor = createEditor();
-                    editor.init();
-                    if (editor.openDocument(recent))
-                    {
-                        addToRecentList(editor.getFileName());
-                    }
-                };
+                menu.Click += mnuRecentClick;
             }
 
             if (this.mnuFileRecentList.DropDownItems.Count > 0)
             {
                 this.mnuFileRecentList.Visible = true;
+            }
+        }
+
+        private void mnuRecentClick(object sender, EventArgs e)
+        {
+            ToolStripMenuItem mnu = (ToolStripMenuItem)sender;
+            cEditor editor = createEditor();
+            editor.init();
+            if (editor.openDocument(mnu.Text))
+            {
+                addToRecentList(editor.getFileName());
             }
         }
 
@@ -776,6 +781,24 @@ namespace CSReportEditor
             {
                 editor.preview();
             }        
+        }
+
+
+        private void tabReports_MouseClick(object sender, MouseEventArgs e)
+        {
+            for (int i = 0; i < tabReports.TabCount; ++i)
+            {
+                var rect = tabReports.GetTabRect(i);
+                var xRect = new System.Drawing.Rectangle(rect.Left + rect.Width - 18, rect.Top, 18, rect.Height);
+                if (xRect.Contains(e.Location))
+                {
+                    cEditor editor = (cEditor)tabReports.TabPages[i].Tag;
+                    if (editor.close())
+                    {
+                        tabReports.TabPages.RemoveAt(i);
+                    }
+                }
+            }
         }
     }
 }

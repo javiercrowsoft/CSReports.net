@@ -47,14 +47,14 @@ namespace CSKernelClient
             msgWarning(msg, "@@@@@", "");
         }
 
-        public static bool ask(String msg, VbMsgBoxResult defaultButton) 
+        public static bool ask(String msg, MessageBoxDefaultButton defaultButton) 
         {
             return ask(msg, defaultButton, "@@@@@");
         }
 
-        public static bool ask(String msg, VbMsgBoxResult defaultButton, String Title) 
+        public static bool ask(String msg, MessageBoxDefaultButton defaultButton, String Title) 
         {
-            return false;
+            return MessageBox.Show(msg, "", MessageBoxButtons.YesNo, MessageBoxIcon.Question, defaultButton) == DialogResult.Yes;
         }
 
         public static void msgInfo(String msg)
