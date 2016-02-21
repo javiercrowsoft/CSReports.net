@@ -2850,8 +2850,8 @@ namespace CSReportDll
 
         private String pGetFileImageInTMP(byte[] bytes)
         {
-            String fileName = fileName = "~csrptImage";
-            fileName = cUtil.getValidPath(System.Environment.GetEnvironmentVariable("TEMP")) + fileName;
+            String fileName = "~csrptImage";
+            fileName = cUtil.getValidPath(System.IO.Path.GetTempPath()) + fileName;
 
             CSKernelFile.cFileEx fileEx = null;
             fileEx = new CSKernelFile.cFileEx();
