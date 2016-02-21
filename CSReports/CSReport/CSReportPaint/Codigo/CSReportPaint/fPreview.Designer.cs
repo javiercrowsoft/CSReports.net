@@ -38,17 +38,18 @@
             this.rpwReport.Dock = System.Windows.Forms.DockStyle.Fill;
             this.rpwReport.Location = new System.Drawing.Point(0, 0);
             this.rpwReport.Name = "rpwReport";
-            this.rpwReport.Size = new System.Drawing.Size(487, 410);
+            this.rpwReport.Size = new System.Drawing.Size(532, 383);
             this.rpwReport.TabIndex = 0;
             // 
             // fPreview
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(487, 410);
+            this.ClientSize = new System.Drawing.Size(532, 383);
             this.Controls.Add(this.rpwReport);
             this.Name = "fPreview";
             this.Text = "fPreview";
+            this.Load += new System.EventHandler(this.fPreview_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

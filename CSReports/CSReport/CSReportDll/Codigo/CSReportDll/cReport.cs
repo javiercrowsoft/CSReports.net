@@ -863,7 +863,7 @@ namespace CSReportDll
                 int indexRow = m_vRowsIndexAux[indexRows] + 1;
                 if (m_collRows[indexRows] != null)
                 {
-                    if (indexRow < m_collRows.Length)
+                    if (indexRow < m_collRows[indexRows].Rows.Count)
                     {
                         m_vRowsIndexAux[indexRows] = indexRow;
                     }
@@ -2831,7 +2831,9 @@ namespace CSReportDll
                 {
                     try
                     {
-                        image = Image.FromFile(fileInTMP);
+                        var tmpImage = Image.FromFile(fileInTMP);
+                        image = new Bitmap(tmpImage);
+                        tmpImage.Dispose();
                         m_images.Add(key, image);
                     }
                     catch

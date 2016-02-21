@@ -765,7 +765,7 @@ namespace CSReportPaint
             {
                 return;
             }
-            refreshBackgroundPicture(graph as Graphics, (int)csColors.C_COLOR_WHITE);
+            refreshBackgroundPicture(graph as Graphics, Color.White.ToArgb(), false);
         }
 
         public bool refreshObject(String key, Graphics graph)
@@ -1330,6 +1330,11 @@ namespace CSReportPaint
 
         private void refreshBackgroundPicture(Graphics graph, int color)
         {
+            refreshBackgroundPicture(graph, color, true);
+        }
+
+        private void refreshBackgroundPicture(Graphics graph, int color, bool disposeGraphicObject)
+        {
             /*
             int i = 0;
             RECT tR = null;
@@ -1378,12 +1383,18 @@ namespace CSReportPaint
             Graphics bitmapGraphic = Graphics.FromImage(m_bitmap);
 
             Rectangle rect = cGlobals.newRectangle(0, 0, (int)graph.VisibleClipBounds.Width, (int)graph.VisibleClipBounds.Height + 3); // TODO check why 56 ???
-            Brush brush = new SolidBrush(cColor.colorFromRGB(color));
-            bitmapGraphic.FillRectangle(brush, rect);
-            brush.Dispose();
 
-            bitmapGraphic.FillRectangle(m_brushGrid, rect);
-            
+            if (m_brushGrid != null)
+            {
+                bitmapGraphic.FillRectangle(m_brushGrid, rect);
+            }
+            else 
+            {
+                Brush brush = new SolidBrush(cColor.colorFromRGB(color));
+                bitmapGraphic.FillRectangle(brush, rect);
+                brush.Dispose();            
+            }
+
             for (int i = 0; i < getPaintObjects().count(); i++)
             {
                 drawObject(getPaintObjects().getNextKeyForZOrder(i), bitmapGraphic);
@@ -1394,7 +1405,7 @@ namespace CSReportPaint
                 drawSection(getPaintSections().getNextKeyForZOrder(i), bitmapGraphic);
             }
             
-            paintPicture(graph, true);
+            paintPicture(graph, disposeGraphicObject);
         }
 
         //--------------------------------------------------------------------------------------------------
@@ -2206,7 +2217,16 @@ namespace CSReportPaint
                         dash = true;
                     }
 
-                    printLine(graph, filled, x1, y1, x2, y2, colorIn, borderWidth, dash, colorOut, false);
+                    // TODO: clean this
+                    //
+                    if (m_notBorder)
+                    {
+                        //printLine(graph, true, x1, y1, x2, y2, Color.White.ToArgb(), 1, false, Color.White.ToArgb(), false);
+                    }
+                    else
+                    {
+                        printLine(graph, filled, x1, y1, x2, y2, colorIn, borderWidth, dash, colorOut, false);
+                    }
                 }
             }
         }

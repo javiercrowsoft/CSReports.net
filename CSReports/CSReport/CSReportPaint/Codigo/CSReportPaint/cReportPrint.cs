@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using CSReportDll;
 using CSReportGlobals;
 using CSReportExport;
+using CSReportPreview;
 
 namespace CSReportPaint
 {
@@ -68,7 +69,7 @@ namespace CSReportPaint
         }
 
         public void setFileToSavePDF(String rhs)
-        { // TODO: Use of ByRef founded Public Property Let FileToSavePDF(ByRef rhs As String)
+        {
             m_fileToSavePDF = rhs;
         }
 
@@ -78,7 +79,7 @@ namespace CSReportPaint
         }
 
         public void setPDFQuality(csPDFQuality rhs)
-        { // TODO: Use of ByRef founded Public Property Let PDFQuality(ByRef rhs As csPDFQuality)
+        {
             m_pDFQuality = rhs;
         }
 
@@ -90,7 +91,7 @@ namespace CSReportPaint
         }
 
         public void setExportFileName(String rhs)
-        { // TODO: Use of ByRef founded Public Property Let ExportFileName(ByRef rhs As String)
+        {
             m_exportFileName = rhs;
         }
 
@@ -103,7 +104,7 @@ namespace CSReportPaint
         }
 
         public void setPreviewControl(CSReportPreview.cReportPreview rhs)
-        { // TODO: Use of ByRef founded Public Property Set PreviewControl(ByRef rhs As Object)
+        {
             m_rpwPrint = rhs;
         }
 
@@ -128,7 +129,7 @@ namespace CSReportPaint
         }
 
         private void setReport(CSReportDll.cReport rhs)
-        { // TODO: Use of ByRef founded Private Property Set Report(ByRef rhs As cReport)
+        {
             m_report = rhs;
         }
 
@@ -319,7 +320,7 @@ namespace CSReportPaint
             String ctrlName,
             int indexField,
             CSReportDll.cReportPageField testFld)
-        { // TODO: Use of ByRef founded Public Function IsInThisLine(ByVal CtrlName As String, ByVal IndexField As Long, ByRef testFld As cReportPageField) As Boolean
+        {
             CSReportDll.cReportPageFields fields = null;
             CSReportDll.cReportPageField fld = null;
 
@@ -446,7 +447,7 @@ namespace CSReportPaint
                 //
                 m_rpwPrint.setCurrPage(m_currPage);
 
-                m_rpwPrint.refresh();
+                m_rpwPrint.getBody().Refresh();
             }
         }
 
@@ -568,7 +569,7 @@ namespace CSReportPaint
                 if (m_rpwPrint != null)
                 {
                     printPage(m_currPage, false);
-                    m_rpwPrint.refresh();
+                    m_rpwPrint.getBody().Refresh();
                 }
             }
         }
@@ -723,7 +724,7 @@ namespace CSReportPaint
         }
 
         private bool pRefreshObjClient(int iPage, cIPrintClient objClient)
-        { // TODO: Use of ByRef founded Private Function pRefreshObjClient(ByVal iPage As Long, ByRef ObjClient As Object) As Boolean
+        {
             if (objClient == null)
             {
                 return true;
@@ -748,9 +749,6 @@ namespace CSReportPaint
 
         private int[] pGetPagesToPrint(String pagesToPrint)
         {
-
-            throw new NotImplementedException();
-
             String[] v = null;
             int[] n = null;
             String[] v2 = null;
@@ -836,7 +834,7 @@ namespace CSReportPaint
             float top = 0;
             float topSection = 0;
             float heightSection = 0;
-            int secLnIndex = 0;
+            int secLnIndex = -1;
             float[] offsetTop = null;
             float[] vdummy = null;
 
@@ -879,7 +877,7 @@ namespace CSReportPaint
 
             // get details dimensions
             //
-            detailHeight = getDetailHeight(m_report.getPages().item(m_report.getPages().count()-1), top);
+            detailHeight = getDetailHeight(m_report.getPages().item(m_report.getPages().count()-1), ref top);
 
             // add the height of the images for controls which can grow and are in the header
             //
@@ -922,7 +920,7 @@ namespace CSReportPaint
                 {
                     // get the new page
                     //
-                    if (!pNewPage(top, detailHeight))
+                    if (!pNewPage(ref top, ref detailHeight))
                     {
                         return false;
                     }
@@ -940,7 +938,7 @@ namespace CSReportPaint
 
                         // get the new page
                         //
-                        if (!pNewPage(top, detailHeight))
+                        if (!pNewPage(ref top, ref detailHeight))
                         {
                             return false;
                         }
@@ -949,7 +947,7 @@ namespace CSReportPaint
                     {
                         heightSection = 0;
                         topSection = 0;
-                        secLnIndex = 0;
+                        secLnIndex = -1;
 
                         //---------------------------------------------------------------------------------
                         // this code is here and not in a function because we want to improve the
@@ -1035,8 +1033,8 @@ namespace CSReportPaint
             // throw new NotImplementedException();
         }
 
-        private bool pNewPage(float top, float detailHeight)
-        { // TODO: Use of ByRef founded Private Function pNewPage(ByRef Top As Single, ByRef DetailHeight As Single) As Boolean
+        private bool pNewPage(ref float top, ref float detailHeight)
+        {
             csRptNewPageResult rsltNewPage;
             csRptEndPageResult rsltEndPage;
 
@@ -1054,15 +1052,15 @@ namespace CSReportPaint
 
             // get details' dimentions
             //
-            detailHeight = getDetailHeight(m_report.getPages().item(m_report.getPages().count()-1), top);
+            detailHeight = getDetailHeight(m_report.getPages().item(m_report.getPages().count()-1), ref top);
 
             return true;
         }
 
         // returns details' height of this page
         //
-        private float getDetailHeight(CSReportDll.cReportPage page, float top)
-        { // TODO: Use of ByRef founded Private Function GetDetailHeight(ByRef Page As cReportPage, ByRef Top As Single) As Single
+        private float getDetailHeight(CSReportDll.cReportPage page, ref float top)
+        {
             top = page.getHeaderBottom();
             return page.getFooterTop() - top;
         }
@@ -1091,7 +1089,7 @@ namespace CSReportPaint
             Font font = null;
 
             float topSection = 0;
-            int indexSection = 0;
+            int indexSection = -1;
             float heightSection = 0;
 
             offsetTop = new float[1];
@@ -1225,7 +1223,7 @@ namespace CSReportPaint
 
                             // to separete a little
                             //
-                            if (offBottom < 0) { offBottom = offBottom + 80; }
+                            if (offBottom < 0) { offBottom = offBottom + 5; }
 
                             // new line's height 
                             //
@@ -1262,7 +1260,7 @@ namespace CSReportPaint
         //
         private float evaluateTextHeight(string text, Font font, float width, int flags, float scaleY, float scaleX)
         {
-            Bitmap bmp = new Bitmap(1,1);
+            Bitmap bmp = new Bitmap(1, 1);
             Graphics graph = Graphics.FromImage(bmp);
             SizeF stringSize = graph.MeasureString(text, font, Convert.ToInt32(width * scaleX));
             graph.Dispose();
@@ -1323,10 +1321,17 @@ namespace CSReportPaint
                     }
                 }
             }
+
+            m_rpwPrint.getBody().Paint += new PaintEventHandler(rpwPrintBodyPaint);
+            m_rpwPrint.FirstPage += new CSReportPreview.FirstPage(rpwPrintMoveFirst);
+            m_rpwPrint.PreviousPage += new CSReportPreview.PreviousPage(rpwPrintMovePrevious);
+            m_rpwPrint.MoveToPage += new CSReportPreview.MoveToPage(rpwPrintMoveToPage);
+            m_rpwPrint.NextPage += new CSReportPreview.NextPage(rpwPrintMoveNext);
+            m_rpwPrint.LastPage += new CSReportPreview.LastPage(rpwPrintMoveLast);
         }
 
         private void createPaintObjects(CSReportDll.cReportPageFields fields, int offset)
-        { // TODO: Use of ByRef founded Private Sub CreatePaintObjects(ByRef Fields As cReportPageFields, ByVal Offset As Long)
+        {
             CSReportDll.cReportPageField field = null;
 
             CSReportDll.cReportAspect rptAspect = null;
@@ -1447,7 +1452,7 @@ namespace CSReportPaint
         }
 
         private bool pGetFieldFromIndexAux(CSReportDll.cReportPageFields fields, int index, ref CSReportDll.cReportPageField rtn)
-        { // TODO: Use of ByRef founded Private Function pGetFieldFromIndexAux(ByRef Fields As cReportPageFields, ByVal Index As Long, ByRef rtn As cReportPageField) As Boolean
+        {
             try
             {
                 rtn = fields.item(index);
@@ -1540,10 +1545,12 @@ namespace CSReportPaint
         */
         }
 
-        private void m_rpwPrint_BodyPaint()
+        private void rpwPrintBodyPaint(object sender, PaintEventArgs e)
         {
-            if (m_paint == null) { return; }
-            drawPage(m_rpwPrint.getBody());
+            if (m_paint != null)
+            {
+                drawPage(e.Graphics);
+            }
         }
 
         private void m_rpwPrint_ChangeZoom(int zoom)
@@ -1597,7 +1604,7 @@ namespace CSReportPaint
             else
             {
                 m_paint.setZoom(zoom);
-                m_rpwPrint.refresh();
+                m_rpwPrint.getBody().Refresh();
             }
         }
 
@@ -1641,14 +1648,15 @@ namespace CSReportPaint
             return expPDF.sendMail(files);
         }
 
-        public bool exportPDFEx(String outputFile, bool bShowPDFWindow)
-        { // TODO: Use of ByRef founded Public Function ExportPDFEx(ByRef OutputFile As String, ByVal bShowPDFWindow As Boolean) As Boolean
-            return pExportPDF(outputFile, bShowPDFWindow);
+        public bool exportPDFEx(ref String outputFile, bool bShowPDFWindow)
+        {
+            return pExportPDF(ref outputFile, bShowPDFWindow);
         }
 
         public bool exportPDF()
         {
-            return pExportPDF("", true);
+            string dummy = "";
+            return pExportPDF(ref dummy, true);
         }
 
         private String pGetExportFileName()
@@ -1663,8 +1671,8 @@ namespace CSReportPaint
             }
         }
 
-        private bool pExportPDF(String outputFile, bool bShowPDFWindow)
-        { // TODO: Use of ByRef founded Private Function pExportPDF(ByRef OutputFile As String, ByVal bShowPDFWindow As Boolean) As Boolean
+        private bool pExportPDF(ref String outputFile, bool bShowPDFWindow)
+        {
             try
             {
                 cMouseWait mouse = new cMouseWait();
@@ -1703,29 +1711,29 @@ namespace CSReportPaint
                 }
             }
         */
-        private void m_rpwPrint_MoveFirst()
+        private void rpwPrintMoveFirst(object sender, EventArgs e)
         {
             printPage((int)csEMoveTo.C_FIRSTPAGE);
         }
 
-        private void m_rpwPrint_MoveLast()
+        private void rpwPrintMoveLast(object sender, EventArgs e)
         {
             printPage((int)csEMoveTo.C_LASTPAGE);
         }
 
-        private void m_rpwPrint_MoveNext()
+        private void rpwPrintMoveNext(object sender, EventArgs e)
         {
             printPage((int)csEMoveTo.C_NEXTPAGE);
         }
 
-        private void m_rpwPrint_MovePrevious()
+        private void rpwPrintMovePrevious(object sender, EventArgs e)
         {
             printPage((int)csEMoveTo.C_PREVIOUSPAGE);
         }
 
-        private void m_rpwPrint_MoveToPage(int page)
+        private void rpwPrintMoveToPage(object sender, PageEventArgs e)
         {
-            printPage(page);
+            printPage(e.page);
         }
 
         private void m_rpwPrint_SaveDocument()
@@ -1739,10 +1747,10 @@ namespace CSReportPaint
 
             if (m_rePaintObject)
             {
-                m_paint.clearPage(graph);
-
                 if (graph.GetType() == typeof(cPrinter))
                 {
+                    m_paint.clearPage(graph);
+
                     for (i = 0; i < m_paint.getPaintObjects().count(); i++)
                     {
                         if (!m_paint.drawObject(m_paint.getPaintObjects().getNextKeyForZOrder(i), (graph as cPrinter).getGraph())) { return false; }
@@ -1755,12 +1763,16 @@ namespace CSReportPaint
                 }
                 else
                 {
+                    m_paint.clearPage(m_rpwPrint.getBody().CreateGraphics());
+
                     m_rePaintObject = false;
+
+                    m_paint.paintPicture(graph as Graphics, false);
                 }
             }
             else
             {
-                m_paint.paintPicture(graph as Graphics, true);
+                m_paint.paintPicture(graph as Graphics, false);
             }
             return true;
         }

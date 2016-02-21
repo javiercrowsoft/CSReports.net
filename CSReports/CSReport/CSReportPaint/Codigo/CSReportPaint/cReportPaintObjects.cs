@@ -126,6 +126,7 @@ namespace CSReportPaint
         public void clear()
         {
             this.BaseClear();
+            m_zorder = null;
         }
 
         private String[] m_zorder = null;
