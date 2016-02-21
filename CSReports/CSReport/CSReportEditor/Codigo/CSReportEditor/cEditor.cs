@@ -3576,7 +3576,7 @@ namespace CSReportEditor
             if (secLn == null) { return; }
             if (!isSecLn) { return; }
 
-            pShowSecProperties(secLn, sec.getName() + " - line " + secLn.getRealIndex().ToString());
+            pShowSecProperties(secLn, sec.getName() + " - line " + secLn.getIndex().ToString());
 
             refreshAll();
         }

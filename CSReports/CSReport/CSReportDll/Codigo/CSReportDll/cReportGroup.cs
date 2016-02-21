@@ -147,7 +147,11 @@ namespace CSReportDll
         internal bool load(CSXml.cXml xDoc, XmlNode nodeObj)
         {
             m_name = xDoc.getNodeProperty(nodeObj, "Name").getValueString(eTypes.eText);
-            m_index = xDoc.getNodeProperty(nodeObj, "Index").getValueInt(eTypes.eInteger);
+
+            // TODO: fix me - this is Spanish - English bug we should use Index
+            //
+            m_index = xDoc.getNodeProperty(nodeObj, "Indice").getValueInt(eTypes.eInteger);
+
             m_comparisonType = (csRptGrpComparisonType)xDoc.getNodeProperty(nodeObj, "ComparisonType").getValueInt(eTypes.eInteger);
             m_fieldName = xDoc.getNodeProperty(nodeObj, "FieldName").getValueString(eTypes.eText);
             m_oderType = (csRptGrpOrderType)xDoc.getNodeProperty(nodeObj, "OderType").getValueInt(eTypes.eInteger);
@@ -215,7 +219,10 @@ namespace CSReportDll
             xProperty.setValue(eTypes.eText, m_name);
             xDoc.addPropertyToNode(nodeObj, xProperty);
 
-            xProperty.setName("Index");
+            // TODO: fix me - this is Spanish - English bug we should use Index
+            //
+            xProperty.setName("Indice");
+
             xProperty.setValue(eTypes.eInteger, m_index);
             xDoc.addPropertyToNode(nodeObj, xProperty);
 

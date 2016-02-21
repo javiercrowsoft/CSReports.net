@@ -144,7 +144,11 @@ namespace CSReportDll
             cReportSectionLine secLn = null;
 
             m_name = xDoc.getNodeProperty(nodeObj, "Name").getValueString(eTypes.eText);
-            m_index = xDoc.getNodeProperty(nodeObj, "Index").getValueInt(eTypes.eInteger);
+
+            // TODO: fix me - this is Spanish - English bug we should use Index
+            //
+            m_index = xDoc.getNodeProperty(nodeObj, "Indice").getValueInt(eTypes.eInteger);
+
             setTypeSection((csRptTypeSection)xDoc.getNodeProperty(nodeObj, "TypeSection").getValueInt(eTypes.eInteger));
             m_hasFormulaHide = xDoc.getNodeProperty(nodeObj, "HasFormulaHide").getValueBool(eTypes.eBoolean);
 
@@ -200,7 +204,9 @@ namespace CSReportDll
             xProperty.setValue(eTypes.eText, m_key);
             xDoc.addPropertyToNode(nodeObj, xProperty);
 
-            xProperty.setName("Index");
+            // TODO: fix me - this is Spanish - English bug we should use Index
+            //
+            xProperty.setName("Indice");
             xProperty.setValue(eTypes.eInteger, m_index);
             xDoc.addPropertyToNode(nodeObj, xProperty);
 

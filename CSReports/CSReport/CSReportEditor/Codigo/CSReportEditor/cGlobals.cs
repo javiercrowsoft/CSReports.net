@@ -385,7 +385,7 @@ namespace CSReportEditor
                 for (int j = 0; j < sec.getSectionLines().count(); j++)
                 {
                     secLn = sec.getSectionLines().item(j);
-                    nodeSecLn = nodeSec.Nodes.Add("Line " + secLn.getRealIndex());
+                    nodeSecLn = nodeSec.Nodes.Add("Line " + secLn.getIndex());
                     nodeSecLn.ImageIndex = C_IMG_FOLDER;
                     nodeSecLn.Tag = "L" + secLn.getKey();
 

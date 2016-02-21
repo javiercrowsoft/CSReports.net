@@ -967,9 +967,9 @@ namespace CSReportPaint
 
                             // one time for section
                             //
-                            if (secLnIndex != w_sectionLine.getRealIndex())
+                            if (secLnIndex != w_sectionLine.getIndex())
                             {
-                                secLnIndex = w_sectionLine.getRealIndex();
+                                secLnIndex = w_sectionLine.getIndex();
                                 CSReportDll.cReportAspect w_aspect = w_sectionLine.getAspect();
                                 topSection = topSection + (w_aspect.getTop() - (topSection + heightSection));
                                 heightSection = heightSection + w_aspect.getHeight();
@@ -1115,12 +1115,12 @@ namespace CSReportPaint
                     // if the line has changed we need to get the height of the line
                     // and add it to heightSection
                     //
-                    if (indexSection != field.getInfo().getSectionLine().getRealIndex())
+                    if (indexSection != field.getInfo().getSectionLine().getIndex())
                     {
 
                         // save a reference to this section
                         //
-                        indexSection = field.getInfo().getSectionLine().getRealIndex();
+                        indexSection = field.getInfo().getSectionLine().getIndex();
 
                         if (indexSection > offsetTop.Length -1)
                         {

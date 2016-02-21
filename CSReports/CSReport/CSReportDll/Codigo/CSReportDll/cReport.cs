@@ -4228,7 +4228,7 @@ namespace CSReportDll
                     // to have debug info
                     //
                     ctrl.getFormulaHide().setSectionName(ctrl.getSectionLine().getSectionName());
-                    ctrl.getFormulaHide().setSectionLineIndex(ctrl.getSectionLine().getRealIndex());
+                    ctrl.getFormulaHide().setSectionLineIndex(ctrl.getSectionLine().getIndex());
                     ctrl.getFormulaHide().setControlName(ctrl.getName());
 
                     // add the formula to the formulas collection
@@ -4245,7 +4245,7 @@ namespace CSReportDll
                     // to have debug info
                     //
                     ctrl.getFormulaValue().setSectionName(ctrl.getSectionLine().getSectionName());
-                    ctrl.getFormulaValue().setSectionLineIndex(ctrl.getSectionLine().getRealIndex());
+                    ctrl.getFormulaValue().setSectionLineIndex(ctrl.getSectionLine().getIndex());
                     ctrl.getFormulaValue().setControlName(ctrl.getName());
 
                     // add the formula to the formulas collection
@@ -4426,12 +4426,12 @@ namespace CSReportDll
                         // to have debug info
                         //
                         secLn.getFormulaHide().setSectionName(secLn.getSectionName());
-                        secLn.getFormulaHide().setSectionLineIndex(secLn.getRealIndex());
+                        secLn.getFormulaHide().setSectionLineIndex(secLn.getIndex());
 
                         // add the formula to the formulas collection
                         //
                         addFormula(secLn.getFormulaHide(), sec.getName() 
-                                    + "_R_" + secLn.getRealIndex().ToString() + "_" + "H");
+                                    + "_R_" + secLn.getIndex().ToString() + "_" + "H");
                     }
                 }
             }

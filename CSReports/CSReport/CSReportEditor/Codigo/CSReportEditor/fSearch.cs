@@ -80,7 +80,7 @@ namespace CSReportEditor
                     secLn = sec.getSectionLines().item(j);
                     if (secLn.getFormulaHide().getText().ToLower().IndexOf(toSearch) > -1)
                     {
-                        pAddToSearchResult(sec.getName() + " - Line " + secLn.getRealIndex().ToString(),
+                        pAddToSearchResult(sec.getName() + " - Line " + secLn.getIndex().ToString(),
                             csObjType.iTypeSecLn, csObjType.iTypeFormulaH, "S" + sec.getKey(), secLn.getFormulaHide().getText());
                     }
                     for (int t = 0; t < secLn.getControls().count(); t++)
