@@ -233,6 +233,13 @@ namespace CSReportDll
                 if (!m_formulaValue.load(xDoc, nodeObj)) { return false; }
                 if (!m_chart.load(xDoc, nodeObj)) { return false; }
 
+                // TODO: remove me after all reports were migrated
+                //
+                if (m_label.getAspect().getFormat() == "" && m_field.getFieldType() == (int)CSDataBase.csAdoDataType.adDBTimeStamp)
+                {
+                    m_label.getAspect().setFormat("dd/MM/yyyy");
+                }
+
                 return true;
             }
             catch 

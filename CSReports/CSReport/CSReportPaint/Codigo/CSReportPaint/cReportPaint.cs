@@ -765,7 +765,7 @@ namespace CSReportPaint
             {
                 return;
             }
-            refreshBackgroundPicture(graph as Graphics, Color.White.ToArgb(), false);
+            refreshBackgroundPicture(graph as Graphics, Color.White.ToArgb());
         }
 
         public bool refreshObject(String key, Graphics graph)
@@ -1330,11 +1330,6 @@ namespace CSReportPaint
 
         private void refreshBackgroundPicture(Graphics graph, int color)
         {
-            refreshBackgroundPicture(graph, color, true);
-        }
-
-        private void refreshBackgroundPicture(Graphics graph, int color, bool disposeGraphicObject)
-        {
             /*
             int i = 0;
             RECT tR = null;
@@ -1405,7 +1400,7 @@ namespace CSReportPaint
                 drawSection(getPaintSections().getNextKeyForZOrder(i), bitmapGraphic);
             }
             
-            paintPicture(graph, disposeGraphicObject);
+            paintPicture(graph, true);
         }
 
         //--------------------------------------------------------------------------------------------------

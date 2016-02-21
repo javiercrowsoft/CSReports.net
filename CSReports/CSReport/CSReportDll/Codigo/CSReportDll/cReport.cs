@@ -56,7 +56,7 @@ namespace CSReportDll
             public int lineNumber;
         }
 
-        // remember mark any change could bring errors 
+        // remember mark any change that could bring errors 
         // with the label WARNING and the date
         //
         // 2008-02-18 WARNING
@@ -193,7 +193,7 @@ namespace CSReportDll
 
         // to print groups in a new page when a group changes
         //
-        private int m_idxGroupToPrintNP = 0;
+        private int m_idxGroupToPrintNP = -1;
 
         // flag to know if there are group headers to re-print in a new page
         // if it is false we can print a footer as the first line in a new page
@@ -203,11 +203,11 @@ namespace CSReportDll
 
         // index of the current group header
         //
-        private int m_idxGroupHeader = 0;
+        private int m_idxGroupHeader = -1;
 
         // index of the current group footer
         //
-        private int m_idxGroupFooter = 0;
+        private int m_idxGroupFooter = -1;
 
         private bool m_bPrintFooter;
         private bool m_bLastFootersWasPrinted;
@@ -699,7 +699,7 @@ namespace CSReportDll
             //
             if (m_idxGroupToPrintNP == m_idxGroupHeader)
             {
-                m_idxGroupToPrintNP = 0;
+                m_idxGroupToPrintNP = -1;
             }
 
             headerSec = m_groups.item(m_idxGroupHeader).getHeader();
@@ -802,13 +802,13 @@ namespace CSReportDll
 
         public void evalPostGroupHeader()
         {
-            if (m_idxGroupHeader == 0) { return; }
+            if (m_idxGroupHeader == -1) { return; }
             evalFunctions(m_idxGroupHeader, csRptWhenEval.CSRPTEVALPOST);
         }
 
         public void evalPostGroupFooter()
         {
-            if (m_idxGroupHeader != 0)
+            if (m_idxGroupHeader != -1)
             {
 
                 int idxChildGroupFooter = 0;
@@ -939,7 +939,7 @@ namespace CSReportDll
             // o
             // - which need to be re-printed because we are in a new page
             //
-            if (m_idxGroupToPrintNP > 0 || m_bHaveToRePrintGroup)
+            if (m_idxGroupToPrintNP > -1 || m_bHaveToRePrintGroup)
             {
                 return csRptGetLineResult.CSRPTGLVIRTUALH;
             }
@@ -1058,7 +1058,7 @@ namespace CSReportDll
 
             // if we need to print the group in a new page
             //
-            if (m_idxGroupToPrintNP > 0)
+            if (m_idxGroupToPrintNP > -1)
             {
                 pGetLineAuxPrintGroupInNP();
             }
@@ -1090,7 +1090,7 @@ namespace CSReportDll
 
                         // continue with the next group
                         //
-                        pGetLineAuxDoGroups(bGetNewPage);
+                        pGetLineAuxDoGroups(ref bGetNewPage);
                     }
                 }
             }
@@ -1100,7 +1100,7 @@ namespace CSReportDll
         private void pGetLineAuxPrintGroupInNP()
         {
             m_idxGroupHeader = m_idxGroupToPrintNP;
-            m_idxGroupToPrintNP = 0;
+            m_idxGroupToPrintNP = -1;
             m_bOpenHeader = true;
         }
 
@@ -1374,7 +1374,7 @@ namespace CSReportDll
             return true;
         }
 
-        private void pGetLineAuxDoGroups(bool bGetNewPage)
+        private void pGetLineAuxDoGroups(ref bool bGetNewPage)
         { // TODO: Use of ByRef founded Private Sub pGetLineAuxDoGroups(ByRef bGetNewPage As Boolean)
             // we continue evaluating groups
             //
@@ -1393,7 +1393,7 @@ namespace CSReportDll
                 //
                 if (m_vGroups[i].changed)
                 {
-                    pGroupChanged(i, bGetNewPage);
+                    pGroupChanged(i, ref bGetNewPage);
                     break;
                 }
                 else
@@ -1553,13 +1553,16 @@ namespace CSReportDll
             }
         }
 
-        private void pGroupChanged(int i, bool bGetNewPage)
+        private void pGroupChanged(int i, ref bool bGetNewPage)
         { // TODO: Use of ByRef founded Private Sub pGroupChanged(ByVal i As Integer, ByRef bGetNewPage As Boolean)
             m_idxGroupHeader = i;
             pGroupChangedAux(i);
 
             bGetNewPage = m_groups.item(i).getPrintInNewPage() && !m_firstGroup;
-            m_idxGroupHeader = i;
+            
+            // TODO: remove me
+            //
+            // m_idxGroupHeader = i;
 
             if (bGetNewPage)
             {
@@ -1570,7 +1573,7 @@ namespace CSReportDll
             }
             else
             {
-                m_idxGroupToPrintNP = 0;
+                m_idxGroupToPrintNP = -1;
             }
 
             // set this flag on to open this group in a future
@@ -4976,8 +4979,8 @@ namespace CSReportDll
                 m_recordCount = 0;
             }
             m_iRow = 0;
-            m_idxGroupHeader = 0;
-            m_idxGroupFooter = 0;
+            m_idxGroupHeader = -1;
+            m_idxGroupFooter = -1;
 
             return true;
         }
