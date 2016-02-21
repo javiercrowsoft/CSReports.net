@@ -8,6 +8,7 @@ using System.Globalization;
 using CSKernelClient;
 using CSKernelNumberToString;
 using CSReportGlobals;
+using CSReportScript;
 
 namespace CSReportDll
 {
@@ -285,6 +286,7 @@ namespace CSReportDll
             else
             {
                 code = formula.getTextC();
+                var parameters = "";
 
                 for (int i = 0; i < vResult.Length; i++)
                 {
@@ -296,14 +298,38 @@ namespace CSReportDll
                         return null; 
                     }
 
+                    /* TODO: remove me
                     code = code.Replace(C_KEYFUNCINT + cReportGlobals.format(i + 1, "000"), 
                                             getNumericVal(vResult[i].ToString()));
+                     * */
+
+                    var parameter = "p__" + i + "__";
+                    parameters += parameter + ",";
+                    code = code.Replace(C_KEYFUNCINT + cReportGlobals.format(i + 1, "000"), parameter);
+
+                    var paramValue = m_objGlobals.getVar(parameter);
+                    if (paramValue == null) {
+                        paramValue = m_objGlobals.addVar(parameter);
+                    }
+                    paramValue.setValue(vResult[i]);
                 }
 
-                formula.setLastResult(pExecScriptCode(code));
+                if (parameters.Length > 0)
+                {
+                    parameters = parameters.Substring(0, parameters.Length - 1);
+                    code = insertParametersIntoFunction(code, parameters);
+                }
+
+                formula.setLastResult(pExecScriptCode(code, formula));
                 formula.setHaveToEval(false);
                 return formula.getLastResult();
             }
+        }
+
+        private string insertParametersIntoFunction(string code, string parameters)
+        {
+            int n = code.IndexOf("(") + 1;
+            return code = code.Substring(0, n) + parameters + code.Substring(n);
         }
 
         private void pEvalFunctionGroup(cReportFormulaInt fint)
@@ -363,19 +389,19 @@ namespace CSReportDll
             {
                 if (G.isNumeric(codeC))
                 {
-                    pEvalSyntax("", codeC, false);
+                    pEvalSyntax("", codeC, false, formula);
                 }
                 else
                 {
                     if (cUtil.subString(codeC.Trim(), 0, 8).ToLower() == "function")
                     {
-                        pEvalSyntax("", codeC, false);
+                        pEvalSyntax("", codeC, false, formula);
                     }
                 }
             }
             else
             {
-                pEvalSyntax("", codeC, false);
+                pEvalSyntax("", codeC, false, formula);
             }
             m_formula = null;
         }
@@ -421,7 +447,7 @@ namespace CSReportDll
             // to the internal formula collection of this formula
             //
             m_fint = m_formula.getFormulasInt().add();
-            return pEvalSyntax(functionName, code, true);
+            return pEvalSyntax(functionName, code, true, null);
         }
 
         private void pEvalFunctionInt(cReportFormulaInt fint)
@@ -619,7 +645,7 @@ namespace CSReportDll
             return null;
         }
 
-        private object pEvalSyntax(String functionName, String code, bool bParam)
+        private object pEvalSyntax(String functionName, String code, bool bParam, cReportFormula formula)
         {
             int i = 0;
             String s = "";
@@ -652,7 +678,7 @@ namespace CSReportDll
             }
             else if (!bParam)
             {
-                pExecScriptCode(code);
+                pExecScriptCode(code, formula);
                 return code;
             }
             else
@@ -687,7 +713,7 @@ namespace CSReportDll
                                     // no se llevara a cabo, y no perdere el valor
                                     // del parametro
                                     s = C_TEMPFUNCTIONB + vParams[i] + C_TEMPFUNCTIONE;
-                                    vParams[i] = pExecScriptCode(s).ToString();
+                                    vParams[i] = pExecScriptCode(s, formula).ToString();
                                 }
                             }
                             code = vParams[i] + "|";
@@ -737,13 +763,16 @@ namespace CSReportDll
             pCompile(code, true, "");
         }
 
-        private object pExecScriptCode(String code)
+        private object pExecScriptCode(String code, cReportFormula formula)
         {
             try
             {
                 code = pPipeToColon(code);
-                Assembly compiledScript = cReportScriptEngine.compileCode(code);
-                return cReportScriptEngine.eval(compiledScript, m_objGlobals);
+                if (formula.getCompiledScript() == null)
+                {
+                    formula.setCompiledScript(cReportScriptEngine.compileCode(code, formula));
+                }
+                return cReportScriptEngine.eval(formula.getCompiledScript(), m_objGlobals);
             }
             catch (Exception ex)
             {
@@ -1033,17 +1062,17 @@ namespace CSReportDll
 
             if (param == "\"\"")
             {
-                return "\"\"";
+                return param;
             }
             else
             {
                 if (pIsControl(param))
                 {
-                    return "\"\"" + m_report.getValueString(param).Replace("\"\"", "\"\"") + "\"\"";
+                    return "\"" + m_report.getValueString(param).Replace("\"", "\"\"") + "\"";
                 }
                 else
                 {
-                    return "\"\"" + param.Replace("\"\"", "\"\"") + "\"\"";
+                    return "\"" + param.Replace("\"", "\"\"") + "\"";
                 }
             }
         }
@@ -1071,7 +1100,7 @@ namespace CSReportDll
         private double resultSum(cReportFormulaInt fint)
         {
             if (fint.getVariables().count() == 0) { return 0; }
-            return (double)fint.getVariables().item(C_SUM).getValue();
+            return Convert.ToDouble(fint.getVariables().item(C_SUM).getValue());
         }
 
         private object resultGetDataFromRsAd(cReportFormulaInt fint)
@@ -1501,7 +1530,7 @@ namespace CSReportDll
             cReportVariable w_item = fint.getVariables().item(C_SUM);
             // the sum function is for numbers
             //
-            w_item.setValue((double)w_item.getValue() 
+            w_item.setValue(Convert.ToDouble(w_item.getValue())
                 + pGetNumber(m_report.getValue(fint.getParameters().item(0).getValue(), true)));
         }
 

@@ -17,9 +17,49 @@ namespace CSReportEditor
             InitializeComponent();
         }
 
+        public Label lbTask
+        {
+            get
+            {
+                return lb_task;
+            }
+        }
+
+        public Label lbCurrPage
+        {
+            get
+            {
+                return lb_curr_page;
+            }
+        }
+
+        public Label lbRecordCount
+        {
+            get
+            {
+                return lb_record_count;
+            }
+        }
+
+        public Label lbCurrRecord
+        {
+            get
+            {
+                return lb_curr_record;
+            }
+        }
+
+        public ProgressBar prgBar
+        {
+            get
+            {
+                return prg_bar;
+            }
+        }
+
         private void fProgress_Load(object sender, EventArgs e)
         {
-            cWindow.centerForm(this);
+            cWindow.locateFormAtTop(this);
         }
     }
 }

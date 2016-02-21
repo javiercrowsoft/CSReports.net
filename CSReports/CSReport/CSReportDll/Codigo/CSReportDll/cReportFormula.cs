@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Xml;
+using System.Reflection;
 using CSKernelClient;
 using CSReportGlobals;
 
@@ -41,6 +42,18 @@ namespace CSReportDll
         private String m_controlName = "";
         private int m_sectionLineIndex = 0;
         private String m_sectionName = "";
+
+        private Assembly m_compiledScript;
+
+        public Assembly getCompiledScript()
+        {
+            return m_compiledScript;
+        }
+
+        public void setCompiledScript(Assembly value)
+        {
+            m_compiledScript = value;
+        }
 
         public int getIdxGroup()
         {

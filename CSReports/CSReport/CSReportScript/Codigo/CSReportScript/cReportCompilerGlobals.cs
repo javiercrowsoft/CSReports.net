@@ -5,7 +5,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 
-namespace CSReportDll
+namespace CSReportScript
 {
 
     public class cReportCompilerGlobals : NameObjectCollectionBase
@@ -134,7 +134,7 @@ namespace CSReportDll
             return m_mode;
         }
         
-        internal void setMode(eReportCompilerMode rhs)
+        public void setMode(eReportCompilerMode rhs)
         {
             m_mode = rhs;
         }

@@ -883,13 +883,13 @@ namespace CSReportPaint
 
             // add the height of the images for controls which can grow and are in the header
             //
-            getLineHeight(m_report.getPages().item(m_report.getPages().count()-1).getHeader(), vdummy);
+            getLineHeight(m_report.getPages().item(m_report.getPages().count()-1).getHeader(), ref vdummy);
 
             do
             {
                 // get the line
                 //
-                rslt = m_report.getLine(fields);
+                rslt = m_report.getLine(ref fields);
 
                 // if we have finished
                 //
@@ -931,7 +931,7 @@ namespace CSReportPaint
                 {
                     // get the line's height
                     //
-                    lineHeight = getLineHeight(fields, offsetTop);
+                    lineHeight = getLineHeight(fields, ref offsetTop);
 
                     // if it can fit we create a new page
                     //
@@ -1069,8 +1069,8 @@ namespace CSReportPaint
 
         // returns the bigger control's height and set the height of every control
         //
-        private float getLineHeight(CSReportDll.cReportPageFields fields, float[] offsetTop)
-        { // TODO: Use of ByRef founded Private Function GetLineHeight(ByRef Fields As cReportPageFields, ByRef OffsetTop() As Single) As Single
+        private float getLineHeight(CSReportDll.cReportPageFields fields, ref float[] offsetTop)
+        {
             CSReportDll.cReportPageField field = null;
             float offBottom = 0;
             float aspectHeight = 0;
@@ -1094,7 +1094,7 @@ namespace CSReportPaint
             int indexSection = 0;
             float heightSection = 0;
 
-            G.redim(ref offsetTop, 0);
+            offsetTop = new float[1];
 
             if (fields.count() > 0)
             {

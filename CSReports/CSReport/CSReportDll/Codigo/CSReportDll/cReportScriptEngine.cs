@@ -2,27 +2,49 @@
 using System.Reflection;
 using System.CodeDom.Compiler;
 using CSKernelClient;
+using CSReportScript;
 
 namespace CSReportDll
 {
     internal static class cReportScriptEngine
     {
 
-        private static string getFunctionName(string code)
+        private static string getFunctionCall(string code, cReportFormula formula)
         { 
             int n = code.IndexOf("(");
-            return cUtil.subString(code, 8, n-8);
+            var functionName = cUtil.subString(code, 8, n-8);
+            var parameters = "";
+            for (int _i = 0; _i < formula.getFormulasInt().count(); _i++)
+            {
+                var fint = formula.getFormulasInt().item(_i);
+                parameters += "globals.getVar(\"p__" + _i + "__\").getValue(),";
+            }
+            if (parameters.Length > 0)
+            {
+                parameters = parameters.Substring(0, parameters.Length - 1);
+            }
+            return functionName + "(" + parameters + ")";
         }
 
-        private static string putCodeInClass(string code)
+        private static string putCodeInClass(string code, cReportFormula formula)
         {
             if (cUtil.subString(code, 0, 8).ToLower() == "function")
             {
                 return "Public Class util\r\n"
-                     + "Implements CSReportDll.cIReportScriptType\r\n"
+                     + "Implements CSReportScript.cIReportScriptType\r\n"
                      + code + "\r\n"
-                     + "Public Function RunScript(globals As CSReportDll.cReportCompilerGlobals) As String Implements CSReportDll.cIReportScriptType.RunScript\r\n"
-                     + "  dim value__ = " + getFunctionName(code) + "()\r\n"
+                     + "Public Function RunScript(globals As CSReportScript.cReportCompilerGlobals) As String Implements CSReportScript.cIReportScriptType.RunScript\r\n"
+                     + "  dim value__ = " + getFunctionCall(code, formula) + "\r\n"
+
+                     // TODO: remove debug info
+                     /*
+                     + "  System.Console.WriteLine(\"" + formula.getName() + "\")\r\n"
+                     + "  Dim var__\r\nFor Each var__ In globals\r\n System.Console.WriteLine(var__.ToString() + \" : \" + globals.getVar(var__).getValue().ToString())\r\nNext\r\n"
+                     + "  System.Console.WriteLine(value__.ToString())\r\n"
+                     + "  System.Console.WriteLine(\"---------------\")\r\n"
+                      */ 
+                     // end debug info
+
                      + "  Select Case Microsoft.VisualBasic.Information.VarType(value__)\r\n"
                      + "    Case 11\r\n"
                      + "      RunScript = System.Convert.ToInt32(value__)\r\n"
@@ -31,6 +53,12 @@ namespace CSReportDll
                      + "    Case Else\r\n"
                      + "      RunScript = value__\r\n"
                      + "  End Select\r\n"
+                     + "End Function\r\n"
+                     + "Function Now()\r\n"
+                     + "  Now = Microsoft.VisualBasic.Now\r\n"
+                     + "End Function\r\n"
+                     + "Function FormatDateTime(aDate, format) As String\r\n"
+                     + "    FormatDateTime = Microsoft.VisualBasic.Strings.FormatDateTime(aDate, format)\r\n"
                      + "End Function\r\n"
                      + "End Class";
             }
@@ -42,7 +70,7 @@ namespace CSReportDll
             }            
         }
 
-        internal static Assembly compileCode(string code)
+        internal static Assembly compileCode(string code, cReportFormula formula)
         {
             // Create a code provider
             // This class implements the 'CodeDomProvider' class as its base. All of the current .Net languages (at least Microsoft ones)
@@ -53,7 +81,7 @@ namespace CSReportDll
 
             if (cUtil.subString(code, 0, 8).ToLower() == "function")
             {
-                provider = new Microsoft.VisualBasic.VBCodeProvider();                
+                provider = new Microsoft.VisualBasic.VBCodeProvider();
             }
             else 
             {
@@ -74,16 +102,27 @@ namespace CSReportDll
             // project to store the interfaces that both this class and the other uses. Just remember, this will expose ALL public classes to
             // the "script"
 
-            // TODO: create a new project and put there the interface
-            //       then learn how to get a refence to the Assembly of
-            //       that project
-            //
+            var assemblies = Assembly.GetExecutingAssembly().GetReferencedAssemblies();
 
-            options.ReferencedAssemblies.Add(Assembly.GetExecutingAssembly().Location);
+            foreach (AssemblyName assemblyName in assemblies)
+            {
+                if (assemblyName.Name == "CSReportScript")
+                {
+                    foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies())
+                    {
+                        if (assembly.GetName().Name == assemblyName.Name)
+                        {
+                            options.ReferencedAssemblies.Add(assembly.Location);
+                            break;                        
+                        }
+                    }
+                    break;
+                }
+            }            
 
             // Compile our code
             CompilerResults result;
-            string classCode = putCodeInClass(code);
+            string classCode = putCodeInClass(code, formula);
             result = provider.CompileAssemblyFromSource(options, classCode);
 
             if (result.Errors.HasErrors)

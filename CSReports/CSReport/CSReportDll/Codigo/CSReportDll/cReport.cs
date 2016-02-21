@@ -181,6 +181,7 @@ namespace CSReportDll
         private DataTable m_rows = null;
         private int m_recordCount = 0;
         private int[] m_vRowsIndex = null;
+        private int m_lastRowIndex = -1;
         private int[] m_vRowsIndexAux = null;
         private int m_iRow = 0;
         private int m_iRow2 = 0;
@@ -557,7 +558,7 @@ namespace CSReportDll
             {
                 return csRptNewPageResult.CSRPTNPEND;
             }
-            else if (m_iRow > m_vRowsIndex.Length)
+            else if (m_iRow > m_lastRowIndex)
             {
                 return csRptNewPageResult.CSRPTNPEND;
             }
@@ -952,7 +953,7 @@ namespace CSReportDll
 
             // if there is nothing more to do we have finished
             //
-            if (m_iRow > m_vRowsIndex.Length && pNotPendingFooters())
+            if (m_iRow > m_lastRowIndex && pNotPendingFooters())
             {
                 return csRptGetLineResult.CSRPTGLEND;
             }
@@ -972,7 +973,7 @@ namespace CSReportDll
         // it returns every controls of a line
         // it moves through every row in the main recordset
         //
-        public csRptGetLineResult getLine(cReportPageFields fields)
+        public csRptGetLineResult getLine(ref cReportPageFields fields)
         {
             // to know if we need to print in a new page
             // because a group has changed its value
@@ -1198,7 +1199,7 @@ namespace CSReportDll
         {
             // if we have printed the las footer we have finished
             //
-            if (m_iRow > m_vRowsIndex.Length && pNotPendingFooters())
+            if (m_iRow > m_lastRowIndex && pNotPendingFooters())
             {
                 reportDone();
                 m_bPrintFooter = false;
@@ -1428,7 +1429,7 @@ namespace CSReportDll
             m_groupIndexChange = i;
 
             m_bCloseFooter = true;
-            m_idxGroupFooter = m_groupCount;
+            m_idxGroupFooter = m_groupCount - 1;
 
             // when a group changes we need to close from the
             // most inner group to the most outer group 
@@ -1575,7 +1576,7 @@ namespace CSReportDll
             // set this flag on to open this group in a future
             // call to getLine(). only if there are more groups
             //
-            if (i < m_groupCount)
+            if (i < m_groupCount - 1)
             {
                 m_vGroups[i + 1].changed = true;
             }
@@ -2480,7 +2481,15 @@ namespace CSReportDll
 
         internal String getValueString(String controlName)
         {
-            return (String)getValue(controlName, false);
+            var value = getValue(controlName, false);
+            if (value == null)
+            {
+                return "";
+            }
+            else
+            {
+                return value.ToString();
+            }
         }
 
         internal object getValue(String controlName)
@@ -2494,9 +2503,9 @@ namespace CSReportDll
             bool found = false;
             int iRow = 0;
 
-            if (m_iRowFormula > m_vRowsIndex.Length)
+            if (m_iRowFormula > m_lastRowIndex)
             {
-                iRow = m_vRowsIndex.Length;
+                iRow = m_lastRowIndex;
             }
             else
             {
@@ -4252,6 +4261,7 @@ namespace CSReportDll
             for (int _i = 0; _i < m_formulas.count(); _i++)
             {
                 formula = m_formulas.item(_i);
+                formula.setCompiledScript(null);
                 m_compiler.initVariable(formula);
             }
 
@@ -4425,7 +4435,7 @@ namespace CSReportDll
         }
 
         private void addFormula(cReportFormula formula, String name)
-        { // TODO: Use of ByRef founded Private Sub AddFormula(ByRef Formula As cReportFormula, ByVal Name As String)
+        {
             if (m_formulas.item(name) == null)
             {
                 m_formulas.add2(formula, name);
@@ -4769,7 +4779,7 @@ namespace CSReportDll
                     return false;
                 }
             }
-            G.redim(ref m_vRowsIndexAux, m_collRows.Length);
+            m_vRowsIndexAux = new int[m_collRows.Length];
             return true;
         }
 
@@ -4896,7 +4906,8 @@ namespace CSReportDll
                     vRows = null;
                     if (createIndexVector)
                     {
-                        G.redim(ref m_vRowsIndex, 0);
+                        m_vRowsIndex = new int[0];
+                        m_lastRowIndex = -1;
                     }
                 }
                 else
@@ -4904,7 +4915,8 @@ namespace CSReportDll
                     vRows = rs;
                     if (createIndexVector)
                     {
-                        G.redim(ref m_vRowsIndex, vRows.Rows.Count);
+                        m_vRowsIndex = new int[vRows.Rows.Count];
+                        m_lastRowIndex = m_vRowsIndex.Length - 1;
                         int k = 0;
                         for (k = 0; k < m_vRowsIndex.Length; k++)
                         {
@@ -4947,7 +4959,8 @@ namespace CSReportDll
                 vRows = null;
                 if (createIndexVector)
                 {
-                    G.redim(ref m_vRowsIndex, 0);
+                    m_vRowsIndex = new int[0];
+                    m_lastRowIndex = -1;
                 }
             }
             if (m_rows != null)
@@ -5367,6 +5380,7 @@ namespace CSReportDll
             m_vRowsIndexAux = null;
             m_vGroups = null;
             m_vRowsIndex = null;
+            m_lastRowIndex = -1;
             m_lastRowPreEvalued = null;
             m_lastRowPostEvalued = null;
 
@@ -5628,7 +5642,10 @@ namespace CSReportDll
 
         private void reportDone()
         {
-            ReportDone.Invoke(this, null);
+            if (ReportDone != null)
+            {
+                ReportDone(this, new EventArgs());
+            }
         }
     
     }

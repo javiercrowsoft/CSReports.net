@@ -5255,21 +5255,22 @@ namespace CSReportEditor
             refreshRule();
         }
 
-        private void m_report_Done() {
+        private void reportDone(object sender, EventArgs e)
+        {
             closeProgressDlg();
         }
 
-        /* TODO: implement me
-        private void m_report_Progress(
-            String task, 
-            int page, 
-            int currRecord, 
-            int recordCount, 
-            out bool cancel) 
+        private void reportProgress(object sender, ProgressEventArgs e) 
         { 
+
+            String task = e.task; 
+            int page = e.page; 
+            int currRecord = e.currRecord; 
+            int recordCount = e.recordCount; 
+
             if (m_cancelPrinting) {
-                if (cWindow.ask("Confirm you want to cancel the execution of this report?", VbMsgBoxResult.vbNo)) {
-                    cancel = true;
+                if (cWindow.ask("Confirm you want to cancel the execution of this report?", MessageBoxDefaultButton.Button2)) {
+                    e.cancel = true;
                     closeProgressDlg();
                     return;
                 } 
@@ -5280,23 +5281,27 @@ namespace CSReportEditor
 
             if (m_fProgress == null) { return; }
 
-            if (page > 0) { m_fProgress.lbCurrPage.Caption = page; }
-            if (task != "") { m_fProgress.lbTask.Caption = task; }
-            if (currRecord > 0) { m_fProgress.lbCurrRecord.Caption = currRecord; }
-            if (recordCount > 0 && Val(m_fProgress.lbRecordCount.Caption) != recordCount) { 
-                m_fProgress.lbRecordCount.Caption = recordCount; 
+            if (page > 0) { m_fProgress.lbCurrPage.Text = page.ToString(); }
+            if (task != "") { m_fProgress.lbTask.Text = task; }
+            if (currRecord > 0) { m_fProgress.lbCurrRecord.Text = currRecord.ToString(); }
+            if (recordCount > 0 && cUtil.val(m_fProgress.lbRecordCount.Text) != recordCount) { 
+                m_fProgress.lbRecordCount.Text = recordCount.ToString(); 
             }
 
             double percent = 0;
             if (recordCount > 0 && currRecord > 0) {
-                percent = currRecord / recordCount;
-                m_fProgress.prgVar.Value = percent * 100;
+                percent = Convert.ToDouble(currRecord) / recordCount;
+                m_fProgress.prgBar.Value = Convert.ToInt32(percent * 100);
             }
+
+            Application.DoEvents();
         }
-         */
 
         private void closeProgressDlg() {
-            m_fProgress.Close();
+            if (m_fProgress != null && !m_fProgress.IsDisposed)
+            {
+                m_fProgress.Close();
+            }
             m_fProgress = null;
         }
 
@@ -6432,6 +6437,10 @@ namespace CSReportEditor
                         m_report_Progress(task, page, currRecord, recordCount, cancel,);
                         m_report_FindFileAccess(answer, commDialog, file,);
             */
+
+            m_report.Progress += reportProgress;
+            m_report.ReportDone += reportDone;
+
             oLaunchInfo = new cReportLaunchInfo();
 
             m_report.getPaperInfo().setPaperSize(m_fmain.getPaperSize());

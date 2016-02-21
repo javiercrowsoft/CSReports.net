@@ -48,7 +48,6 @@
     <Compile Include="cColumnsInfo.cs" />
     <Compile Include="cImage.cs" />
     <Compile Include="cIReportGroupSections.cs" />
-    <Compile Include="cIReportScriptType.cs" />
     <Compile Include="cIReportSection.cs" />
     <Compile Include="cParameter.cs" />
     <Compile Include="cParameters.cs" />
@@ -60,8 +59,6 @@
     <Compile Include="cReportChartSerie.cs" />
     <Compile Include="cReportChartSeries.cs" />
     <Compile Include="cReportCompiler.cs" />
-    <Compile Include="cReportCompilerGlobals.cs" />
-    <Compile Include="cReportCompilerVar.cs" />
     <Compile Include="cReportConnect.cs" />
     <Compile Include="cReportConnectsAux.cs" />
     <Compile Include="cReportControl.cs" />
@@ -144,6 +141,10 @@
     <ProjectReference Include="..\..\..\CSReportGlobals\Codigo\CSReportGlobals\CSReportGlobals.csproj">
       <Project>{6018C911-1404-462B-9FA7-31904D56813A}</Project>
       <Name>CSReportGlobals</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\CSReportScript\Codigo\CSReportScript\CSReportScript.csproj">
+      <Project>{54CAF374-6A63-479F-AF23-CA6143693F11}</Project>
+      <Name>CSReportScript</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
