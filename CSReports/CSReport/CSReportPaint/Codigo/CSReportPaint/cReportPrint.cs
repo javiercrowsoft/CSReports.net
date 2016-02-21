@@ -967,9 +967,9 @@ namespace CSReportPaint
 
                             // one time for section
                             //
-                            if (secLnIndex != w_sectionLine.getIndex())
+                            if (secLnIndex != w_sectionLine.getRealIndex())
                             {
-                                secLnIndex = w_sectionLine.getIndex();
+                                secLnIndex = w_sectionLine.getRealIndex();
                                 CSReportDll.cReportAspect w_aspect = w_sectionLine.getAspect();
                                 topSection = topSection + (w_aspect.getTop() - (topSection + heightSection));
                                 heightSection = heightSection + w_aspect.getHeight();
@@ -1109,19 +1109,22 @@ namespace CSReportPaint
                     aspect = field.getInfo().getAspect();
                     aspectLn = field.getInfo().getSectionLine().getAspect();
 
+                    // TODO: remove me
+                    // System.Console.WriteLine(field.getInfo().getSectionLine().getRealIndex());
+
                     // if the line has changed we need to get the height of the line
                     // and add it to heightSection
                     //
-                    if (indexSection != field.getInfo().getSectionLine().getIndex())
+                    if (indexSection != field.getInfo().getSectionLine().getRealIndex())
                     {
 
                         // save a reference to this section
                         //
-                        indexSection = field.getInfo().getSectionLine().getIndex();
+                        indexSection = field.getInfo().getSectionLine().getRealIndex();
 
-                        if (offsetTop.Length < indexSection)
+                        if (indexSection > offsetTop.Length -1)
                         {
-                            G.redimPreserve(ref offsetTop, indexSection);
+                            G.redimPreserve(ref offsetTop, indexSection + 1);
                         }
 
                         // save this offset to add it to every control holded in the
@@ -1215,7 +1218,7 @@ namespace CSReportPaint
                             }
                         }
 
-                        // if it doesn't fit in the line because is to much high
+                        // if it doesn't fit in the line because is too high
                         //
                         if (field.getHeight() + aspect.getTop() > topSection + newLnHeight)
                         {

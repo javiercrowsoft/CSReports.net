@@ -457,6 +457,7 @@ namespace CSKernelFile
                         m_bw.Close();
                         m_bw = null;
                     }
+                    m_file = null;
                 }
                 m_open = false;
             }

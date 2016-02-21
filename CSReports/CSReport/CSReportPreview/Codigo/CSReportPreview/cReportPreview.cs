@@ -52,7 +52,7 @@ namespace CSReportPreview
 
         public void setCurrPage(int page)
         {
-            tsbPage.Text = page.ToString();
+            tsbPage.Text = (page + 1).ToString();
         }
 
         public void setPages(int pages)

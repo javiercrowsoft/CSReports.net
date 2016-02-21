@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSReportGlobals", "CSReport
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSReportEditor", "CSReport\CSReportEditor\Codigo\CSReportEditor\CSReportEditor.csproj", "{273C5ECF-DB2A-4E01-A4B3-C73B8D37374E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSReportScript", "CSReport\CSReportScript\Codigo\CSReportScript\CSReportScript.csproj", "{54CAF374-6A63-479F-AF23-CA6143693F11}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -218,6 +220,17 @@ Global
 		{273C5ECF-DB2A-4E01-A4B3-C73B8D37374E}.Release|Mixed Platforms.Build.0 = Release|x86
 		{273C5ECF-DB2A-4E01-A4B3-C73B8D37374E}.Release|x86.ActiveCfg = Release|x86
 		{273C5ECF-DB2A-4E01-A4B3-C73B8D37374E}.Release|x86.Build.0 = Release|x86
+		{54CAF374-6A63-479F-AF23-CA6143693F11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54CAF374-6A63-479F-AF23-CA6143693F11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54CAF374-6A63-479F-AF23-CA6143693F11}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{54CAF374-6A63-479F-AF23-CA6143693F11}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{54CAF374-6A63-479F-AF23-CA6143693F11}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{54CAF374-6A63-479F-AF23-CA6143693F11}.Debug|x86.Build.0 = Debug|Any CPU
+		{54CAF374-6A63-479F-AF23-CA6143693F11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54CAF374-6A63-479F-AF23-CA6143693F11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54CAF374-6A63-479F-AF23-CA6143693F11}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{54CAF374-6A63-479F-AF23-CA6143693F11}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{54CAF374-6A63-479F-AF23-CA6143693F11}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

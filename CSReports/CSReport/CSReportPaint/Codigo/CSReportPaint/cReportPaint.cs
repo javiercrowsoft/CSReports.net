@@ -2219,11 +2219,7 @@ namespace CSReportPaint
 
                     // TODO: clean this
                     //
-                    if (m_notBorder)
-                    {
-                        //printLine(graph, true, x1, y1, x2, y2, Color.White.ToArgb(), 1, false, Color.White.ToArgb(), false);
-                    }
-                    else
+                    if (!m_notBorder || (aspect.getBorderType() == csReportBorderType.CSRPTBSFIXED && aspect.getBorderWidth() > 0))
                     {
                         printLine(graph, filled, x1, y1, x2, y2, colorIn, borderWidth, dash, colorOut, false);
                     }

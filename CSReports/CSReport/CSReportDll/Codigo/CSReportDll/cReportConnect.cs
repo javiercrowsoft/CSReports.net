@@ -171,7 +171,7 @@ namespace CSReportDll
                 }
             }
 
-            if (s.Substring(s.Length - 1) == ",")
+            if (s.Length > 0 &&  s.Substring(s.Length - 1) == ",")
             {
                 s = s.Substring(0, s.Length - 1);
             }

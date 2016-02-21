@@ -86,5 +86,12 @@ namespace CSKernelClient
             form.Left = 100;
             form.Top = (Screen.FromControl(form).Bounds.Height - form.Height) / 2;
         }
+
+        public static void locateFormAtTop(Form form)
+        {
+            var top = (Screen.FromControl(form).Bounds.Height - form.Height) / 2 - 200;
+            form.Left = (Screen.FromControl(form).Bounds.Width - form.Width) / 2;
+            form.Top = top;
+        }
     }
 }

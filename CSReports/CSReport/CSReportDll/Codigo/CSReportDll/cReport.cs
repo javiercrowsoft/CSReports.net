@@ -3586,7 +3586,8 @@ namespace CSReportDll
                 m_vGroups[i].comparisonType = m_groups.item(i).getComparisonType();
                 m_vGroups[i].oderType = m_groups.item(i).getOderType();
 
-                m_vGroups[i].groups = null;
+                m_vGroups[i].groups = new T_Group[1];
+                m_vGroups[i].groups[0] = new T_Group();
             }
 
             int recordCount = 0;
@@ -3725,8 +3726,8 @@ namespace CSReportDll
                                     {
                                         case csRptGrpComparisonType.CSRPTGRPTEXT:
 
-                                            String text1 = (String)m_vGroups[i + 1].value;
-                                            String text2 = (String)value;
+                                            String text1 = m_vGroups[i + 1].value.ToString();
+                                            String text2 = value.ToString();
                                             if (text1.ToLower() != text2.ToLower())
                                             {
                                                 addGroup(i, j, value);
@@ -4223,10 +4224,11 @@ namespace CSReportDll
                     { 
                         return false; 
                     }
+
                     // to have debug info
                     //
                     ctrl.getFormulaHide().setSectionName(ctrl.getSectionLine().getSectionName());
-                    ctrl.getFormulaHide().setSectionLineIndex(ctrl.getSectionLine().getIndex());
+                    ctrl.getFormulaHide().setSectionLineIndex(ctrl.getSectionLine().getRealIndex());
                     ctrl.getFormulaHide().setControlName(ctrl.getName());
 
                     // add the formula to the formulas collection
@@ -4243,7 +4245,7 @@ namespace CSReportDll
                     // to have debug info
                     //
                     ctrl.getFormulaValue().setSectionName(ctrl.getSectionLine().getSectionName());
-                    ctrl.getFormulaValue().setSectionLineIndex(ctrl.getSectionLine().getIndex());
+                    ctrl.getFormulaValue().setSectionLineIndex(ctrl.getSectionLine().getRealIndex());
                     ctrl.getFormulaValue().setControlName(ctrl.getName());
 
                     // add the formula to the formulas collection
@@ -4424,12 +4426,12 @@ namespace CSReportDll
                         // to have debug info
                         //
                         secLn.getFormulaHide().setSectionName(secLn.getSectionName());
-                        secLn.getFormulaHide().setSectionLineIndex(secLn.getIndex());
+                        secLn.getFormulaHide().setSectionLineIndex(secLn.getRealIndex());
 
                         // add the formula to the formulas collection
                         //
                         addFormula(secLn.getFormulaHide(), sec.getName() 
-                                    + "_R_" + secLn.getIndex().ToString() + "_" + "H");
+                                    + "_R_" + secLn.getRealIndex().ToString() + "_" + "H");
                     }
                 }
             }
