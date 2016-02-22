@@ -1,7 +1,40 @@
 CSReports.net
 =============
 
-Report editor tool written in C#. It runs in Windows and Mac (using mono).
+Welcome
+
+CSReports.Net is a report editor tool that allows you to create reports from data in SQL Server, PostgreSQL, Oracle and MySQL
+
+The datasource can be a SQL select statement or an stored procedure. A report can contain many datasources.
+
+It is written in C#.
+
+It runs in Windows, Mac OSX and Linux.
+
+It support multiple headers, footers and groups.
+
+Sections can contain subsections.
+
+You can create formulas to define the value of controls and the visibility of controls, sections and subsections.
+
+Formulas can be written in C# or VB.Net
+
+It support images embedded in the report or from the database.
+
+In a future version it will allow to preview reports in the browser using the canvas object for rendering.
+
+It can export to PDF and Excel.
+
+The datasource can be a JSON file so it can run disconnected from a database as a client preview tool that consume
+reports from a web application.
+
+All the controls in the report can be browsed and linked to other reports or web pages.
+
+It is open source and all the code is in Github.
+
+https://github.com/javiercrowsoft/CSReports.net
+
+I am working a version that can preview reports in mobile devices using Xamarin.
 
 ![video](https://cloud.githubusercontent.com/assets/1075455/13229619/b03e679a-d980-11e5-9221-d6752521d914.png)
 
@@ -10,8 +43,6 @@ Report editor tool written in C#. It runs in Windows and Mac (using mono).
 ![screen1](https://cloud.githubusercontent.com/assets/1075455/13089239/8612ddd6-d4ce-11e5-88e0-fb7465a35a06.png)
 
 ![screen1](https://cloud.githubusercontent.com/assets/1075455/13089263/96e17e74-d4ce-11e5-9bd8-81519e223ae1.png)
-
-A report editor tool.
 
 Copyright (C) 2002-2014 Javier Mariano Alvarez
 
