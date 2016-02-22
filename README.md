@@ -3,6 +3,8 @@ CSReports.net
 
 Report editor tool written in C#. It runs in Windows and Mac (using mono).
 
+![video](https://cloud.githubusercontent.com/assets/1075455/13229619/b03e679a-d980-11e5-9221-d6752521d914.png)
+
 ![screen1](https://cloud.githubusercontent.com/assets/1075455/13089213/6c69df88-d4ce-11e5-80a6-bef3bebd860f.png)
 
 ![screen1](https://cloud.githubusercontent.com/assets/1075455/13089239/8612ddd6-d4ce-11e5-88e0-fb7465a35a06.png)
