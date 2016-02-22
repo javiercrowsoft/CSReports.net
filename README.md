@@ -36,7 +36,9 @@ https://github.com/javiercrowsoft/CSReports.net
 
 I am working a version that can preview reports in mobile devices using Xamarin.
 
-![video](https://cloud.githubusercontent.com/assets/1075455/13229619/b03e679a-d980-11e5-9221-d6752521d914.png)
+[![video](https://cloud.githubusercontent.com/assets/1075455/13229619/b03e679a-d980-11e5-9221-d6752521d914.png)](https://www.youtube.com/watch?v=PMC9Rmh78M0)
+
+[![video xamarin mac](https://cloud.githubusercontent.com/assets/1075455/13230003/68322d5e-d982-11e5-96fe-ce9a15194fab.png)](https://www.youtube.com/watch?v=YXpu5gCcReY)
 
 ![screen1](https://cloud.githubusercontent.com/assets/1075455/13089213/6c69df88-d4ce-11e5-80a6-bef3bebd860f.png)
 
