@@ -30,6 +30,7 @@
         {
             this.cmd_cancel = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.lb_task = new System.Windows.Forms.Label();
             this.Label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -39,7 +40,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.lb_curr_record = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.lb_task = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -48,7 +48,7 @@
             // 
             this.cmd_cancel.Location = new System.Drawing.Point(224, 185);
             this.cmd_cancel.Name = "cmd_cancel";
-            this.cmd_cancel.Size = new System.Drawing.Size(75, 23);
+            this.cmd_cancel.Size = new System.Drawing.Size(88, 27);
             this.cmd_cancel.TabIndex = 9;
             this.cmd_cancel.Text = "Cancel";
             this.cmd_cancel.UseVisualStyleBackColor = true;
@@ -63,6 +63,15 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(531, 77);
             this.panel1.TabIndex = 7;
+            // 
+            // lb_task
+            // 
+            this.lb_task.AutoSize = true;
+            this.lb_task.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_task.Location = new System.Drawing.Point(232, 26);
+            this.lb_task.Name = "lb_task";
+            this.lb_task.Size = new System.Drawing.Size(0, 24);
+            this.lb_task.TabIndex = 3;
             // 
             // Label1
             // 
@@ -150,20 +159,11 @@
             this.label6.TabIndex = 15;
             this.label6.Text = "Current row :";
             // 
-            // lb_task
-            // 
-            this.lb_task.AutoSize = true;
-            this.lb_task.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lb_task.Location = new System.Drawing.Point(232, 26);
-            this.lb_task.Name = "lb_task";
-            this.lb_task.Size = new System.Drawing.Size(0, 24);
-            this.lb_task.TabIndex = 3;
-            // 
             // fProgress
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(526, 220);
+            this.ClientSize = new System.Drawing.Size(526, 228);
             this.Controls.Add(this.lb_curr_record);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.lb_record_count);

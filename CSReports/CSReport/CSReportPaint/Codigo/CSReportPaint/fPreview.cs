@@ -24,8 +24,8 @@ namespace CSReportPaint
 
         private void fPreview_Load(object sender, EventArgs e)
         {
-            this.Height = 950;
-            this.Width = 850;
+            this.Height = 990;
+            this.Width = 950;
             cWindow.centerForm(this);
         }
     }

@@ -832,8 +832,7 @@ namespace CSReportDll
         private int pGetChildGroupFooterToClose(int idxGroupFather)
         {
             int groupIndex = 0;
-            int j = 0;
-            for (j = idxGroupFather; j < m_groupCount; j++)
+            for (int j = idxGroupFather; j < m_groupCount; j++)
             {
                 if (m_vGroups[j].footerMustBeClosed)
                 {
@@ -907,7 +906,7 @@ namespace CSReportDll
         {
             // if there are groups footers which need to be printed
             //
-            if (m_idxGroupFooter > 0)
+            if (m_idxGroupFooter > -1)
             {
                 if (m_vGroups[m_idxGroupFooter].footerMustBeClosed)
                 {
@@ -917,7 +916,7 @@ namespace CSReportDll
 
             // if there are groups headers which need to be printed
             //
-            if (m_idxGroupHeader > 0)
+            if (m_idxGroupHeader > -1)
             {
                 if (m_vGroups[m_idxGroupHeader].changed)
                 {
@@ -1124,18 +1123,18 @@ namespace CSReportDll
         {
             // if we have finished return csRptGLEnd
             //
-            if (m_rows == null || m_iRow > m_recordCount)
+            if (m_rows == null || m_iRow > m_recordCount - 1)
             {
-                if (m_iRow > m_recordCount)
+                if (m_iRow > m_recordCount - 1)
                 {
-                    m_iRow2 = m_recordCount;
+                    m_iRow2 = m_recordCount - 1;
                 }
 
                 // if there are footer to be printed
                 //
                 if (m_bPrintFooter)
                 {
-                    // if we to eval functions before print
+                    // if we need to eval functions before print
                     //
                     if (m_bEvalPreGroups)
                     {
@@ -1159,7 +1158,7 @@ namespace CSReportDll
                             // we force a change in the first group to force
                             // the close of every group footer
                             //
-                            m_groupIndexChange = 1;
+                            m_groupIndexChange = 0;
 
                             // set the flag of the last group on to force this call to
                             // print it and the next footers will be printed in sucesive
@@ -1304,11 +1303,11 @@ namespace CSReportDll
             for (i = first + 1; i <= last; i++)
             {
                 bChanged = false;
-                for (j = last; j > i; j--)
+                for (j = last; j >= i; j--)
                 {
                     q = q + 1;
                     int row1 = m_vRowsIndex[j];
-                    int row2 = m_vRowsIndex[j-1];
+                    int row2 = m_vRowsIndex[j - 1];
                     DateTime date1 = cReportGlobals.dateValue(cReportGlobals.valVariant(m_rows.Rows[row1][orderBy]));
                     DateTime date2 = cReportGlobals.dateValue(cReportGlobals.valVariant(m_rows.Rows[row2][orderBy]));
                     if (date1 < date2)
@@ -1345,7 +1344,7 @@ namespace CSReportDll
             for (i = first + 1; i <= last; i++)
             {
                 bChanged = false;
-                for (j = last; j > i; j--)
+                for (j = last; j >= i; j--)
                 {
                     q = q + 1;
                     int row1 = m_vRowsIndex[j];
@@ -1375,7 +1374,7 @@ namespace CSReportDll
         }
 
         private void pGetLineAuxDoGroups(ref bool bGetNewPage)
-        { // TODO: Use of ByRef founded Private Sub pGetLineAuxDoGroups(ByRef bGetNewPage As Boolean)
+        {
             // we continue evaluating groups
             //
             for (int i = 0; i < m_groupCount; i++)
@@ -1435,9 +1434,7 @@ namespace CSReportDll
             // most inner group to the most outer group 
             // which is changing (m_GroupIndexChange)
             //
-            int j = 0;
-
-            for (j = m_groupIndexChange; j < m_idxGroupFooter; j++)
+            for (int j = m_groupIndexChange; j < m_idxGroupFooter; j++)
             {
                 m_vGroups[j].footerMustBeClosed = true;
             }
@@ -1895,12 +1892,6 @@ namespace CSReportDll
         { // TODO: Use of ByRef founded Public Function Launch(Optional ByRef oLaunchInfo As cReportLaunchInfo = Nothing) As Boolean
             try
             {
-                int errNumber = 0;
-                String errSource = "";
-                String errDescription = "";
-                String errHelpfile = "";
-                int errHelpcontext = 0;
-
                 List<object[]> recordsets = null;
                 DataTable rs = null;
 
@@ -3789,7 +3780,7 @@ namespace CSReportDll
             for (i = first + 1; i <= last; i++)
             {
                 bChanged = false;
-                for (j = last; j <= i; j--)
+                for (j = last; j >= i; j--)
                 {
                     q = q + 1;
                     double value1 = cUtil.val(m_rows.Rows[m_vRowsIndex[j]][orderBy]);
@@ -3828,7 +3819,7 @@ namespace CSReportDll
             for (i = first + 1; i <= last; i++)
             {
                 bChanged = false;
-                for (j = last; j <= i; j--)
+                for (j = last; j >= i; j--)
                 {
                     q = q + 1;
                     double number1 = cUtil.val(m_rows.Rows[m_vRowsIndex[j]][orderBy]);
@@ -3867,11 +3858,11 @@ namespace CSReportDll
             for (i = first + 1; i <= last; i++)
             {
                 bChanged = false;
-                for (j = last; j <= i; j--)
+                for (j = last; j >= i; j--)
                 {
                     q = q + 1;
-                    String text1 = (String)cReportGlobals.valVariant(m_rows.Rows[m_vRowsIndex[j]][orderBy]);
-                    String text2 = (String)cReportGlobals.valVariant(m_rows.Rows[m_vRowsIndex[j - 1]][orderBy]);
+                    String text1 = cReportGlobals.valVariant(m_rows.Rows[m_vRowsIndex[j]][orderBy]).ToString();
+                    String text2 = cReportGlobals.valVariant(m_rows.Rows[m_vRowsIndex[j - 1]][orderBy]).ToString();
                     if (String.Compare(text1.ToLower(), 
                                         text2.ToLower(), 
                                         StringComparison.CurrentCulture) < 0)
@@ -3908,11 +3899,11 @@ namespace CSReportDll
             for (i = first + 1; i <= last; i++)
             {
                 bChanged = false;
-                for (j = last; j <= i; j--)
+                for (j = last; j >= i; j--)
                 {
                     q = q + 1;
-                    String text1 = (String)cReportGlobals.valVariant(m_rows.Rows[m_vRowsIndex[j]][orderBy]);
-                    String text2 = (String)cReportGlobals.valVariant(m_rows.Rows[m_vRowsIndex[j - 1]][orderBy]);
+                    String text1 = cReportGlobals.valVariant(m_rows.Rows[m_vRowsIndex[j]][orderBy]).ToString();
+                    String text2 = cReportGlobals.valVariant(m_rows.Rows[m_vRowsIndex[j - 1]][orderBy]).ToString();
                     if (String.Compare(text1.ToLower(),
                                         text2.ToLower(),
                                         StringComparison.CurrentCulture) > 0)

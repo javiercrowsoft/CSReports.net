@@ -43,7 +43,7 @@ namespace CSDataBase
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void cmdCancel_Click(object sender, EventArgs e)
         {
             m_cancel = true;
             Hide();

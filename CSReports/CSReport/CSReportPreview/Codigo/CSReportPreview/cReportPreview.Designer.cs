@@ -41,13 +41,13 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbExportPDF = new System.Windows.Forms.ToolStripButton();
             this.pnEditor = new System.Windows.Forms.Panel();
-            this.pnRule = new System.Windows.Forms.PictureBox();
             this.pnReport = new System.Windows.Forms.PictureBox();
+            this.pnRule = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.toolStrip1.SuspendLayout();
             this.pnEditor.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pnRule)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pnReport)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pnRule)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -164,6 +164,16 @@
             this.pnEditor.Size = new System.Drawing.Size(780, 432);
             this.pnEditor.TabIndex = 2;
             // 
+            // pnReport
+            // 
+            this.pnReport.BackColor = System.Drawing.SystemColors.Window;
+            this.pnReport.Location = new System.Drawing.Point(3, 3);
+            this.pnReport.Name = "pnReport";
+            this.pnReport.Size = new System.Drawing.Size(339, 306);
+            this.pnReport.TabIndex = 0;
+            this.pnReport.TabStop = false;
+            this.pnReport.Click += new System.EventHandler(this.pnReport_Click);
+            // 
             // pnRule
             // 
             this.pnRule.BackColor = System.Drawing.SystemColors.ControlLight;
@@ -173,15 +183,6 @@
             this.pnRule.Size = new System.Drawing.Size(54, 426);
             this.pnRule.TabIndex = 1;
             this.pnRule.TabStop = false;
-            // 
-            // pnReport
-            // 
-            this.pnReport.BackColor = System.Drawing.SystemColors.Window;
-            this.pnReport.Location = new System.Drawing.Point(3, 3);
-            this.pnReport.Name = "pnReport";
-            this.pnReport.Size = new System.Drawing.Size(339, 306);
-            this.pnReport.TabIndex = 0;
-            this.pnReport.TabStop = false;
             // 
             // tableLayoutPanel1
             // 
@@ -209,8 +210,8 @@
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.pnEditor.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pnRule)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pnReport)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pnRule)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

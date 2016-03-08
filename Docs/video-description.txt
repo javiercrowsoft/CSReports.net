@@ -1,0 +1,70 @@
+Welcome
+
+CSReports.Net is a report editor tool that allows you to create reports from data in SQL Server, PostgreSQL, Oracle and MySQL
+
+The datasource can be a SQL select statement or an stored procedure. A report can contain many datasources.
+
+As you can see reports can contain images stored in the database.
+
+It is written in C#.
+
+It runs in Windows, Mac OSX and Linux.
+
+It support multiple headers, footers and groups.
+
+Sections can contain subsections.
+
+There is no limit for the amount of groups or any other header or footer section and subsections you can add to a report.
+
+This report I am showing now is a General Ledger which has 10 groups
+Each group is a level in the accounts tree.
+
+You can create formulas to define the value of controls and the visibility of controls, sections and subsections.
+
+For example the totals in this report are not calculated in the database.
+
+Them are calculated by the sum internal function of the editor.
+
+There are many internal functions like sum, average, minimum and maximum.
+
+You can create complex function using scripting.
+
+Formulas can be written in C# or VB.Net
+
+Being able to modify the visibility of a section using formulas brings you full control over the layout of a page.
+
+For example in this landscape report that we are watching now pages 1 to 4 share the same layout but pages 5 to 8 have all different layouts.
+
+In a future version it will allow to preview reports in the browser using the canvas object for rendering.
+
+It can export to PDF and Excel.
+
+The datasource can be a JSON file so it can run disconnected from a database as a client preview tool that consume
+reports from a web application.
+
+All the controls in the report can be browsed and linked to other reports or web pages.
+
+It is open source and all the code is in Github.
+
+https://github.com/javiercrowsoft/CSReports.net
+
+The URL to the repository in Github is in the comments section of this video.
+
+I am working a version that can preview reports in mobile devices using Xamarin.
+
+Now we are watching the control properties dialog.
+
+Here you can define the font, the colour,
+the border type the formulas for visibility and value and many other control properties.
+
+Sections has is own property dialog where she can define the visibility formula. As I mentioned before this is used to control the page layout.
+
+You can search a text in all elements of a report. The search tool will look at controls, sections, subsections and in the code of formulas.
+
+Here I am searching the word IVA which means VAT tax in Spanish. As you see it has been found in several controls. When I click in any of the elements of this list it is selected in the report window. We can edit its properties from here.
+
+Obviously the sections can be resized and controls can be move to other sections.
+
+As I has said before a report can have more than one datasource. This report has three datasources. The main datasource contains all the rows used by the controls in the details and there are two secondary datasources which contains the logos that are shown in the header and footer of the report.
+
+Thank you for watching.

@@ -236,8 +236,8 @@ namespace CSReportDll
             // C
 
             fi = add(null, csRptFormulaType.CSRPTFCALCULO);
-            fi.setName("_calc");
-            fi.setNameUser("Calc");
+            fi.setName("_calculo");
+            fi.setNameUser("Calculo");
             fi.setDecrip("It returns a double after applying an aritmetical operation to ther first two arguments.\r\n\r\nSyntax: _calc(control_1, control_2, value, operator)\n1 addition, 2 substraction, 3 multiplication, 4 division, 5 power");
             fi.setId(csRptFormulaType.CSRPTFCALCULO);
             fi.setHelpContextId(csRptFormulaType.CSRPTFCALCULO);

@@ -1257,11 +1257,11 @@ namespace CSReportDll
 
             control = fint.getParameters().item(1).getValue();
 
-            value1 = (double)m_report.getValue(fint.getParameters().item(0).getValue(), true);
+            value1 = Convert.ToDouble(m_report.getValue(fint.getParameters().item(0).getValue(), true));
 
             if (control != "\"\"")
             {
-                value2 = (double)m_report.getValue(control, true);
+                value2 = Convert.ToDouble(m_report.getValue(control, true));
             }
             else
             {
@@ -1275,26 +1275,25 @@ namespace CSReportDll
                 // addition
                 case 1:
                     return value1 + value2;
-                    break;
+                    
                 // substraction
                 case 2:
                     return value1 - value2;
-                    break;
+                    
                 // multiplication
                 case 3:
                     return value1 * value2;
-                    break;
+                    
                 // division
                 case 4:
                     return cUtil.divideByZero(value1, value2);
-                    break;
+                    
                 // power
                 case 5:
                     return Math.Pow(value1, ((int)value2));
-                    break;
+                    
                 default:
-                    return 0;
-                    break;
+                    return 0;                    
             }
         }
 
@@ -1324,8 +1323,6 @@ namespace CSReportDll
             }
             catch
             {
-
-                int lastIndex = 0;
                 int lenText = 0;
                 int pos = 0;
                 int endpos = 0;
@@ -1353,7 +1350,6 @@ namespace CSReportDll
                 }
 
                 m_collTextReplace.Add(m_ctrlName, collCtrlsToReplace);
-
             }
 
             cReportControl ctrlValue = null;

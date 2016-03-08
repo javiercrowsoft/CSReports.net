@@ -5291,7 +5291,9 @@ namespace CSReportEditor
             double percent = 0;
             if (recordCount > 0 && currRecord > 0) {
                 percent = Convert.ToDouble(currRecord) / recordCount;
-                m_fProgress.prgBar.Value = Convert.ToInt32(percent * 100);
+                var value = Convert.ToInt32(percent * 100);
+                if (value > 100) value = 100;
+                m_fProgress.prgBar.Value = value;
             }
 
             Application.DoEvents();

@@ -122,6 +122,11 @@ namespace CSReportPreview
                 Print(this, EventArgs.Empty);
             }
         }
+
+        private void pnReport_Click(object sender, EventArgs e)
+        {
+            pnEditor.Focus();
+        }
     }
 
     public class PageEventArgs : EventArgs
