@@ -17,7 +17,6 @@ namespace CSKernelClient
 
         public static void msgError(String msg, String title, String details)
         {
-            if (title == "@@@@@") { title = m_title; }
             pMsgAux(msg, CSMSGICONS.Error, title, details);
         }
 
@@ -33,7 +32,6 @@ namespace CSKernelClient
 
         public static void msgWarning(String msg, String title, String details)
         {
-            if (title == "@@@@@") { title = m_title; }
             pMsgAux(msg, CSMSGICONS.Exclamation, title, details);
         }
 
@@ -64,10 +62,12 @@ namespace CSKernelClient
 
         public static void msgInfo(String msg, String title)
         {
+            pMsgAux(msg, CSMSGICONS.Information, title, "");
         }
 
         private static void pMsgAux(String msg, CSMSGICONS icon, String title, String details) 
         {
+            if (title == "@@@@@") { title = m_title; }
             fMsg fmsg = new fMsg();
             fmsg.setIcon(icon);
             fmsg.setMessage(msg);

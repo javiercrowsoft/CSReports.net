@@ -18,25 +18,25 @@ namespace CSReportDll
         // it is a reference to the controls collection of cReport
         //
         private cReportControls2 m_copyColl;
-        private csRptTypeSection m_typeSection;
-        private csRptTypeSection m_mainTypeSection;
+        private csRptSectionType m_typeSection;
+        private csRptSectionType m_mainTypeSection;
 
         // Creates an empty collection.
         public cReportSections()
         {
         }
 
-        public csRptTypeSection getTypeSection()
+        public csRptSectionType getTypeSection()
         {
             return m_typeSection;
         }
 
-        public void setTypeSection(csRptTypeSection rhs)
+        public void setTypeSection(csRptSectionType rhs)
         {
             m_typeSection = rhs;
         }
 
-        internal void setMainTypeSection(csRptTypeSection rhs)
+        internal void setMainTypeSection(csRptSectionType rhs)
         {
             m_mainTypeSection = rhs;
         }

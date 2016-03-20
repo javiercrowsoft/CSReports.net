@@ -16,7 +16,7 @@ namespace CSReportDll
         private cReportImage m_image = new cReportImage();
         private cReportLine m_line = new cReportLine();
         private cReportField m_field = new cReportField();
-        private csRptTypeSection m_typeSection;
+        private csRptSectionType m_typeSection;
         private String m_key = "";
         private String m_keyPaint = "";
         private String m_name = "";
@@ -135,12 +135,12 @@ namespace CSReportDll
             m_tag = rhs;
         }
 
-        public csRptTypeSection getTypeSection()
+        public csRptSectionType getTypeSection()
         {
             return m_typeSection;
         }
 
-        public void setTypeSection(csRptTypeSection rhs)
+        public void setTypeSection(csRptSectionType rhs)
         {
             m_typeSection = rhs;
         }

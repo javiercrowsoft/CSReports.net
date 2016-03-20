@@ -2206,15 +2206,24 @@ namespace CSReportPaint
                     bool dash = false;
                     const int borderWidth = 1;
 
-                    if (m_notBorder == false && aspect.getBorderType() == csReportBorderType.CSRPTBSFIXED && !aspect.getBorderRounded())
+                    if (m_notBorder == false 
+                            && (
+                                (aspect.getBorderType() == csReportBorderType.CSRPTBSFIXED && !aspect.getBorderRounded())
+                                || aspect.getBorderType() == csReportBorderType.CSRPTBSNONE
+                            )
+                        )
                     {
                         colorOut = Color.Gray.ToArgb(); // 0xff9966; //Color.LightGray.ToArgb();
                         dash = true;
                     }
 
-                    // TODO: clean this
+                    // TODO: clean this. we have many issues with this code. the value 16777215 is white
+                    //       it is used in cairo reports. when a control has a background (colorIn) == white
+                    //       we must not call printLine
                     //
-                    if (!m_notBorder || (aspect.getBorderType() == csReportBorderType.CSRPTBSFIXED && aspect.getBorderWidth() > 0))
+                    if (!m_notBorder 
+                        || (filled && colorIn != 16777215) // this is the value of white controls in cairo reports.
+                        || (aspect.getBorderType() == csReportBorderType.CSRPTBSFIXED && aspect.getBorderWidth() > 0))
                     {
                         printLine(graph, filled, x1, y1, x2, y2, colorIn, borderWidth, dash, colorOut, false);
                     }

@@ -261,15 +261,15 @@ namespace CSReportDll
                 m_groupsHeaders.setCopyColl(m_controls);
                 m_groupsFooters.setCopyColl(m_controls);
 
-                m_details.setTypeSection(csRptTypeSection.DETAIL);
-                m_headers.setTypeSection(csRptTypeSection.HEADER);
-                m_footers.setTypeSection(csRptTypeSection.FOOTER);
-                m_groupsHeaders.setTypeSection(csRptTypeSection.GROUP_HEADER);
-                m_groupsFooters.setTypeSection(csRptTypeSection.GROUP_FOOTER);
+                m_details.setTypeSection(csRptSectionType.DETAIL);
+                m_headers.setTypeSection(csRptSectionType.HEADER);
+                m_footers.setTypeSection(csRptSectionType.FOOTER);
+                m_groupsHeaders.setTypeSection(csRptSectionType.GROUP_HEADER);
+                m_groupsFooters.setTypeSection(csRptSectionType.GROUP_FOOTER);
 
-                m_details.setMainTypeSection(csRptTypeSection.MAIN_DETAIL);
-                m_headers.setMainTypeSection(csRptTypeSection.MAIN_HEADER);
-                m_footers.setMainTypeSection(csRptTypeSection.MAIN_FOOTER);
+                m_details.setMainTypeSection(csRptSectionType.MAIN_DETAIL);
+                m_headers.setMainTypeSection(csRptSectionType.MAIN_HEADER);
+                m_footers.setMainTypeSection(csRptSectionType.MAIN_FOOTER);
             }
             catch (Exception ex)
             {
@@ -4336,15 +4336,15 @@ namespace CSReportDll
                     }
                     if (indexGroup == -1)
                     {
-                        if (sec.getTypeSection() == csRptTypeSection.GROUP_HEADER
-                            || sec.getTypeSection() == csRptTypeSection.GROUP_FOOTER)
+                        if (sec.getTypeSection() == csRptSectionType.GROUP_HEADER
+                            || sec.getTypeSection() == csRptSectionType.GROUP_FOOTER)
                         {
                             // index of the group
                             //
                             fint.getParameters().item(cReportGlobals.C_KEYINDEXGROUP).setValue(sec.getIndex().ToString());
                             formula.setIdxGroup(sec.getIndex());
                         }
-                        else if (sec.getTypeSection() == csRptTypeSection.MAIN_DETAIL)
+                        else if (sec.getTypeSection() == csRptSectionType.MAIN_DETAIL)
                         {
                             // index of the most internal group
                             //

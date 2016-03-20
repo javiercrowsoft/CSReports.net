@@ -115,19 +115,19 @@ namespace CSReportDll
         // it is a reference to the controls collection of cReport
         //
         private cReportControls2 m_copyColl;
-        private csRptTypeSection m_typeSection;
+        private csRptSectionType m_typeSection;
         private int[] m_collByLeft;
 
         // this reference tell in which section line is this controls collection
         //
         private cReportSectionLine m_sectionLine;
 
-        public csRptTypeSection getTypeSection()
+        public csRptSectionType getTypeSection()
         {
             return m_typeSection;
         }
 
-        public void setTypeSection(csRptTypeSection rhs)
+        public void setTypeSection(csRptSectionType rhs)
         {
             m_typeSection = rhs;
         }

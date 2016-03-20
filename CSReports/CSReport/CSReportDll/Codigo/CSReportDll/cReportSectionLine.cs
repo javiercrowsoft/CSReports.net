@@ -137,12 +137,12 @@ namespace CSReportDll
             return m_formulaHide;
         }
 
-        public csRptTypeSection getTypeSection()
+        public csRptSectionType getTypeSection()
         {
             return m_controls.getTypeSection();
         }
 
-        public void setTypeSection(csRptTypeSection rhs)
+        public void setTypeSection(csRptSectionType rhs)
         {
             m_controls.setTypeSection(rhs);
         }

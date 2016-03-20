@@ -18,7 +18,7 @@ namespace CSReportPaint
         private String m_text = "";
         private csRptPaintObjType m_paintType;
         private String m_tag = "";
-        private csRptTypeSection m_rptType;
+        private csRptSectionType m_rptType;
         private String m_rptKeySec = "";
         private Image m_image = null;
         private int m_indexField = 0;
@@ -79,12 +79,12 @@ namespace CSReportPaint
             m_paintType = rhs;
         }
 
-        public csRptTypeSection getRptType()
+        public csRptSectionType getRptType()
         {
             return m_rptType;
         }
 
-        public void setRptType(csRptTypeSection rhs)
+        public void setRptType(csRptSectionType rhs)
         {
             m_rptType = rhs;
         }

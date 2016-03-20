@@ -9,7 +9,7 @@ namespace CSReportDll
     public interface cIReportGroupSections
     {
 
-        void setTypeSection(csRptTypeSection rhs);
+        void setTypeSection(csRptSectionType rhs);
         int count();
         cReportSection item(String key);
         cReportSection item(int index);

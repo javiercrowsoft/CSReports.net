@@ -185,7 +185,7 @@ namespace CSReportGlobals
         CSRPTCTCHART = 5
     }
 
-    public enum csRptTypeSection 
+    public enum csRptSectionType 
     { 
         HEADER = 0,
         DETAIL = 1,

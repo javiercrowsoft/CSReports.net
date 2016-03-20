@@ -84,12 +84,12 @@ namespace CSReportDll
             m_key = rhs;
         }
 
-        public csRptTypeSection getTypeSection()
+        public csRptSectionType getTypeSection()
         {
             return m_sectionLines.getTypeSection();
         }
 
-        public void setTypeSection(csRptTypeSection rhs)
+        public void setTypeSection(csRptSectionType rhs)
         {
             m_sectionLines.setTypeSection(rhs);
         }
@@ -149,7 +149,7 @@ namespace CSReportDll
             //
             m_index = xDoc.getNodeProperty(nodeObj, "Indice").getValueInt(eTypes.eInteger);
 
-            setTypeSection((csRptTypeSection)xDoc.getNodeProperty(nodeObj, "TypeSection").getValueInt(eTypes.eInteger));
+            setTypeSection((csRptSectionType)xDoc.getNodeProperty(nodeObj, "TypeSection").getValueInt(eTypes.eInteger));
             m_hasFormulaHide = xDoc.getNodeProperty(nodeObj, "HasFormulaHide").getValueBool(eTypes.eBoolean);
 
             nodeObjAspect = nodeObj;

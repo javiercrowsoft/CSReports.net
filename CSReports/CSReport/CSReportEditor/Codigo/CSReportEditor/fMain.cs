@@ -800,5 +800,86 @@ namespace CSReportEditor
                 }
             }
         }
+
+        private void mnuEditAddHeader_Click(object sender, EventArgs e)
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.addSection(csRptSectionType.HEADER);
+            }
+        }
+
+        private void mnuEditAddGroup_Click(object sender, EventArgs e)
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.addGroup();
+            }
+        }
+
+        private void mnuEditAddFooter_Click(object sender, EventArgs e)
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.addSection(csRptSectionType.FOOTER);
+            }
+        }
+
+        private void mnuEditAddLabel_Click(object sender, EventArgs e)
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.addLabel();
+            }
+        }
+
+        private void mnuEditAddLine_Click(object sender, EventArgs e)
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.addLabel();
+            }
+        }
+
+        private void mnuEditAddControl_Click(object sender, EventArgs e)
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.addDBField();
+            }
+        }
+
+        private void mnuEditAddImage_Click(object sender, EventArgs e)
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.addImage();
+            }
+        }
+
+        private void mnuEditAddChart_Click(object sender, EventArgs e)
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.addChart();
+            }
+        }
+
+        private void mnuHelpAbout_Click(object sender, EventArgs e)
+        {
+            cWindow.msgInfo(
+                System.Reflection.Assembly.GetExecutingAssembly().GetName().Name 
+                + " - Version " 
+                + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version
+                + "\r\n\r\nhttps://github.com/javiercrowsoft/CSReports.net");
+        }
     }
 }
