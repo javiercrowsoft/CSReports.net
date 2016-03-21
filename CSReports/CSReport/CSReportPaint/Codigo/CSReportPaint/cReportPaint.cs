@@ -1054,25 +1054,28 @@ namespace CSReportPaint
                         int bmpWidth = 0;
                         int bmpHeight = 0;
 
-                        cGlobals.getBitmapSize(oPaintObj.getImage(), out bmpWidth, out bmpHeight, true);
-
-                        if (bmpWidth > w_aspect.getWidth())
+                        if (oPaintObj.getImage() != null)
                         {
-                            bmpWidth = (int)w_aspect.getWidth();
-                        }
-                        if (bmpHeight > w_aspect.getHeight())
-                        {
-                            bmpHeight = (int)w_aspect.getHeight();
-                        }
+                            cGlobals.getBitmapSize(oPaintObj.getImage(), out bmpWidth, out bmpHeight, true);
 
-                        drawBMP(graph,
-                                oPaintObj.getImage(),
-                                x1 * m_scaleX,
-                                y1 * m_scaleY,
-                                bmpWidth,
-                                bmpHeight,
-                                bmpWidth * m_scaleX,
-                                bmpHeight * m_scaleY);
+                            if (bmpWidth > w_aspect.getWidth())
+                            {
+                                bmpWidth = (int)w_aspect.getWidth();
+                            }
+                            if (bmpHeight > w_aspect.getHeight())
+                            {
+                                bmpHeight = (int)w_aspect.getHeight();
+                            }
+
+                            drawBMP(graph,
+                                    oPaintObj.getImage(),
+                                    x1 * m_scaleX,
+                                    y1 * m_scaleY,
+                                    bmpWidth,
+                                    bmpHeight,
+                                    bmpWidth * m_scaleX,
+                                    bmpHeight * m_scaleY);
+                        }
                         break;
                 }
 

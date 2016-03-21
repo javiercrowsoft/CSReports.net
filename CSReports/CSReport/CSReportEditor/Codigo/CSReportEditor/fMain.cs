@@ -93,9 +93,9 @@ namespace CSReportEditor
 
         private void mnuNewReport_Click(object sender, EventArgs e)
         {
-            createEditor();
             cEditor editor = createEditor();
             editor.init();
+            editor.newReport(null);
         }
 
         private void tsbNew_Click(object sender, EventArgs e)
@@ -633,7 +633,7 @@ namespace CSReportEditor
             var connect = editor.getReport().getConnect();
             cGlobals.fillColumns(
                 connect.getDataSource(), 
-                connect.getColumns(), lv_fields, C_INDEX, C_FIELDTYPE);
+                connect.getColumns(), lv_fields, C_INDEX, C_FIELDTYPE, false);
         }
 
         private void lv_controls_ColumnClick(object sender, ColumnClickEventArgs e)
@@ -842,7 +842,7 @@ namespace CSReportEditor
             cEditor editor = cMainEditor.getDocActive();
             if (editor != null)
             {
-                editor.addLabel();
+                editor.addLineLabel();
             }
         }
 

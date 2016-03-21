@@ -71,7 +71,7 @@ namespace CSReportDll
             int width = 0;
             int height = 0;
 
-            getDefaultPrinter(out deviceName, out driverName, out port, out orientation, out paperSize, out width, out height);
+            getDefaultPrinter(out deviceName, out driverName, out port, out paperSize, out orientation, out width, out height);
 
             if (deviceName != "")
             {
@@ -111,6 +111,8 @@ namespace CSReportDll
 
             if (width == 0 || height == 0)
             {
+                if (paperSize == 99 /*UNKNOWN*/) paperSize = 1; /*LETTER*/
+
                 getSizeFromPaperSize((csReportPaperType)paperSize, orientation, out width, out height);
             }
         }

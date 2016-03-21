@@ -45,9 +45,9 @@ namespace CSReportEditor
             lv_columns.Items.Clear();
         }
 
-        internal void fillColumns(string dataSource, cColumnsInfo columns)
+        internal void fillColumns(string dataSource, cColumnsInfo columns, bool add)
         {
-            cGlobals.fillColumns(dataSource, columns, lv_columns, C_INDEX, C_FIELDTYPE);
+            cGlobals.fillColumns(dataSource, columns, lv_columns, C_INDEX, C_FIELDTYPE, add);
             /*
             foreach (cColumnInfo column in columns) 
             {

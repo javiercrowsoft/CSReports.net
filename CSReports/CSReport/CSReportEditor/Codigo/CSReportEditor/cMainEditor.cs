@@ -144,7 +144,8 @@ namespace CSReportEditor
 	    private static void setMenu() {
 	        try {
 
-	            if (m_editor == null) {
+                if (m_editor == null || m_editor.getReport() == null)
+                {
 	                fmain.setMenuAux(false);
 	                fmain.setBarText("");
 	                fmain.setStatus("");

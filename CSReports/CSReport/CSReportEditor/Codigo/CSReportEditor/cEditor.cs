@@ -2400,7 +2400,7 @@ namespace CSReportEditor
 
             beginDraging();
             m_controlName = "";
-            m_controlType = csRptEditCtrlType.CSRPTEDITFIELD;
+            m_controlType = csRptEditCtrlType.field;
             m_fieldName = sField;
             m_formulaText = "";
             m_fieldIndex = nIndex;
@@ -2408,15 +2408,20 @@ namespace CSReportEditor
         }
 
         public void addLabel() {
-            pAddLabelAux(csRptEditCtrlType.CSRPTEDITLABEL);
+            pAddLabelAux(csRptEditCtrlType.label);
+        }
+
+        public void addLineLabel()
+        {
+            pAddLabelAux(csRptEditCtrlType.lineLabel);
         }
 
         public void addImage() {
-            pAddLabelAux(csRptEditCtrlType.CSRPTEDITIMAGE);
+            pAddLabelAux(csRptEditCtrlType.image);
         }
 
         public void addChart() {
-            pAddLabelAux(csRptEditCtrlType.CSRPTEDITCHART);
+            pAddLabelAux(csRptEditCtrlType.chart);
         }
 
         public void pAddLabelAux(csRptEditCtrlType ctrlType) {
@@ -2433,7 +2438,7 @@ namespace CSReportEditor
 
             m_draging = false;
 
-            if (m_controlType == csRptEditCtrlType.CSRPTEDITNONE) {
+            if (m_controlType == csRptEditCtrlType.none) {
                 return true;
             }
 
@@ -2721,13 +2726,21 @@ namespace CSReportEditor
             pCopyChart(fromCtrl.getChart(), toCtrl.getChart());
         }
 
-        private void pSetNewControlProperties(cReportControl ctrl) { 
-			cReportAspect aspect = null;
+        private void pSetNewControlProperties(cReportControl ctrl) {
+            const int CTRL_HEIGHT = 19;
+            const int CTRL_WIDTH = 133;
+            const int LINE_HEIGHT = 1;
+
+            cReportLabel label = null;
+            cReportAspect aspect = null;
+
+            int ctrlHeigth = CTRL_HEIGHT;
+            bool transparent = true;
 
             ctrl.getLabel().getAspect().setAlign(CSReportGlobals.HorizontalAlignment.Left);
 
             switch (m_controlType) {
-                case csRptEditCtrlType.CSRPTEDITFIELD:
+                case csRptEditCtrlType.field:
                     ctrl.setControlType(csRptControlType.CSRPTCTFIELD);
                     ctrl.getLabel().setText(m_fieldName);
                     cReportField field = ctrl.getField();
@@ -2743,40 +2756,51 @@ namespace CSReportEditor
                     }
                     break;
 
-                case csRptEditCtrlType.CSRPTEDITFORMULA:
+                case csRptEditCtrlType.formula:
                     ctrl.setControlType(csRptControlType.CSRPTCTLABEL);
                     ctrl.getFormulaValue().setText(m_formulaText + "(" + m_controlName + ")");
                     ctrl.setHasFormulaValue(true);
-                    ctrl.getLabel().getAspect().setFormat("0.00;-0.00");
-                    ctrl.getLabel().getAspect().getFont().setBold(true);
-                    ctrl.getLabel().setText(ctrl.getFormulaValue().getText());
-                    ctrl.getLabel().getAspect().setAlign(CSReportGlobals.HorizontalAlignment.Right);
+                    label = ctrl.getLabel();
+                    aspect = label.getAspect();
+                    aspect.setFormat("0.00;-0.00");
+                    aspect.getFont().setBold(true);
+                    label.setText(ctrl.getFormulaValue().getText());
+                    aspect.setAlign(CSReportGlobals.HorizontalAlignment.Right);
                     break;
 
-                case csRptEditCtrlType.CSRPTEDITLABEL:
+                case csRptEditCtrlType.label:
                     ctrl.setControlType(csRptControlType.CSRPTCTLABEL);
-                    ctrl.getLabel().setText(m_fieldName);
-                    ctrl.getLabel().getAspect().getFont().setBold(true);
-
+                    label = ctrl.getLabel();
+                    label.setText(m_fieldName);
+                    label.getAspect().getFont().setBold(true);
                     break;
-                case csRptEditCtrlType.CSRPTEDITIMAGE:
+
+                case csRptEditCtrlType.lineLabel:
+                    ctrlHeigth = LINE_HEIGHT;
+                    ctrl.setControlType(csRptControlType.CSRPTCTLABEL);
+                    label = ctrl.getLabel();
+                    label.setText(m_fieldName);
+                    aspect = label.getAspect();
+                    aspect.getFont().setBold(true);
+                    aspect.setBackColor(Color.Gray.ToArgb());
+                    transparent = false;
+                    break;
+
+                case csRptEditCtrlType.image:
                     ctrl.setControlType(csRptControlType.CSRPTCTIMAGE);
                     ctrl.getLabel().setText(m_fieldName);
-
                     break;
-                case csRptEditCtrlType.CSRPTEDITCHART:
+
+                case csRptEditCtrlType.chart:
                     ctrl.setControlType(csRptControlType.CSRPTCTCHART);
                     ctrl.getLabel().setText(m_fieldName);
                     break;
             }
 
-            const int ctrl_height = 19;
-            const int ctrl_width = 133;
-
 			aspect = ctrl.getLabel().getAspect();
-            aspect.setWidth(ctrl_width);
-            aspect.setHeight(ctrl_height);
-            aspect.setTransparent(true);
+            aspect.setWidth(CTRL_WIDTH);
+            aspect.setHeight(ctrlHeigth);
+            aspect.setTransparent(transparent);
         }
 
 		private void pSetNewControlPosition(cReportControl ctrl, float left, float top) {
@@ -3105,10 +3129,10 @@ namespace CSReportEditor
 
                     // all footers are added to the beginning of the collection
                     // 
-                    rptSection = w_footers.add(null, "" , 1);
+                    rptSection = w_footers.add(null, "" , 0);
                     rptSection.setName("F_" + rptSection.getIndex().ToString());
 
-                    aspect = w_footers.item(2).getAspect();
+                    aspect = w_footers.item(1).getAspect();
                     rptSection.getAspect().setWidth(aspect.getWidth());
                     rptSection.getAspect().setHeight(cGlobals.C_HEIGHT_NEW_SECTION);
                     rptSection.getAspect().setTop(aspect.getTop());
@@ -4203,7 +4227,7 @@ namespace CSReportEditor
 
         private void endDraging() {
             m_draging = false;
-            m_controlType = csRptEditCtrlType.CSRPTEDITNONE;
+            m_controlType = csRptEditCtrlType.none;
             m_picReport.Cursor = Cursors.Default;
         }
 

@@ -85,12 +85,12 @@ namespace CSReportEditor
                 cReport report = editor.getReport();
                 
                 cReportConnect connect = report.getConnect();
-                fc.fillColumns(connect.getDataSource(), connect.getColumns());
+                fc.fillColumns(connect.getDataSource(), connect.getColumns(), false);
 
                 for (int _i = 0; _i < report.getConnectsAux().count(); _i++)
                 {
                     connect = report.getConnectsAux().item(_i);
-                    fc.fillColumns(connect.getDataSource(), connect.getColumns());
+                    fc.fillColumns(connect.getDataSource(), connect.getColumns(), true);
                 }
 
                 fc.setField(field);
@@ -480,9 +480,9 @@ namespace CSReportEditor
 
         public static void fillColumns(
             string dataSource, CSReportDll.cColumnsInfo columns, ListView lv_columns,
-            string C_INDEX, string C_FIELDTYPE)
+            string C_INDEX, string C_FIELDTYPE, bool add)
         {
-            lv_columns.Items.Clear();
+            if (!add) lv_columns.Items.Clear();
 
             foreach (CSReportDll.cColumnInfo column in columns)
             {
@@ -532,11 +532,12 @@ namespace CSReportEditor
     }
 
     public enum csRptEditCtrlType {
-        CSRPTEDITNONE,
-        CSRPTEDITLABEL,
-        CSRPTEDITFIELD,
-        CSRPTEDITFORMULA,
-        CSRPTEDITIMAGE,
-        CSRPTEDITCHART
+        none,
+        label,
+        field,
+        formula,
+        image,
+        chart,
+        lineLabel
     }
 }
