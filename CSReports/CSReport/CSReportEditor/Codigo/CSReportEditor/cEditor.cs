@@ -2873,14 +2873,14 @@ namespace CSReportEditor
                 case csRptSectionType.FOOTER:
                 case csRptSectionType.MAIN_FOOTER:
 
-                    aspect = sec.getSectionLines().add(null, "", 1).getAspect();
+                    aspect = sec.getSectionLines().add(null, "", 0).getAspect();
                     aspect.setHeight(cGlobals.C_HEIGHT_NEW_SECTION);
                     aspect.setWidth(sec.getAspect().getWidth());
 
                     // for new sections the top is the top of the previous section
                     // plus cGlobals.C_HEIGHT_NEW_SECTION
                     //
-				    aspect.setTop(sec.getSectionLines().item(1).getAspect().getTop() - cGlobals.C_HEIGHT_NEW_SECTION);
+				    aspect.setTop(sec.getSectionLines().item(0).getAspect().getTop() - cGlobals.C_HEIGHT_NEW_SECTION);
                     break;
 
                 default:
@@ -2941,7 +2941,7 @@ namespace CSReportEditor
                     aspect = sec.getAspect();
                     y = aspect.getHeight() + aspect.getTop();
                     typeSecLn = csRptSectionType.SECLN_HEADER;
-                    index = sec.getSectionLines().count() - 1;
+                    index = sec.getSectionLines().count() - 2;
                     break;
 
                 case csRptSectionType.DETAIL:
@@ -2951,7 +2951,7 @@ namespace CSReportEditor
                     aspect = sec.getAspect();
                     y = aspect.getHeight() + aspect.getTop();
                     typeSecLn = csRptSectionType.SECLN_DETAIL;
-                    index = sec.getSectionLines().count() - 1;
+                    index = sec.getSectionLines().count() - 2;
                     break;
 
                 case csRptSectionType.GROUP_HEADER:
@@ -2960,7 +2960,7 @@ namespace CSReportEditor
                     aspect = sec.getAspect();
                     y = aspect.getHeight() + aspect.getTop();
                     typeSecLn = csRptSectionType.SECLN_GROUPH;
-                    index = sec.getSectionLines().count() - 1;
+                    index = sec.getSectionLines().count() - 2;
                     break;
 
                 case csRptSectionType.GROUP_FOOTER:
@@ -2969,7 +2969,7 @@ namespace CSReportEditor
                     aspect = sec.getAspect();
                     y = aspect.getHeight() + aspect.getTop();
                     typeSecLn = csRptSectionType.SECLN_GROUPF;
-                    index = sec.getSectionLines().count() - 1;
+                    index = sec.getSectionLines().count() - 2;
                     break;
 
                 case csRptSectionType.FOOTER:
@@ -2981,7 +2981,7 @@ namespace CSReportEditor
                     m_offY = 0;
                     y = aspect.getHeight() + aspect.getTop() - m_offSet - cGlobals.C_HEIGHT_BAR_SECTION;
                     typeSecLn = csRptSectionType.SECLN_FOOTER;
-                    index = 1;
+                    index = 0;
                     break;
             }
 			// we add a paint object to all sectionlines except the last one 
@@ -2992,7 +2992,7 @@ namespace CSReportEditor
 				paintSection(secL.getAspect(), 
 								secL.getKey(), 
                                 sec.getTypeSection(), 
-								C_SECTIONLINE + (sec.getSectionLines().count() - 1).ToString(), 
+								C_SECTIONLINE + (sec.getSectionLines().count() - 2).ToString(), 
 								true));
 
 			// section line
@@ -5554,7 +5554,7 @@ namespace CSReportEditor
 
                 case  csRptSectionType.SECLN_HEADER:
                     sKeySection = paintObj.getRptKeySec();
-                    rptSec = pMoveHeader(sKeySection, out minBottom, out maxBottom);
+                    rptSec = pMoveHeader(sKeySection, out minBottom, out maxBottom, true, paintObj.getTag(), out maxBottomSectionLine);
                     isSecLn = true;
                     break;
 

@@ -881,5 +881,29 @@ namespace CSReportEditor
                 + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version
                 + "\r\n\r\nhttps://github.com/javiercrowsoft/CSReports.net");
         }
+
+        private void cmSectionAddSectionLine_Click(object sender, EventArgs e)
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.addSectionLine();
+            }
+        }
+
+        private void cmSectionDeleteSection_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmSectionDeleteSectionLine_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmSectionMoveGroup_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
