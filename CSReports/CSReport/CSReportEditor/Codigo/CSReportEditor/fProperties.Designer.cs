@@ -346,6 +346,7 @@
             this.tx_exportColIdx.Name = "tx_exportColIdx";
             this.tx_exportColIdx.Size = new System.Drawing.Size(71, 20);
             this.tx_exportColIdx.TabIndex = 45;
+            this.tx_exportColIdx.TextChanged += new System.EventHandler(this.tx_exportColIdx_TextChanged);
             // 
             // label23
             // 
@@ -366,6 +367,7 @@
             this.chk_isFreeCtrl.Text = "The control is in the back of the page ( the limit of the section doesn\'t apply t" +
                 "o it)";
             this.chk_isFreeCtrl.UseVisualStyleBackColor = true;
+            this.chk_isFreeCtrl.CheckedChanged += new System.EventHandler(this.chk_isFreeCtrl_CheckedChanged);
             // 
             // label22
             // 
@@ -385,6 +387,7 @@
             this.chk_wordWrap.TabIndex = 41;
             this.chk_wordWrap.Text = "Wrap text";
             this.chk_wordWrap.UseVisualStyleBackColor = true;
+            this.chk_wordWrap.CheckedChanged += new System.EventHandler(this.chk_wordWrap_CheckedChanged);
             // 
             // chk_canGrow
             // 
@@ -396,6 +399,7 @@
             this.chk_canGrow.TabIndex = 40;
             this.chk_canGrow.Text = "The control can grow";
             this.chk_canGrow.UseVisualStyleBackColor = true;
+            this.chk_canGrow.CheckedChanged += new System.EventHandler(this.chk_canGrow_CheckedChanged);
             // 
             // label21
             // 
@@ -420,6 +424,7 @@
             this.tx_width.Name = "tx_width";
             this.tx_width.Size = new System.Drawing.Size(71, 20);
             this.tx_width.TabIndex = 37;
+            this.tx_width.TextChanged += new System.EventHandler(this.tx_width_TextChanged);
             // 
             // label19
             // 
@@ -436,6 +441,7 @@
             this.tx_height.Name = "tx_height";
             this.tx_height.Size = new System.Drawing.Size(71, 20);
             this.tx_height.TabIndex = 35;
+            this.tx_height.TextChanged += new System.EventHandler(this.tx_height_TextChanged);
             // 
             // label18
             // 
@@ -452,6 +458,7 @@
             this.tx_top.Name = "tx_top";
             this.tx_top.Size = new System.Drawing.Size(71, 20);
             this.tx_top.TabIndex = 33;
+            this.tx_top.TextChanged += new System.EventHandler(this.tx_top_TextChanged);
             // 
             // label17
             // 
@@ -468,6 +475,7 @@
             this.tx_left.Name = "tx_left";
             this.tx_left.Size = new System.Drawing.Size(71, 20);
             this.tx_left.TabIndex = 31;
+            this.tx_left.TextChanged += new System.EventHandler(this.tx_left_TextChanged);
             // 
             // label16
             // 
@@ -501,6 +509,7 @@
             this.tx_symbol.Name = "tx_symbol";
             this.tx_symbol.Size = new System.Drawing.Size(71, 20);
             this.tx_symbol.TabIndex = 27;
+            this.tx_symbol.TextChanged += new System.EventHandler(this.tx_symbol_TextChanged);
             // 
             // label14
             // 
@@ -517,6 +526,7 @@
             this.tx_format.Name = "tx_format";
             this.tx_format.Size = new System.Drawing.Size(216, 20);
             this.tx_format.TabIndex = 25;
+            this.tx_format.TextChanged += new System.EventHandler(this.tx_format_TextChanged);
             // 
             // chk_transparent
             // 
@@ -553,6 +563,7 @@
             this.tx_backColor.Name = "tx_backColor";
             this.tx_backColor.Size = new System.Drawing.Size(97, 20);
             this.tx_backColor.TabIndex = 21;
+            this.tx_backColor.TextChanged += new System.EventHandler(this.tx_backColor_TextChanged);
             // 
             // chk_fontStrike
             // 
@@ -564,6 +575,7 @@
             this.chk_fontStrike.TabIndex = 20;
             this.chk_fontStrike.Text = "Strike";
             this.chk_fontStrike.UseVisualStyleBackColor = true;
+            this.chk_fontStrike.CheckedChanged += new System.EventHandler(this.chk_fontStrike_CheckedChanged);
             // 
             // chk_fontItalic
             // 
@@ -575,6 +587,7 @@
             this.chk_fontItalic.TabIndex = 19;
             this.chk_fontItalic.Text = "Italic";
             this.chk_fontItalic.UseVisualStyleBackColor = true;
+            this.chk_fontItalic.CheckedChanged += new System.EventHandler(this.chk_fontItalic_CheckedChanged);
             // 
             // sh_foreColor
             // 
@@ -600,6 +613,7 @@
             this.tx_foreColor.Name = "tx_foreColor";
             this.tx_foreColor.Size = new System.Drawing.Size(97, 20);
             this.tx_foreColor.TabIndex = 16;
+            this.tx_foreColor.TextChanged += new System.EventHandler(this.tx_foreColor_TextChanged);
             // 
             // chk_fontUnderline
             // 
@@ -611,6 +625,7 @@
             this.chk_fontUnderline.TabIndex = 15;
             this.chk_fontUnderline.Text = "Underline";
             this.chk_fontUnderline.UseVisualStyleBackColor = true;
+            this.chk_fontUnderline.CheckedChanged += new System.EventHandler(this.chk_fontUnderline_CheckedChanged);
             // 
             // chk_fontBold
             // 
@@ -622,6 +637,7 @@
             this.chk_fontBold.TabIndex = 14;
             this.chk_fontBold.Text = "Bold";
             this.chk_fontBold.UseVisualStyleBackColor = true;
+            this.chk_fontBold.CheckedChanged += new System.EventHandler(this.chk_fontBold_CheckedChanged);
             // 
             // label8
             // 
@@ -639,6 +655,7 @@
             this.cb_align.Name = "cb_align";
             this.cb_align.Size = new System.Drawing.Size(121, 21);
             this.cb_align.TabIndex = 12;
+            this.cb_align.SelectedIndexChanged += new System.EventHandler(this.cb_align_SelectedIndexChanged);
             this.cb_align.Click += new System.EventHandler(this.cb_align_Click);
             // 
             // label7
@@ -656,6 +673,7 @@
             this.tx_fontSize.Name = "tx_fontSize";
             this.tx_fontSize.Size = new System.Drawing.Size(71, 20);
             this.tx_fontSize.TabIndex = 9;
+            this.tx_fontSize.TextChanged += new System.EventHandler(this.tx_fontSize_TextChanged);
             // 
             // label6
             // 
@@ -672,6 +690,7 @@
             this.tx_font.Name = "tx_font";
             this.tx_font.Size = new System.Drawing.Size(194, 20);
             this.tx_font.TabIndex = 7;
+            this.tx_font.TextChanged += new System.EventHandler(this.tx_font_TextChanged);
             // 
             // label5
             // 
@@ -688,6 +707,7 @@
             this.tx_tag.Name = "tx_tag";
             this.tx_tag.Size = new System.Drawing.Size(335, 20);
             this.tx_tag.TabIndex = 5;
+            this.tx_tag.TextChanged += new System.EventHandler(this.tx_tag_TextChanged);
             // 
             // label4
             // 
@@ -704,6 +724,7 @@
             this.tx_text.Name = "tx_text";
             this.tx_text.Size = new System.Drawing.Size(335, 20);
             this.tx_text.TabIndex = 3;
+            this.tx_text.TextChanged += new System.EventHandler(this.tx_text_TextChanged);
             // 
             // label3
             // 
@@ -728,6 +749,7 @@
             this.tx_name.Name = "tx_name";
             this.tx_name.Size = new System.Drawing.Size(335, 20);
             this.tx_name.TabIndex = 0;
+            this.tx_name.TextChanged += new System.EventHandler(this.tx_name_TextChanged);
             // 
             // tbpFormulas
             // 
@@ -1174,6 +1196,7 @@
             this.chk_borderRounded.TabIndex = 41;
             this.chk_borderRounded.Text = "The control can grow";
             this.chk_borderRounded.UseVisualStyleBackColor = true;
+            this.chk_borderRounded.CheckedChanged += new System.EventHandler(this.chk_borderRounded_CheckedChanged);
             // 
             // label51
             // 
@@ -1190,6 +1213,7 @@
             this.tx_borderWidth.Name = "tx_borderWidth";
             this.tx_borderWidth.Size = new System.Drawing.Size(71, 20);
             this.tx_borderWidth.TabIndex = 39;
+            this.tx_borderWidth.TextChanged += new System.EventHandler(this.tx_borderWidth_TextChanged_1);
             // 
             // sh_borderShadow
             // 
@@ -1215,6 +1239,7 @@
             this.tx_borderShadow.Name = "tx_borderShadow";
             this.tx_borderShadow.Size = new System.Drawing.Size(121, 20);
             this.tx_borderShadow.TabIndex = 32;
+            this.tx_borderShadow.TextChanged += new System.EventHandler(this.tx_borderShadow_TextChanged);
             // 
             // sh_border3D
             // 
@@ -1240,6 +1265,7 @@
             this.tx_border3D.Name = "tx_border3D";
             this.tx_border3D.Size = new System.Drawing.Size(121, 20);
             this.tx_border3D.TabIndex = 29;
+            this.tx_border3D.TextChanged += new System.EventHandler(this.tx_border3D_TextChanged);
             // 
             // sh_borderColor
             // 
@@ -1265,6 +1291,7 @@
             this.tx_borderColor.Name = "tx_borderColor";
             this.tx_borderColor.Size = new System.Drawing.Size(121, 20);
             this.tx_borderColor.TabIndex = 26;
+            this.tx_borderColor.TextChanged += new System.EventHandler(this.tx_borderColor_TextChanged);
             // 
             // label48
             // 
@@ -1282,6 +1309,7 @@
             this.cb_borderType.Name = "cb_borderType";
             this.cb_borderType.Size = new System.Drawing.Size(121, 21);
             this.cb_borderType.TabIndex = 24;
+            this.cb_borderType.SelectedIndexChanged += new System.EventHandler(this.cb_borderType_SelectedIndexChanged);
             // 
             // tbpChart
             // 
@@ -1347,6 +1375,7 @@
             this.cb_colorSerie2.Name = "cb_colorSerie2";
             this.cb_colorSerie2.Size = new System.Drawing.Size(121, 21);
             this.cb_colorSerie2.TabIndex = 65;
+            this.cb_colorSerie2.SelectedIndexChanged += new System.EventHandler(this.cb_colorSerie2_SelectedIndexChanged);
             // 
             // cmd_dbFieldLbl2
             // 
@@ -1372,6 +1401,7 @@
             this.tx_dbFieldLbl2.Name = "tx_dbFieldLbl2";
             this.tx_dbFieldLbl2.Size = new System.Drawing.Size(276, 20);
             this.tx_dbFieldLbl2.TabIndex = 62;
+            this.tx_dbFieldLbl2.TextChanged += new System.EventHandler(this.tx_dbFieldLbl2_TextChanged);
             // 
             // cmd_dbFieldVal2
             // 
@@ -1397,6 +1427,7 @@
             this.tx_dbFieldVal2.Name = "tx_dbFieldVal2";
             this.tx_dbFieldVal2.Size = new System.Drawing.Size(276, 20);
             this.tx_dbFieldVal2.TabIndex = 59;
+            this.tx_dbFieldVal2.TextChanged += new System.EventHandler(this.tx_dbFieldVal2_TextChanged);
             // 
             // groupBox4
             // 
@@ -1431,6 +1462,7 @@
             this.cb_colorSerie1.Name = "cb_colorSerie1";
             this.cb_colorSerie1.Size = new System.Drawing.Size(121, 21);
             this.cb_colorSerie1.TabIndex = 65;
+            this.cb_colorSerie1.SelectedIndexChanged += new System.EventHandler(this.cb_colorSerie1_SelectedIndexChanged);
             // 
             // cmd_dbFieldLbl1
             // 
@@ -1456,6 +1488,7 @@
             this.tx_dbFieldLbl1.Name = "tx_dbFieldLbl1";
             this.tx_dbFieldLbl1.Size = new System.Drawing.Size(276, 20);
             this.tx_dbFieldLbl1.TabIndex = 62;
+            this.tx_dbFieldLbl1.TextChanged += new System.EventHandler(this.tx_dbFieldLbl1_TextChanged);
             // 
             // cmd_dbFieldVal1
             // 
@@ -1481,6 +1514,7 @@
             this.tx_dbFieldVal1.Name = "tx_dbFieldVal1";
             this.tx_dbFieldVal1.Size = new System.Drawing.Size(276, 20);
             this.tx_dbFieldVal1.TabIndex = 59;
+            this.tx_dbFieldVal1.TextChanged += new System.EventHandler(this.tx_dbFieldVal1_TextChanged);
             // 
             // label58
             // 
@@ -1497,6 +1531,7 @@
             this.tx_chartGroupValue.Name = "tx_chartGroupValue";
             this.tx_chartGroupValue.Size = new System.Drawing.Size(71, 20);
             this.tx_chartGroupValue.TabIndex = 59;
+            this.tx_chartGroupValue.TextChanged += new System.EventHandler(this.tx_chartGroupValue_TextChanged_1);
             // 
             // cmd_dbFieldGroupValue
             // 
@@ -1522,6 +1557,7 @@
             this.tx_dbFieldGroupValue.Name = "tx_dbFieldGroupValue";
             this.tx_dbFieldGroupValue.Size = new System.Drawing.Size(276, 20);
             this.tx_dbFieldGroupValue.TabIndex = 56;
+            this.tx_dbFieldGroupValue.TextChanged += new System.EventHandler(this.tx_dbFieldGroupValue_TextChanged);
             // 
             // chk_sort
             // 
@@ -1532,6 +1568,7 @@
             this.chk_sort.TabIndex = 55;
             this.chk_sort.Text = "Sort";
             this.chk_sort.UseVisualStyleBackColor = true;
+            this.chk_sort.CheckedChanged += new System.EventHandler(this.chk_sort_CheckedChanged);
             // 
             // chk_showOutlines
             // 
@@ -1543,6 +1580,7 @@
             this.chk_showOutlines.TabIndex = 54;
             this.chk_showOutlines.Text = "Show outlines";
             this.chk_showOutlines.UseVisualStyleBackColor = true;
+            this.chk_showOutlines.CheckedChanged += new System.EventHandler(this.chk_showOutlines_CheckedChanged);
             // 
             // chk_showBarValues
             // 
@@ -1553,6 +1591,7 @@
             this.chk_showBarValues.TabIndex = 53;
             this.chk_showBarValues.Text = "Bar values";
             this.chk_showBarValues.UseVisualStyleBackColor = true;
+            this.chk_showBarValues.CheckedChanged += new System.EventHandler(this.chk_showBarValues_CheckedChanged);
             // 
             // label59
             // 
@@ -1569,6 +1608,7 @@
             this.tx_chartTop.Name = "tx_chartTop";
             this.tx_chartTop.Size = new System.Drawing.Size(71, 20);
             this.tx_chartTop.TabIndex = 51;
+            this.tx_chartTop.TextChanged += new System.EventHandler(this.tx_chartTop_TextChanged_1);
             // 
             // label56
             // 
@@ -1586,6 +1626,7 @@
             this.cb_chartThickness.Name = "cb_chartThickness";
             this.cb_chartThickness.Size = new System.Drawing.Size(121, 21);
             this.cb_chartThickness.TabIndex = 34;
+            this.cb_chartThickness.SelectedIndexChanged += new System.EventHandler(this.cb_chartThickness_SelectedIndexChanged);
             // 
             // label54
             // 
@@ -1603,6 +1644,7 @@
             this.cb_chartSize.Name = "cb_chartSize";
             this.cb_chartSize.Size = new System.Drawing.Size(121, 21);
             this.cb_chartSize.TabIndex = 32;
+            this.cb_chartSize.SelectedIndexChanged += new System.EventHandler(this.cb_chartSize_SelectedIndexChanged);
             // 
             // label55
             // 
@@ -1620,6 +1662,7 @@
             this.cb_linesType.Name = "cb_linesType";
             this.cb_linesType.Size = new System.Drawing.Size(121, 21);
             this.cb_linesType.TabIndex = 30;
+            this.cb_linesType.SelectedIndexChanged += new System.EventHandler(this.cb_linesType_SelectedIndexChanged);
             // 
             // label53
             // 
@@ -1637,6 +1680,7 @@
             this.cb_formatType.Name = "cb_formatType";
             this.cb_formatType.Size = new System.Drawing.Size(121, 21);
             this.cb_formatType.TabIndex = 28;
+            this.cb_formatType.SelectedIndexChanged += new System.EventHandler(this.cb_formatType_SelectedIndexChanged);
             // 
             // label52
             // 
@@ -1654,6 +1698,7 @@
             this.cb_type.Name = "cb_type";
             this.cb_type.Size = new System.Drawing.Size(121, 21);
             this.cb_type.TabIndex = 26;
+            this.cb_type.SelectedIndexChanged += new System.EventHandler(this.cb_type_SelectedIndexChanged);
             // 
             // cmd_apply
             // 
@@ -1663,6 +1708,7 @@
             this.cmd_apply.TabIndex = 2;
             this.cmd_apply.Text = "Apply";
             this.cmd_apply.UseVisualStyleBackColor = true;
+            this.cmd_apply.Click += new System.EventHandler(this.cmd_apply_Click);
             // 
             // cmd_cancel
             // 

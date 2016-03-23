@@ -109,7 +109,7 @@ namespace CSReportDll
             width = cUtil.valAsInt(cPrintWMI.getPrinterConfigInfoValueFromWMI("PaperWidth", printerConfigInfo, 210));
             height = cUtil.valAsInt(cPrintWMI.getPrinterConfigInfoValueFromWMI("PaperLength", printerConfigInfo, 297));
 
-            if (width == 0 || height == 0)
+            if (width == 0 || height == 0 || paperSize == 99)
             {
                 if (paperSize == 99 /*UNKNOWN*/) paperSize = 1; /*LETTER*/
 

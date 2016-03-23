@@ -1952,5 +1952,236 @@ namespace CSReportEditor
                 m_dbFieldChanged = true;
             }
         }
+
+        private void cmd_apply_Click(object sender, EventArgs e)
+        {
+            m_ok = true;
+            this.Hide();
+        }
+
+        private void tx_name_TextChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void tx_text_TextChanged(object sender, EventArgs e)
+        {
+            m_textChanged = true;
+        }
+
+        private void tx_tag_TextChanged(object sender, EventArgs e)
+        {
+            m_tagChanged = true;
+        }
+
+        private void tx_font_TextChanged(object sender, EventArgs e)
+        {
+            m_fontChanged = true;
+        }
+
+        private void tx_fontSize_TextChanged(object sender, EventArgs e)
+        {
+            m_fontSizeChanged = true;
+        }
+
+        private void cb_align_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            m_alignChanged = true;
+        }
+
+        private void tx_foreColor_TextChanged(object sender, EventArgs e)
+        {
+            m_foreColorChanged = true;
+        }
+
+        private void tx_backColor_TextChanged(object sender, EventArgs e)
+        {
+            m_backColorChanged = true;
+        }
+
+        private void tx_format_TextChanged(object sender, EventArgs e)
+        {
+            m_formatChanged = true;
+        }
+
+        private void tx_symbol_TextChanged(object sender, EventArgs e)
+        {
+            m_symbolChanged = true;
+        }
+
+        private void chk_fontBold_CheckedChanged(object sender, EventArgs e)
+        {
+            m_boldChanged = true;
+        }
+
+        private void chk_fontUnderline_CheckedChanged(object sender, EventArgs e)
+        {
+            m_underlineChanged = true;
+        }
+
+        private void chk_fontItalic_CheckedChanged(object sender, EventArgs e)
+        {
+            m_italicChanged = true;
+        }
+
+        private void chk_fontStrike_CheckedChanged(object sender, EventArgs e)
+        {
+            m_strikeChanged = true;
+        }
+
+        private void tx_left_TextChanged(object sender, EventArgs e)
+        {
+            m_leftChanged = true;
+        }
+
+        private void tx_top_TextChanged(object sender, EventArgs e)
+        {
+            m_topChanged = true;
+        }
+
+        private void tx_height_TextChanged(object sender, EventArgs e)
+        {
+            m_heightChanged = true;
+        }
+
+        private void tx_width_TextChanged(object sender, EventArgs e)
+        {
+            m_widthChanged = true;
+        }
+
+        private void chk_canGrow_CheckedChanged(object sender, EventArgs e)
+        {
+            m_canGrowChanged = true;
+        }
+
+        private void chk_wordWrap_CheckedChanged(object sender, EventArgs e)
+        {
+            m_wordWrapChanged = true;
+        }
+
+        private void chk_isFreeCtrl_CheckedChanged(object sender, EventArgs e)
+        {
+            m_isFreeCtrlChanged = true;
+        }
+
+        private void tx_exportColIdx_TextChanged(object sender, EventArgs e)
+        {
+            m_exportColIdxChanged = true;
+        }
+
+        private void cb_borderType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            m_borderTypeChanged = true;
+        }
+
+        private void tx_borderColor_TextChanged(object sender, EventArgs e)
+        {
+            m_borderColorChanged = true;
+        }
+
+        private void tx_border3D_TextChanged(object sender, EventArgs e)
+        {
+            m_border3DChanged = true;
+        }
+
+        private void tx_borderShadow_TextChanged(object sender, EventArgs e)
+        {
+            m_border3DShadowChanged = true;
+        }
+
+        private void tx_borderWidth_TextChanged_1(object sender, EventArgs e)
+        {
+            m_borderWidthChanged = true;
+        }
+
+        private void chk_borderRounded_CheckedChanged(object sender, EventArgs e)
+        {
+            m_borderRoundedChanged = true;
+        }
+
+        private void cb_type_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            m_chartTypeChanged = true;
+        }
+
+        private void cb_formatType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            m_chartFormatTypeChanged = true;
+        }
+
+        private void cb_linesType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            m_chartLinesTypeChanged = true;
+        }
+
+        private void cb_chartSize_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            m_chartSizeChanged = true;
+        }
+
+        private void tx_chartTop_TextChanged_1(object sender, EventArgs e)
+        {
+            m_chartTopChanged = true;
+        }
+
+        private void cb_chartThickness_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            m_chartThicknessChanged = true;
+        }
+
+        private void chk_showBarValues_CheckedChanged(object sender, EventArgs e)
+        {
+            m_chartShowValuesChanged = true;
+        }
+
+        private void chk_showOutlines_CheckedChanged(object sender, EventArgs e)
+        {
+            m_chartShowLinesChanged = true;
+        }
+
+        private void chk_sort_CheckedChanged(object sender, EventArgs e)
+        {
+            m_chartSortChanged = true;
+        }
+
+        private void tx_dbFieldGroupValue_TextChanged(object sender, EventArgs e)
+        {
+            m_chartFieldGroupChanged = true;
+        }
+
+        private void tx_chartGroupValue_TextChanged_1(object sender, EventArgs e)
+        {
+            m_chartGroupValueChanged = true;
+        }
+
+        private void tx_dbFieldVal1_TextChanged(object sender, EventArgs e)
+        {
+            m_chartFieldVal1Changed = true;
+        }
+
+        private void tx_dbFieldLbl1_TextChanged(object sender, EventArgs e)
+        {
+            m_chartFieldLbl1Changed = true;
+        }
+
+        private void cb_colorSerie1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            m_chartColorSerie1Changed = true;
+        }
+
+        private void tx_dbFieldVal2_TextChanged(object sender, EventArgs e)
+        {
+            m_chartFieldVal2Changed = true;
+        }
+
+        private void tx_dbFieldLbl2_TextChanged(object sender, EventArgs e)
+        {
+            m_chartFieldLbl2Changed = true;
+        }
+
+        private void cb_colorSerie2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            m_chartColorSerie2Changed = true;
+        }
     }
 }

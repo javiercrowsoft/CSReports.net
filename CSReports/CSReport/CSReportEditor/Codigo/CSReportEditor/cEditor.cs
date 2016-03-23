@@ -3057,16 +3057,16 @@ namespace CSReportEditor
                 case csRptSectionType.GROUP_HEADER:
 
                     cIReportGroupSections w_groupsHeaders = m_report.getGroupsHeaders();
-				    rptSection = w_groupsHeaders.item(w_groupsHeaders.count()-1);
+				    rptSection = w_groupsHeaders.item(w_groupsHeaders.count() - 1);
                     rptSection.setName("GH_" + rptSection.getIndex().ToString());
 
                     // the first group is next to the last header
                     //
 					if (w_groupsHeaders.count() == 1) {
-                        topSec = m_report.getHeaders().item(m_report.getHeaders().count()-1);
+                        topSec = m_report.getHeaders().item(m_report.getHeaders().count() - 1);
                     } 
                     else {
-						topSec = w_groupsHeaders.item(w_groupsHeaders.count() - 1);
+						topSec = w_groupsHeaders.item(w_groupsHeaders.count() - 2);
                     }
 
 				    w_aspect = topSec.getAspect();
@@ -3100,7 +3100,7 @@ namespace CSReportEditor
                     // beginning they are next to the detail section
                     //
 
-                    topSec = m_report.getDetails().item(m_report.getDetails().count()-1);
+                    topSec = m_report.getDetails().item(m_report.getDetails().count() - 1);
 
 					w_aspect = topSec.getAspect();
                     rptSection.getAspect().setWidth(w_aspect.getWidth());
@@ -6115,7 +6115,7 @@ namespace CSReportEditor
                 // bottom of the last detail + C_Min_Height_Section
                 //
                 cReportSections w_details = m_report.getDetails();
-                cReportAspect w_aspect = w_details.item(w_details.count()-1).getAspect();
+                cReportAspect w_aspect = w_details.item(w_details.count() - 1).getAspect();
                 minBottom = w_aspect.getHeight() + w_aspect.getTop() + C_MIN_HEIGHT_SECTION;
             } 
             else {
@@ -6172,14 +6172,14 @@ namespace CSReportEditor
                     // the bottom of the last group footer
                     //
                     cIReportGroupSections w_groupsFooters = m_report.getGroupsFooters();
-                    cReportAspect w_aspect = w_groupsFooters.item(w_groupsFooters.count()-1).getAspect();
+                    cReportAspect w_aspect = w_groupsFooters.item(w_groupsFooters.count() - 1).getAspect();
                     minBottom = w_aspect.getHeight() + w_aspect.getTop() + C_MIN_HEIGHT_SECTION;
                 } 
                 else {
                     // bottom of the last detail
                     //
                     cReportSections w_details = m_report.getDetails();
-                    cReportAspect w_aspect = w_details.item(w_details.count()-1).getAspect();
+                    cReportAspect w_aspect = w_details.item(w_details.count() - 1).getAspect();
                     minBottom = w_aspect.getHeight() + w_aspect.getTop() + C_MIN_HEIGHT_SECTION;
                 }
             } 
