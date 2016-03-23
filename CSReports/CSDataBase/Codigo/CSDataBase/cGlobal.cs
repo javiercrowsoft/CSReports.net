@@ -149,6 +149,44 @@ namespace CSDataBase
             throw new Exception("This datatype is not supported [" + adoDBType.ToString() + "]");
         }
 
+        public static csAdoDataType getAdoTypeFromDataType(csDataType dataType)
+        {
+            switch (dataType)
+            {
+                case csDataType.CSTDBIGINT:
+                    return csAdoDataType.adBigInt;
+
+                case csDataType.CSTDBINARY:
+                    return csAdoDataType.adBinary;
+
+                case csDataType.CSTDVARCHAR:
+                    return csAdoDataType.adVarChar;
+
+                case csDataType.CSTDCURRENCY:
+                    return csAdoDataType.adCurrency;
+
+                case csDataType.CSTDDATE:
+                    return csAdoDataType.adDate;
+
+                case csDataType.CSTDDOUBLE:
+                    return csAdoDataType.adDouble;
+
+                case csDataType.CSTDINTEGER:
+                    return csAdoDataType.adInteger;
+
+                case csDataType.CSTDSINGLE:
+                    return csAdoDataType.adSingle;
+
+                case csDataType.CSTDSMALLINT:
+                    return csAdoDataType.adSmallInt;
+
+                case csDataType.CSTDTINYINT:
+                    return csAdoDataType.adTinyInt;
+            }
+
+            throw new Exception("This datatype is not supported [" + dataType.ToString() + "]");
+        }
+
     }
 
     public enum csDataType

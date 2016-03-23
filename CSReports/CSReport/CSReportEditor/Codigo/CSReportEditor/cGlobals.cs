@@ -165,6 +165,7 @@ namespace CSReportEditor
                 rptParameter.setName(parameter.getName());
                 rptParameter.setPosition(parameter.getPosition());
                 rptParameter.setColumnType(parameter.getColumnType());
+                rptParameter.setValue(parameter.getValue());
                 rptConnect.getParameters().add(rptParameter, "");
             }        
         }

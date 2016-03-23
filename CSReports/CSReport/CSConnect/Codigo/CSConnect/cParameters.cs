@@ -146,7 +146,7 @@ namespace CSConnect
                     key = cReportGlobals.getKey(key);
                 }
 
-                c.setPosition(this.Count);
+                c.setPosition(this.Count + 1);
                 c.setKey(key);
                 Add(key, c);
                 return c;

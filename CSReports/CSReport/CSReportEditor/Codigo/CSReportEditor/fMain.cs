@@ -905,5 +905,19 @@ namespace CSReportEditor
         {
 
         }
+
+        private void tsbDatabase_Click(object sender, EventArgs e)
+        {
+            mnuDataBaseConnectConfig_Click(sender, e);
+        }
+
+        private void mnuDataBaseSetToMainConnect_Click(object sender, EventArgs e)
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.setAllConnectToMainConnect();
+            }
+        }
     }
 }

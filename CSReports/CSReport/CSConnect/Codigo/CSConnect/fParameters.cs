@@ -59,8 +59,10 @@ namespace CSConnect
             for (int i = 0; i < m_parameters.count(); i++)
             {
                 var input = m_texts[i];
-                var value = "";
 
+                m_parameters.item(i).setValue(input.Text);
+
+                var value = "";
                 switch(input.Tag.ToString())
                 {
                     case "T":
@@ -72,8 +74,7 @@ namespace CSConnect
                     case "F":
                         value = cDataBase.sqlDate(input.Text);
                         break;
-                }
-                m_parameters.item(i).setValue(value);
+                }                
                 parameters += value + ",";
             }
 

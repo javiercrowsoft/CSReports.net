@@ -63,8 +63,34 @@ namespace CSConnect
                         p.setColumnType(cDatabaseGlobals.getDataTypeFromString(row["data_type"].ToString()));
                     }
                 }
+                //
+                // openSchema can be sorted by any column (usually by name)
+                // we need this collection to be sorted by position
+                //
+                m_parameters = new cParameters();
 
-                m_parameters = parameters;
+                for (var j = 1; j < parameters.count() + 1; j++)
+                {
+                    cParameter p = null;
+                    bool found = false;
+                    for (var i = 0; i < parameters.count(); i++)
+                    {
+                        p = parameters.item(i);
+                        if (p.getPosition() == j)
+                        {
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found)
+                    {
+                        throw new Exception("Parameter not found for position: " + j);
+                    }
+                    else
+                    {
+                        m_parameters.add(p, p.getKey());
+                    }
+                }
                 
                 return true;
             }

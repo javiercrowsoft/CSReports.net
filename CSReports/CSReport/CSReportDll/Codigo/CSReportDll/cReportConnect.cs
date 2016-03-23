@@ -127,7 +127,7 @@ namespace CSReportDll
             for (int _i = 0; _i < m_parameters.count(); _i++)
             {
                 param = m_parameters.item(_i);
-                switch (cDatabaseGlobals.getDataTypeFromAdo((int)param.getColumnType()))
+                switch (param.getColumnType())
                 {
                     case csDataType.CSTDWCHAR:
                         /*

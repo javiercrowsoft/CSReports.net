@@ -509,33 +509,33 @@
             // mnuViewToolbar
             // 
             this.mnuViewToolbar.Name = "mnuViewToolbar";
-            this.mnuViewToolbar.Size = new System.Drawing.Size(140, 22);
+            this.mnuViewToolbar.Size = new System.Drawing.Size(139, 22);
             this.mnuViewToolbar.Text = "Toolbox";
             this.mnuViewToolbar.Click += new System.EventHandler(this.mnuViewToolbar_Click);
             // 
             // toolStripSeparator14
             // 
             this.toolStripSeparator14.Name = "toolStripSeparator14";
-            this.toolStripSeparator14.Size = new System.Drawing.Size(137, 6);
+            this.toolStripSeparator14.Size = new System.Drawing.Size(136, 6);
             // 
             // mnuViewControls
             // 
             this.mnuViewControls.Name = "mnuViewControls";
-            this.mnuViewControls.Size = new System.Drawing.Size(140, 22);
+            this.mnuViewControls.Size = new System.Drawing.Size(139, 22);
             this.mnuViewControls.Text = "Control Grid";
             this.mnuViewControls.Click += new System.EventHandler(this.mnuViewControls_Click);
             // 
             // mnuViewTreeViewCtrls
             // 
             this.mnuViewTreeViewCtrls.Name = "mnuViewTreeViewCtrls";
-            this.mnuViewTreeViewCtrls.Size = new System.Drawing.Size(140, 22);
+            this.mnuViewTreeViewCtrls.Size = new System.Drawing.Size(139, 22);
             this.mnuViewTreeViewCtrls.Text = "Control Tree";
             this.mnuViewTreeViewCtrls.Click += new System.EventHandler(this.mnuViewTreeViewCtrls_Click);
             // 
             // toolStripSeparator23
             // 
             this.toolStripSeparator23.Name = "toolStripSeparator23";
-            this.toolStripSeparator23.Size = new System.Drawing.Size(137, 6);
+            this.toolStripSeparator23.Size = new System.Drawing.Size(136, 6);
             // 
             // viewGridToolStripMenuItem
             // 
@@ -544,7 +544,7 @@
             this.linesToolStripMenuItem,
             this.mnuViewGridMain});
             this.viewGridToolStripMenuItem.Name = "viewGridToolStripMenuItem";
-            this.viewGridToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.viewGridToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
             this.viewGridToolStripMenuItem.Text = "View Grid";
             // 
             // pointsToolStripMenuItem
@@ -651,13 +651,14 @@
             this.mnuDataBaseSetToMainConnect.Name = "mnuDataBaseSetToMainConnect";
             this.mnuDataBaseSetToMainConnect.Size = new System.Drawing.Size(328, 22);
             this.mnuDataBaseSetToMainConnect.Text = "Apply Main Connection to Addional Conections";
+            this.mnuDataBaseSetToMainConnect.Click += new System.EventHandler(this.mnuDataBaseSetToMainConnect_Click);
             // 
             // mnTool
             // 
             this.mnTool.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.optionsToolStripMenuItem});
             this.mnTool.Name = "mnTool";
-            this.mnTool.Size = new System.Drawing.Size(48, 20);
+            this.mnTool.Size = new System.Drawing.Size(47, 20);
             this.mnTool.Text = "Tools";
             // 
             // optionsToolStripMenuItem
@@ -761,6 +762,7 @@
             this.tsbDatabase.Name = "tsbDatabase";
             this.tsbDatabase.Size = new System.Drawing.Size(23, 22);
             this.tsbDatabase.Text = "Edit connection settings";
+            this.tsbDatabase.Click += new System.EventHandler(this.tsbDatabase_Click);
             // 
             // toolStripSeparator2
             // 
@@ -1221,7 +1223,7 @@
             this.cmSectionGroupProperties,
             this.cmSectionMoveGroup});
             this.cmnSection.Name = "cmnSection";
-            this.cmnSection.Size = new System.Drawing.Size(192, 198);
+            this.cmnSection.Size = new System.Drawing.Size(192, 176);
             // 
             // cmSectionAddSectionLine
             // 
