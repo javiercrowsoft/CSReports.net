@@ -157,7 +157,7 @@ namespace CSReportDll
                 c.setIndex(count());
 
                 c.setHeader(m_groupsHeaders.add(null, "", -1));
-                c.setFooter(m_groupsFooters.add(null, "", 1));
+                c.setFooter(m_groupsFooters.add(null, "", 0));
 
                 pSetName(c, "G_" + c.getIndex().ToString());
                 pSetName(c.getHeader(), c.getName());
@@ -198,7 +198,7 @@ namespace CSReportDll
                 c.setIndex(this.Count);
 
                 m_groupsHeaders.add(c.getHeader(), "", -1);
-                m_groupsFooters.add(c.getFooter(), "", 1);
+                m_groupsFooters.add(c.getFooter(), "", 0);
 
                 pSetName(c, "G_" + c.getIndex().ToString());
                 pSetName(c.getHeader(), c.getName());
