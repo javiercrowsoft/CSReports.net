@@ -30,6 +30,7 @@ namespace CSReportEditor
         private string m_printerName = "";
         private string m_driverName = "";
         private string m_port = "";
+        private cEditor m_sourceEditor = null;
 
         private bool m_wasDoubleClick = false;
 
@@ -71,7 +72,7 @@ namespace CSReportEditor
 
         public cEditor getReportCopySource()
         {
-            return null;
+            return m_sourceEditor;
         }
 
         private cEditor createEditor() 
@@ -150,7 +151,7 @@ namespace CSReportEditor
             this.mnuDataBaseSetToMainConnect.Enabled = enabled;
             this.mnuDataBaseEditDataSource.Enabled = enabled;
             this.mnuDataBaseConnectsAuxCfg.Enabled = enabled;
-            this.mnuViewGridMain.Enabled = enabled;
+            this.mnuHideGrid.Enabled = enabled;
             this.mnuViewToolbar.Enabled = enabled;
             this.mnuViewControls.Enabled = enabled;
             this.mnuViewTreeViewCtrls.Enabled = enabled;
@@ -281,9 +282,9 @@ namespace CSReportEditor
             cGlobals.implementThisMessage("setsbPnlCtrl", "(fMain)");
 		}
 
-        internal void setReportCopySource(cEditor cEditor)
+        internal void setReportCopySource(cEditor editor)
         {
-            throw new NotImplementedException();
+            m_sourceEditor = editor;
         }
 
         internal CSReportGlobals.csReportPaperType getPaperSize()
@@ -387,7 +388,6 @@ namespace CSReportEditor
         public void showPopMenuControl(cEditor editor, bool clickInCtrl, bool pasteEnabled, Point p)
         {
             cmCtrlCopy.Enabled = clickInCtrl;
-            cmCtrlCut.Enabled = clickInCtrl;
             cmCtrlDelete.Enabled = clickInCtrl;
             cmCtrlEditText.Enabled = clickInCtrl;
             cmCtrlSendBack.Enabled = clickInCtrl;
@@ -891,19 +891,32 @@ namespace CSReportEditor
             }
         }
 
+        private void deleteReportObject(Boolean isSectionLine)
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.deleteObj(isSectionLine);
+            }
+        }
+
         private void cmSectionDeleteSection_Click(object sender, EventArgs e)
         {
-
+            deleteReportObject(false);
         }
 
         private void cmSectionDeleteSectionLine_Click(object sender, EventArgs e)
         {
-
+            deleteReportObject(true);
         }
 
         private void cmSectionMoveGroup_Click(object sender, EventArgs e)
         {
-
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.moveGroup();
+            }
         }
 
         private void tsbDatabase_Click(object sender, EventArgs e)
@@ -918,6 +931,146 @@ namespace CSReportEditor
             {
                 editor.setAllConnectToMainConnect();
             }
+        }
+
+        private void alignText(CSReportGlobals.HorizontalAlignment align)
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.textAlign(align);
+            }
+        }
+
+        private void tsbAlignLeft_Click(object sender, EventArgs e)
+        {
+            alignText(CSReportGlobals.HorizontalAlignment.Left);
+        }
+
+        private void tsbAligntCenter_Click(object sender, EventArgs e)
+        {
+            alignText(CSReportGlobals.HorizontalAlignment.Center);
+        }
+
+        private void tsbAlignRight_Click(object sender, EventArgs e)
+        {
+            alignText(CSReportGlobals.HorizontalAlignment.Right);
+        }
+
+        private void tsbBold_Click(object sender, EventArgs e)
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.setFontBold();
+            }
+        }
+
+        private void saveReport(Boolean saveAs)
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.saveDocument(saveAs);
+            }
+        }
+
+        private void tsbSaveAs_Click(object sender, EventArgs e)
+        {
+            saveReport(true);
+        }
+
+        private void tsbSave_Click(object sender, EventArgs e)
+        {
+            saveReport(false);
+        }
+
+        private void mnuSaveReport_Click(object sender, EventArgs e)
+        {
+            saveReport(false);
+        }
+
+        private void mnuReportSaveAs_Click(object sender, EventArgs e)
+        {
+            saveReport(true);
+        }
+
+        private void mnuPageSetup_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void mnuPrinterSettings_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void mnuHideGrid_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void mnuGridLines_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void mnuGridPoints_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void mnuOptionsTool_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void copy()
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.copy();
+            }
+        }
+
+        private void mnuCopy_Click(object sender, EventArgs e)
+        {
+            copy();
+        }
+
+        private void paste(Boolean dontMove)
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.paste(false);
+            }
+        }
+
+        private void mnuPaste_Click(object sender, EventArgs e)
+        {
+            paste(false);
+        }
+
+        private void mnuPasteSpecial_Click(object sender, EventArgs e)
+        {
+            paste(true);
+        }
+
+        private void cmCtrlCopy_Click(object sender, EventArgs e)
+        {
+            copy();
+        }
+
+        private void cmCtrlPaste_Click(object sender, EventArgs e)
+        {
+            paste(false);
+        }
+
+        private void cmCtrlPasteEx_Click(object sender, EventArgs e)
+        {
+            paste(true);
         }
     }
 }

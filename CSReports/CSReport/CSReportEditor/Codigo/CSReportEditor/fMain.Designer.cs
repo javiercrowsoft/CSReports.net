@@ -38,7 +38,7 @@
             this.mnuSaveReport = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuReportSaveAs = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
-            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuPageSetup = new System.Windows.Forms.ToolStripMenuItem();
             this.printerSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuPreviewReport = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,9 +46,8 @@
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.mnEdit = new System.Windows.Forms.ToolStripMenuItem();
-            this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.cutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pasteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuCopy = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuPaste = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuEditSearch = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
@@ -76,12 +75,12 @@
             this.mnuViewControls = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuViewTreeViewCtrls = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator23 = new System.Windows.Forms.ToolStripSeparator();
-            this.viewGridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pointsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.linesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuViewGridMain = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnViewGridTool = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuGridPoints = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuGridLines = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuHideGrid = new System.Windows.Forms.ToolStripMenuItem();
             this.mnDatabase = new System.Windows.Forms.ToolStripMenuItem();
-            this.connectionSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuConnectionSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuParametersSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuDataBaseConnectsAuxCfg = new System.Windows.Forms.ToolStripMenuItem();
@@ -93,7 +92,7 @@
             this.mnuDataBaseEditDataSource = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuDataBaseSetToMainConnect = new System.Windows.Forms.ToolStripMenuItem();
             this.mnTool = new System.Windows.Forms.ToolStripMenuItem();
-            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuOptionsTool = new System.Windows.Forms.ToolStripMenuItem();
             this.mnHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.tbMain = new System.Windows.Forms.ToolStrip();
@@ -144,7 +143,6 @@
             this.saveFielDlg = new System.Windows.Forms.SaveFileDialog();
             this.cmnControl = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.cmCtrlCopy = new System.Windows.Forms.ToolStripMenuItem();
-            this.cmCtrlCut = new System.Windows.Forms.ToolStripMenuItem();
             this.cmCtrlPaste = new System.Windows.Forms.ToolStripMenuItem();
             this.cmCtrlPasteEx = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator17 = new System.Windows.Forms.ToolStripSeparator();
@@ -167,6 +165,7 @@
             this.cmSectionGroupSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.cmSectionGroupProperties = new System.Windows.Forms.ToolStripMenuItem();
             this.cmSectionMoveGroup = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuPasteSpecial = new System.Windows.Forms.ToolStripMenuItem();
             this.mnMain.SuspendLayout();
             this.tbMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -212,7 +211,7 @@
             this.mnuSaveReport,
             this.mnuReportSaveAs,
             this.toolStripSeparator7,
-            this.exitToolStripMenuItem,
+            this.mnuPageSetup,
             this.printerSettingsToolStripMenuItem,
             this.toolStripSeparator8,
             this.mnuPreviewReport,
@@ -250,29 +249,33 @@
             this.mnuSaveReport.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
             this.mnuSaveReport.Size = new System.Drawing.Size(180, 22);
             this.mnuSaveReport.Text = "Save";
+            this.mnuSaveReport.Click += new System.EventHandler(this.mnuSaveReport_Click);
             // 
             // mnuReportSaveAs
             // 
             this.mnuReportSaveAs.Name = "mnuReportSaveAs";
             this.mnuReportSaveAs.Size = new System.Drawing.Size(180, 22);
             this.mnuReportSaveAs.Text = "Save As";
+            this.mnuReportSaveAs.Click += new System.EventHandler(this.mnuReportSaveAs_Click);
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
             this.toolStripSeparator7.Size = new System.Drawing.Size(177, 6);
             // 
-            // exitToolStripMenuItem
+            // mnuPageSetup
             // 
-            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.exitToolStripMenuItem.Text = "Page Setup";
+            this.mnuPageSetup.Name = "mnuPageSetup";
+            this.mnuPageSetup.Size = new System.Drawing.Size(180, 22);
+            this.mnuPageSetup.Text = "Page Setup";
+            this.mnuPageSetup.Click += new System.EventHandler(this.mnuPageSetup_Click);
             // 
             // printerSettingsToolStripMenuItem
             // 
             this.printerSettingsToolStripMenuItem.Name = "printerSettingsToolStripMenuItem";
             this.printerSettingsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.printerSettingsToolStripMenuItem.Text = "Printer Settings";
+            this.printerSettingsToolStripMenuItem.Click += new System.EventHandler(this.mnuPrinterSettings_Click);
             // 
             // toolStripSeparator8
             // 
@@ -309,9 +312,9 @@
             // mnEdit
             // 
             this.mnEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.copyToolStripMenuItem,
-            this.cutToolStripMenuItem,
-            this.pasteToolStripMenuItem,
+            this.mnuCopy,
+            this.mnuPaste,
+            this.mnuPasteSpecial,
             this.toolStripSeparator10,
             this.mnuEditSearch,
             this.toolStripSeparator11,
@@ -323,44 +326,39 @@
             this.mnEdit.Size = new System.Drawing.Size(39, 20);
             this.mnEdit.Text = "Edit";
             // 
-            // copyToolStripMenuItem
+            // mnuCopy
             // 
-            this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            this.copyToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
-            this.copyToolStripMenuItem.Text = "Copy";
+            this.mnuCopy.Name = "mnuCopy";
+            this.mnuCopy.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.mnuCopy.Size = new System.Drawing.Size(152, 22);
+            this.mnuCopy.Text = "Copy";
+            this.mnuCopy.Click += new System.EventHandler(this.mnuCopy_Click);
             // 
-            // cutToolStripMenuItem
+            // mnuPaste
             // 
-            this.cutToolStripMenuItem.Name = "cutToolStripMenuItem";
-            this.cutToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.X)));
-            this.cutToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
-            this.cutToolStripMenuItem.Text = "Cut";
-            // 
-            // pasteToolStripMenuItem
-            // 
-            this.pasteToolStripMenuItem.Name = "pasteToolStripMenuItem";
-            this.pasteToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.pasteToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
-            this.pasteToolStripMenuItem.Text = "Paste";
+            this.mnuPaste.Name = "mnuPaste";
+            this.mnuPaste.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
+            this.mnuPaste.Size = new System.Drawing.Size(152, 22);
+            this.mnuPaste.Text = "Paste";
+            this.mnuPaste.Click += new System.EventHandler(this.mnuPaste_Click);
             // 
             // toolStripSeparator10
             // 
             this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(146, 6);
+            this.toolStripSeparator10.Size = new System.Drawing.Size(149, 6);
             // 
             // mnuEditSearch
             // 
             this.mnuEditSearch.Name = "mnuEditSearch";
             this.mnuEditSearch.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
-            this.mnuEditSearch.Size = new System.Drawing.Size(149, 22);
+            this.mnuEditSearch.Size = new System.Drawing.Size(152, 22);
             this.mnuEditSearch.Text = "Search";
             this.mnuEditSearch.Click += new System.EventHandler(this.mnuEditSearch_Click);
             // 
             // toolStripSeparator11
             // 
             this.toolStripSeparator11.Name = "toolStripSeparator11";
-            this.toolStripSeparator11.Size = new System.Drawing.Size(146, 6);
+            this.toolStripSeparator11.Size = new System.Drawing.Size(149, 6);
             // 
             // mnuEditAddSec
             // 
@@ -369,7 +367,7 @@
             this.mnuEditAddGroup,
             this.mnuEditAddFooter});
             this.mnuEditAddSec.Name = "mnuEditAddSec";
-            this.mnuEditAddSec.Size = new System.Drawing.Size(149, 22);
+            this.mnuEditAddSec.Size = new System.Drawing.Size(152, 22);
             this.mnuEditAddSec.Text = "Sections";
             // 
             // mnuEditAddHeader
@@ -402,7 +400,7 @@
             this.mnuEditAddImage,
             this.mnuEditAddChart});
             this.controlsToolStripMenuItem.Name = "controlsToolStripMenuItem";
-            this.controlsToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.controlsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.controlsToolStripMenuItem.Text = "Controls";
             // 
             // mnuEditAddLabel
@@ -443,7 +441,7 @@
             // toolStripSeparator12
             // 
             this.toolStripSeparator12.Name = "toolStripSeparator12";
-            this.toolStripSeparator12.Size = new System.Drawing.Size(146, 6);
+            this.toolStripSeparator12.Size = new System.Drawing.Size(149, 6);
             // 
             // mnuEditMove
             // 
@@ -455,7 +453,7 @@
             this.toolStripSeparator13,
             this.sizeOfMoveStepWithKeyboardToolStripMenuItem});
             this.mnuEditMove.Name = "mnuEditMove";
-            this.mnuEditMove.Size = new System.Drawing.Size(149, 22);
+            this.mnuEditMove.Size = new System.Drawing.Size(152, 22);
             this.mnuEditMove.Text = "Move";
             // 
             // horizontalToolStripMenuItem
@@ -501,7 +499,7 @@
             this.mnuViewControls,
             this.mnuViewTreeViewCtrls,
             this.toolStripSeparator23,
-            this.viewGridToolStripMenuItem});
+            this.mnViewGridTool});
             this.mnView.Name = "mnView";
             this.mnView.Size = new System.Drawing.Size(44, 20);
             this.mnView.Text = "View";
@@ -509,66 +507,69 @@
             // mnuViewToolbar
             // 
             this.mnuViewToolbar.Name = "mnuViewToolbar";
-            this.mnuViewToolbar.Size = new System.Drawing.Size(139, 22);
+            this.mnuViewToolbar.Size = new System.Drawing.Size(152, 22);
             this.mnuViewToolbar.Text = "Toolbox";
             this.mnuViewToolbar.Click += new System.EventHandler(this.mnuViewToolbar_Click);
             // 
             // toolStripSeparator14
             // 
             this.toolStripSeparator14.Name = "toolStripSeparator14";
-            this.toolStripSeparator14.Size = new System.Drawing.Size(136, 6);
+            this.toolStripSeparator14.Size = new System.Drawing.Size(149, 6);
             // 
             // mnuViewControls
             // 
             this.mnuViewControls.Name = "mnuViewControls";
-            this.mnuViewControls.Size = new System.Drawing.Size(139, 22);
+            this.mnuViewControls.Size = new System.Drawing.Size(152, 22);
             this.mnuViewControls.Text = "Control Grid";
             this.mnuViewControls.Click += new System.EventHandler(this.mnuViewControls_Click);
             // 
             // mnuViewTreeViewCtrls
             // 
             this.mnuViewTreeViewCtrls.Name = "mnuViewTreeViewCtrls";
-            this.mnuViewTreeViewCtrls.Size = new System.Drawing.Size(139, 22);
+            this.mnuViewTreeViewCtrls.Size = new System.Drawing.Size(152, 22);
             this.mnuViewTreeViewCtrls.Text = "Control Tree";
             this.mnuViewTreeViewCtrls.Click += new System.EventHandler(this.mnuViewTreeViewCtrls_Click);
             // 
             // toolStripSeparator23
             // 
             this.toolStripSeparator23.Name = "toolStripSeparator23";
-            this.toolStripSeparator23.Size = new System.Drawing.Size(136, 6);
+            this.toolStripSeparator23.Size = new System.Drawing.Size(149, 6);
             // 
-            // viewGridToolStripMenuItem
+            // mnViewGridTool
             // 
-            this.viewGridToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.pointsToolStripMenuItem,
-            this.linesToolStripMenuItem,
-            this.mnuViewGridMain});
-            this.viewGridToolStripMenuItem.Name = "viewGridToolStripMenuItem";
-            this.viewGridToolStripMenuItem.Size = new System.Drawing.Size(139, 22);
-            this.viewGridToolStripMenuItem.Text = "View Grid";
+            this.mnViewGridTool.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuGridPoints,
+            this.mnuGridLines,
+            this.mnuHideGrid});
+            this.mnViewGridTool.Name = "mnViewGridTool";
+            this.mnViewGridTool.Size = new System.Drawing.Size(152, 22);
+            this.mnViewGridTool.Text = "View Grid";
             // 
-            // pointsToolStripMenuItem
+            // mnuGridPoints
             // 
-            this.pointsToolStripMenuItem.Name = "pointsToolStripMenuItem";
-            this.pointsToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
-            this.pointsToolStripMenuItem.Text = "Points";
+            this.mnuGridPoints.Name = "mnuGridPoints";
+            this.mnuGridPoints.Size = new System.Drawing.Size(124, 22);
+            this.mnuGridPoints.Text = "Points";
+            this.mnuGridPoints.Click += new System.EventHandler(this.mnuGridPoints_Click);
             // 
-            // linesToolStripMenuItem
+            // mnuGridLines
             // 
-            this.linesToolStripMenuItem.Name = "linesToolStripMenuItem";
-            this.linesToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
-            this.linesToolStripMenuItem.Text = "Lines";
+            this.mnuGridLines.Name = "mnuGridLines";
+            this.mnuGridLines.Size = new System.Drawing.Size(124, 22);
+            this.mnuGridLines.Text = "Lines";
+            this.mnuGridLines.Click += new System.EventHandler(this.mnuGridLines_Click);
             // 
-            // mnuViewGridMain
+            // mnuHideGrid
             // 
-            this.mnuViewGridMain.Name = "mnuViewGridMain";
-            this.mnuViewGridMain.Size = new System.Drawing.Size(124, 22);
-            this.mnuViewGridMain.Text = "Hide Grid";
+            this.mnuHideGrid.Name = "mnuHideGrid";
+            this.mnuHideGrid.Size = new System.Drawing.Size(124, 22);
+            this.mnuHideGrid.Text = "Hide Grid";
+            this.mnuHideGrid.Click += new System.EventHandler(this.mnuHideGrid_Click);
             // 
             // mnDatabase
             // 
             this.mnDatabase.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.connectionSettingsToolStripMenuItem,
+            this.mnuConnectionSettings,
             this.mnuParametersSettings,
             this.toolStripSeparator15,
             this.mnuDataBaseConnectsAuxCfg,
@@ -580,11 +581,11 @@
             this.mnDatabase.Size = new System.Drawing.Size(67, 20);
             this.mnDatabase.Text = "Database";
             // 
-            // connectionSettingsToolStripMenuItem
+            // mnuConnectionSettings
             // 
-            this.connectionSettingsToolStripMenuItem.Name = "connectionSettingsToolStripMenuItem";
-            this.connectionSettingsToolStripMenuItem.Size = new System.Drawing.Size(328, 22);
-            this.connectionSettingsToolStripMenuItem.Text = "Connection Settings";
+            this.mnuConnectionSettings.Name = "mnuConnectionSettings";
+            this.mnuConnectionSettings.Size = new System.Drawing.Size(328, 22);
+            this.mnuConnectionSettings.Text = "Connection Settings";
             // 
             // mnuParametersSettings
             // 
@@ -656,16 +657,17 @@
             // mnTool
             // 
             this.mnTool.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.optionsToolStripMenuItem});
+            this.mnuOptionsTool});
             this.mnTool.Name = "mnTool";
             this.mnTool.Size = new System.Drawing.Size(47, 20);
             this.mnTool.Text = "Tools";
             // 
-            // optionsToolStripMenuItem
+            // mnuOptionsTool
             // 
-            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
-            this.optionsToolStripMenuItem.Text = "Options";
+            this.mnuOptionsTool.Name = "mnuOptionsTool";
+            this.mnuOptionsTool.Size = new System.Drawing.Size(116, 22);
+            this.mnuOptionsTool.Text = "Options";
+            this.mnuOptionsTool.Click += new System.EventHandler(this.mnuOptionsTool_Click);
             // 
             // mnHelp
             // 
@@ -739,6 +741,7 @@
             this.tsbSave.Name = "tsbSave";
             this.tsbSave.Size = new System.Drawing.Size(23, 22);
             this.tsbSave.Text = "Save";
+            this.tsbSave.Click += new System.EventHandler(this.tsbSave_Click);
             // 
             // tsbSaveAs
             // 
@@ -748,6 +751,7 @@
             this.tsbSaveAs.Name = "tsbSaveAs";
             this.tsbSaveAs.Size = new System.Drawing.Size(23, 22);
             this.tsbSaveAs.Text = "Save as";
+            this.tsbSaveAs.Click += new System.EventHandler(this.tsbSaveAs_Click);
             // 
             // toolStripSeparator1
             // 
@@ -826,6 +830,7 @@
             this.tsbAlignLeft.Name = "tsbAlignLeft";
             this.tsbAlignLeft.Size = new System.Drawing.Size(23, 22);
             this.tsbAlignLeft.Text = "Align left";
+            this.tsbAlignLeft.Click += new System.EventHandler(this.tsbAlignLeft_Click);
             // 
             // tsbAligntCenter
             // 
@@ -835,6 +840,7 @@
             this.tsbAligntCenter.Name = "tsbAligntCenter";
             this.tsbAligntCenter.Size = new System.Drawing.Size(23, 22);
             this.tsbAligntCenter.Text = "Center";
+            this.tsbAligntCenter.Click += new System.EventHandler(this.tsbAligntCenter_Click);
             // 
             // tsbAlignRight
             // 
@@ -844,6 +850,7 @@
             this.tsbAlignRight.Name = "tsbAlignRight";
             this.tsbAlignRight.Size = new System.Drawing.Size(23, 22);
             this.tsbAlignRight.Text = "Align right";
+            this.tsbAlignRight.Click += new System.EventHandler(this.tsbAlignRight_Click);
             // 
             // toolStripSeparator5
             // 
@@ -858,6 +865,7 @@
             this.tsbBold.Name = "tsbBold";
             this.tsbBold.Size = new System.Drawing.Size(23, 22);
             this.tsbBold.Text = "Bold";
+            this.tsbBold.Click += new System.EventHandler(this.tsbBold_Click);
             // 
             // toolStripSeparator6
             // 
@@ -1119,7 +1127,6 @@
             // 
             this.cmnControl.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.cmCtrlCopy,
-            this.cmCtrlCut,
             this.cmCtrlPaste,
             this.cmCtrlPasteEx,
             this.toolStripSeparator17,
@@ -1132,31 +1139,28 @@
             this.toolStripSeparator19,
             this.cmCtrlProperties});
             this.cmnControl.Name = "cmnControl";
-            this.cmnControl.Size = new System.Drawing.Size(161, 226);
+            this.cmnControl.Size = new System.Drawing.Size(153, 226);
             // 
             // cmCtrlCopy
             // 
             this.cmCtrlCopy.Name = "cmCtrlCopy";
-            this.cmCtrlCopy.Size = new System.Drawing.Size(160, 22);
+            this.cmCtrlCopy.Size = new System.Drawing.Size(152, 22);
             this.cmCtrlCopy.Text = "Copy";
-            // 
-            // cmCtrlCut
-            // 
-            this.cmCtrlCut.Name = "cmCtrlCut";
-            this.cmCtrlCut.Size = new System.Drawing.Size(160, 22);
-            this.cmCtrlCut.Text = "Cut";
+            this.cmCtrlCopy.Click += new System.EventHandler(this.cmCtrlCopy_Click);
             // 
             // cmCtrlPaste
             // 
             this.cmCtrlPaste.Name = "cmCtrlPaste";
-            this.cmCtrlPaste.Size = new System.Drawing.Size(160, 22);
+            this.cmCtrlPaste.Size = new System.Drawing.Size(152, 22);
             this.cmCtrlPaste.Text = "Paste";
+            this.cmCtrlPaste.Click += new System.EventHandler(this.cmCtrlPaste_Click);
             // 
             // cmCtrlPasteEx
             // 
             this.cmCtrlPasteEx.Name = "cmCtrlPasteEx";
-            this.cmCtrlPasteEx.Size = new System.Drawing.Size(160, 22);
-            this.cmCtrlPasteEx.Text = "Paste (no move)";
+            this.cmCtrlPasteEx.Size = new System.Drawing.Size(152, 22);
+            this.cmCtrlPasteEx.Text = "Paste special";
+            this.cmCtrlPasteEx.Click += new System.EventHandler(this.cmCtrlPasteEx_Click);
             // 
             // toolStripSeparator17
             // 
@@ -1289,6 +1293,13 @@
             this.cmSectionMoveGroup.Text = "Move group";
             this.cmSectionMoveGroup.Click += new System.EventHandler(this.cmSectionMoveGroup_Click);
             // 
+            // mnuPasteSpecial
+            // 
+            this.mnuPasteSpecial.Name = "mnuPasteSpecial";
+            this.mnuPasteSpecial.Size = new System.Drawing.Size(152, 22);
+            this.mnuPasteSpecial.Text = "Paste special";
+            this.mnuPasteSpecial.Click += new System.EventHandler(this.mnuPasteSpecial_Click);
+            // 
             // fMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1332,7 +1343,7 @@
 
         private System.Windows.Forms.MenuStrip mnMain;
         private System.Windows.Forms.ToolStripMenuItem mnFile;
-        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mnuPageSetup;
         private System.Windows.Forms.ToolStrip tbMain;
         private System.Windows.Forms.ToolStripButton tsbNew;
         private System.Windows.Forms.ToolStripButton tsbOpen;
@@ -1366,9 +1377,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator9;
         private System.Windows.Forms.ToolStripMenuItem mnuExit;
         private System.Windows.Forms.ToolStripMenuItem mnEdit;
-        private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem cutToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem pasteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mnuCopy;
+        private System.Windows.Forms.ToolStripMenuItem mnuPaste;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
         private System.Windows.Forms.ToolStripMenuItem mnuEditSearch;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
@@ -1395,14 +1405,14 @@
         private System.Windows.Forms.ToolStripMenuItem mnuViewControls;
         private System.Windows.Forms.ToolStripMenuItem mnuViewTreeViewCtrls;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator14;
-        private System.Windows.Forms.ToolStripMenuItem viewGridToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem pointsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem linesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem mnuViewGridMain;
+        private System.Windows.Forms.ToolStripMenuItem mnViewGridTool;
+        private System.Windows.Forms.ToolStripMenuItem mnuGridPoints;
+        private System.Windows.Forms.ToolStripMenuItem mnuGridLines;
+        private System.Windows.Forms.ToolStripMenuItem mnuHideGrid;
         private System.Windows.Forms.ToolStripMenuItem mnDatabase;
         private System.Windows.Forms.ToolStripMenuItem mnTool;
         private System.Windows.Forms.ToolStripMenuItem mnHelp;
-        private System.Windows.Forms.ToolStripMenuItem connectionSettingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mnuConnectionSettings;
         private System.Windows.Forms.ToolStripMenuItem mnuParametersSettings;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator15;
         private System.Windows.Forms.ToolStripMenuItem mnuDataBaseConnectsAuxCfg;
@@ -1413,7 +1423,7 @@
         private System.Windows.Forms.ToolStripMenuItem mnuDataBaseConnectConfig;
         private System.Windows.Forms.ToolStripMenuItem mnuDataBaseEditDataSource;
         private System.Windows.Forms.ToolStripMenuItem mnuDataBaseSetToMainConnect;
-        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mnuOptionsTool;
         private System.Windows.Forms.ToolStripMenuItem mnuHelpAbout;
         private System.Windows.Forms.StatusStrip sbMain;
         private System.Windows.Forms.SplitContainer splitContainer1;
@@ -1437,7 +1447,6 @@
         private System.Windows.Forms.ContextMenuStrip cmnControl;
         private System.Windows.Forms.ToolStripMenuItem cmCtrlProperties;
         private System.Windows.Forms.ToolStripMenuItem cmCtrlCopy;
-        private System.Windows.Forms.ToolStripMenuItem cmCtrlCut;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator17;
         private System.Windows.Forms.ToolStripMenuItem cmCtrlDelete;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator18;
@@ -1467,7 +1476,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader3;
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.ImageList imageListTree;
-
+        private System.Windows.Forms.ToolStripMenuItem mnuPasteSpecial;
     }
 }
 

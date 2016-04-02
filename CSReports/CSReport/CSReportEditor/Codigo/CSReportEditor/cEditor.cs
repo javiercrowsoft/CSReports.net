@@ -1122,7 +1122,7 @@ namespace CSReportEditor
             if (m_paint == null) return;
 
             MouseButtons button = e.Button;
-            bool ctrlKey = Control.ModifierKeys.HasFlag(Keys.Control);
+            bool ctrlKey = Control.ModifierKeys.HasFlag(Keys.Control) || Control.ModifierKeys.HasFlag(Keys.LWin);
             int x = e.X;
             int y = e.Y;
 
