@@ -73,14 +73,7 @@ namespace CSReportDll
             xProperty.setValue(eTypes.eBoolean, m_canGrow);
             xDoc.addPropertyToNode(nodeObj, xProperty);
 
-            if (!m_aspect.save(xDoc, nodeObj))
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return m_aspect.save(xDoc, nodeObj);
         }
 
     }

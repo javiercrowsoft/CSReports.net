@@ -129,6 +129,10 @@ namespace CSXml
             {
                 m_value = (bool)value ? "-1" : "0";
             }
+            else if (type == eTypes.eInteger)
+            {
+                m_value = Convert.ToInt64(value).ToString();
+            }
             else
             {
                 m_value = value.ToString();

@@ -89,14 +89,7 @@ namespace CSReportDll
             xDoc.addBinaryPropertyToNode(nodeObj, xProperty);
             G.redim(ref vBytes, 0);
 
-            if (!m_aspect.save(xDoc, nodeObj))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return m_aspect.save(xDoc, nodeObj);
         }
 
     }

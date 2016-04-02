@@ -402,7 +402,7 @@ namespace CSReportDll
 
             twipsToPixels();
 
-            return !m_font.save(xDoc, nodeObj);
+            return m_font.save(xDoc, nodeObj);
         }
 
         private void twipsToPixels() 
