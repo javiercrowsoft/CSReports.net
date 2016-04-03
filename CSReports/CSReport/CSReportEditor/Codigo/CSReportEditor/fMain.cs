@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.Reflection;
 using System.IO;
@@ -87,7 +84,7 @@ namespace CSReportEditor
             tab.Controls.Add(pnEditor);
             pnEditor.Dock = DockStyle.Fill;
             tabReports.TabPages.Add(tab);
-            tab.Text = "New Report";
+            tab.Text = "New Report [X]";
 
             return new cEditor(this, pnEditor, pnRule, pnReport, tab);
         }
@@ -972,6 +969,7 @@ namespace CSReportEditor
             if (editor != null)
             {
                 editor.saveDocument(saveAs);
+                addToRecentList(editor.getFileName());
             }
         }
 

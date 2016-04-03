@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
 using System.IO;
@@ -84,7 +81,7 @@ namespace CSReportEditor
         private const int C_NOMOVE = -1111111;
 
         private cReport m_report;
-        private CSReportPaint.cReportPaint m_paint;
+        private cReportPaint m_paint;
         private String m_keyMoving = "";
         private csRptEditorMoveType m_moveType;
         private String m_keySizing = "";
@@ -153,7 +150,7 @@ namespace CSReportEditor
 
         private bool m_inMouseDown = false;
 
-        private CSReportPaint.csETypeGrid m_typeGrid;
+        private csETypeGrid m_typeGrid;
 
         public TabPage getEditorTab() {
             return m_editorTab;
@@ -167,7 +164,7 @@ namespace CSReportEditor
             return m_vCopyKeys.Length;
         }
 
-        public CSReportPaint.cReportPaint getPaint() {
+        public cReportPaint getPaint() {
             return m_paint;
         }
 
@@ -302,7 +299,7 @@ namespace CSReportEditor
             //form_KeyUp(Keys.F8, false);
         }
 
-        public void showGrid(CSReportPaint.csETypeGrid typeGrid) {
+        public void showGrid(csETypeGrid typeGrid) {
             m_typeGrid = typeGrid;
             m_paint.initGrid(m_picReport.CreateGraphics(), typeGrid);
         }
@@ -1060,7 +1057,7 @@ namespace CSReportEditor
 
             m_keyMoving = m_keyFocus;
 
-            CSReportPaint.cReportPaintObject po = m_paint.getPaintObject(m_keyMoving);
+            cReportPaintObject po = m_paint.getPaintObject(m_keyMoving);
 
             switch (po.getTag()) {
                 case cGlobals.C_KEY_DETAIL:
@@ -1165,7 +1162,7 @@ namespace CSReportEditor
                         if (sKey != "")
                         {
 
-                            CSReportPaint.cReportPaintObject po = m_paint.getPaintObject(sKey);
+                            cReportPaintObject po = m_paint.getPaintObject(sKey);
                             lastKeyMoving = m_keyMoving;
                             m_keyMoving = sKey;
 
@@ -1269,7 +1266,7 @@ namespace CSReportEditor
                     m_keyObj = sKey;
                     m_paint.setFocus(m_keyFocus, m_picReport.CreateGraphics(), bClearSelected);
 
-                    CSReportPaint.cReportPaintObject poSelected = m_paint.getPaintObject(sKey);
+                    cReportPaintObject poSelected = m_paint.getPaintObject(sKey);
                     if (poSelected != null)
                     {
                         cMainEditor.showProperties(
@@ -1293,7 +1290,7 @@ namespace CSReportEditor
                         m_keyFocus = sKey;
                         m_paint.setFocus(m_keyFocus, m_picReport.CreateGraphics(), bClearSelected);
 
-                        CSReportPaint.cReportPaintObject po = m_paint.getPaintObject(sKey);
+                        cReportPaintObject po = m_paint.getPaintObject(sKey);
 
                         if (m_paint.paintObjIsSection(sKey))
                         {
@@ -1377,7 +1374,7 @@ namespace CSReportEditor
                 bBoldValue = bBold == 0;
             }
 
-            CSReportPaint.cReportPaintObject paintObject = null;
+            cReportPaintObject paintObject = null;
             cReportControl rptCtrl = null;
 
             for (int i = 0; i < m_vSelectedKeys.Length; i++) {
@@ -1412,7 +1409,7 @@ namespace CSReportEditor
         }
 
         public void controlsAlign(CSReportGlobals.csECtlAlignConst align) {
-            CSReportPaint.cReportPaintObject paintObject = null;
+            cReportPaintObject paintObject = null;
             cReportControl rptCtrl = null;
 
             float top = 0;
@@ -1522,7 +1519,7 @@ namespace CSReportEditor
         }
 
         public void textAlign(CSReportGlobals.HorizontalAlignment align) {
-            CSReportPaint.cReportPaintObject paintObject = null;
+            cReportPaintObject paintObject = null;
             cReportControl rptCtrl = null;
 
             for (int i = 0; i < m_vSelectedKeys.Length; i++) {
@@ -1757,7 +1754,7 @@ namespace CSReportEditor
                 if (m_keyFocus != "") {
                     sKey = m_keyFocus;
                     if (m_paint.pointIsInThisObject(x, y, ref m_keyFocus, ref rgnTp)) {
-                        CSReportPaint.cReportPaintObject po = m_paint.getPaintObject(sKey);
+                        cReportPaintObject po = m_paint.getPaintObject(sKey);
 
                         cReportControl ctrl = m_report.getControls().item(po.getTag());
                         pSetSbPnlCtrl(
@@ -1883,7 +1880,7 @@ namespace CSReportEditor
                 }
 
                 if (m_paint.pointIsInObject(x, y, ref sKey, ref rgnTp)) {
-                    CSReportPaint.cReportPaintObject po = m_paint.getPaintObject(sKey);
+                    cReportPaintObject po = m_paint.getPaintObject(sKey);
                     if (po.getRptType() == csRptSectionType.CONTROL) {
                         cReportControl rptCtrl = null;
                         rptCtrl = m_report.getControls().item(po.getTag());
@@ -2020,7 +2017,7 @@ namespace CSReportEditor
         {
             if (m_paint != null)
             {
-                CSReportPaint.cReportPaintObjects ps = m_paint.getPaintSections();
+                cReportPaintObjects ps = m_paint.getPaintSections();
                 for (int i = 0; i < ps.count(); i++)
                 {
                     m_paint.drawRule(ps.getNextKeyForZOrder(i), e.Graphics);
@@ -2138,7 +2135,7 @@ namespace CSReportEditor
             cReportSections secs = null;
             cReportSectionLine secLn = null;
             cReportControl ctrl = null;
-            CSReportPaint.cReportPaintObject paintObj = null;
+            cReportPaintObject paintObj = null;
 
             bool isGroupFooter = false;
             bool isGroupHeader = false;
@@ -2151,7 +2148,7 @@ namespace CSReportEditor
             if (m_paint.paintObjIsSection(m_keyFocus)) {
                 if (m_paint.getPaintSections().item(m_keyFocus) == null) { return; }
 
-                CSReportPaint.cReportPaintObject po = m_paint.getPaintSections().item(m_keyFocus);
+                cReportPaintObject po = m_paint.getPaintSections().item(m_keyFocus);
 
                 // first we check it is not a section line
                 //
@@ -2813,7 +2810,7 @@ namespace CSReportEditor
 
             if (ctrl.getControlType() == csRptControlType.CSRPTCTIMAGE
                 || ctrl.getControlType() == csRptControlType.CSRPTCTCHART) {
-                paintType = CSReportPaint.csRptPaintObjType.CSRPTPAINTOBJIMAGE;
+                paintType = csRptPaintObjType.CSRPTPAINTOBJIMAGE;
             }
 
             paintObj = m_paint.getNewObject(paintType);
@@ -2996,7 +2993,7 @@ namespace CSReportEditor
                                 true));
 
             // section line
-            CSReportPaint.cReportPaintObject po = m_paint.getPaintSections().item(secL.getKeyPaint());
+            cReportPaintObject po = m_paint.getPaintSections().item(secL.getKeyPaint());
             po.setRptType(typeSecLn);
             po.setRptKeySec(sec.getKey());
 
@@ -3019,7 +3016,7 @@ namespace CSReportEditor
             cReportSection topSec = null;
             cReportAspect w_aspect = null;
             cReportAspect aspect = null;
-            CSReportPaint.cReportPaintObject paintObj = null;
+            cReportPaintObject paintObj = null;
 
             float maxBottom = 0;
             float minBottom = 0;
@@ -3194,7 +3191,7 @@ namespace CSReportEditor
                 showProgressDlg();
 
                 m_report.getLaunchInfo().getPrinter().setPaperInfo(m_report.getPaperInfo());
-                m_report.getLaunchInfo().setObjPaint(new CSReportPaint.cReportPrint());
+                m_report.getLaunchInfo().setObjPaint(new cReportPrint());
                 // TODO: remove this
                 m_report.getLaunchInfo().setHwnd(0);
                 m_report.getLaunchInfo().setShowPrintersDialog(true);
@@ -3228,9 +3225,16 @@ namespace CSReportEditor
 
                 pValidateSectionAspect();
 
-                if (!m_report.save(m_fmain.saveFileDialog, isNew))
-                reLoadReport();
-                return true;
+                if (m_report.save(m_fmain.saveFileDialog, isNew))
+                {
+                    reLoadReport();
+                    cMainEditor.setDocActive(this);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
 
             } catch (Exception ex) {
                 cError.mngError(ex, "saveDocument", C_MODULE, "");
@@ -3721,7 +3725,7 @@ namespace CSReportEditor
             //
             if (!m_paint.paintObjIsSection(m_keyFocus)) { return null; }
 
-            CSReportPaint.cReportPaintObject paintObj = m_paint.getPaintSections().item(m_keyFocus);
+            cReportPaintObject paintObj = m_paint.getPaintSections().item(m_keyFocus);
 
             // nothing to do
             //
@@ -3851,7 +3855,7 @@ namespace CSReportEditor
         private void showCtrlProperties() {
             try {
 
-                CSReportPaint.cReportPaintObject paintObject = null;
+                cReportPaintObject paintObject = null;
                 cReportControl rptCtrl = null;
                 cReportAspect w_aspect = null;
                 cReportFont w_font = null;
@@ -4366,7 +4370,7 @@ namespace CSReportEditor
 
             m_dataHasChanged = true;
 
-            CSReportPaint.cReportPaintObject paintObjAspect = null;
+            cReportPaintObject paintObjAspect = null;
             paintObjAspect = m_paint.getPaintObject(m_keyObj);
             if (paintObjAspect == null) { return; }
 
@@ -4387,8 +4391,8 @@ namespace CSReportEditor
                                     bool isSecLn)
         {
 
-            CSReportPaint.cReportPaintObject paintObj = null;
-            paintObj = m_paint.getNewSection(CSReportPaint.csRptPaintObjType.CSRPTPAINTOBJBOX);
+            cReportPaintObject paintObj = null;
+            paintObj = m_paint.getNewSection(csRptPaintObjType.CSRPTPAINTOBJBOX);
 
             cReportAspect w_aspect = paintObj.getAspect();
 
@@ -4717,7 +4721,7 @@ namespace CSReportEditor
             }
         }
 
-        private void moveSection(CSReportPaint.cReportPaintObject paintObj,
+        private void moveSection(cReportPaintObject paintObj,
                                     float x,
                                     float y,
                                     float minBottom,
@@ -4956,7 +4960,7 @@ namespace CSReportEditor
             m_keyFocus = "";
             m_moveType = csRptEditorMoveType.CSRPTEDMOVTNONE;
 
-            m_paint = new CSReportPaint.cReportPaint();
+            m_paint = new cReportPaint();
 
             cReportPaperInfo w_paperInfo = m_report.getPaperInfo();
             m_paint.setGridHeight(
@@ -5033,7 +5037,7 @@ namespace CSReportEditor
                 pAddPaintSetcionForSecLn(sec, csRptSectionType.SECLN_FOOTER);
             }
 
-            CSReportPaint.csRptPaintObjType paintType;
+            csRptPaintObjType paintType;
 
             for (int _i = 0; _i < m_report.getControls().count(); _i++) {
 
@@ -5043,13 +5047,13 @@ namespace CSReportEditor
 
                 if (rptCtrl.getControlType() == csRptControlType.CSRPTCTIMAGE
                     || rptCtrl.getControlType() == csRptControlType.CSRPTCTCHART) {
-                    paintType = CSReportPaint.csRptPaintObjType.CSRPTPAINTOBJIMAGE;
+                    paintType = csRptPaintObjType.CSRPTPAINTOBJIMAGE;
                 }
                 else {
-                    paintType = CSReportPaint.csRptPaintObjType.CSRPTPAINTOBJBOX;
+                    paintType =csRptPaintObjType.CSRPTPAINTOBJBOX;
                 }
 
-                CSReportPaint.cReportPaintObject paintObj = m_paint.getNewObject(paintType);
+               cReportPaintObject paintObj = m_paint.getNewObject(paintType);
 
                 // for old reports
                 //
@@ -5140,7 +5144,7 @@ namespace CSReportEditor
                 // if there is more than one section we use
                 // textLine to show the name of the last line
                 //
-                CSReportPaint.cReportPaintObject po = m_paint.getPaintSections().item(sec.getKeyPaint());
+               cReportPaintObject po = m_paint.getPaintSections().item(sec.getKeyPaint());
                 po.setTextLine(C_SECTIONLINE + (sec.getSectionLines().count() - 1).ToString());
             }
 
@@ -5260,7 +5264,7 @@ namespace CSReportEditor
 
             cReportPaperInfo w_paperInfo = m_report.getPaperInfo();
             m_paint.setGridHeight(pSetSizePics(
-                                        CSReportPaint.cGlobals.getRectFromPaperSize(
+                                       CSReportPaint.cGlobals.getRectFromPaperSize(
                                                                     m_report.getPaperInfo(),
                                                                     w_paperInfo.getPaperSize(),
                                                                     w_paperInfo.getOrientation()).Height));
@@ -5398,7 +5402,7 @@ namespace CSReportEditor
 
         private void pMoveAll(float x, float y) {
             cReportAspect rptCtrlAspect = null;
-            CSReportPaint.cReportPaintObject paintObj = null;
+           cReportPaintObject paintObj = null;
 
             m_dataHasChanged = true;
 
@@ -5478,7 +5482,7 @@ namespace CSReportEditor
             float maxBottomSectionLine = 0;
 
             cReportSection rptSec = null;
-            CSReportPaint.cReportPaintObject paintObj = null;
+           cReportPaintObject paintObj = null;
             bool isSecLn = false;
 
             m_indexSecLnMoved = -1;
@@ -5629,7 +5633,7 @@ namespace CSReportEditor
         }
 
         private void pChangeSecLnHeight(
-            CSReportPaint.cReportPaintObject paintObj,
+           cReportPaintObject paintObj,
             float y,
             float minBottom,
             float maxBottom,
@@ -6259,7 +6263,7 @@ namespace CSReportEditor
                         }
                         for (int _k = 0; _k < secLines.getControls().count(); _k++) {
                             ctl = secLines.getControls().item(_k);
-                            CSReportPaint.cReportPaintObject po;
+                           cReportPaintObject po;
                             po = m_paint.getPaintObjects().item(ctl.getKeyPaint());
                             po.getAspect().setOffset(m_offSet);
                         }
@@ -6471,7 +6475,7 @@ namespace CSReportEditor
             m_report.getPaperInfo().setOrientation(m_fmain.getOrientation());
 
             oLaunchInfo.setPrinter(cPrintAPI.getcPrinterFromDefaultPrinter());
-            oLaunchInfo.setObjPaint(new CSReportPaint.cReportPrint());
+            oLaunchInfo.setObjPaint(new cReportPrint());
             if (!m_report.init(oLaunchInfo)) { return; }
 
             CSKernelFile.cFile file = new CSKernelFile.cFile();
@@ -6487,7 +6491,7 @@ namespace CSReportEditor
             m_keyFocus = "";
             m_nextNameCtrl = 0;
 
-            m_paint = new CSReportPaint.cReportPaint();
+            m_paint = new cReportPaint();
 
             Rectangle tR = null;
             cReportPaperInfo w_paperInfo = m_report.getPaperInfo();
@@ -6499,8 +6503,6 @@ namespace CSReportEditor
             cGlobals.createStandarSections(m_report, tR);
 
             reLoadReport();
-
-            m_dataHasChanged = false;
         }
 
         private void pUpdateFormulas(String currentName, String newName) {
