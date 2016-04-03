@@ -305,7 +305,7 @@ namespace CSReportPaint
             }
             else
             {
-                CSReportDll.cReportAspect w_aspect = paintObj.getAspect();
+                cReportAspect w_aspect = paintObj.getAspect();
                 left = w_aspect.getLeft();
                 width = w_aspect.getWidth();
                 top = w_aspect.getTop() - w_aspect.getOffset();
@@ -526,7 +526,7 @@ namespace CSReportPaint
 
                 left = C_GRID_AREA_WIDTH * l;
                 top = C_GRID_AREA_HEIGHT * t;
-                CSReportDll.cReportAspect w_aspect = c.getAspect();
+                cReportAspect w_aspect = c.getAspect();
                 w_aspect.setLeft(left);
                 w_aspect.setTop(top);
                 w_aspect.setWidth(C_GRID_AREA_WIDTH);
@@ -618,7 +618,7 @@ namespace CSReportPaint
             int q1 = 0;
             int maxY = 0;
             int maxX = 0;
-            CSReportDll.cReportAspect gridObjAspect = null;
+            cReportAspect gridObjAspect = null;
 
             maxX = m_vGridObjs.GetLength(0)-1;
             maxY = m_vGridObjs.GetLength(1)-1;            
@@ -646,7 +646,7 @@ namespace CSReportPaint
             float nTop = 0;
 
             cReportPaintObject w_item = paintObjs.item(sKey);
-            CSReportDll.cReportAspect w_aspect = w_item.getAspect();
+            cReportAspect w_aspect = w_item.getAspect();
             nLeft = w_aspect.getLeft() - offSetPointSep;
             nTop = w_aspect.getTop() - w_aspect.getOffset() - offSetPointSep;
 
@@ -797,13 +797,13 @@ namespace CSReportPaint
             const int LINE_COLOR = 0xcc6600;
             int top = 0;
             float heightSec = 0;
-            CSReportDll.cReportAspect aspect = null;
+            cReportAspect aspect = null;
 
-            aspect = new CSReportDll.cReportAspect();
+            aspect = new cReportAspect();
 
             cReportPaintObject w_item = m_paintSections.item(key);
             heightSec = w_item.getHeightSecLine() * 0.5f;
-            CSReportDll.cReportAspect w_aspect = w_item.getAspect();
+            cReportAspect w_aspect = w_item.getAspect();
             aspect.setTop(w_aspect.getTop() + 3 - heightSec);
             aspect.setOffset(w_aspect.getOffset());
             aspect.setTransparent(true);
@@ -896,12 +896,12 @@ namespace CSReportPaint
         {
             if (sKey.Substring(0, 1) == C_KEY_PAINT_OBJ)
             {
-                CSReportDll.cReportAspect w_aspect = m_paintObjects.item(sKey).getAspect();
+                cReportAspect w_aspect = m_paintObjects.item(sKey).getAspect();
                 move(x, y, w_aspect.getWidth(), w_aspect.getHeight(), graph);
             }
             else
             {
-                CSReportDll.cReportAspect w_aspect = m_paintSections.item(sKey).getAspect();
+                cReportAspect w_aspect = m_paintSections.item(sKey).getAspect();
                 move(x, y, w_aspect.getWidth(), w_aspect.getHeight(), graph);
             }
         }
@@ -940,12 +940,12 @@ namespace CSReportPaint
         {
             if (sKey.Substring(0, 1) == C_KEY_PAINT_OBJ)
             {
-                CSReportDll.cReportAspect w_aspect = m_paintObjects.item(sKey).getAspect();
+                cReportAspect w_aspect = m_paintObjects.item(sKey).getAspect();
                 move(w_aspect.getLeft(), y, w_aspect.getWidth(), w_aspect.getHeight(), graph);
             }
             else
             {
-                CSReportDll.cReportAspect w_aspect = m_paintSections.item(sKey).getAspect();
+                cReportAspect w_aspect = m_paintSections.item(sKey).getAspect();
                 move(w_aspect.getLeft(), y, w_aspect.getWidth(), w_aspect.getHeight(), graph);
             }
         }
@@ -954,12 +954,12 @@ namespace CSReportPaint
         {
             if (sKey.Substring(0, 1) == C_KEY_PAINT_OBJ)
             {
-                CSReportDll.cReportAspect w_aspect = m_paintObjects.item(sKey).getAspect();
+                cReportAspect w_aspect = m_paintObjects.item(sKey).getAspect();
                 move(x, w_aspect.getTop(), w_aspect.getWidth(), w_aspect.getHeight(), graph);
             }
             else
             {
-                CSReportDll.cReportAspect w_aspect = m_paintSections.item(sKey).getAspect();
+                cReportAspect w_aspect = m_paintSections.item(sKey).getAspect();
                 move(x, w_aspect.getTop(), w_aspect.getWidth(), w_aspect.getHeight(), graph);
             }
         }
@@ -1007,7 +1007,7 @@ namespace CSReportPaint
 
                 if (oPaintObj == null) { return false; }
 
-                CSReportDll.cReportAspect w_aspect = oPaintObj.getAspect();
+                cReportAspect w_aspect = oPaintObj.getAspect();
 
                 x1 = w_aspect.getLeft();
                 x2 = x1 + w_aspect.getWidth();
@@ -1226,7 +1226,7 @@ namespace CSReportPaint
 
             if (paintObjAsp == null) { return; }
 
-            CSReportDll.cReportAspect w_aspect = paintObjAsp.getAspect();
+            cReportAspect w_aspect = paintObjAsp.getAspect();
             showHandles(graph, 
                         Convert.ToInt32(w_aspect.getLeft()), 
                         Convert.ToInt32(w_aspect.getTop() - w_aspect.getOffset()), 
@@ -1262,7 +1262,7 @@ namespace CSReportPaint
             const int C_MIN_WIDTH = 1;
             const int C_MIN_HEIGHT = 1;
 
-            CSReportDll.cReportAspect paintObjAsp = null;
+            cReportAspect paintObjAsp = null;
 
             if (sKey.Substring(0, 1) == C_KEY_PAINT_OBJ)
             {
@@ -1537,7 +1537,7 @@ namespace CSReportPaint
             pen.Dispose();
         }
 
-        private void printText(Graphics graph, String sText, CSReportDll.cReportAspect aspect, Image image)
+        private void printText(Graphics graph, String sText, cReportAspect aspect, Image image)
         { // TODO: Use of ByRef founded Private Sub PrintText(ByVal hDC As Long, ByVal sText As String, ByRef Aspect As cReportAspect, ByVal hImage As Long)
             /*
             // Para separarlo del borde
@@ -2136,7 +2136,7 @@ namespace CSReportPaint
 
             if (oPaintObj == null) { return; }
 
-            CSReportDll.cReportAspect w_aspect = oPaintObj.getAspect();
+            cReportAspect w_aspect = oPaintObj.getAspect();
             RectangleF tR = cGlobals.newRectangleF(w_aspect.getLeft(), w_aspect.getTop(), w_aspect.getLeft() + w_aspect.getWidth(), w_aspect.getTop() + w_aspect.getHeight());
 
             if (tR.Right > graph.ClipBounds.Width) { tR.Width = cGlobals.setRectangleWidth(graph.ClipBounds.Width - tR.Left); }
@@ -2211,7 +2211,11 @@ namespace CSReportPaint
 
                     if (m_notBorder == false 
                             && (
-                                (aspect.getBorderType() == csReportBorderType.CSRPTBSFIXED && !aspect.getBorderRounded())
+                                (
+                                    aspect.getBorderType() == csReportBorderType.CSRPTBSFIXED 
+                                    && !aspect.getBorderRounded()
+                                    && aspect.getBorderWidth() == 0
+                                )
                                 || aspect.getBorderType() == csReportBorderType.CSRPTBSNONE
                             )
                         )

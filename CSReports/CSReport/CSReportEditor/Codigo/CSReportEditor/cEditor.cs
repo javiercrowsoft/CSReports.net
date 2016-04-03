@@ -20,6 +20,8 @@ namespace CSReportEditor
         private String m_reportFullPath = "";
         private String m_name = "";
 
+        private bool m_isNew = false;
+
         public cEditor(fMain fmain, Panel editor, PictureBox rule, PictureBox report, TabPage editorTab) {
             m_fmain = fmain;
             m_editor = editor;
@@ -3209,9 +3211,7 @@ namespace CSReportEditor
         public bool saveDocument(bool saveAs) {
             cMouseWait mouse = new cMouseWait();
             try {
-                bool isNew = false;
-
-                isNew = m_report.getName() == "";
+                bool isNew = m_isNew || m_report.getName() == "";
 
                 if (isNew) {
                     m_report.setName(m_name);
@@ -3227,6 +3227,7 @@ namespace CSReportEditor
 
                 if (m_report.save(m_fmain.saveFileDialog, isNew))
                 {
+                    m_isNew = false;
                     reLoadReport();
                     cMainEditor.setDocActive(this);
                     return true;
@@ -3255,10 +3256,12 @@ namespace CSReportEditor
 
         public void newReport(cReport report) {
 
+            m_isNew = true;
+
             if (report != null) {
 
                 m_report = report;
-                reLoadReport();
+                //reLoadReport();
                 pValidateSectionAspect();
                 reLoadReport();
 
@@ -4402,6 +4405,8 @@ namespace CSReportEditor
             w_aspect.setTop(aspect.getTop() + aspect.getHeight() - cGlobals.C_HEIGHT_BAR_SECTION);
             w_aspect.setWidth(aspect.getWidth());
             w_aspect.setHeight(cGlobals.C_HEIGHT_BAR_SECTION);
+            w_aspect.setBorderType(csReportBorderType.CSRPTBSFIXED);
+            w_aspect.setBorderWidth(1);
 
             if (isSecLn) {
                 w_aspect.setBackColor(0xffcc99);
@@ -5073,7 +5078,7 @@ namespace CSReportEditor
 
                 if (ctrlAspect.getBorderType() == csReportBorderType.CSRPTBSNONE) {
                     w_aspect.setBorderColor(Color.Black.ToArgb());
-                    w_aspect.setBorderWidth(1);
+                    w_aspect.setBorderWidth(0);
                     w_aspect.setBorderRounded(false);
                     w_aspect.setBorderType(csReportBorderType.CSRPTBSFIXED);
                 }
