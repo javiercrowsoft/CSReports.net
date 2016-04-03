@@ -109,6 +109,12 @@
     <Compile Include="fMain.Designer.cs">
       <DependentUpon>fMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="fPageSetup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fPageSetup.Designer.cs">
+      <DependentUpon>fPageSetup.cs</DependentUpon>
+    </Compile>
     <Compile Include="fProgress.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -170,6 +176,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="fMain.resx">
       <DependentUpon>fMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fPageSetup.resx">
+      <DependentUpon>fPageSetup.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="fProgress.resx">
       <DependentUpon>fProgress.cs</DependentUpon>
@@ -326,6 +335,8 @@
     <Content Include="Resources\move32x32.cur">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\page_portrait.png" />
+    <None Include="Resources\page_landscape1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

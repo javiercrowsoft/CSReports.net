@@ -287,9 +287,9 @@ namespace CSReportEditor
             m_sourceEditor = editor;
         }
 
-        internal CSReportGlobals.csReportPaperType getPaperSize()
+        internal csReportPaperType getPaperSize()
         {
-            return (CSReportGlobals.csReportPaperType)m_paperSize;
+            return (csReportPaperType)m_paperSize;
         }
 
         internal int getOrientation()
@@ -997,7 +997,31 @@ namespace CSReportEditor
 
         private void mnuPageSetup_Click(object sender, EventArgs e)
         {
+            fPageSetup pageSetup = new fPageSetup();
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                pageSetup.initDialog(editor.getPaperSize(), editor.getCustomHeight(), editor.getCustomWidth(), editor.getOrientation());
+            }
 
+            pageSetup.ShowDialog();
+
+            if (pageSetup.getOk())
+            {
+                m_paperSize = (int)pageSetup.getPaperSize();
+                m_paperSizeHeight = pageSetup.getCustomHeight();
+                m_paperSizeWidth = pageSetup.getCustomWidth();
+                m_orientation = pageSetup.getOrientation();
+                if (editor != null)
+                {
+                    editor.setPaperSize((csReportPaperType)m_paperSize);
+                    editor.setOrientation(m_orientation);
+                    editor.setCustomHeight(m_paperSizeHeight);
+                    editor.setCustomWidth(m_paperSizeWidth);
+                    editor.refreshReport();
+                }
+            }
+            pageSetup.Close();
         }
 
         private void mnuPrinterSettings_Click(object sender, EventArgs e)
