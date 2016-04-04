@@ -2295,6 +2295,8 @@ namespace CSReportEditor
 
                 pResetKeysFocus();
                 G.redim(ref m_vSelectedKeys, 0);
+
+                updateSectionNameInPaintObjects();
             }
             else {
                 paintObj = m_paint.getPaintObjects().item(m_keyFocus);
@@ -2316,6 +2318,28 @@ namespace CSReportEditor
             }
 
             refreshAll();
+        }
+
+        private void updateSectionNameInPaintObjects()
+        {
+            updateSectionNameInPaintObjects(m_report.getHeaders());
+            updateSectionNameInPaintObjects(m_report.getFooters());
+            updateSectionNameInPaintObjects(m_report.getDetails());
+            updateSectionNameInPaintObjects(m_report.getGroupsHeaders());
+            updateSectionNameInPaintObjects(m_report.getGroupsFooters());
+        }
+
+        private void updateSectionNameInPaintObjects(cIReportGroupSections sections)
+        {
+            for(var i =0; i < sections.count(); i++)
+            {
+                var sec = sections.item(i);
+                var paintObj = m_paint.getPaintSections().item(sec.getKeyPaint());
+                if (paintObj != null)
+                {
+                    paintObj.setText(sec.getName());
+                }
+            }            
         }
 
         private bool pCanDeleteSection(
@@ -3058,7 +3082,7 @@ namespace CSReportEditor
 
                     cIReportGroupSections w_groupsHeaders = m_report.getGroupsHeaders();
                     rptSection = w_groupsHeaders.item(w_groupsHeaders.count() - 1);
-                    rptSection.setName("GH_" + rptSection.getIndex().ToString());
+                    rptSection.setName("G_" + rptSection.getIndex().ToString());
 
                     // the first group is next to the last header
                     //
@@ -3094,7 +3118,7 @@ namespace CSReportEditor
 
                     cIReportGroupSections w_groupsFooters = m_report.getGroupsFooters();
                     rptSection = w_groupsFooters.item(0);
-                    rptSection.setName("GF_" + rptSection.getIndex().ToString());
+                    rptSection.setName("G_" + rptSection.getIndex().ToString());
 
                     // all group footers are added to the top so at the
                     // beginning they are next to the detail section
@@ -3776,11 +3800,13 @@ namespace CSReportEditor
                             if (sec != null) {
 
                                 // it's a detail
-
-                                // it's a line
                             }
                             else {
+                                
+                                // it's a line
+
                                 isSecLn = true;
+
                                 switch (paintObj.getRptType()) {
                                     case csRptSectionType.SECLN_HEADER:
                                         sec = m_report.getHeaders().item(paintObj.getRptKeySec());
@@ -5285,6 +5311,7 @@ namespace CSReportEditor
         public void refreshAll() {
             refreshBody();
             refreshRule();
+            cMainEditor.setDocActive(this);
         }
 
         private void reportDone(object sender, EventArgs e)

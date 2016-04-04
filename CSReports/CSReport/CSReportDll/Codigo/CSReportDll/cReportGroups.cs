@@ -305,6 +305,7 @@ namespace CSReportDll
                 for (int i = 0; i < this.Count; i++)
                 {
                     item(i).setIndex(i);
+                    item(i).fixName();
                 }
             }
             catch (Exception ex)

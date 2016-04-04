@@ -149,6 +149,7 @@ namespace CSReportDll
                     m_coll[m_keys[i]].setName(m_coll[m_keys[i]].getName().Substring(0, 2).Replace("_", "") 
                                                 + "_" + i.ToString());
                 }
+                pRefreshIndex();
                 return;
             }
             catch
@@ -171,6 +172,7 @@ namespace CSReportDll
                     sec.setName(sec.getName().Substring(0, 2).Replace("_", "")
                                 + "_" + i.ToString());
                 }
+                pRefreshIndex();
                 return;
             }
             catch

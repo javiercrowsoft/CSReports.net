@@ -159,7 +159,7 @@ namespace CSReportDll
             m_rePrintInNewPage = xDoc.getNodeProperty(nodeObj, "RePrintInNewPage").getValueBool(eTypes.eBoolean);
             m_grandTotalGroup = xDoc.getNodeProperty(nodeObj, "GrandTotalGroup").getValueBool(eTypes.eBoolean);
 
-            pSetName();
+            fixName();
 
             XmlNode nodeObjAux = null;
 
@@ -186,7 +186,7 @@ namespace CSReportDll
             return true;
         }
 
-        private void pSetName()
+        public void fixName()
         {
             if (m_name.Length == 0
                 ||cUtil.subString(m_name.ToLower(), 0, 5) == "group" 

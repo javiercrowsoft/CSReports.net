@@ -188,7 +188,7 @@ namespace CSReportPaint
             return null;
         }
 
-        public cReportPaintObject getPaintSectoinForTag(String tag)
+        public cReportPaintObject getPaintSectionForTag(String tag)
         {
             for (int i = 0; i < m_paintSections.count(); i++)
             {
