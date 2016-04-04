@@ -2296,6 +2296,7 @@ namespace CSReportEditor
                 pResetKeysFocus();
                 G.redim(ref m_vSelectedKeys, 0);
 
+                pValidateSectionAspect();
                 updateSectionNameInPaintObjects();
             }
             else {
@@ -3286,7 +3287,7 @@ namespace CSReportEditor
             if (report != null) {
 
                 m_report = report;
-                //reLoadReport();
+
                 pValidateSectionAspect();
                 reLoadReport();
 
@@ -4868,7 +4869,7 @@ namespace CSReportEditor
                                                         m_report.getPaperInfo(),
                                                         w_paperInfo.getPaperSize(),
                                                         w_paperInfo.getOrientation()).Height,
-                                                        pageHeight);
+                                                        out pageHeight);
             pRefreshOffSetInPaintObjs();
             m_paint.setGridHeight(pageHeight);
         }
@@ -5423,7 +5424,7 @@ namespace CSReportEditor
                                                                 m_report.getPaperInfo(),
                                                                 w_paperInfo.getPaperSize(),
                                                                 w_paperInfo.getOrientation()).Width;
-            pGetOffSet(realPageHeight, pageHeight);
+            pGetOffSet(realPageHeight, out pageHeight);
 
             if (pageHeight > realPageHeight) { realPageHeight = pageHeight; }
 
@@ -6245,7 +6246,13 @@ namespace CSReportEditor
             return minBottom;
         }
 
-        private void pGetOffSet(float realPageHeight, float rtnPageHeight) {
+        private void pGetOffSet(float realPageHeight)
+        {
+            float pageHeight = 0;
+            pGetOffSet(realPageHeight, out pageHeight);
+        }
+
+        private void pGetOffSet(float realPageHeight, out float rtnPageHeight) {
             cReportSection sec = null;
 
             rtnPageHeight = 0;
@@ -6345,15 +6352,20 @@ namespace CSReportEditor
             }
 
             cReportPaperInfo w_paperInfo = m_report.getPaperInfo();
-            top = CSReportPaint.cGlobals.getRectFromPaperSize(m_report.getPaperInfo(),
+            var height = CSReportPaint.cGlobals.getRectFromPaperSize(m_report.getPaperInfo(),
                                                     w_paperInfo.getPaperSize(),
                                                     w_paperInfo.getOrientation()).Height;
+            top = height;
+
+            pGetOffSet(height);
 
             for (i = m_report.getFooters().count()-1; i > -1; i--) {
                 sec = m_report.getFooters().item(i);
                 top = top - sec.getAspect().getHeight();
                 pValidateSectionAspecAux(top, sec);
             }
+
+            pRefreshOffSetInPaintObjs();
         }
 
         private float pValidateSectionAspecAux(float top, cReportSection sec) {
