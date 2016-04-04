@@ -330,7 +330,7 @@
             // 
             this.mnuCopy.Name = "mnuCopy";
             this.mnuCopy.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.mnuCopy.Size = new System.Drawing.Size(149, 22);
+            this.mnuCopy.Size = new System.Drawing.Size(152, 22);
             this.mnuCopy.Text = "Copy";
             this.mnuCopy.Click += new System.EventHandler(this.mnuCopy_Click);
             // 
@@ -338,34 +338,34 @@
             // 
             this.mnuPaste.Name = "mnuPaste";
             this.mnuPaste.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.mnuPaste.Size = new System.Drawing.Size(149, 22);
+            this.mnuPaste.Size = new System.Drawing.Size(152, 22);
             this.mnuPaste.Text = "Paste";
             this.mnuPaste.Click += new System.EventHandler(this.mnuPaste_Click);
             // 
             // mnuPasteSpecial
             // 
             this.mnuPasteSpecial.Name = "mnuPasteSpecial";
-            this.mnuPasteSpecial.Size = new System.Drawing.Size(149, 22);
-            this.mnuPasteSpecial.Text = "Paste special";
+            this.mnuPasteSpecial.Size = new System.Drawing.Size(152, 22);
+            this.mnuPasteSpecial.Text = "Paste Special";
             this.mnuPasteSpecial.Click += new System.EventHandler(this.mnuPasteSpecial_Click);
             // 
             // toolStripSeparator10
             // 
             this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(146, 6);
+            this.toolStripSeparator10.Size = new System.Drawing.Size(149, 6);
             // 
             // mnuEditSearch
             // 
             this.mnuEditSearch.Name = "mnuEditSearch";
             this.mnuEditSearch.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
-            this.mnuEditSearch.Size = new System.Drawing.Size(149, 22);
+            this.mnuEditSearch.Size = new System.Drawing.Size(152, 22);
             this.mnuEditSearch.Text = "Search";
             this.mnuEditSearch.Click += new System.EventHandler(this.mnuEditSearch_Click);
             // 
             // toolStripSeparator11
             // 
             this.toolStripSeparator11.Name = "toolStripSeparator11";
-            this.toolStripSeparator11.Size = new System.Drawing.Size(146, 6);
+            this.toolStripSeparator11.Size = new System.Drawing.Size(149, 6);
             // 
             // mnuEditAddSec
             // 
@@ -374,27 +374,27 @@
             this.mnuEditAddGroup,
             this.mnuEditAddFooter});
             this.mnuEditAddSec.Name = "mnuEditAddSec";
-            this.mnuEditAddSec.Size = new System.Drawing.Size(149, 22);
+            this.mnuEditAddSec.Size = new System.Drawing.Size(152, 22);
             this.mnuEditAddSec.Text = "Sections";
             // 
             // mnuEditAddHeader
             // 
             this.mnuEditAddHeader.Name = "mnuEditAddHeader";
-            this.mnuEditAddHeader.Size = new System.Drawing.Size(137, 22);
+            this.mnuEditAddHeader.Size = new System.Drawing.Size(152, 22);
             this.mnuEditAddHeader.Text = "Add Header";
             this.mnuEditAddHeader.Click += new System.EventHandler(this.mnuEditAddHeader_Click);
             // 
             // mnuEditAddGroup
             // 
             this.mnuEditAddGroup.Name = "mnuEditAddGroup";
-            this.mnuEditAddGroup.Size = new System.Drawing.Size(137, 22);
+            this.mnuEditAddGroup.Size = new System.Drawing.Size(152, 22);
             this.mnuEditAddGroup.Text = "Add Group";
             this.mnuEditAddGroup.Click += new System.EventHandler(this.mnuEditAddGroup_Click);
             // 
             // mnuEditAddFooter
             // 
             this.mnuEditAddFooter.Name = "mnuEditAddFooter";
-            this.mnuEditAddFooter.Size = new System.Drawing.Size(137, 22);
+            this.mnuEditAddFooter.Size = new System.Drawing.Size(152, 22);
             this.mnuEditAddFooter.Text = "Add Footer";
             this.mnuEditAddFooter.Click += new System.EventHandler(this.mnuEditAddFooter_Click);
             // 
@@ -407,48 +407,48 @@
             this.mnuEditAddImage,
             this.mnuEditAddChart});
             this.controlsToolStripMenuItem.Name = "controlsToolStripMenuItem";
-            this.controlsToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
+            this.controlsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.controlsToolStripMenuItem.Text = "Controls";
             // 
             // mnuEditAddLabel
             // 
             this.mnuEditAddLabel.Name = "mnuEditAddLabel";
-            this.mnuEditAddLabel.Size = new System.Drawing.Size(150, 22);
-            this.mnuEditAddLabel.Text = "Label";
+            this.mnuEditAddLabel.Size = new System.Drawing.Size(175, 22);
+            this.mnuEditAddLabel.Text = "Add Label";
             this.mnuEditAddLabel.Click += new System.EventHandler(this.mnuEditAddLabel_Click);
             // 
             // mnuEditAddLine
             // 
             this.mnuEditAddLine.Name = "mnuEditAddLine";
-            this.mnuEditAddLine.Size = new System.Drawing.Size(150, 22);
-            this.mnuEditAddLine.Text = "Line";
+            this.mnuEditAddLine.Size = new System.Drawing.Size(175, 22);
+            this.mnuEditAddLine.Text = "Add Line";
             this.mnuEditAddLine.Click += new System.EventHandler(this.mnuEditAddLine_Click);
             // 
             // mnuEditAddControl
             // 
             this.mnuEditAddControl.Name = "mnuEditAddControl";
-            this.mnuEditAddControl.Size = new System.Drawing.Size(150, 22);
-            this.mnuEditAddControl.Text = "Database Field";
+            this.mnuEditAddControl.Size = new System.Drawing.Size(175, 22);
+            this.mnuEditAddControl.Text = "Add Database Field";
             this.mnuEditAddControl.Click += new System.EventHandler(this.mnuEditAddControl_Click);
             // 
             // mnuEditAddImage
             // 
             this.mnuEditAddImage.Name = "mnuEditAddImage";
-            this.mnuEditAddImage.Size = new System.Drawing.Size(150, 22);
-            this.mnuEditAddImage.Text = "Image";
+            this.mnuEditAddImage.Size = new System.Drawing.Size(175, 22);
+            this.mnuEditAddImage.Text = "Add Image";
             this.mnuEditAddImage.Click += new System.EventHandler(this.mnuEditAddImage_Click);
             // 
             // mnuEditAddChart
             // 
             this.mnuEditAddChart.Name = "mnuEditAddChart";
-            this.mnuEditAddChart.Size = new System.Drawing.Size(150, 22);
-            this.mnuEditAddChart.Text = "Chart";
+            this.mnuEditAddChart.Size = new System.Drawing.Size(175, 22);
+            this.mnuEditAddChart.Text = "Add Chart";
             this.mnuEditAddChart.Click += new System.EventHandler(this.mnuEditAddChart_Click);
             // 
             // toolStripSeparator12
             // 
             this.toolStripSeparator12.Name = "toolStripSeparator12";
-            this.toolStripSeparator12.Size = new System.Drawing.Size(146, 6);
+            this.toolStripSeparator12.Size = new System.Drawing.Size(149, 6);
             // 
             // mnuEditMove
             // 
@@ -460,7 +460,7 @@
             this.toolStripSeparator13,
             this.sizeOfMoveStepWithKeyboardToolStripMenuItem});
             this.mnuEditMove.Name = "mnuEditMove";
-            this.mnuEditMove.Size = new System.Drawing.Size(149, 22);
+            this.mnuEditMove.Size = new System.Drawing.Size(152, 22);
             this.mnuEditMove.Text = "Move";
             // 
             // horizontalToolStripMenuItem
@@ -1146,7 +1146,7 @@
             this.toolStripSeparator19,
             this.cmCtrlProperties});
             this.cmnControl.Name = "cmnControl";
-            this.cmnControl.Size = new System.Drawing.Size(142, 204);
+            this.cmnControl.Size = new System.Drawing.Size(153, 226);
             // 
             // cmCtrlCopy
             // 
@@ -1177,8 +1177,9 @@
             // cmCtrlDelete
             // 
             this.cmCtrlDelete.Name = "cmCtrlDelete";
-            this.cmCtrlDelete.Size = new System.Drawing.Size(141, 22);
+            this.cmCtrlDelete.Size = new System.Drawing.Size(152, 22);
             this.cmCtrlDelete.Text = "Delete";
+            this.cmCtrlDelete.Click += new System.EventHandler(this.cmCtrlDelete_Click);
             // 
             // toolStripSeparator18
             // 

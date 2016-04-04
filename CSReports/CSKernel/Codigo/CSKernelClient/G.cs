@@ -109,7 +109,7 @@ namespace CSKernelClient
                 else
                 {
                     String[] newArray = new String[size];
-                    Array.Copy(vStrings, newArray, vStrings.Length);
+                    Array.Copy(vStrings, newArray, Math.Min(size, vStrings.Length));
                     vStrings = newArray;
                 }
             }

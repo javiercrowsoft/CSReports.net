@@ -2147,6 +2147,7 @@ namespace CSReportEditor
 
             cReportGroup group = null;
             cReportSection secG = null;
+
             if (m_paint.paintObjIsSection(m_keyFocus)) {
                 if (m_paint.getPaintSections().item(m_keyFocus) == null) { return; }
 

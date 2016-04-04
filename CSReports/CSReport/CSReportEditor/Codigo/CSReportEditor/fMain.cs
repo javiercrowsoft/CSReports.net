@@ -1094,5 +1094,14 @@ namespace CSReportEditor
         {
             paste(true);
         }
+
+        private void cmCtrlDelete_Click(object sender, EventArgs e)
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.deleteObj(false);
+            }
+        }
     }
 }

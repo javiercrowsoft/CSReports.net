@@ -154,7 +154,7 @@ namespace CSReportDll
                 Add(key, c);
 
                 c.setKey(key);
-                c.setIndex(count());
+                c.setIndex(count()-1);
 
                 c.setHeader(m_groupsHeaders.add(null, "", -1));
                 c.setFooter(m_groupsFooters.add(null, "", 0));

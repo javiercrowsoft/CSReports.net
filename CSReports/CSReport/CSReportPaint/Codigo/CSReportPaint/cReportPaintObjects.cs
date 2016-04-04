@@ -114,12 +114,15 @@ namespace CSReportPaint
         public void remove(String key)
         {
             this.BaseRemove(key);
+            removeZOrder(key);
         }
 
         // Removes an entry in the specified index from the collection.
         public void remove(int index)
         {
+            string key = item(index).getKey();
             this.BaseRemoveAt(index);
+            removeZOrder(key);
         }
 
         // Clears all the elements in the collection.
@@ -272,7 +275,7 @@ namespace CSReportPaint
             }
         }
 
-        private void dellZOrder(String sKey)
+        private void removeZOrder(String sKey)
         {
             for (int i = 0; i < m_zorder.Length; i++)
             {

@@ -5053,8 +5053,8 @@ namespace CSReportDll
             for (int _i = 0; _i < m_groups.count(); _i++)
             {
                 cReportGroup group = m_groups.item(_i);
-                idx = idx + 1;
                 group.setIndex(idx);
+                idx = idx + 1;
             }
         }
 
@@ -5645,6 +5645,36 @@ namespace CSReportDll
                 ReportDone(this, new EventArgs());
             }
         }
-    
+
+
+        //
+        // debug functions
+        //
+        public string[] debugGroupKeys()
+        {
+            string[] keys = new String[m_groups.count() * 2];
+            var groupCount = m_groups.count();
+            for (int i = 0; i < groupCount; i++)
+            {
+                var h = m_groups.getGroupsHeaders().item(i);
+                var f = m_groups.getGroupsFooters().item(i);
+                keys[i] = "H: " + h.getKey() + " " + h.getKeyPaint() + " " + h.getName() + " " + h.getIndex() + " " + h.getRealIndex() ;
+                keys[groupCount+i] = "F: " + f.getKey() + " " + h.getKeyPaint() + " " + f.getName() + " " + f.getIndex() + " " + f.getRealIndex();
+            }
+            return keys;
+        }
+
+        public string[] debugGroupPanitKeys()
+        {
+            string[] keys = new String[m_groups.count() * 2];
+            var groupCount = m_groups.count();
+            for (int i = 0; i < groupCount; i++)
+            {
+                keys[i] = "H: " + m_groups.getGroupsHeaders().item(i).getKeyPaint();
+                keys[groupCount + i] = "F: " + m_groups.getGroupsFooters().item(i).getKeyPaint();
+            }
+            return keys;
+        }
+
     }
 }
