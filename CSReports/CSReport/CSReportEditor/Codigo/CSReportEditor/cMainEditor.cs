@@ -69,7 +69,7 @@ namespace CSReportEditor
             {
                 TabPage editorTab = editor.getEditorTab();
                 (editorTab.Parent as TabControl).SelectedTab = editorTab;
-                
+
                 if (m_fToolbox != null && !m_fToolbox.IsDisposed && m_fToolbox.Visible)
                 {
                     if (getToolbox(editor) != null) { editor.showToolbox(); }
@@ -82,11 +82,26 @@ namespace CSReportEditor
                 {
                     if (getCtrlTreeBox(editor) != null) { editor.showControlsTree(); }
                 }
-                fmain.showControls(editor);
-                fmain.showControlsTree(editor);
-                fmain.showFields(editor);
             }
-	    }
+            else
+            {
+                if (m_fToolbox != null && !m_fToolbox.IsDisposed && m_fToolbox.Visible)
+                {
+                    m_fToolbox.clear();
+                }
+                if (m_fControls != null && !m_fControls.IsDisposed && m_fControls.Visible)
+                {
+                    m_fControls.clear();
+                }
+                if (m_fTreeViewCtrls != null && !m_fTreeViewCtrls.IsDisposed && m_fTreeViewCtrls.Visible)
+                {
+                    m_fTreeViewCtrls.clear();
+                }
+            }
+            fmain.showControls(editor);
+            fmain.showControlsTree(editor);
+            fmain.showFields(editor);
+        }
 
 	    public static void setDocInacActive(cEditor editor) {
 	        if (m_editor != editor) { return; }

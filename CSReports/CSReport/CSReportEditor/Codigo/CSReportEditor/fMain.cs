@@ -531,13 +531,23 @@ namespace CSReportEditor
 
         public void showControls(cEditor editor)
         {
-            cGlobals.addCtrls(editor.getReport(), lv_controls, C_CTRL_IMAGE, C_DB_IMAGE);
+            lv_controls.Items.Clear();
+
+            if (editor != null)
+            {
+                cGlobals.addCtrls(editor.getReport(), lv_controls, C_CTRL_IMAGE, C_DB_IMAGE);
+            }
         }
 
         public void showControlsTree(cEditor editor)
         {
             m_wasDoubleClick = false;
-            cGlobals.addCtrls(editor.getReport(), tv_controls, C_IMG_FOLDER, C_IMG_FORMULA, C_IMG_CONTROL, C_IMG_DATBASE_FIELD);
+            tv_controls.Nodes.Clear();
+
+            if (editor != null)
+            {
+                cGlobals.addCtrls(editor.getReport(), tv_controls, C_IMG_FOLDER, C_IMG_FORMULA, C_IMG_CONTROL, C_IMG_DATBASE_FIELD);
+            }            
         }
 
         public void showProperties(cEditor editor, string key)
@@ -627,10 +637,15 @@ namespace CSReportEditor
 
         public void showFields(cEditor editor)
         {
-            var connect = editor.getReport().getConnect();
-            cGlobals.fillColumns(
-                connect.getDataSource(), 
-                connect.getColumns(), lv_fields, C_INDEX, C_FIELDTYPE, false);
+            lv_fields.Items.Clear();
+
+            if (editor != null)
+            {
+                var connect = editor.getReport().getConnect();
+                cGlobals.fillColumns(
+                    connect.getDataSource(),
+                    connect.getColumns(), lv_fields, C_INDEX, C_FIELDTYPE, false);
+            }            
         }
 
         private void lv_controls_ColumnClick(object sender, ColumnClickEventArgs e)
@@ -793,6 +808,10 @@ namespace CSReportEditor
                     if (editor.close())
                     {
                         tabReports.TabPages.RemoveAt(i);
+                        if (tabReports.TabPages.Count == 0)
+                        {
+                            cMainEditor.setDocActive(null);
+                        }
                     }
                 }
             }

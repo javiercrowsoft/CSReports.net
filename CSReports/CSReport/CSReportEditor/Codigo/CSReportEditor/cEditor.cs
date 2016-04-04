@@ -6601,11 +6601,6 @@ namespace CSReportEditor
             return _rtn;
         }
 
-        private void form_Deactivate() {
-            cMainEditor.setDocInacActive(this);
-            cMainEditor.clearToolbox(this);
-        }
-
         public void editConnectionString()
         {
             string stringConnection = m_report.getConnect().getStrConnect();
