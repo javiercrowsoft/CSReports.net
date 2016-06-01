@@ -1,0 +1,38 @@
+{
+  "manifest_version": 2,
+  "name": "CSReports Web Server",
+  "version": "0.0.0.1",
+  "description": "This extension allows web pages to print directly to printer using CrowSoft Reports",
+  "icons": {
+    "48": "icons/report-48x48.png",
+    "32": "icons/report-32x32.png",
+    "24": "icons/report-24x24.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [ "http://*/*", "https://*/*", "file://*/*" ],
+      "js": [ "scripts/content.js" ]
+    }
+  ],
+  "background": {
+    "scripts": [ "scripts/background.js" ],
+    "persistent": false
+  },
+  "permissions": [
+    "nativeMessaging"
+  ],
+  "externally_connectable": {
+    // Extension and app IDs. If this field is not specified, no
+    // extensions or apps can connect.
+    "ids": [
+      "*"
+    ],
+    // Match patterns for web pages. Does not affect content scripts.
+    // If this field is not specified, no webpages can connect.
+    "matches": [
+      "https://*.google.com/*",
+      "*://*.chromium.org/*",
+      "http://cairowebtest.dev/"
+    ]
+  }
+}

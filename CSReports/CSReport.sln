@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual C# Express 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSReportDll", "CSReport\CSReportDll\Codigo\CSReportDll\CSReportDll.csproj", "{9A3F2CA3-2093-47AF-9B48-2CE6B1636245}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSReportPaint", "CSReport\CSReportPaint\Codigo\CSReportPaint\CSReportPaint.csproj", "{E448F39C-75BC-42FC-8E4A-9110D60EECE4}"
@@ -34,6 +36,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSReportEditor", "CSReport\CSReportEditor\Codigo\CSReportEditor\CSReportEditor.csproj", "{273C5ECF-DB2A-4E01-A4B3-C73B8D37374E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSReportScript", "CSReport\CSReportScript\Codigo\CSReportScript\CSReportScript.csproj", "{54CAF374-6A63-479F-AF23-CA6143693F11}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSReportWebServer", "CSReportWebServer\CSReportWebServer.csproj", "{5BBE72D2-EA6A-4543-BA5E-55654148459D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -231,6 +235,18 @@ Global
 		{54CAF374-6A63-479F-AF23-CA6143693F11}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{54CAF374-6A63-479F-AF23-CA6143693F11}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{54CAF374-6A63-479F-AF23-CA6143693F11}.Release|x86.ActiveCfg = Release|Any CPU
+		{5BBE72D2-EA6A-4543-BA5E-55654148459D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BBE72D2-EA6A-4543-BA5E-55654148459D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BBE72D2-EA6A-4543-BA5E-55654148459D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{5BBE72D2-EA6A-4543-BA5E-55654148459D}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{5BBE72D2-EA6A-4543-BA5E-55654148459D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5BBE72D2-EA6A-4543-BA5E-55654148459D}.Debug|x86.Build.0 = Debug|Any CPU
+		{5BBE72D2-EA6A-4543-BA5E-55654148459D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BBE72D2-EA6A-4543-BA5E-55654148459D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BBE72D2-EA6A-4543-BA5E-55654148459D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{5BBE72D2-EA6A-4543-BA5E-55654148459D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{5BBE72D2-EA6A-4543-BA5E-55654148459D}.Release|x86.ActiveCfg = Release|Any CPU
+		{5BBE72D2-EA6A-4543-BA5E-55654148459D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
