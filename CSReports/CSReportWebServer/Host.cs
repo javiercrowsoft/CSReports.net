@@ -47,16 +47,15 @@ namespace CSReportWebServer
                 {
                     string message = port.Read();
                     log.DebugFormat("request message\n{0}", message);
+                    m_f.log("request message " + message);
                     JObject request = JObject.Parse(message);
-
                     JObject reply = new JObject();
                     if (request["source"] != null) reply["source"] = request["destination"];
                     if (request["destination"] != null) reply["destination"] = request["source"];
                     reply["request"] = request;
                     reply["extension"] = "CSReportWebServer.Echo";
                     message = reply.ToString(Formatting.None);
-                    //log.DebugFormat("reply message\n{0}", message);
-                    log.Info("reply message: " + message);
+                    log.DebugFormat("reply message\n{0}", message);
                     m_f.log(message);
                     port.Write(message);
                 }

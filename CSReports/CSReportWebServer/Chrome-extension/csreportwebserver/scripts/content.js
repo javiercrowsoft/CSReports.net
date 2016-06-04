@@ -2,8 +2,6 @@ var extension_url = "chrome-extension://"+chrome.runtime.id+"/";
 var port;
 
 window.addEventListener( "message", function(event) {
-  debugger;
-  console.log("hola");
 	if (event.source != window) return;
 	var message = event.data;
 	if (message.destination && (message.destination === extension_url))
@@ -19,6 +17,7 @@ window.addEventListener( "message", function(event) {
 						console.log(message);
 					}
 					else {
+            message.source = extension_url;
 						window.postMessage(message,"*");
 					}
 				} );
@@ -30,9 +29,6 @@ window.addEventListener( "message", function(event) {
 			else {
 				port.postMessage(message);
 			}
-		}
-
+		}    
 	}
 }, false );
-
-/* eof */
