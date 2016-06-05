@@ -39,6 +39,7 @@
             this.lvLog = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.cmdTest = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -95,6 +96,7 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.cmdTest);
             this.panel2.Controls.Add(this.label2);
             this.panel2.Controls.Add(this.cmdRegister);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -153,6 +155,16 @@
             this.columnHeader2.Text = "Text";
             this.columnHeader2.Width = 6000;
             // 
+            // cmdTest
+            // 
+            this.cmdTest.Location = new System.Drawing.Point(303, 70);
+            this.cmdTest.Name = "cmdTest";
+            this.cmdTest.Size = new System.Drawing.Size(181, 31);
+            this.cmdTest.TabIndex = 2;
+            this.cmdTest.Text = "Test";
+            this.cmdTest.UseVisualStyleBackColor = true;
+            this.cmdTest.Click += new System.EventHandler(this.cmdTest_Click);
+            // 
             // fMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -184,6 +196,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button cmdTest;
     }
 }
 

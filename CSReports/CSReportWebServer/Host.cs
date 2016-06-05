@@ -40,8 +40,6 @@ namespace CSReportWebServer
             log.Info("host started 0.0.0.1");
             m_f.log("host started");
 
-            throw new InvalidOperationException();
-
             stop.Reset();
             while (!stop.WaitOne(0))
             {
@@ -79,7 +77,7 @@ namespace CSReportWebServer
 
             log.Info("host stopped");
             m_f.log("host stopped");
-            m_f.Close();
+            m_f.close();
         }
 
         /// <summary>
@@ -92,13 +90,8 @@ namespace CSReportWebServer
 
         private void previewReport()
         {
-            var pathAndFile = @"\\vmware-host\Shared Folders\Documents\CrowSoft\Reportes\temp\DC_CSC_CON_014016.csr";
-            var report = new Report();
-            report.init();
-            if (report.openDocument(pathAndFile))
-            {
-                report.preview();
-            }
+
+            m_f.preview();
         }
     }
 }
