@@ -61,6 +61,12 @@
     <Compile Include="fMain.Designer.cs">
       <DependentUpon>fMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="fProgress.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="fProgress.Designer.cs">
+      <DependentUpon>fProgress.cs</DependentUpon>
+    </Compile>
     <Compile Include="Host.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="NativeMessagingException.cs" />
@@ -68,8 +74,12 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProtocolErrorException.cs" />
+    <Compile Include="Report.cs" />
     <EmbeddedResource Include="fMain.resx">
       <DependentUpon>fMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="fProgress.resx">
+      <DependentUpon>fProgress.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -96,6 +106,28 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\config_page.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CSKernel\Codigo\CSKernelClient\CSKernelClient.csproj">
+      <Project>{b3932376-5fea-4c07-9709-663989c7ecf2}</Project>
+      <Name>CSKernelClient</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CSReport\CSIReportPrint\Codigo\CSIReportPrint\CSIReportPrint.csproj">
+      <Project>{33eb467a-cdef-426e-afa3-0e2ca9e2e8aa}</Project>
+      <Name>CSIReportPrint</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CSReport\CSReportDll\Codigo\CSReportDll\CSReportDll.csproj">
+      <Project>{9a3f2ca3-2093-47af-9b48-2ce6b1636245}</Project>
+      <Name>CSReportDll</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CSReport\CSReportGlobals\Codigo\CSReportGlobals\CSReportGlobals.csproj">
+      <Project>{6018c911-1404-462b-9fa7-31904d56813a}</Project>
+      <Name>CSReportGlobals</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CSReport\CSReportPaint\Codigo\CSReportPaint\CSReportPaint.csproj">
+      <Project>{e448f39c-75bc-42fc-8e4a-9110d60eece4}</Project>
+      <Name>CSReportPaint</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

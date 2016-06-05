@@ -1749,6 +1749,7 @@ namespace CSDataBase
     { 
         SQL_SERVER = 1,
         POSTGRESQL = 2,
-        ORACLE = 3
+        ORACLE = 3,
+        CSREPORT_WEB = 4
     }
 }

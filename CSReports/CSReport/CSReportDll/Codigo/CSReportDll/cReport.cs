@@ -231,6 +231,8 @@ namespace CSReportDll
 
         private bool m_isForWeb;
 
+        private csDatabaseEngine m_databaseEngine = csDatabaseEngine.SQL_SERVER;
+
         private String m_exportEmailAddress = "";
 
         public cReport()
@@ -295,6 +297,11 @@ namespace CSReportDll
         public void setIsForWeb(bool rhs)
         {
             m_isForWeb = rhs;
+        }
+
+        public void setDatabaseEngine(csDatabaseEngine databaseEngine)
+        {
+            m_databaseEngine = databaseEngine;
         }
 
         public cReportConnectsAux getConnectsAux()
@@ -4831,7 +4838,7 @@ namespace CSReportDll
                     return false;
                 }
 
-                cn = new cDataBase(csDatabaseEngine.SQL_SERVER);
+                cn = new cDataBase(m_databaseEngine);
 
                 if (m_isForWeb)
                 {

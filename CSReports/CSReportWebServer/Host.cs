@@ -40,6 +40,8 @@ namespace CSReportWebServer
             log.Info("host started 0.0.0.1");
             m_f.log("host started");
 
+            throw new InvalidOperationException();
+
             stop.Reset();
             while (!stop.WaitOne(0))
             {
@@ -55,6 +57,9 @@ namespace CSReportWebServer
                     reply["request"] = request;
                     reply["extension"] = "CSReportWebServer.Echo";
                     message = reply.ToString(Formatting.None);
+
+                    previewReport();
+
                     log.DebugFormat("reply message\n{0}", message);
                     m_f.log(message);
                     port.Write(message);
@@ -83,6 +88,17 @@ namespace CSReportWebServer
         public void Stop()
         {
             stop.Set();
+        }
+
+        private void previewReport()
+        {
+            var pathAndFile = @"\\vmware-host\Shared Folders\Documents\CrowSoft\Reportes\temp\DC_CSC_CON_014016.csr";
+            var report = new Report();
+            report.init();
+            if (report.openDocument(pathAndFile))
+            {
+                report.preview();
+            }
         }
     }
 }

@@ -6523,7 +6523,6 @@ namespace CSReportEditor
             oLaunchInfo.setObjPaint(new cReportPrint());
             if (!m_report.init(oLaunchInfo)) { return; }
 
-            CSKernelFile.cFile file = new CSKernelFile.cFile();
             m_report.setPathDefault(Application.StartupPath);
 
             m_picReport.Top = C_TOPBODY;
