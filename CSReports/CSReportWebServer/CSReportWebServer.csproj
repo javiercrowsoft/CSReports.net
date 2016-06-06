@@ -108,6 +108,10 @@
     <None Include="Resources\config_page.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CSDataBase\Codigo\CSDataBase\CSDataBase.csproj">
+      <Project>{a02fe16d-0b24-467e-ba97-6e1c1213ad46}</Project>
+      <Name>CSDataBase</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CSKernel\Codigo\CSKernelClient\CSKernelClient.csproj">
       <Project>{b3932376-5fea-4c07-9709-663989c7ecf2}</Project>
       <Name>CSKernelClient</Name>

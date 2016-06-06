@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\CSReportWebServer\packages\Newtonsoft.Json.6.0.0\lib\net35-client\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.OracleClient" />
@@ -45,6 +48,9 @@
     <Compile Include="cConstants.cs" />
     <Compile Include="cDataBase.cs" />
     <Compile Include="cGlobal.cs" />
+    <Compile Include="cJSONDataSource.cs" />
+    <Compile Include="cJSONDataSources.cs" />
+    <Compile Include="cJSONServer.cs" />
     <Compile Include="cOpenRsCommand.cs" />
     <Compile Include="fCancelQuery.cs">
       <SubType>Form</SubType>

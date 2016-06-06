@@ -56,7 +56,7 @@ namespace CSReportWebServer
                     reply["extension"] = "CSReportWebServer.Echo";
                     message = reply.ToString(Formatting.None);
 
-                    previewReport();
+                    executeMessage(request);
 
                     log.DebugFormat("reply message\n{0}", message);
                     m_f.log(message);
@@ -88,10 +88,20 @@ namespace CSReportWebServer
             stop.Set();
         }
 
-        private void previewReport()
+        private void executeMessage(JObject request)
         {
+            var action = request["message"]["action"].ToString();
+            switch (action)
+            {
+                case "preview":
+                    previewReport(request);
+                    break;
+            }
+        }
 
-            m_f.preview();
+        private void previewReport(JObject request)
+        {
+            m_f.preview(request);
         }
     }
 }

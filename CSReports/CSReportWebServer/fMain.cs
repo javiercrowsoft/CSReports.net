@@ -7,15 +7,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace CSReportWebServer
 {
     public partial class fMain : Form
     {
+        private string[] m_args;
+
         public fMain(string[] args)
         {
             InitializeComponent();
-            Main.Init(args, this);
+            m_args = args;
         }
 
         private void cmdRegister_Click(object sender, EventArgs e)
@@ -44,28 +48,28 @@ namespace CSReportWebServer
             this.Invoke(d);
         }
 
-        delegate void PreviewCallback();
+        delegate void PreviewCallback(JObject request);
 
-        private void safePreview()
+        private void safePreview(JObject request)
         {
             var pathAndFile = @"\\vmware-host\Shared Folders\Documents\CrowSoft\Reportes\temp\DC_CSC_CON_014016.csr";
             var report = new Report();
-            report.init();
+            report.init(request);
             if (report.openDocument(pathAndFile))
             {
                 report.preview();
             }
         }
 
-        public void preview()
+        public void preview(JObject request)
         {
             PreviewCallback d = new PreviewCallback(safePreview);
-            this.Invoke(d);
+            this.Invoke(d, new object[] { request });
         }
 
-        private void cmdTest_Click(object sender, EventArgs e)
+        private void fMain_Load(object sender, EventArgs e)
         {
-            preview();
+            Main.Init(m_args, this);
         }
     }
 }

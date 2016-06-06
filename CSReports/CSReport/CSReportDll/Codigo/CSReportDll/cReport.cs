@@ -1896,7 +1896,7 @@ namespace CSReportDll
 			return launch(null);
 		}
         public bool launch(cReportLaunchInfo oLaunchInfo)
-        { // TODO: Use of ByRef founded Public Function Launch(Optional ByRef oLaunchInfo As cReportLaunchInfo = Nothing) As Boolean
+        {
             try
             {
                 List<object[]> recordsets = null;

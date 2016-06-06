@@ -1665,6 +1665,8 @@ namespace CSDataBase
                     throw new NotImplementedException();
                 case csDatabaseEngine.ORACLE:
                     return new OracleConnection();
+                case csDatabaseEngine.CSREPORT_WEB:
+                    return new cJSONServerConnection();
             }
             throw new Exception("The database engine is not supported " + m_databaseEngine.ToString());
         }
@@ -1743,6 +1745,11 @@ namespace CSDataBase
             return strConnect;
         }
 
+    }
+
+    public static class csDataBaseEngineStringConnections
+    {
+        public static string CSREPORT_WEB = "CSREPORT_WEB";
     }
 
     public enum csDatabaseEngine

@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using CSKernelClient;
 using CSReportGlobals;
 using CSReportDll;
 using CSReportPaint;
+using CSDataBase;
 
 namespace CSReportWebServer
 {
@@ -19,9 +22,13 @@ namespace CSReportWebServer
         private fProgress m_fProgress;
         private bool m_cancelPrinting = false;
 
-        public void init()
+        // we modify the report data source so it uses the CSReportWebServer instead of a real sql engine (SqlServer, PostgreSQL or Oracle)
+        //
+        public void init(JObject request)
         {
             m_report = new cReport();
+
+            m_report.setDatabaseEngine(csDatabaseEngine.CSREPORT_WEB);
 
             m_report.Progress += reportProgress;
             m_report.ReportDone += reportDone;
@@ -30,6 +37,9 @@ namespace CSReportWebServer
 
             oLaunchInfo.setPrinter(cPrintAPI.getcPrinterFromDefaultPrinter());
             oLaunchInfo.setObjPaint(new cReportPrint());
+
+            registerDataSource(request);
+
             if (!m_report.init(oLaunchInfo)) { return; }
 
             m_report.setPathDefault(Application.StartupPath);
@@ -44,6 +54,8 @@ namespace CSReportWebServer
                 {
                     return false;
                 }
+
+                m_report.getLaunchInfo().setStrConnect(csDataBaseEngineStringConnections.CSREPORT_WEB);
 
                 Application.DoEvents();
                 
@@ -63,6 +75,16 @@ namespace CSReportWebServer
         {
             m_report.getLaunchInfo().setAction(csRptLaunchAction.CSRPTLAUNCHPREVIEW);
             launchReport();
+        }
+
+        private void registerDataSource(JObject request)
+        {
+            var dataSources = request["message"]["data"]["data"];
+            foreach (var dataSource in dataSources)
+            {
+                cJSONDataSource ds = new cJSONDataSource(dataSource["name"].ToString(), dataSource["data"] as JObject);
+                cJSONServer.registerDataSource(ds, ds.getName());
+            }
         }
 
         private void reportDone(object sender, EventArgs e)
