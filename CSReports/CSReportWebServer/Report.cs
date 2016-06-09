@@ -17,6 +17,7 @@ namespace CSReportWebServer
     {
         private const String C_MODULE = "Report";
 
+        private string m_database;
         private cReport m_report;
 
         private fProgress m_fProgress;
@@ -26,6 +27,7 @@ namespace CSReportWebServer
         //
         public void init(JObject request)
         {
+            m_database = Guid.NewGuid().ToString();
             m_report = new cReport();
 
             m_report.setDatabaseEngine(csDatabaseEngine.CSREPORT_WEB);
@@ -55,7 +57,7 @@ namespace CSReportWebServer
                     return false;
                 }
 
-                m_report.getLaunchInfo().setStrConnect(csDataBaseEngineStringConnections.CSREPORT_WEB);
+                m_report.getLaunchInfo().setStrConnect(m_database);
 
                 Application.DoEvents();
                 
@@ -83,7 +85,7 @@ namespace CSReportWebServer
             foreach (var dataSource in dataSources)
             {
                 cJSONDataSource ds = new cJSONDataSource(dataSource["name"].ToString(), dataSource["data"] as JObject);
-                cJSONServer.registerDataSource(ds, ds.getName());
+                cJSONServer.registerDataSource(ds, m_database + "." + ds.getName());
             }
         }
 

@@ -96,6 +96,8 @@ namespace CSReportWebServer
                 case "preview":
                     previewReport(request);
                     break;
+                case "debugger":
+                    break;
             }
         }
 

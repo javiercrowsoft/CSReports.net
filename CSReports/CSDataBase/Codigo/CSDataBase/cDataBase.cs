@@ -450,6 +450,7 @@ namespace CSDataBase
                 return false;
             }
         }
+
         public bool loadDataTable(bool showWindowCancel,
                                      bool raiseProgressEvent,
                                      bool showModal,
@@ -1684,6 +1685,9 @@ namespace CSDataBase
                     throw new NotImplementedException();
                 case csDatabaseEngine.ORACLE:
                     ocmd = new OracleCommand(sqlstmt, m_ocn as OracleConnection);
+                    break;
+                case csDatabaseEngine.CSREPORT_WEB:
+                    ocmd = new cJSONCommand(sqlstmt, m_ocn as cJSONServerConnection);
                     break;
             }
             

@@ -48,6 +48,10 @@
     <Compile Include="cConstants.cs" />
     <Compile Include="cDataBase.cs" />
     <Compile Include="cGlobal.cs" />
+    <Compile Include="cJSONCommand.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="cJSONDataReader.cs" />
     <Compile Include="cJSONDataSource.cs" />
     <Compile Include="cJSONDataSources.cs" />
     <Compile Include="cJSONServer.cs" />

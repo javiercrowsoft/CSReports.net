@@ -139,7 +139,7 @@ namespace CSDataBase
                     throw new ArgumentNullException("name");
                 }
 
-                Add(name, dataSource);
+                Add(name.ToLower(), dataSource);
 
                 return dataSource;
             }
@@ -158,7 +158,7 @@ namespace CSDataBase
         {
             try
             {
-                return (cJSONDataSource)this.BaseGet(key);
+                return (cJSONDataSource)this.BaseGet(key.ToLower());
             }
             catch
             {

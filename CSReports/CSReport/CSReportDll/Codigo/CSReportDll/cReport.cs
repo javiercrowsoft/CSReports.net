@@ -2640,7 +2640,7 @@ namespace CSReportDll
                     || ctrl.getControlType() == csRptControlType.CSRPTCTDBIMAGE)
                 {
                     idx = ctrl.getField().getIndex();
-                    if (!pInitCtrls(ctrl, idx, recordsets, ctrl.getField().getName()))
+                    if (!pInitCtrls(ctrl, out idx, recordsets, ctrl.getField().getName()))
                     {
                         return false;
                     }
@@ -2651,7 +2651,7 @@ namespace CSReportDll
                     if (ctrl.getChart().getGroupFieldName() != "")
                     {
                         idx = -1;
-                        pInitCtrls(ctrl, idx, recordsets, ctrl.getChart().getGroupFieldName());
+                        pInitCtrls(ctrl, out idx, recordsets, ctrl.getChart().getGroupFieldName());
                         ctrl.getChart().setGroupFieldIndex(idx);
                     }
                     else
@@ -2663,13 +2663,13 @@ namespace CSReportDll
                     {
                         serie = ctrl.getChart().getSeries().item(_j);
                         idx = serie.getValueIndex();
-                        if (!pInitCtrls(ctrl, idx, recordsets, serie.getValueFieldName()))
+                        if (!pInitCtrls(ctrl, out idx, recordsets, serie.getValueFieldName()))
                         {
                             return false;
                         }
                         serie.setValueIndex(idx);
                         idx = serie.getLabelIndex();
-                        if (!pInitCtrls(ctrl, idx, recordsets, serie.getLabelFieldName()))
+                        if (!pInitCtrls(ctrl, out idx, recordsets, serie.getLabelFieldName()))
                         {
                             return false;
                         }
@@ -2681,7 +2681,7 @@ namespace CSReportDll
             return true;
         }
 
-        private bool pInitCtrls(cReportControl ctrl, int idx, List<object[]> recordsets, String fieldName)
+        private bool pInitCtrls(cReportControl ctrl, out int idx, List<object[]> recordsets, String fieldName)
         {
             bool found = false;
             int j = 0;

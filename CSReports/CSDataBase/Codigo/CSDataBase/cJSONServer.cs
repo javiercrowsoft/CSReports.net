@@ -12,6 +12,10 @@ namespace CSDataBase
         {
             m_dataSources.add(dataSource, name);
         }
+
+        public static cJSONDataSource getDataSource(string name) {
+            return m_dataSources.item(name);
+        }
     }
 
     class cJSONServerConnection : DbConnection
@@ -28,7 +32,10 @@ namespace CSDataBase
         // Parameters:
         //   connectionString:
         //     The connection used to open the SQL Server database.
-        public cJSONServerConnection(string connectionString) { }
+        public cJSONServerConnection(string connectionString)
+        {
+            this.ConnectionString = connectionString;
+        }
 
         //
         // Summary:
