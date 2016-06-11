@@ -17,7 +17,7 @@ window.addEventListener( "message", function(event) {
 						console.log(message);
 					}
 					else {
-            message.source = extension_url;
+						message.source = extension_url;
 						window.postMessage(message,"*");
 					}
 				} );
@@ -29,6 +29,6 @@ window.addEventListener( "message", function(event) {
 			else {
 				port.postMessage(message);
 			}
-		}    
+		}
 	}
 }, false );

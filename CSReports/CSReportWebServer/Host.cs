@@ -21,15 +21,17 @@ namespace CSReportWebServer
         private Port port;
 
         private fMain m_f;
+        private SizeQueue<JObject> m_messageQueue;
 
         /// <summary>
         /// Creates a new instance of native messaging host.
         /// </summary>
-        public Host(fMain f)
+        public Host(fMain f, SizeQueue<JObject> messageQueue)
         {
             port = new Port();
             stop = new ManualResetEvent(false);
             m_f = f;
+            m_messageQueue = messageQueue;
         }
 
         /// <summary>
@@ -43,6 +45,8 @@ namespace CSReportWebServer
             stop.Reset();
             while (!stop.WaitOne(0))
             {
+                // process messages from Chrome
+                //
                 try
                 {
                     string message = port.Read();
@@ -72,6 +76,18 @@ namespace CSReportWebServer
                     log.Error("message processing caused an exception", ex);
                     stop.Set();
                     throw ex;
+                }
+
+                // process messages from CSReports
+                //
+                JObject jMessage = m_messageQueue.Dequeue();
+
+                if (jMessage != null)
+                {
+                    string message = jMessage.ToString(Formatting.None);
+                    log.DebugFormat("reply message\n{0}", message);
+                    m_f.log(message);
+                    port.Write(message);
                 }
             }
 
@@ -104,6 +120,36 @@ namespace CSReportWebServer
         private void previewReport(JObject request)
         {
             m_f.preview(request);
+        }
+    }
+
+    public class SizeQueue<T>
+    {
+        private readonly Queue<T> queue = new Queue<T>();
+        private readonly int maxSize;
+        public SizeQueue(int maxSize) { this.maxSize = maxSize; }
+
+        public void Enqueue(T item)
+        {
+            lock (queue)
+            {
+                if (queue.Count < maxSize) // yes, I am a bad person :P
+                {
+                    queue.Enqueue(item);
+                }
+            }
+        }
+        public T Dequeue()
+        {
+            lock (queue)
+            {
+                T item = default(T);
+                if (queue.Count > 0)
+                {
+                    item = queue.Dequeue();
+                }
+                return item;
+            }
         }
     }
 }

@@ -17,16 +17,20 @@ namespace CSReportWebServer
     {
         private const String C_MODULE = "Report";
 
+        private string m_reportId;
         private string m_database;
         private cReport m_report;
 
         private fProgress m_fProgress;
         private bool m_cancelPrinting = false;
 
+        private cReportPrint m_fPrint = null;
+
         // we modify the report data source so it uses the CSReportWebServer instead of a real sql engine (SqlServer, PostgreSQL or Oracle)
         //
         public void init(JObject request)
         {
+            m_reportId = Guid.NewGuid().ToString();
             m_database = Guid.NewGuid().ToString();
             m_report = new cReport();
 
@@ -38,7 +42,6 @@ namespace CSReportWebServer
             cReportLaunchInfo oLaunchInfo = new cReportLaunchInfo();
 
             oLaunchInfo.setPrinter(cPrintAPI.getcPrinterFromDefaultPrinter());
-            oLaunchInfo.setObjPaint(new cReportPrint());
 
             registerDataSource(request);
 
@@ -92,6 +95,8 @@ namespace CSReportWebServer
         private void reportDone(object sender, EventArgs e)
         {
             closeProgressDlg();
+            JObject message = JObject.Parse("{ messageType: 'REPORT_DONE', reportId: '" + m_reportId + "' }");
+            Main.sendMessage(message);
         }
 
         private void reportProgress(object sender, ProgressEventArgs e)
@@ -144,11 +149,17 @@ namespace CSReportWebServer
             {
                 showProgressDlg();
 
-                m_report.getLaunchInfo().getPrinter().setPaperInfo(m_report.getPaperInfo());
-                m_report.getLaunchInfo().setObjPaint(new cReportPrint());
+                var li = m_report.getLaunchInfo();
+
+                li.getPrinter().setPaperInfo(m_report.getPaperInfo());
+
+                m_fPrint = new cReportPrint();
+                li.setObjPaint(m_fPrint);
+
                 // TODO: remove this
-                m_report.getLaunchInfo().setHwnd(0);
-                m_report.getLaunchInfo().setShowPrintersDialog(true);
+                li.setHwnd(0);
+                li.setShowPrintersDialog(true);
+
                 m_report.launch();
 
             }
@@ -169,7 +180,6 @@ namespace CSReportWebServer
             if (m_fProgress == null)
             {
                 m_fProgress = new fProgress();
-                // TODO: add event for m_report_Progress
             }
             m_fProgress.Show();
             m_fProgress.BringToFront();

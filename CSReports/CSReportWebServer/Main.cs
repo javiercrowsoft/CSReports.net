@@ -18,6 +18,8 @@ namespace CSReportWebServer
         private static Options options = new Options();
         private static Properties.Settings settings = Properties.Settings.Default;
 
+        private static SizeQueue<JObject> m_messageQueue = new SizeQueue<JObject>(1); // no more than one message for now
+
         public static int Init(string[] args, fMain f)
         {
             // configure log4net
@@ -42,9 +44,15 @@ namespace CSReportWebServer
             return 0;
         }
 
+        public static void sendMessage(JObject message)
+        {
+            m_messageQueue.Enqueue(message);
+        }
+
         static int RunNativeMessagingHost(string[] args, fMain f)
         {
-            Host host = new Host(f);
+
+            Host host = new Host(f, m_messageQueue);
             Thread workerThread = new Thread(host.Run);
             workerThread.Start();
             return 0;
