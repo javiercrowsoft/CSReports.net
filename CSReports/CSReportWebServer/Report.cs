@@ -18,6 +18,7 @@ namespace CSReportWebServer
         private const String C_MODULE = "Report";
 
         private string m_reportId;
+        private string m_webReportId;
         private string m_database;
         private cReport m_report;
 
@@ -26,10 +27,19 @@ namespace CSReportWebServer
 
         private cReportPrint m_fPrint = null;
 
+        public string reportId
+        {
+            get
+            {
+                return m_webReportId;
+            }
+        }
+
         // we modify the report data source so it uses the CSReportWebServer instead of a real sql engine (SqlServer, PostgreSQL or Oracle)
         //
         public void init(JObject request)
         {
+            m_webReportId = request["message"]["webReportId"].ToString();
             m_reportId = Guid.NewGuid().ToString();
             m_database = Guid.NewGuid().ToString();
             m_report = new cReport();
@@ -80,6 +90,17 @@ namespace CSReportWebServer
         {
             m_report.getLaunchInfo().setAction(csRptLaunchAction.CSRPTLAUNCHPREVIEW);
             launchReport();
+
+            JObject message = JObject.Parse("{ messageType: 'REPORT_PREVIEW_DONE', reportId: '" + m_reportId + "', webReportId: '" + m_webReportId + "' }");
+            message["page"] = getPage(1);
+            Main.sendMessage(message);
+        }
+
+        public void moveToPage(int page)
+        {
+            JObject message = JObject.Parse("{ messageType: 'REPORT_PREVIEW_PAGE', reportId: '" + m_reportId + "', webReportId: '" + m_webReportId + "' }");
+            message["page"] = getPage(page);
+            Main.sendMessage(message);
         }
 
         private void registerDataSource(JObject request)
@@ -95,8 +116,13 @@ namespace CSReportWebServer
         private void reportDone(object sender, EventArgs e)
         {
             closeProgressDlg();
-            JObject message = JObject.Parse("{ messageType: 'REPORT_DONE', reportId: '" + m_reportId + "' }");
+            JObject message = JObject.Parse("{ messageType: 'REPORT_DONE', reportId: '" + m_reportId + "', webReportId: '" + m_webReportId + "' }");
             Main.sendMessage(message);
+        }
+
+        private string getPage(int page)
+        {
+            return m_fPrint.getPageImageAsBase64(page);
         }
 
         private void reportProgress(object sender, ProgressEventArgs e)
@@ -154,6 +180,7 @@ namespace CSReportWebServer
                 li.getPrinter().setPaperInfo(m_report.getPaperInfo());
 
                 m_fPrint = new cReportPrint();
+                m_fPrint.setHidePreviewWindow(true);
                 li.setObjPaint(m_fPrint);
 
                 // TODO: remove this

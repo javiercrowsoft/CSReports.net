@@ -23,6 +23,8 @@ namespace CSReportWebServer
         private fMain m_f;
         private SizeQueue<JObject> m_messageQueue;
 
+        private const string C_EXTENSION_NAME = "CSReportWebServer.Echo";
+
         /// <summary>
         /// Creates a new instance of native messaging host.
         /// </summary>
@@ -49,21 +51,47 @@ namespace CSReportWebServer
                 //
                 try
                 {
+                    //
+                    // read a message
+                    //
                     string message = port.Read();
+
+                    // log
+                    //
                     log.DebugFormat("request message\n{0}", message);
                     m_f.log("request message " + message);
+
                     JObject request = JObject.Parse(message);
+
+                    //
+                    // execute the request
+                    //
+                    executeMessage(request);
+
+                    //
+                    // prepare a response
+                    //
                     JObject reply = new JObject();
                     if (request["source"] != null) reply["source"] = request["destination"];
                     if (request["destination"] != null) reply["destination"] = request["source"];
-                    reply["request"] = request;
-                    reply["extension"] = "CSReportWebServer.Echo";
-                    message = reply.ToString(Formatting.None);
 
-                    executeMessage(request);
+                    reply["message"] = new JObject();
+                    reply["message"]["id"] = request["id"];
 
+                    // identify service
+                    //
+                    reply["extension"] = C_EXTENSION_NAME;
+
+                    message = reply.ToString(Formatting.None);                    
+
+                    // log
+                    //
                     log.DebugFormat("reply message\n{0}", message);
                     m_f.log(message);
+
+                    //
+                    // send response
+                    //
                     port.Write(message);
                 }
                 catch (EndOfInputStreamException)
@@ -82,12 +110,25 @@ namespace CSReportWebServer
                 //
                 JObject jMessage = m_messageQueue.Dequeue();
 
-                if (jMessage != null)
+                while (jMessage != null)
                 {
+                    // identify service
+                    //
+                    jMessage["extension"] = C_EXTENSION_NAME;
+
                     string message = jMessage.ToString(Formatting.None);
+
+                    // log
+                    //
                     log.DebugFormat("reply message\n{0}", message);
                     m_f.log(message);
+
+                    //
+                    // send message
+                    //
                     port.Write(message);
+
+                    jMessage = m_messageQueue.Dequeue();
                 }
             }
 
@@ -112,6 +153,9 @@ namespace CSReportWebServer
                 case "preview":
                     previewReport(request);
                     break;
+                case "moveToPage":
+                    moveToPage(request);
+                    break;
                 case "debugger":
                     break;
             }
@@ -120,6 +164,11 @@ namespace CSReportWebServer
         private void previewReport(JObject request)
         {
             m_f.preview(request);
+        }
+
+        private void moveToPage(JObject request)
+        {
+            m_f.moveToPage(request);
         }
     }
 

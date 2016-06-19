@@ -9,12 +9,15 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 
 namespace CSReportWebServer
 {
     public partial class fMain : Form
     {
         private string[] m_args;
+
+        private Dictionary<string, Report> m_reports = new Dictionary<string, Report>();
 
         public fMain(string[] args)
         {
@@ -48,7 +51,7 @@ namespace CSReportWebServer
             this.Invoke(d);
         }
 
-        delegate void PreviewCallback(JObject request);
+        delegate void ReportActionCallback(JObject request);
 
         private void safePreview(JObject request)
         {
@@ -59,11 +62,27 @@ namespace CSReportWebServer
             {
                 report.preview();
             }
+            m_reports.Add(report.reportId, report);
+        }
+
+        private void safeMoveToPage(JObject request)
+        {
+            var data = request["message"]["data"];
+            var reportId = data["reportId"].ToString();
+            var page =  int.Parse(data["page"].ToString());
+            var report = m_reports[reportId];
+            report.moveToPage(page);
         }
 
         public void preview(JObject request)
         {
-            PreviewCallback d = new PreviewCallback(safePreview);
+            ReportActionCallback d = new ReportActionCallback(safePreview);
+            this.Invoke(d, new object[] { request });
+        }
+
+        public void moveToPage(JObject request)
+        {
+            ReportActionCallback d = new ReportActionCallback(safeMoveToPage);
             this.Invoke(d, new object[] { request });
         }
 

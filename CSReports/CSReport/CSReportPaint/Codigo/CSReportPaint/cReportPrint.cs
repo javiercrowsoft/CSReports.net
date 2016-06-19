@@ -10,6 +10,8 @@ using CSReportDll;
 using CSReportGlobals;
 using CSReportExport;
 using CSReportPreview;
+using System.IO;
+using System.Drawing.Imaging;
 
 namespace CSReportPaint
 {
@@ -395,7 +397,7 @@ namespace CSReportPaint
 
             if (nPage > 1)
             {
-                m_currPage = nPage;
+                m_currPage = nPage-1;
             }
             else
             {
@@ -429,7 +431,7 @@ namespace CSReportPaint
                         break;
                 }
             }
-            if (m_currPage == -1) { return; }
+            if (m_currPage == -1 || m_currPage > m_report.getPages().count()-1) { return; }
 
             page = m_report.getPages().item(m_currPage);
 
@@ -1807,6 +1809,27 @@ namespace CSReportPaint
         public bool printReport()
         {
             return pDoPrint(null);
+        }
+
+        public string getPageImageAsBase64(int page)
+        {
+            if (m_paint != null)
+            {
+                if(m_currPage == page -1) printPage(page, true);
+
+                Bitmap bmp = new Bitmap((int)m_realWidth, (int)m_realHeight);
+                Graphics bmpGraphics = Graphics.FromImage(bmp);
+                drawPage(bmpGraphics);
+                MemoryStream memoryStream = new MemoryStream();
+                m_paint.getBitmap().Save(memoryStream, ImageFormat.Png);
+                var pngData = memoryStream.ToArray();
+                var image = Convert.ToBase64String(pngData);
+                return "data:image/png;base64," + image;
+            }
+            else
+            {
+                return "";
+            }            
         }
 
     }
