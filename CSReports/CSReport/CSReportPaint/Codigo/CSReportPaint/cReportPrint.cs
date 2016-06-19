@@ -10,6 +10,8 @@ using CSReportDll;
 using CSReportGlobals;
 using CSReportExport;
 using CSReportPreview;
+using System.IO;
+using System.Drawing.Imaging;
 
 namespace CSReportPaint
 {
@@ -1807,6 +1809,25 @@ namespace CSReportPaint
         public bool printReport()
         {
             return pDoPrint(null);
+        }
+
+        public string getPageImageAsBase64(int page)
+        {
+            if (m_paint != null)
+            {
+                Bitmap bmp = new Bitmap((int)m_realWidth, (int)m_realHeight);
+                Graphics bmpGraphics = Graphics.FromImage(bmp);
+                drawPage(bmpGraphics);
+                MemoryStream memoryStream = new MemoryStream();
+                m_paint.getBitmap().Save(memoryStream, ImageFormat.Png);
+                var pngData = memoryStream.ToArray();
+                var image = Convert.ToBase64String(pngData);
+                return "data:image/png;base64," + image;
+            }
+            else
+            {
+                return "";
+            }            
         }
 
     }

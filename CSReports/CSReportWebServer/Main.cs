@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
-using System.Resources;
-using Microsoft.Win32;
 using log4net;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Threading;
 
@@ -18,13 +12,10 @@ namespace CSReportWebServer
         private static Options options = new Options();
         private static Properties.Settings settings = Properties.Settings.Default;
 
-        private static SizeQueue<JObject> m_messageQueue = new SizeQueue<JObject>(1); // no more than one message for now
+        private static SizeQueue<JObject> m_messageQueue = new SizeQueue<JObject>(2); // no more than one message for now
 
         public static int Init(string[] args, fMain f)
         {
-            // configure log4net
-            log4net.Config.XmlConfigurator.Configure();
-
             log.Info("application started");
             log.DebugFormat("command line : \"{0}\"", string.Join("\", \"", args));
 
@@ -46,7 +37,10 @@ namespace CSReportWebServer
 
         public static void sendMessage(JObject message)
         {
-            m_messageQueue.Enqueue(message);
+            JObject envelope = new JObject();
+            envelope["message"] = message;
+
+            m_messageQueue.Enqueue(envelope);
         }
 
         static int RunNativeMessagingHost(string[] args, fMain f)
@@ -151,7 +145,7 @@ namespace CSReportWebServer
         static int Usage(TextWriter tw = null)
         {
             if (tw == null) tw = Console.Out;
-            tw.WriteLine("CSReportWebServer Echo Example Extension. Author Konstantin Kuzvesov, 2015");
+            tw.WriteLine("CSReportWebServer Echo Example Extension.");
             tw.WriteLine("Usage: {0} [options] <command>", Path.GetFileName(System.Reflection.Assembly.GetEntryAssembly().Location));
             tw.WriteLine();
             tw.WriteLine("Commands with options");

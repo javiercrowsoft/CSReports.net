@@ -1,15 +1,16 @@
 ﻿<Properties StartupItem="CSReportWebServer/CSReportWebServer.csproj">
-  <MonoDevelop.Ide.Workbench ActiveDocument="CSReport/CSReportEditor/Codigo/CSReportEditor/fProperties.Designer.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="CSKernel/Codigo/CSKernelClient/cUtil.cs">
     <Files>
-      <File FileName="CSReport/CSReportEditor/Codigo/CSReportEditor/cEditor.cs" Line="1" Column="1" />
-      <File FileName="CSReport/CSReportEditor/Codigo/CSReportEditor/fMain.Designer.cs" Line="1" Column="1" />
-      <File FileName="CSAssocFile/Codigo/CSAssocFile/cAssocFile.cs" Line="1" Column="1" />
-      <File FileName="CSReport/CSConnect/Codigo/CSConnect/cConnect.cs" Line="1" Column="1" />
-      <File FileName="CSReport/CSConnect/Codigo/CSConnect/cParameter.cs" Line="1" Column="1" />
-      <File FileName="CSReport/CSConnect/Codigo/CSConnect/cParameters.cs" Line="1" Column="1" />
-      <File FileName="CSDataBase/Codigo/CSDataBase/cDataBase.cs" Line="1" Column="1" />
-      <File FileName="CSReport/CSReportEditor/Codigo/CSReportEditor/fProperties.cs" Line="1" Column="1" />
-      <File FileName="CSReport/CSReportEditor/Codigo/CSReportEditor/fProperties.Designer.cs" Line="1" Column="1" />
+      <File FileName="CSReportWebServer/Main.cs" Line="17" Column="27" />
+      <File FileName="CSReportWebServer/fMain.cs" Line="72" Column="36" />
+      <File FileName="CSReportWebServer/Program.cs" Line="25" Column="1" />
+      <File FileName="CSReportWebServer/Host.cs" Line="62" Column="53" />
+      <File FileName="CSReportWebServer/Report.cs" Line="87" Column="1" />
+      <File FileName="CSReport/CSReportDll/Codigo/CSReportDll/cReport.cs" Line="2126" Column="1" />
+      <File FileName="CSKernel/Codigo/CSKernelClient/cUtil.cs" Line="83" Column="3" />
+      <File FileName="CSReport/CSReportDll/Codigo/CSReportDll/cReportAspect.cs" Line="308" Column="1" />
+      <File FileName="CSReport/CSReportDll/Codigo/CSReportDll/cReportSectionLine.cs" Line="188" Column="1" />
+      <File FileName="CSReport/CSReportDll/Codigo/CSReportDll/cReportSection.cs" Line="177" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.ItemProperties.CSReportEditor PreferredExecutionTarget="MonoDevelop.Default" />
