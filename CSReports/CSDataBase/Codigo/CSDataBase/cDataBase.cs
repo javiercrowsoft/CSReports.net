@@ -535,7 +535,9 @@ namespace CSDataBase
                             openRsProgress();
                         }
                     }
-                    Application.DoEvents();
+
+					if (showWindowCancel) Application.DoEvents();
+
                     if (cancelDialogShowed)
                     {
                         if (f.cancel)

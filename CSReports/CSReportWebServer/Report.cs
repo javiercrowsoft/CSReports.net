@@ -24,13 +24,21 @@ namespace CSReportWebServer
 
         private cReportPrint m_fPrint = null;
 
-		private static ILog m_log = LogManager.GetLogger(typeof(Host));
+		private static ILog m_log = LogManager.GetLogger(typeof(Report));
+
+		public string reportId
+        {
+            get
+            {
+                return m_reportId;
+            }
+        }
+
 
         // we modify the report data source so it uses the CSReportWebServer instead of a real sql engine (SqlServer, PostgreSQL or Oracle)
         //
         public void init(JObject request)
         {
-
 			m_log.Info("in Report.init 01");
 
             m_webReportId = request["message"]["webReportId"].ToString();
@@ -85,10 +93,6 @@ namespace CSReportWebServer
                 m_report.getLaunchInfo().setStrConnect(m_database);
 
 				m_log.Info("in Report.openDocument 04");
-
-                Application.DoEvents();
-
-				m_log.Info("in Report.openDocument 05");
                 
                 return true;
             }
@@ -106,9 +110,26 @@ namespace CSReportWebServer
         {
             m_report.getLaunchInfo().setAction(csRptLaunchAction.CSRPTLAUNCHPREVIEW);
             launchReport();
+			int pageIndex;
+			JObject message = JObject.Parse(
+				"{ messageType: 'REPORT_PREVIEW_DONE', reportId: '" + m_reportId 
+				+ "', webReportId: '" + m_webReportId 
+				+ "', totalPages: " + m_report.getPages().count().ToString() 
+				+ " }");
+            message["page"] = getPage(1, out pageIndex);
+			message["pageIndex"] = pageIndex;
+            Main.sendMessage(message);
+		}
 
-            JObject message = JObject.Parse("{ messageType: 'REPORT_PREVIEW_DONE', reportId: '" + m_reportId + "', webReportId: '" + m_webReportId + "' }");
-            message["page"] = getPage(1);
+        public void moveToPage(int page)
+        {
+			int pageIndex;
+            JObject message = JObject.Parse(
+				"{ messageType: 'REPORT_PREVIEW_PAGE', reportId: '" + m_reportId 
+				+ "', webReportId: '" + m_webReportId 
+				+ "' }");
+            message["page"] = getPage(page, out pageIndex);
+			message["pageIndex"] = pageIndex;
             Main.sendMessage(message);
         }
 
@@ -125,13 +146,16 @@ namespace CSReportWebServer
         private void reportDone(object sender, EventArgs e)
         {
             closeProgressDlg();
-            JObject message = JObject.Parse("{ messageType: 'REPORT_DONE', reportId: '" + m_reportId + "', webReportId: '" + m_webReportId + "' }");
+            JObject message = JObject.Parse(
+				"{ messageType: 'REPORT_DONE', reportId: '" + m_reportId 
+				+ "', webReportId: '" + m_webReportId 
+				+ "' }");
             Main.sendMessage(message);
         }
 
-        private string getPage(int page)
+        private string getPage(int page, out int pageIndex)
         {
-            return m_fPrint.getPageImageAsBase64(page);
+            return m_fPrint.getPageImageAsBase64(page, out pageIndex);
         }
 
         private void reportProgress(object sender, ProgressEventArgs e)
@@ -155,6 +179,8 @@ namespace CSReportWebServer
                 }
             }
 
+			m_log.Info("page: " + page.ToString() + " - " + recordCount.ToString());
+
 			/*
             if (m_fProgress == null) { return; }
 
@@ -174,8 +200,6 @@ namespace CSReportWebServer
                 if (value > 100) value = 100;
                 m_fProgress.prgBar.Value = value;
             }
-
-            Application.DoEvents();
             */
         }
 

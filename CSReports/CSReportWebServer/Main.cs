@@ -12,7 +12,9 @@ namespace CSReportWebServer
         private static Options options = new Options();
         private static Properties.Settings settings = Properties.Settings.Default;
 
-        private static SizeQueue<JObject> m_messageQueue = new SizeQueue<JObject>(2); // no more than one message for now
+		private const int MAX_MESSAGE_QUEUE_SIZE = 10;
+
+        private static SizeQueue<JObject> m_messageQueue = new SizeQueue<JObject>(MAX_MESSAGE_QUEUE_SIZE); // no more than one message for now
 
         public static int Init(string[] args, fMain f)
         {
@@ -170,4 +172,3 @@ namespace CSReportWebServer
             Path.GetFileNameWithoutExtension(System.Reflection.Assembly.GetEntryAssembly().Location) + ".manifest.json";
     }
 }
-

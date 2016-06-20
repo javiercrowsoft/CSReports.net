@@ -11,6 +11,8 @@ namespace CSKernelClient
 
         private static String m_sepDecimal = "";
 
+		private static int _dpi = -1;
+
         public static string getToken(string token, string source)
         {
               int i = 0;
@@ -67,16 +69,20 @@ namespace CSKernelClient
         }
 
         private static int getDPI()
-        { 
-            int currentDPI = 0;
-            using (PictureBox pic = new PictureBox())
-            {
-                using (Graphics g =  pic.CreateGraphics())
-                {
-                    currentDPI = (int)g.DpiX;
-                }
-            }
-            return currentDPI;
+        {
+			if (_dpi < 0)
+			{
+				int currentDPI = 0;
+				using (PictureBox pic = new PictureBox())
+				{
+					using (Graphics g = pic.CreateGraphics())
+					{
+						currentDPI = (int)g.DpiX;
+					}
+				}
+				_dpi = currentDPI;
+			}
+			return _dpi;
         }
 
         public static void setEmailServer(String rhs) {

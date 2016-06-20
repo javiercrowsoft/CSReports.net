@@ -1,15 +1,18 @@
 ﻿using System;
-using System.IO;
+using System.Collections.Generic;
 using System.Windows.Forms;
-using log4net;
 using Newtonsoft.Json.Linq;
+using log4net;
 
 namespace CSReportWebServer
 {
     public partial class fMain : Form
     {
         private string[] m_args;
-		private static ILog m_log = LogManager.GetLogger(typeof(Host));
+
+        private Dictionary<string, Report> m_reports = new Dictionary<string, Report>();
+
+		private static ILog m_log = LogManager.GetLogger(typeof(fMain));
 
         public fMain(string[] args)
         {
@@ -17,21 +20,9 @@ namespace CSReportWebServer
             m_args = args;
         }
 
-		private string loadTestRequest()
-		{ 
-		    // Open the text file using a stream reader.
-			using (StreamReader sr = new StreamReader("/Users/javier/Work/Temp/request.json"))
-			{
-				// Read the stream to a string, and write the string to the console.
-				return sr.ReadToEnd();
-			}
-		}
-
         private void cmdRegister_Click(object sender, EventArgs e)
         {
-			//Main.RegisterNativeMessagingHost(new string[] { "register" });
-			string r = loadTestRequest();
-			safePreview(JObject.Parse(r));
+            Main.RegisterNativeMessagingHost(new string[] { "register" });
         }
 
         delegate void LogCallback(string message);
@@ -55,35 +46,41 @@ namespace CSReportWebServer
             this.Invoke(d);
         }
 
-        delegate void PreviewCallback(JObject request);
+        delegate void ReportActionCallback(JObject request);
 
         private void safePreview(JObject request)
         {
-			m_log.Info("in safePreview 01");
-
-            //var pathAndFile = @"\\vmware-host\Shared Folders\Documents\CrowSoft\Reportes\temp\" + request["message"]["data"]["file"];
-			var pathAndFile = @"/Users/javier/Documents/CrowSoft/Reportes/temp/" + request["message"]["data"]["file"];
+			var pathAndFile = "/Users/javier/Documents/CrowSoft/Reportes/temp/" + request["message"]["data"]["file"];
             var report = new Report();
-
-			m_log.Info("in safePreview 02");
-
             report.init(request);
-
-			m_log.Info("in safePreview 03");
-
             if (report.openDocument(pathAndFile))
             {
-				m_log.Info("in safePreview 04");
-
                 report.preview();
             }
+			m_log.Info("Adding report to m_reports " + report.reportId);
+            m_reports.Add(report.reportId, report);
+        }
 
-			m_log.Info("in safePreview 05");
+        private void safeMoveToPage(JObject request)
+        {
+            var data = request["message"]["data"];
+            var reportId = data["reportId"].ToString();
+			var page =  int.Parse(data["report_page"].ToString());
+			m_log.Info("Getting page " + page);
+
+            var report = m_reports[reportId];
+            report.moveToPage(page);
         }
 
         public void preview(JObject request)
         {
-            PreviewCallback d = new PreviewCallback(safePreview);
+            ReportActionCallback d = new ReportActionCallback(safePreview);
+            this.Invoke(d, new object[] { request });
+        }
+
+        public void moveToPage(JObject request)
+        {
+            ReportActionCallback d = new ReportActionCallback(safeMoveToPage);
             this.Invoke(d, new object[] { request });
         }
 

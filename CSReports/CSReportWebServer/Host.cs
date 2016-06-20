@@ -16,12 +16,14 @@ namespace CSReportWebServer
     {
         private static ILog log = LogManager.GetLogger(typeof(Host));
 
+		private const int MAX_TASK_QUEUE_SIZE = 10;
+
         private ManualResetEvent stop;
         private Port port;
 
         private fMain m_f;
         private SizeQueue<JObject> m_messageQueue;
-		private SizeQueue<JObject> m_taskQueue = new SizeQueue<JObject>(10);
+		private SizeQueue<JObject> m_taskQueue = new SizeQueue<JObject>(MAX_TASK_QUEUE_SIZE);
 
         private const string C_EXTENSION_NAME = "CSReportWebServer.Echo";
 
@@ -179,6 +181,9 @@ namespace CSReportWebServer
                 case "preview":
                     previewReport(request);
                     break;
+				case "moveToPage":
+					moveToPage(request);
+					break;
                 case "debugger":
                     break;
             }
@@ -188,6 +193,11 @@ namespace CSReportWebServer
         {
             m_f.preview(request);
         }
+
+		private void moveToPage(JObject request)
+		{
+			m_f.moveToPage(request);
+		}
 
 		//
 		//
@@ -204,11 +214,14 @@ namespace CSReportWebServer
 			{
 				waitHandle.Set();
 			}
+
+			//m_taskQueue.CloseAndReleaseThreads();
 		}
 
 		private void startTaskThread()
 		{
 			Thread workerThread = new Thread(this.processTaskQueue);
+			workerThread.IsBackground = true;
 			workerThread.Start();
 		}
 
@@ -228,7 +241,8 @@ namespace CSReportWebServer
 				return;
 			}
 
-			while (!waitHandle.WaitOne(TimeSpan.FromSeconds(1)))
+			//while (!waitHandle.WaitOne(TimeSpan.FromMilliseconds(50)))
+			while (true)
             {
 				try
 				{
@@ -264,11 +278,14 @@ namespace CSReportWebServer
 			{
 				waitHandle.Set();
 			}
+
+			//m_messageQueue.CloseAndReleaseThreads();
 		}
 
 		private void startMessageThread()
 		{ 
 		    Thread workerThread = new Thread(this.processMessageQueue);
+			workerThread.IsBackground = true;
 			workerThread.Start();
 		}
 
@@ -288,7 +305,8 @@ namespace CSReportWebServer
 				return;
 			}
 
-			while (!waitHandle.WaitOne(TimeSpan.FromSeconds(1)))
+			//while (!waitHandle.WaitOne(TimeSpan.FromMilliseconds(50)))
+			while (true)
 			{
 				try
 				{
@@ -330,27 +348,54 @@ namespace CSReportWebServer
         private readonly int maxSize;
         public SizeQueue(int maxSize) { this.maxSize = maxSize; }
 
+		/*private bool closing = false;
+
+		public void CloseAndReleaseThreads()
+		{
+			closing = true;
+			lock (queue)
+			{
+				Monitor.PulseAll(queue);
+			}
+		}*/
+
         public void Enqueue(T item)
         {
+			//if (closing) return;
+
             lock (queue)
             {
-                if (queue.Count < maxSize) // yes, I am a bad person :P
-                {
-                    queue.Enqueue(item);
-                }
+				while (queue.Count >= maxSize)
+				{
+					Monitor.Wait(queue);
+				}
+                queue.Enqueue(item);
+				if (queue.Count == 1)
+				{
+					// wake up any blocked dequeue
+					Monitor.PulseAll(queue);
+				}
             }
         }
         public T Dequeue()
         {
+			//if (closing) return default(T);
+
             lock (queue)
             {
-                T item = default(T);
-                if (queue.Count > 0)
-                {
-                    item = queue.Dequeue();
-                }
+				while (queue.Count == 0)
+				{
+					Monitor.Wait(queue);
+				}
+                T item = queue.Dequeue();
+                if (queue.Count == maxSize - 1)
+				{
+					// wake up any blocked enqueue
+					Monitor.PulseAll(queue);
+				}
                 return item;
             }
         }
     }
 }
+

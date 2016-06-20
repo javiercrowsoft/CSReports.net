@@ -397,7 +397,7 @@ namespace CSReportPaint
 
             if (nPage > 1)
             {
-                m_currPage = nPage;
+                m_currPage = nPage-1;
             }
             else
             {
@@ -431,7 +431,7 @@ namespace CSReportPaint
                         break;
                 }
             }
-            if (m_currPage == -1) { return; }
+            if (m_currPage == -1 || m_currPage > m_report.getPages().count()-1) { return; }
 
             page = m_report.getPages().item(m_currPage);
 
@@ -1682,8 +1682,6 @@ namespace CSReportPaint
             {
                 cMouseWait mouse = new cMouseWait();
 
-                Application.DoEvents();
-
                 CSReportExport.cReportPdf expPDF = null;
                 expPDF = new CSReportExport.cReportPdf();
 
@@ -1811,10 +1809,14 @@ namespace CSReportPaint
             return pDoPrint(null);
         }
 
-        public string getPageImageAsBase64(int page)
+        public string getPageImageAsBase64(int page, out int pageIndex)
         {
             if (m_paint != null)
             {
+                if(m_currPage != page -1) printPage(page, true);
+
+				pageIndex = m_currPage + 1;
+
                 Bitmap bmp = new Bitmap((int)m_realWidth, (int)m_realHeight);
                 Graphics bmpGraphics = Graphics.FromImage(bmp);
                 drawPage(bmpGraphics);
@@ -1826,6 +1828,7 @@ namespace CSReportPaint
             }
             else
             {
+				pageIndex = -1;
                 return "";
             }            
         }

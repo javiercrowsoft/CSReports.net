@@ -2238,8 +2238,6 @@ namespace CSReportPaint
             }
         }
 
-        // Testing
-
         public Image getBitmap()
         {
             return m_bitmap;
