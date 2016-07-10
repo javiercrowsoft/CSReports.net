@@ -59,6 +59,7 @@ namespace CSReportWebServer
             }
 			m_log.Info("Adding report to m_reports " + report.reportId);
             m_reports.Add(report.reportId, report);
+			this.WindowState = FormWindowState.Minimized;
         }
 
         private void safeMoveToPage(JObject request)
@@ -87,6 +88,7 @@ namespace CSReportWebServer
         private void fMain_Load(object sender, EventArgs e)
         {
             Main.Init(m_args, this);
+			this.Height = 120;
         }
     }
 }

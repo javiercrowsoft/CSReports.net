@@ -1,16 +1,8 @@
 ﻿<Properties StartupItem="CSReportWebServer/CSReportWebServer.csproj">
-  <MonoDevelop.Ide.Workbench ActiveDocument="CSKernel/Codigo/CSKernelClient/cUtil.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="CSReportWebServer/fMain.cs">
     <Files>
-      <File FileName="CSReportWebServer/Main.cs" Line="17" Column="27" />
-      <File FileName="CSReportWebServer/fMain.cs" Line="72" Column="36" />
-      <File FileName="CSReportWebServer/Program.cs" Line="25" Column="1" />
-      <File FileName="CSReportWebServer/Host.cs" Line="62" Column="53" />
-      <File FileName="CSReportWebServer/Report.cs" Line="87" Column="1" />
-      <File FileName="CSReport/CSReportDll/Codigo/CSReportDll/cReport.cs" Line="2126" Column="1" />
-      <File FileName="CSKernel/Codigo/CSKernelClient/cUtil.cs" Line="83" Column="3" />
-      <File FileName="CSReport/CSReportDll/Codigo/CSReportDll/cReportAspect.cs" Line="308" Column="1" />
-      <File FileName="CSReport/CSReportDll/Codigo/CSReportDll/cReportSectionLine.cs" Line="188" Column="1" />
-      <File FileName="CSReport/CSReportDll/Codigo/CSReportDll/cReportSection.cs" Line="177" Column="1" />
+      <File FileName="CSReportWebServer/fMain.cs" Line="62" Column="49" />
+      <File FileName="CSReportWebServer/Program.cs" Line="24" Column="44" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.ItemProperties.CSReportEditor PreferredExecutionTarget="MonoDevelop.Default" />
