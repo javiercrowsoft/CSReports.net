@@ -54,7 +54,7 @@ namespace CSReportEditor
             //
             CSKernelClient.cUtil.setSepDecimal();
 
-            cPrinter printer = cPrintAPI.getcPrinterFromDefaultPrinter();
+            cPrinter printer = cPrintAPI.getcPrinterFromDefaultPrinter(this.printDlg);
             m_paperSize = (int)printer.getPaperInfo().getPaperSize();
             m_paperSizeHeight = Convert.ToInt32(printer.getPaperInfo().getHeight());
             m_paperSizeWidth = Convert.ToInt32(printer.getPaperInfo().getHeight());
@@ -337,6 +337,14 @@ namespace CSReportEditor
             {
                 return saveFielDlg;
             }            
+        }
+
+        public PrintDialog printDialog
+        {
+            get
+            {
+                return printDlg;
+            }
         }
 
         private void fMain_Load(object sender, EventArgs e)
@@ -1121,6 +1129,25 @@ namespace CSReportEditor
             {
                 editor.deleteObj(false);
             }
+        }
+
+        private void printReport()
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.printReport();
+            }
+        }
+
+        private void tsbPrint_Click(object sender, EventArgs e)
+        {
+            printReport();
+        }
+
+        private void mnuPrintReport_Click(object sender, EventArgs e)
+        {
+            printReport();
         }
     }
 }

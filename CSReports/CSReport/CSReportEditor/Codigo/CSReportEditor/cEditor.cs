@@ -6519,7 +6519,7 @@ namespace CSReportEditor
             m_report.getPaperInfo().setPaperSize(m_fmain.getPaperSize());
             m_report.getPaperInfo().setOrientation(m_fmain.getOrientation());
 
-            oLaunchInfo.setPrinter(cPrintAPI.getcPrinterFromDefaultPrinter());
+            oLaunchInfo.setPrinter(cPrintAPI.getcPrinterFromDefaultPrinter(m_fmain.printDialog));
             oLaunchInfo.setObjPaint(new cReportPrint());
             if (!m_report.init(oLaunchInfo)) { return; }
 

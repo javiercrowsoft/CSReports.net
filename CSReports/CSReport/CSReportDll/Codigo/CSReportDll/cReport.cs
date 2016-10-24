@@ -2897,7 +2897,7 @@ namespace CSReportDll
             {
                 // we use the default printer of the OS
                 //
-                m_launchInfo.setPrinter(cPrintAPI.getcPrinterFromDefaultPrinter());
+                m_launchInfo.setPrinter(cPrintAPI.getcPrinterFromDefaultPrinter(null));
             }
 
             // if we have a reference to a printer

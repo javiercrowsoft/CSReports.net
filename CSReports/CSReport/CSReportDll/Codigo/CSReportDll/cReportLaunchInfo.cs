@@ -5,6 +5,7 @@ using System.Text;
 using System.Xml;
 using CSKernelClient;
 using CSReportGlobals;
+using System.Windows.Forms;
 
 namespace CSReportDll
 {
@@ -163,9 +164,9 @@ namespace CSReportDll
             m_silent = rhs;
         }
 
-        public void initPrinter(String deviceName, String driverName, String port)
+        public void initPrinter(PrintDialog printDialog, String deviceName, String driverName, String port)
         {
-            m_printer = cPrintAPI.getcPrint(deviceName, driverName, port);
+            m_printer = cPrintAPI.getcPrint(printDialog, deviceName, driverName, port);
         }
 
         public void setPaperBin(String paperBin)

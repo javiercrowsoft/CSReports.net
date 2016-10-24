@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using CSReportGlobals;
 using System.Drawing;
+using System.Drawing.Printing;
+using System.Windows.Forms;
 
 namespace CSReportDll
 {
@@ -18,10 +20,14 @@ namespace CSReportDll
 
         private int m_copies = 0;
 
-        private bool m_bRestorePaperBin;
-        private int m_oldPaperBin = 0;
-
         private Graphics m_graph;
+
+        private PrintDialog m_printDialog;
+
+        public cPrinter(PrintDialog printDialog)
+        {
+            m_printDialog = printDialog;
+        }
 
         public int getCopies()
         {
@@ -97,15 +103,17 @@ namespace CSReportDll
             fromPage = 1;
             toPage = pages;
 
-            if (cPrintAPI.showPrintDialog(m_deviceName,
-                                            m_driverName,
-                                            m_port,
-                                            paperSize,
-                                            orientation,
-                                            fromPage,
-                                            toPage,
-                                            m_copies,
-                                            paperBin))
+            if (cPrintAPI.showPrintDialog(
+                    m_printDialog,
+                    ref m_deviceName,
+                    ref m_driverName,
+                    ref m_port,
+                    ref paperSize,
+                    ref orientation,
+                    ref fromPage,
+                    ref toPage,
+                    ref m_copies,
+                    ref paperBin))
             {
                 m_paperInfo.setPaperSize(paperSize);
                 m_paperInfo.setOrientation(orientation);
@@ -120,74 +128,34 @@ namespace CSReportDll
             }
         }
 
-        public bool starDoc(String title, csReportPaperType paperSize, int paperOrient)
+        private PaperSize getPaperSize(csReportPaperType paperSize)
         {
-            // TODO: print using .Net
-            /*
-            m_hDC = CreateDC(m_driverName, m_deviceName, 0, 0);
+            PaperSize size = new PaperSize();
 
-            if (m_paperInfo != null)
-            {
-                if (m_paperInfo.getPaperBin())
-                {
-
-                    m_oldPaperBin = mPrintAPI.printerSetPaperBin(m_deviceName, m_paperInfo.getPaperBin());
-                    m_bRestorePaperBin = true;
-
-                }
+            switch (paperSize) {
+                case csReportPaperType.CSRPTPAPERTYPEA4:
+                    size.RawKind = (int)PaperKind.A4;
+                    break;
+                case csReportPaperType.CSRPTPAPERTYPEA3:
+                    size.RawKind = (int)PaperKind.A3;
+                    break;
+                case csReportPaperType.CSRPTPAPERTYPELETTER:
+                    size.RawKind = (int)PaperKind.Letter;
+                    break;
+                case csReportPaperType.CSRPTPAPERTYPELEGAL:
+                    size.RawKind = (int)PaperKind.Legal;
+                    break;
             }
-
-            mPrintAPI.printerSetSizeAndOrient(m_deviceName, paperSize, paperOrient, m_hDC);
-
-            DOCINFO di = null;
-            di.cbSize = di.Length;
-            di.lpszDocName = title;
-
-            return mPrintAPI.StartDoc(m_hDC, di) == 0;
-            */
-            return false;
+            return size;
         }
 
-        public bool endDoc() {
-            bool _rtn = false;
-
-            // TODO: print using .Net
-            /*
-            if (m_hDC != 0)
-            {
-                _rtn = cPrintAPI.endDoc(m_hDC) != 0;
-                // TODO: print using .Net
-                // DeleteDC(m_hDC);
-                m_hDC = 0;
-            }
-            else
-            {
-                _rtn = true;
-            }
-            */
-            if (m_bRestorePaperBin)
-            {
-                m_bRestorePaperBin = false;
-                cPrintAPI.printerSetPaperBin(m_deviceName, m_oldPaperBin);
-            }
-
-            return _rtn;
-        }
-
-        public bool starPage()
+        public bool starDoc(PrintDocument printDoc, String title, csReportPaperType paperSize, int orientation)
         {
-            // TODO: print using .Net
-            //return mPrintAPI.StartPage(m_hDC) != 0;
-            return false;
-        }
+            printDoc.DefaultPageSettings.Landscape = (orientation == (int)csRptPageOrientation.LANDSCAPE);
+            printDoc.DefaultPageSettings.PaperSize = getPaperSize(paperSize);
 
-        public bool endPage()
-        {
-            // TODO: print using .Net
-            // return mPrintAPI.cReport.endPage(m_hDC) != 0;
-            return false;
+            return true;
         }
-
     }
 
 }

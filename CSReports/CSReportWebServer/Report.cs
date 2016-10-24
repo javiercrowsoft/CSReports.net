@@ -51,7 +51,7 @@ namespace CSReportWebServer
 
             cReportLaunchInfo oLaunchInfo = new cReportLaunchInfo();
 
-            oLaunchInfo.setPrinter(cPrintAPI.getcPrinterFromDefaultPrinter());
+            oLaunchInfo.setPrinter(cPrintAPI.getcPrinterFromDefaultPrinter(null));
 
             registerDataSource(request);
 
