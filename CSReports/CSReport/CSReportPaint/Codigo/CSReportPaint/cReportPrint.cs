@@ -642,18 +642,19 @@ namespace CSReportPaint
                 }
 
                 printDoc.PrintPage += new PrintPageEventHandler(printPage);
+                printDoc.PrinterSettings.PrinterName = printer.getDeviceName();
 
-                PrintDialog printDialog = new PrintDialog();
-                printDialog.Document = printDoc;
+                //PrintDialog printDialog = new PrintDialog();
+                //printDialog.Document = printDoc;
 
-                DialogResult dialogResult = printDialog.ShowDialog();
-                if (dialogResult == DialogResult.OK)
-                {
+                //DialogResult dialogResult = printDialog.ShowDialog();
+                //if (dialogResult == DialogResult.OK)
+                //{
                     m_pageToPrint = -1;
                     m_pagesToPrint = pGetPagesToPrint(printer.getPaperInfo().getPagesToPrint());
                     m_objClientToPrint = objClient;
                     printDoc.Print();
-                }
+                //}
 
                 /*
                 for (i = 0; i < m_report.getPages().count(); i++)
@@ -779,7 +780,7 @@ namespace CSReportPaint
                                                   );
                     }
 
-                    e.HasMorePages = true;
+                    e.HasMorePages = (m_pageToPrint+1 < m_pagesToPrint.Last());
                     return;
                 }
                 else {
