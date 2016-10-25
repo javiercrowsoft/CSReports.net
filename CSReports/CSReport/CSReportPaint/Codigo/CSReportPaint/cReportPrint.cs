@@ -718,6 +718,10 @@ namespace CSReportPaint
             }
             */
 
+            /*
+            TODO: after some testing we must remove ScaleX and ScaleY
+            */
+
             if (m_pageToPrint == -1) {
 
                 float dpiX = 0;
@@ -745,6 +749,7 @@ namespace CSReportPaint
                     m_scaleY = m_scaleY * (96f / dPI);
                 }
 
+                // we are not using scaleX and scaleY
                 m_scaleX = 1;
                 m_scaleY = 1;
 
