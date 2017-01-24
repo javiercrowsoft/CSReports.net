@@ -1,0 +1,24 @@
+{
+  "name": "csharp2javascript",
+  "version": "1.0.0",
+  "description": "A C# to JavaScript translator",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/javiercrowsoft/CSReports.net",
+  "keywords": [
+    "CSReports.net",
+    "c#",
+    "JavaScript",
+    "translator"
+  ],
+  "author": "CrowSoft",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "^1.4.1"
+  },
+  "dependencies": {
+    "line-by-line": "^0.1.5"
+  }
+}

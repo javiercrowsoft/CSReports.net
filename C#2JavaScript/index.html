@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="assets/css/demo.css">
+    <title>C# 2 JavaScript</title>
+</head>
+<body>
+<h1>C# 2 JavaScript</h1>
+<!-- All of the Node.js APIs are available in this renderer process. -->
+We are using Node.js <script>document.write(process.versions.node)</script>,
+Chromium <script>document.write(process.versions.chrome)</script>,
+and Electron <script>document.write(process.versions.electron)</script>.
+<br/>
+<br/>
+<div class="demo">
+    <div class="demo-wrapper">
+        <div class="demo-box">
+            <div class="demo-controls">
+                <button class="demo-button" id="output-select-directory">Select Output Folder</button>
+                <span class="demo-response" id="output-selected-file"></span>
+            </div>
+            <br>
+            <div class="demo-controls">
+                <button class="demo-button" id="select-directory">Select Project Folder</button>
+                <span class="demo-response" id="selected-file"></span>
+            </div>
+            <br>
+            <div class="demo-controls">
+                <button class="demo-button" id="transpile">Transpile - now</button>
+                <span class="work-complete" id="work-complete">Work complete</span>
+            </div>
+            <br>
+            <div id="dialog-window">
+                <div id="scrollable-content">
+                    <ul id="csharp-files"></ul>
+                    <div id="footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+<script>
+    // You can also require other files to run in this process
+    require('./renderer.js')
+</script>
+</html>
