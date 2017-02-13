@@ -26,7 +26,7 @@ var createFile = function () {
 
         lr.on('line', function (line) {
             // 'line' contains the current line without the trailing newline character.
-            console.log('read: ', line);
+            //console.log('read: ', line);
             lineData = line;
             lr.pause();
             readLine();

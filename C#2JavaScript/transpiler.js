@@ -15,6 +15,16 @@ var inComment = false;
 var namespaceBracketRemoved = false;
 var openBrackets = 0;
 var namespace = "";
+var className = "";
+var inFunction = false;
+var inForEach = false;
+var loopIdentifiers = ["i_", "j_", "t_", "k_"];
+var loopBracketIndex = [];
+var loopIndex = -1;
+
+const replaceAll = function(target, search, replacement) {
+    return target.replace(new RegExp(search, 'g'), replacement);
+};
 
 const init = function() {
     inMainClass = true;
@@ -41,6 +51,7 @@ const getSentenceType = function() {
     else if(isComment())        setTranslator(asIsTranslator);
     else if(isUsing())          setTranslator(usingTranslator);
     else if(isClassDeclare())   setTranslator(classDeclareTranslator);
+    else if(isConstructor())    setTranslator(constructorTranslator);
     else if(isBracket())        setTranslator(bracketTranslator);
     else if(isConstDeclare())   setTranslator(constDeclareTranslator);
     else if(isFuncDeclare())    setTranslator(funcDeclareTranslator);
@@ -48,8 +59,11 @@ const getSentenceType = function() {
     else if(isReturn())         setTranslator(asIsTranslator);
     else if(isAssignment())     setTranslator(asIsTranslator);
     else if(isIf())             setTranslator(ifTranslator);
+    else if(isForEach())        setTranslator(forEachTranslator);
     else if(isWhile())          setTranslator(whileTranslator);
     else if(isCall())           setTranslator(asIsTranslator);
+    else if(isTry())            setTranslator(asIsTranslator);
+    else if(isCatch())          setTranslator(catchTranslator);
     else                        setTranslator(unknownTranslator);
     checkBrackets();
 };
@@ -109,6 +123,17 @@ const bracketTranslator = function() {
         namespaceBracketRemoved = true;
         currentLine = "";
     }
+    else if(inFunction) {
+        if(openBrackets === 2 && currentLine.trim().substr(0,1) === "}") {
+            currentLine = currentLine.replace("}", "};");
+            inFunction = false;
+        }
+        else if(inForEach) {
+            if(openBrackets === loopBracketIndex[loopIndex] && currentLine.trim().substr(0,1) === "}") {
+                loopIndex--;
+            }
+        }
+    }
 };
 
 const asIsTranslator = function() {
@@ -127,6 +152,7 @@ const privateDeclare = new RegExp(' *private.*;');
 const publicDeclare = new RegExp(' *public.*;');
 
 const privateClassDeclare = new RegExp(' *private.*.class.*');
+const internalClassDeclare = new RegExp(' *internal.*.class.*');
 const publicClassDeclare = new RegExp(' *public.*.class.*');
 
 const privateFuncDeclare = new RegExp(' *private.+[(][)]');
@@ -146,12 +172,33 @@ const createSentence = function(line) {
 };
 
 const isClassDeclare = function() {
-    return privateClassDeclare.test(currentLine) || publicClassDeclare.test(currentLine);
+    return privateClassDeclare.test(currentLine)
+        || internalClassDeclare.test(currentLine)
+        || publicClassDeclare.test(currentLine);
 };
 
-const createFunctionSentence = function(line) {
+const getParams = function(line) {
+    var start;
+    var end;
+    for(var i = 0, count = line.length; i < count; i++) {
+        var c = line.substr(i, 1);
+        if(c === "(") start = i;
+        if(c === ")") end = i;
+        if(start && end) break;
+    }
+    var params = line.substring(start+1, end);
+    var words = params.split(" ");
+    params = [];
+    for(var i = 1, count = words.length; i < count; i+=2) {
+        params.push(words[i].replace(",", ""));
+    }
+    return params.join(", ");
+};
+
+const createFunctionSentence = function(line, parameters) {
+    parameters = parameters || "";
     lastFunctionLine = 0;
-    return line + " = function() {";
+    return line + " = function(" + parameters + ") {";
 };
 
 const getCreateName = function(name) {
@@ -164,7 +211,7 @@ const classDeclareTranslator = function() {
         inMainClass = false;
         prefix = "globalObject." + namespace + ".";
     }
-    else if(privateClassDeclare.test(currentLine)) {
+    else if(privateClassDeclare.test(currentLine) || internalClassDeclare.test(currentLine)) {
         prefix = "var ";
     }
     else {
@@ -173,10 +220,30 @@ const classDeclareTranslator = function() {
     var words = currentLine.trim().split(" ");
     var spaces = currentLine.search(/\S/);
     var indent = currentLine.substr(0, spaces);
-    currentLine = createFunctionSentence(indent + prefix + getCreateName(words[2]))
-        + " //" + words[1] + " - " + currentLine.trim() + "\n\n"
+    className = words[2] === "class" ? words[3] : words[2];
+    currentLine = createFunctionSentence(indent + prefix + getCreateName(className))
+        + " // " + words[1] + " - " + currentLine.trim() + "\n\n"
         + indent + tab + "const self = {};"
     ;
+};
+
+const isConstructor = function() {
+    var identifier = currentLine.trim().split(" ")[1];
+    if(identifier && (identifier.substr(0, className.length+1) === className + "(")) {
+        inFunction = true;
+        return true;
+    }
+    else {
+        return false;
+    }
+};
+
+const constructorTranslator = function() {
+    var words = currentLine.trim().split(" ");
+    var spaces = currentLine.search(/\S/);
+    var indent = currentLine.substr(0, spaces);
+    currentLine = createFunctionSentence(indent + "var " + extractFunctionName(words[1]), getParams(currentLine))
+        + " // " + currentLine.trim();
 };
 
 const isConstDeclare = function() {
@@ -189,13 +256,19 @@ const constDeclareTranslator = function() {
     var spaces = currentLine.search(/\S/);
     var indent = currentLine.substr(0, spaces);
     currentLine = createSentence(indent + prefix + getExpression(words, getIdentifierIndex(words)))
-        + " //" + words[1] + " - " + currentLine.trim();
+        + " // " + words[1] + " - " + currentLine.trim();
 };
 
 const isFuncDeclare = function() {
-    return privateFuncDeclareWithParams.test(currentLine)
+    if(privateFuncDeclareWithParams.test(currentLine)
         || internalFuncDeclareWithParams.test(currentLine)
-        || publicFuncDeclareWithParams.test(currentLine);
+        || publicFuncDeclareWithParams.test(currentLine)) {
+        inFunction = true;
+        return true;
+    }
+    else {
+        return false;
+    }
 };
 
 const getPrefix = function(privateRegex) {
@@ -217,8 +290,9 @@ const funcDeclareTranslator = function() {
     var words = currentLine.trim().split(" ");
     var spaces = currentLine.search(/\S/);
     var indent = currentLine.substr(0, spaces);
-    currentLine = createFunctionSentence(indent + prefix + extractFunctionName(words[2]))
-        + " //" + words[1] + " - " + currentLine.trim();
+    var functionName = words[1] === "static" ? words[3] : words[2];
+    currentLine = createFunctionSentence(indent + prefix + extractFunctionName(functionName), getParams(currentLine))
+        + " // " + words[1] + " - " + currentLine.trim();
 };
 
 const isVarDeclare = function() {
@@ -239,7 +313,7 @@ const varDeclareTranslator = function() {
     var spaces = currentLine.search(/\S/);
     var indent = currentLine.substr(0, spaces);
     currentLine = createSentence(indent + prefix + getExpression(words, getIdentifierIndex(words)))
-                        + " //" + words[1] + " - " + currentLine.trim();
+                        + " // " + words[1] + " - " + currentLine.trim();
 };
 
 const getIdentifierIndex = function(words) {
@@ -296,6 +370,27 @@ const ifTranslator = function() {
 
 };
 
+const isForEach = function() {
+    if(currentLine.trim().substr(0, 8) === "foreach ") {
+        inForEach = true;
+        loopIndex++;
+        loopBracketIndex[loopIndex] = openBrackets + 1;
+        return true;
+    }
+    else {
+        return false;
+    }
+};
+
+const forEachTranslator = function() {
+    var words = currentLine.trim().split(" ");
+    var x = loopIdentifiers[loopIndex];
+    var spaces = currentLine.search(/\S/);
+    var indent = currentLine.substr(0, spaces);
+    currentLine = indent + "for(var " + x + " = 0; " + x + " < " + words[4].replace(")","").trim() + ".length; " + x + "++) {"
+        + " // " + currentLine.trim();
+};
+
 const isWhile = function() {
     return false;
 };
@@ -309,6 +404,27 @@ const isCall = function() {
     return line.indexOf("(") != -1 && line.endsWith(";");
 };
 
+const isTry = function() {
+    var line = currentLine.trim();
+    return line === "try";
+};
+
+const isCatch = function() {
+    var line = currentLine.trim();
+    return line.substr(0, 5) === "catch";
+};
+
+const catchTranslator = function() {
+    var line = currentLine.split("(");
+    if(line.length === 1) {
+        currentLine += "(ex)";
+    }
+    else {
+        var identifier = line[1].split(" ");
+        currentLine = line[0] + "(" + identifier.slice(1).join(" ");
+    }
+}
+
 const unknownTranslator = function() {
     currentLine = UNKNOWN + currentLine;
 };
@@ -319,6 +435,48 @@ const getFileName = function(fileName) {
 
 const writeHeaders = function() {
     return "(function(globalObject) {";
+};
+
+const numbersOrEmpty = new RegExp('^[0-9]*$');
+
+const sanitize = function() {
+    var words = [];
+    var word = "";
+    for(var i = 0, count = currentLine.length; i < count; i += 1) {
+        var c = currentLine.substr(i,1);
+        if(c === "(") {
+            words.push(word)
+            word = c;
+        }
+        else {
+            word += c;
+            if(c === ")") {
+                words.push(word)
+                word = "";
+            }
+        }
+    }
+    words.push(word);
+    for(var i = 0, count = words.length; i < count; i += 1) {
+        if(words[i].substr(0, 1) === "("
+            && words[i].endsWith(")")
+            && words[i].trim() === words[i]
+            && words[i].indexOf(",") === -1
+            && ! numbersOrEmpty.test(words[i])) {
+            word = replaceAll(words[i], " ", "");
+            if(word !== "()"
+                && word !== "(\"\")"
+                && (
+                    "(=+-*".indexOf(words[i-1].trim().slice(-1)) !== -1
+                    || words[i-1].trim().endsWith("return")
+                    )
+                ) {
+                console.log(words);
+                words[i] = "";
+            }
+        }
+    }
+    currentLine = words.join("");
 };
 
 const transpile = function(sourceFile, outputFolder, next) {
@@ -351,6 +509,7 @@ const transpile = function(sourceFile, outputFolder, next) {
             setLine(lineData);
             getSentenceType();
             translate();
+            sanitize();
             if(! discardLine) {
                 output.write(fd, currentLine);
             }

@@ -2,3 +2,5 @@ bin/
 obj/
 JavaScript/
 node_modules/
+npm-debug.log
+
