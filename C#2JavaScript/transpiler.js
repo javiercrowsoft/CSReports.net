@@ -6,6 +6,8 @@ const output = file.createFile();
 const UNKNOWN = "UNKNOWN >> ";
 const tab = "    ";
 
+const debugString = "public delegate void Report";
+
 var currentLine;
 var discardLine;
 var translate;
@@ -15,6 +17,7 @@ var inComment = false;
 var namespaceBracketRemoved = false;
 var openBrackets = 0;
 var namespace = "";
+var mainClassName = "";
 var className = "";
 var inFunction = false;
 var inForEach = false;
@@ -28,6 +31,7 @@ const replaceAll = function(target, search, replacement) {
 
 const init = function() {
     inMainClass = true;
+    mainClassName = "";
     openBrackets = 0;
     namespace = "";
     namespaceBracketRemoved = false;
@@ -44,6 +48,11 @@ const lastLineWasFunctionDeclaration = function() {
 };
 
 const getSentenceType = function() {
+
+    if(debugString && currentLine.trim().substr(0, debugString.length) === debugString) {
+        debugger;
+    }
+
     if(isEmpty())               setTranslator(emptyTranslator);
     else if(isNamespace())      setTranslator(namespaceTranslator);
     else if(isStartComment())   setTranslator(asIsTranslator);
@@ -54,11 +63,18 @@ const getSentenceType = function() {
     else if(isConstructor())    setTranslator(constructorTranslator);
     else if(isBracket())        setTranslator(bracketTranslator);
     else if(isConstDeclare())   setTranslator(constDeclareTranslator);
+    else if(isDelegate())       setTranslator(commentLineTranslator);
+    else if(isEvent())          setTranslator(commentLineTranslator);
     else if(isFuncDeclare())    setTranslator(funcDeclareTranslator);
     else if(isVarDeclare())     setTranslator(varDeclareTranslator);
     else if(isReturn())         setTranslator(asIsTranslator);
+    else if(isSwitch())         setTranslator(asIsTranslator);
+    else if(isCase())           setTranslator(asIsTranslator);
+    else if(isBreak())          setTranslator(asIsTranslator);
     else if(isAssignment())     setTranslator(asIsTranslator);
-    else if(isIf())             setTranslator(ifTranslator);
+    else if(isIf())             setTranslator(asIsTranslator);
+    else if(isElse())           setTranslator(asIsTranslator);
+    else if(isFor())            setTranslator(forTranslator);
     else if(isForEach())        setTranslator(forEachTranslator);
     else if(isWhile())          setTranslator(whileTranslator);
     else if(isCall())           setTranslator(asIsTranslator);
@@ -221,6 +237,7 @@ const classDeclareTranslator = function() {
     var spaces = currentLine.search(/\S/);
     var indent = currentLine.substr(0, spaces);
     className = words[2] === "class" ? words[3] : words[2];
+    if(mainClassName === "") mainClassName = className;
     currentLine = createFunctionSentence(indent + prefix + getCreateName(className))
         + " // " + words[1] + " - " + currentLine.trim() + "\n\n"
         + indent + tab + "const self = {};"
@@ -229,7 +246,11 @@ const classDeclareTranslator = function() {
 
 const isConstructor = function() {
     var identifier = currentLine.trim().split(" ")[1];
-    if(identifier && (identifier.substr(0, className.length+1) === className + "(")) {
+    if(identifier && (
+            (identifier.substr(0, className.length+1) === className + "(")
+        ||  (identifier.substr(0, mainClassName.length+1) === mainClassName + "(")
+        )
+      ) {
         inFunction = true;
         return true;
     }
@@ -331,11 +352,15 @@ const getIdentifierIndex = function(words) {
 };
 
 const getExpression = function(words, index) {
+    if(words.indexOf("=") === -1) {
+        for(var i = 0; i < words.length; i++) {
+            if(words[i].indexOf(";") !== -1) {
+                words[i] = words[i].replace(";", " = null;");
+                break;
+            }
+        }
+    }
     return words.slice(index).join(" ");
-};
-
-const isReturn = function() {
-    return (currentLine.trim().substr(0,7) === 'return ');
 };
 
 const isAssignment = function() {
@@ -363,11 +388,36 @@ const isEndComment = function() {
 };
 
 const isIf = function() {
-    return false;
+    return (currentLine.trim().substr(0, 4) === "if (" || currentLine.trim().substr(0, 3) === "if(");
 };
 
-const ifTranslator = function() {
+const isElse = function() {
+    return (currentLine.trim().substr(0, 5) === "else " || currentLine.trim().substr(0, 4) === "else");
+};
 
+const isReturn = function() {
+    return (currentLine.trim().substr(0, 7) === "return " || currentLine.trim().substr(0, 7) === "return;");
+};
+
+const isFor = function() {
+    return (currentLine.trim().substr(0, 5) === "for (" || currentLine.trim().substr(0, 4) === "for(");
+};
+
+const isSwitch = function() {
+    return (currentLine.trim().substr(0, 8) === "switch (" || currentLine.trim().substr(0, 7) === "switch(");
+};
+
+const isCase = function() {
+    return (currentLine.trim().substr(0, 5) === "case " || currentLine.trim().substr(0, 8) === "default:");
+};
+
+const isBreak = function() {
+    return currentLine.trim().substr(0, 6) === "break;";
+};
+
+const forTranslator = function() {
+    currentLine = currentLine.replace("for (int ", "for(");
+    currentLine = currentLine.replace("for(int ", "for(");
 };
 
 const isForEach = function() {
@@ -423,7 +473,19 @@ const catchTranslator = function() {
         var identifier = line[1].split(" ");
         currentLine = line[0] + "(" + identifier.slice(1).join(" ");
     }
-}
+};
+
+const isDelegate = function() {
+    return currentLine.indexOf(" delegate ") !== -1;
+};
+
+const isEvent = function() {
+    return currentLine.indexOf(" event ") !== -1;
+};
+
+const commentLineTranslator = function() {
+    currentLine = "// " + currentLine;
+};
 
 const unknownTranslator = function() {
     currentLine = UNKNOWN + currentLine;
