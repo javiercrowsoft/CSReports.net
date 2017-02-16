@@ -9,6 +9,7 @@ const tab = "    ";
 const debugString = "public delegate void Report";
 
 var currentLine;
+var originalLine;
 var discardLine;
 var translate;
 var inMainClass = true;
@@ -25,8 +26,12 @@ var loopIdentifiers = ["i_", "j_", "t_", "k_"];
 var loopBracketIndex = [];
 var loopIndex = -1;
 
+const escapeRegExp = function(str) {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // $& means the whole matched string
+};
+
 const replaceAll = function(target, search, replacement) {
-    return target.replace(new RegExp(search, 'g'), replacement);
+    return target.replace(new RegExp(escapeRegExp(search), 'g'), replacement);
 };
 
 const init = function() {
@@ -39,6 +44,7 @@ const init = function() {
 
 const setLine = function(line) {
     currentLine = line;
+    originalLine = isComment() ? "" : line;
     discardLine = false;
     lastFunctionLine += 1;
 };
@@ -66,6 +72,7 @@ const getSentenceType = function() {
     else if(isDelegate())       setTranslator(commentLineTranslator);
     else if(isEvent())          setTranslator(commentLineTranslator);
     else if(isFuncDeclare())    setTranslator(funcDeclareTranslator);
+    else if(isFor())            setTranslator(forTranslator);
     else if(isVarDeclare())     setTranslator(varDeclareTranslator);
     else if(isReturn())         setTranslator(asIsTranslator);
     else if(isSwitch())         setTranslator(asIsTranslator);
@@ -74,12 +81,13 @@ const getSentenceType = function() {
     else if(isAssignment())     setTranslator(asIsTranslator);
     else if(isIf())             setTranslator(asIsTranslator);
     else if(isElse())           setTranslator(asIsTranslator);
-    else if(isFor())            setTranslator(forTranslator);
     else if(isForEach())        setTranslator(forEachTranslator);
     else if(isWhile())          setTranslator(whileTranslator);
     else if(isCall())           setTranslator(asIsTranslator);
     else if(isTry())            setTranslator(asIsTranslator);
     else if(isCatch())          setTranslator(catchTranslator);
+    else if(isMultilineParam()) setTranslator(multilineParamTranslator);
+    else if(isPPorMM())         setTranslator(asIsTranslator);
     else                        setTranslator(unknownTranslator);
     checkBrackets();
 };
@@ -211,10 +219,13 @@ const getParams = function(line) {
     return params.join(", ");
 };
 
-const createFunctionSentence = function(line, parameters) {
+const createFunctionSentence = function(line, parameters, isMultiline) {
     parameters = parameters || "";
     lastFunctionLine = 0;
-    return line + " = function(" + parameters + ") {";
+    if(isMultiline)
+        return line + " = function(";
+    else
+        return line + " = function(" + parameters + ") {";
 };
 
 const getCreateName = function(name) {
@@ -239,9 +250,10 @@ const classDeclareTranslator = function() {
     className = words[2] === "class" ? words[3] : words[2];
     if(mainClassName === "") mainClassName = className;
     currentLine = createFunctionSentence(indent + prefix + getCreateName(className))
-        + " // " + words[1] + " - " + currentLine.trim() + "\n\n"
+        + "\n\n"
         + indent + tab + "const self = {};"
     ;
+    inFunction = true;
 };
 
 const isConstructor = function() {
@@ -263,8 +275,7 @@ const constructorTranslator = function() {
     var words = currentLine.trim().split(" ");
     var spaces = currentLine.search(/\S/);
     var indent = currentLine.substr(0, spaces);
-    currentLine = createFunctionSentence(indent + "var " + extractFunctionName(words[1]), getParams(currentLine))
-        + " // " + currentLine.trim();
+    currentLine = createFunctionSentence(indent + "var " + extractFunctionName(words[1]), getParams(currentLine), isMultiline());
 };
 
 const isConstDeclare = function() {
@@ -276,14 +287,14 @@ const constDeclareTranslator = function() {
     var words = currentLine.trim().split(" ");
     var spaces = currentLine.search(/\S/);
     var indent = currentLine.substr(0, spaces);
-    currentLine = createSentence(indent + prefix + getExpression(words, getIdentifierIndex(words)))
-        + " // " + words[1] + " - " + currentLine.trim();
+    currentLine = createSentence(indent + prefix + getExpression(words, getIdentifierIndex(words)));
 };
 
 const isFuncDeclare = function() {
-    if(privateFuncDeclareWithParams.test(currentLine)
+    if((privateFuncDeclareWithParams.test(currentLine)
         || internalFuncDeclareWithParams.test(currentLine)
-        || publicFuncDeclareWithParams.test(currentLine)) {
+        || publicFuncDeclareWithParams.test(currentLine)
+        ) && currentLine.indexOf("=") === -1) {
         inFunction = true;
         return true;
     }
@@ -312,8 +323,11 @@ const funcDeclareTranslator = function() {
     var spaces = currentLine.search(/\S/);
     var indent = currentLine.substr(0, spaces);
     var functionName = words[1] === "static" ? words[3] : words[2];
-    currentLine = createFunctionSentence(indent + prefix + extractFunctionName(functionName), getParams(currentLine))
-        + " // " + words[1] + " - " + currentLine.trim();
+    currentLine = createFunctionSentence(indent + prefix + extractFunctionName(functionName), getParams(currentLine), isMultiline());
+};
+
+const isMultiline = function() {
+    return currentLine.split("//")[0].trim().endsWith("(");
 };
 
 const isVarDeclare = function() {
@@ -328,13 +342,30 @@ const isLocalVarDeclare = function() {
     return word === "=" || word === ";";
 };
 
+const isMultilineParam = function() {
+    var line = currentLine.split("//")[0].trim();
+    return line.endsWith(",") || line.endsWith(")");
+};
+
+const isPPorMM = function() {
+    var line = currentLine.split("//")[0].trim();
+    return line.endsWith("++;") || line.endsWith("--;");
+};
+
+const multilineParamTranslator = function() {
+    var words = currentLine.trim().split(" ");
+    var spaces = currentLine.search(/\S/);
+    var indent = currentLine.substr(0, spaces);
+    words[0] = "";
+    currentLine = indent + words.join(" ");
+};
+
 const varDeclareTranslator = function() {
     var prefix = getPrefix(privateDeclare);
     var words = currentLine.trim().split(" ");
     var spaces = currentLine.search(/\S/);
     var indent = currentLine.substr(0, spaces);
-    currentLine = createSentence(indent + prefix + getExpression(words, getIdentifierIndex(words)))
-                        + " // " + words[1] + " - " + currentLine.trim();
+    currentLine = createSentence(indent + prefix + getExpression(words, getIdentifierIndex(words)));
 };
 
 const getIdentifierIndex = function(words) {
@@ -416,8 +447,8 @@ const isBreak = function() {
 };
 
 const forTranslator = function() {
-    currentLine = currentLine.replace("for (int ", "for(");
-    currentLine = currentLine.replace("for(int ", "for(");
+    currentLine = currentLine.replace("for (int ", "for(var ");
+    currentLine = currentLine.replace("for(int ", "for(var ");
 };
 
 const isForEach = function() {
@@ -437,8 +468,7 @@ const forEachTranslator = function() {
     var x = loopIdentifiers[loopIndex];
     var spaces = currentLine.search(/\S/);
     var indent = currentLine.substr(0, spaces);
-    currentLine = indent + "for(var " + x + " = 0; " + x + " < " + words[4].replace(")","").trim() + ".length; " + x + "++) {"
-        + " // " + currentLine.trim();
+    currentLine = indent + "for(var " + x + " = 0; " + x + " < " + words[4].replace(")","").trim() + ".length; " + x + "++) {";
 };
 
 const isWhile = function() {
@@ -451,12 +481,12 @@ const whileTranslator = function() {
 
 const isCall = function() {
     var line = currentLine.trim();
-    return line.indexOf("(") != -1 && line.endsWith(";");
+    return line.indexOf("(") != -1 && (line.endsWith(";") || line.endsWith(","));
 };
 
 const isTry = function() {
     var line = currentLine.trim();
-    return line === "try";
+    return line === "try" || line.substr(0, 5) === "try {";
 };
 
 const isCatch = function() {
@@ -467,7 +497,13 @@ const isCatch = function() {
 const catchTranslator = function() {
     var line = currentLine.split("(");
     if(line.length === 1) {
-        currentLine += "(ex)";
+        var i = currentLine.indexOf("{");
+        if(i > -1) {
+            currentLine = currentLine.substr(0,i) + " (ex) " + currentLine.substring(i);
+        }
+        else {
+            currentLine += "(ex)";
+        }
     }
     else {
         var identifier = line[1].split(" ");
@@ -524,7 +560,8 @@ const sanitize = function() {
             && words[i].endsWith(")")
             && words[i].trim() === words[i]
             && words[i].indexOf(",") === -1
-            && ! numbersOrEmpty.test(words[i])) {
+            && ! numbersOrEmpty.test(words[i])
+            ) {
             word = replaceAll(words[i], " ", "");
             if(word !== "()"
                 && word !== "(\"\")"
@@ -532,6 +569,7 @@ const sanitize = function() {
                     "(=+-*".indexOf(words[i-1].trim().slice(-1)) !== -1
                     || words[i-1].trim().endsWith("return")
                     )
+                && words[i+1].trim().substr(0,1) !== "?"
                 ) {
                 console.log(words);
                 words[i] = "";
@@ -539,6 +577,17 @@ const sanitize = function() {
         }
     }
     currentLine = words.join("");
+
+    currentLine = replaceAll(currentLine, "(ref ", "(");
+    currentLine = replaceAll(currentLine, "(out ", "(");
+    currentLine = replaceAll(currentLine, ", ref ", "(");
+    currentLine = replaceAll(currentLine, ", out ", "(");
+};
+
+const printOriginalLine = function() {
+    var line = originalLine.trim();
+    if(line.length > 0)
+        currentLine += " // " + line;
 };
 
 const transpile = function(sourceFile, outputFolder, next) {
@@ -572,6 +621,7 @@ const transpile = function(sourceFile, outputFolder, next) {
             getSentenceType();
             translate();
             sanitize();
+            printOriginalLine();
             if(! discardLine) {
                 output.write(fd, currentLine);
             }
@@ -628,7 +678,7 @@ const transpile = function(sourceFile, outputFolder, next) {
     const outputFile = file.createPath(outputFolder, getFileName(file.getFileName(sourceFile)));
 
     output.openWriter(outputFile, outputClient);
-}
+};
 
 // public interface
 //
