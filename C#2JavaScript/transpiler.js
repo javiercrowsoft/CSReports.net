@@ -25,6 +25,7 @@ var inForEach = false;
 var loopIdentifiers = ["i_", "j_", "t_", "k_"];
 var loopBracketIndex = [];
 var loopIndex = -1;
+var removeNextBracket = 2;
 
 const escapeRegExp = function(str) {
     return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // $& means the whole matched string
@@ -47,6 +48,7 @@ const setLine = function(line) {
     originalLine = isComment() ? "" : line;
     discardLine = false;
     lastFunctionLine += 1;
+    removeNextBracket += 1;
 };
 
 const lastLineWasFunctionDeclaration = function() {
@@ -79,15 +81,16 @@ const getSentenceType = function() {
     else if(isCase())           setTranslator(asIsTranslator);
     else if(isBreak())          setTranslator(asIsTranslator);
     else if(isAssignment())     setTranslator(asIsTranslator);
-    else if(isIf())             setTranslator(asIsTranslator);
-    else if(isElse())           setTranslator(asIsTranslator);
+    else if(isIf())             setTranslator(beginBlockTranslator);
+    else if(isElse())           setTranslator(beginBlockTranslator);
     else if(isForEach())        setTranslator(forEachTranslator);
-    else if(isWhile())          setTranslator(whileTranslator);
+    else if(isWhile())          setTranslator(beginBlockTranslator);
     else if(isCall())           setTranslator(asIsTranslator);
     else if(isTry())            setTranslator(asIsTranslator);
     else if(isCatch())          setTranslator(catchTranslator);
     else if(isMultilineParam()) setTranslator(multilineParamTranslator);
     else if(isPPorMM())         setTranslator(asIsTranslator);
+    else if(isArrayAssign())    setTranslator(asIsTranslator);
     else                        setTranslator(unknownTranslator);
     checkBrackets();
 };
@@ -143,6 +146,9 @@ const isBracket = function() {
 };
 
 const bracketTranslator = function() {
+    if(removeNextBracket === 1 && currentLine.trim() === "{") {
+        discardLine = true;
+    }
     if(! namespaceBracketRemoved) {
         namespaceBracketRemoved = true;
         currentLine = "";
@@ -179,12 +185,14 @@ const privateClassDeclare = new RegExp(' *private.*.class.*');
 const internalClassDeclare = new RegExp(' *internal.*.class.*');
 const publicClassDeclare = new RegExp(' *public.*.class.*');
 
-const privateFuncDeclare = new RegExp(' *private.+[(][)]');
-const publicFuncDeclare = new RegExp(' *public.+[(][)]');
+const privateFuncDeclare = new RegExp(' *private.+[(]*[)]');
+const publicFuncDeclare = new RegExp(' *public.+[(]*[)]');
 
 const privateFuncDeclareWithParams = new RegExp(' *private.+[()]');
 const internalFuncDeclareWithParams = new RegExp(' *internal.+[()]');
 const publicFuncDeclareWithParams = new RegExp(' *public.+[()]');
+
+const arrayAssignment = new RegExp('\\[*\\]');
 
 const constDeclare = new RegExp(' *const.*;');
 
@@ -211,10 +219,17 @@ const getParams = function(line) {
         if(start && end) break;
     }
     var params = line.substring(start+1, end);
-    var words = params.split(" ");
+    var words = params.split(",");
     params = [];
-    for(var i = 1, count = words.length; i < count; i+=2) {
-        params.push(words[i].replace(",", ""));
+    for(var i = 0, count = words.length; i < count; i+=1) {
+        var param = words[i].split(" ");
+        if(param.length > 2) {
+            params.push(param[2]);
+        }
+        else {
+            params.push(param[1]);
+        }
+
     }
     return params.join(", ");
 };
@@ -352,6 +367,11 @@ const isPPorMM = function() {
     return line.endsWith("++;") || line.endsWith("--;");
 };
 
+const isArrayAssign = function() {
+    var line = currentLine.split("//")[0].trim();
+    return arrayAssignment.test(line);
+};
+
 const multilineParamTranslator = function() {
     var words = currentLine.trim().split(" ");
     var spaces = currentLine.search(/\S/);
@@ -362,7 +382,7 @@ const multilineParamTranslator = function() {
 
 const varDeclareTranslator = function() {
     var prefix = getPrefix(privateDeclare);
-    var words = currentLine.trim().split(" ");
+    var words = currentLine.trim().replace(new RegExp("<.+>", 'g'), "").split(" ");
     var spaces = currentLine.search(/\S/);
     var indent = currentLine.substr(0, spaces);
     currentLine = createSentence(indent + prefix + getExpression(words, getIdentifierIndex(words)));
@@ -422,6 +442,13 @@ const isIf = function() {
     return (currentLine.trim().substr(0, 4) === "if (" || currentLine.trim().substr(0, 3) === "if(");
 };
 
+const beginBlockTranslator = function() {
+    if(! currentLine.endsWith("}") && ! currentLine.endsWith("{")) {
+        currentLine += " {";
+        removeNextBracket = 0;
+    }
+};
+
 const isElse = function() {
     return (currentLine.trim().substr(0, 5) === "else " || currentLine.trim().substr(0, 4) === "else");
 };
@@ -449,6 +476,7 @@ const isBreak = function() {
 const forTranslator = function() {
     currentLine = currentLine.replace("for (int ", "for(var ");
     currentLine = currentLine.replace("for(int ", "for(var ");
+    beginBlockTranslator();
 };
 
 const isForEach = function() {
@@ -472,16 +500,12 @@ const forEachTranslator = function() {
 };
 
 const isWhile = function() {
-    return false;
-};
-
-const whileTranslator = function() {
-
+    return (currentLine.trim().substr(0, 7) === "while (" || currentLine.trim().substr(0, 6) === "while(");
 };
 
 const isCall = function() {
     var line = currentLine.trim();
-    return line.indexOf("(") != -1 && (line.endsWith(";") || line.endsWith(","));
+    return line.indexOf("(") != -1 && (line.endsWith(";") || line.endsWith(",") || line.endsWith("("));
 };
 
 const isTry = function() {

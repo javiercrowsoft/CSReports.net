@@ -26,8 +26,8 @@
       <file leaf-file-name="transpiler.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/transpiler.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.43225807" vertical-offset="10908" max-vertical-offset="16008">
-              <caret line="483" column="80" selection-start-line="483" selection-start-column="80" selection-end-line="483" selection-end-column="80" />
+            <state vertical-scroll-proportion="0.39113924" vertical-offset="11352" max-vertical-offset="16560">
+              <caret line="507" column="99" selection-start-line="507" selection-start-column="99" selection-end-line="507" selection-end-column="99" />
               <folding />
             </state>
           </provider>
@@ -53,9 +53,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
+    <option name="x" value="1920" />
     <option name="y" value="27" />
-    <option name="width" value="1366" />
-    <option name="height" value="708" />
+    <option name="width" value="1920" />
+    <option name="height" value="1020" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -71,7 +72,7 @@
     <option name="STATE" value="0" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
+    <navigator proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -82,30 +83,7 @@
       <autoscrollFromSource ProjectPane="true" />
       <sortByType />
     </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="C#2JavaScript" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="C#2JavaScript" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="C#2JavaScript" />
-              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
-    </panes>
+    <panes />
   </component>
   <component name="PropertiesComponent">
     <property name="JavaScriptLanguageLevel" value="ES6" />
@@ -264,16 +242,18 @@
       <workItem from="1485207435385" duration="8418000" />
       <workItem from="1485460794039" duration="7440000" />
       <workItem from="1485959762979" duration="6224000" />
-      <workItem from="1487020595764" duration="15471000" />
+      <workItem from="1487020595764" duration="15978000" />
+      <workItem from="1487262086210" duration="619000" />
+      <workItem from="1487601519407" duration="8065000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="66583000" />
+    <option name="totallyTimeSpent" value="75774000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="27" width="1366" height="708" extended-state="6" />
-    <editor active="false" />
+    <frame x="1920" y="27" width="1920" height="1020" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -327,6 +307,22 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/transpiler.js">
       <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="10908" max-vertical-offset="16008">
+          <caret line="483" column="80" selection-start-line="483" selection-start-column="80" selection-end-line="483" selection-end-column="80" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/transpiler.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="10908" max-vertical-offset="16008">
+          <caret line="483" column="80" selection-start-line="483" selection-start-column="80" selection-end-line="483" selection-end-column="80" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/transpiler.js">
+      <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="13432">
           <caret line="424" column="5" selection-start-line="424" selection-start-column="5" selection-end-line="424" selection-end-column="5" />
           <folding />
@@ -345,14 +341,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.43253234" vertical-offset="1016" max-vertical-offset="3358">
           <caret line="34" column="34" selection-start-line="34" selection-start-column="34" selection-end-line="34" selection-end-column="34" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/transpiler.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.43225807" vertical-offset="10908" max-vertical-offset="16008">
-          <caret line="483" column="80" selection-start-line="483" selection-start-column="80" selection-end-line="483" selection-end-column="80" />
+        <state vertical-scroll-proportion="0.39113924" vertical-offset="11352" max-vertical-offset="16560">
+          <caret line="507" column="99" selection-start-line="507" selection-start-column="99" selection-end-line="507" selection-end-column="99" />
           <folding />
         </state>
       </provider>
