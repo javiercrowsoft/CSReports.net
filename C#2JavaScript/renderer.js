@@ -88,7 +88,7 @@ const readFiles = function(files) {
             debugger;
             document.getElementById('work-complete').style.display = "block";
         }
-    }
+    };
     nextFile();
 };
 
@@ -100,9 +100,11 @@ const translateFile = function(file, next) {
     csharpFiles.appendChild(li);
     li.parentNode.parentNode.scrollTop = li.offsetTop;
 
+    const printOriginalCode = document.getElementById('print-original-code').checked;
+
     // transpile the file
     //
-    transpiler.transpile(file, getOutputFolder(file), next);
+    transpiler.transpile(file, getOutputFolder(file), next, printOriginalCode);
 };
 
 
