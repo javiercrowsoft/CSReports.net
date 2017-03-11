@@ -6,7 +6,7 @@ const output = file.createFile();
 const UNKNOWN = "UNKNOWN >> ";
 const tab = "    ";
 
-var debugString = "private bool pGetData(";
+var debugString = "while (!pIsEndCallFunction(c, nInner) && nStart < nLenCode);";
 
 var currentLine;
 var originalLine;
@@ -94,6 +94,7 @@ const getSentenceType = function() {
     else if(isElse())           setTranslator(beginBlockTranslator);
     else if(isForEach())        setTranslator(forEachTranslator);
     else if(isWhile())          setTranslator(beginBlockTranslator);
+    else if(isDo())             setTranslator(beginBlockTranslator);
     else if(isCall())           setTranslator(asIsTranslator);
     else if(isTry())            setTranslator(beginBlockTranslator);
     else if(isCatch())          setTranslator(catchTranslator);
@@ -218,8 +219,11 @@ const privateFuncDeclare = new RegExp(' *private.+[(]');
 const publicFuncDeclare = new RegExp(' *public.+[(]');
 
 const privateFuncDeclareWithParams = new RegExp(' *private.+[()]');
+const protectedFuncDeclareWithParams = new RegExp(' *protected.+[()]');
 const internalFuncDeclareWithParams = new RegExp(' *internal.+[()]');
 const publicFuncDeclareWithParams = new RegExp(' *public.+[()]');
+
+const validIdentifierCharacter = new RegExp('[a-z_A-Z0-9$]');
 
 const arrayAssignment = new RegExp('\\[*\\]');
 
@@ -341,6 +345,7 @@ const isFuncDeclare = function() {
     if((privateFuncDeclareWithParams.test(currentLine)
         || internalFuncDeclareWithParams.test(currentLine)
         || publicFuncDeclareWithParams.test(currentLine)
+        || protectedFuncDeclareWithParams.test(currentLine)
         ) && currentLine.indexOf("=") === -1) {
         inFunction = true;
         inParamDeclaration = true;
@@ -370,7 +375,7 @@ const funcDeclareTranslator = function() {
     var words = currentLine.trim().split(" ");
     var spaces = currentLine.search(/\S/);
     var indent = currentLine.substr(0, spaces);
-    var functionName = words[1] === "static" ? words[3] : words[2];
+    var functionName = (words[1] === "static" || words[1] === "virtual") ? words[3] : words[2];
     currentLine = createFunctionSentence(indent + prefix + extractFunctionName(functionName), getParams(currentLine), isMultiline());
 };
 
@@ -420,7 +425,7 @@ const multilineParamTranslator = function() {
         var line = currentLine.trim().split("//");
         var comments = line[1] ? "//" + line[1] : "";
         var isLastParameter = line[0].endsWith(")");
-        currentLine = indent + getParams(currentLine.trim().replace(new RegExp("<.+>", 'g'), ""));
+        currentLine = indent + getParams(removeGenerics(currentLine.trim()));
         if(isLastParameter) {
             currentLine += ")";
             addStartBlock();
@@ -429,9 +434,40 @@ const multilineParamTranslator = function() {
     }
 };
 
+const removeGenerics = function(line) {
+    var deep = 0;
+    var newLine = "";
+    var temp = "";
+    for(var i = 0, count = line.length; i < count; i += 1) {
+        var c = line.substr(i,1);
+        if(c === "<") {
+            deep++;
+        }
+        if(deep === 0) {
+            newLine += c;
+            temp = "";
+        }
+        else {
+            temp += c;
+            if(!validIdentifierCharacter.test(c) && ", <>".indexOf(c) === -1) {
+                newLine += temp;
+                temp = "";
+                deep = 0;
+            }
+        }
+        if(c === ">") {
+            deep--;
+        }
+        if(deep < 0) {
+            deep = 0;
+        }
+    }
+    return newLine;
+};
+
 const varDeclareTranslator = function() {
     var prefix = getPrefix(privateDeclare);
-    var words = currentLine.trim().replace(new RegExp("<.+>", 'g'), "").split(" ");
+    var words = removeGenerics(currentLine.trim()).split(" ");
     var spaces = currentLine.search(/\S/);
     var indent = currentLine.substr(0, spaces);
     currentLine = createSentence(indent + prefix + getExpression(words, getIdentifierIndex(words)));
@@ -464,11 +500,12 @@ const getExpression = function(words, index) {
 };
 
 const isAssignment = function() {
-    return currentLine.trim().split(" ")[1] === "=";
+    var line = currentLine.trim().split(" ");
+    return line[1] === "=" || line[1] === "+=" || line[1] === "-=";
 };
 
 const assignmentTranslator = function() {
-    var words = currentLine.trim().replace(new RegExp("<.+>", 'g'), "").split(" ");
+    var words = removeGenerics(currentLine.trim()).split(" ");
     var spaces = currentLine.search(/\S/);
     var indent = currentLine.substr(0, spaces);
     currentLine = indent + words.join(" ");
@@ -585,7 +622,7 @@ const isForEach = function() {
 };
 
 const forEachTranslator = function() {
-    var words = currentLine.trim().replace(new RegExp("<.+>", 'g'), "").split(" ");
+    var words = removeGenerics(currentLine.trim()).split(" ");
     var x = loopIdentifiers[loopIndex];
     var spaces = currentLine.search(/\S/);
     var indent = currentLine.substr(0, spaces);
@@ -595,6 +632,10 @@ const forEachTranslator = function() {
 
 const isWhile = function() {
     return (currentLine.trim().substr(0, 7) === "while (" || currentLine.trim().substr(0, 6) === "while(");
+};
+
+const isDo = function() {
+    return (currentLine.trim().substr(0, 2) === "do");
 };
 
 const isCall = function() {
@@ -690,7 +731,7 @@ const sanitize = function() {
             if(word !== "()"
                 && word !== "(\"\")"
                 && (
-                    "(=+-*".indexOf(words[i-1].trim().slice(-1)) !== -1
+                    "<>(=+-*".indexOf(words[i-1].trim().slice(-1)) !== -1
                     || words[i-1].trim().endsWith("return")
                     || words[i-1].trim().endsWith("case")
                     )
@@ -706,8 +747,10 @@ const sanitize = function() {
 
     currentLine = replaceAll(currentLine, "(ref ", "(");
     currentLine = replaceAll(currentLine, "(out ", "(");
-    currentLine = replaceAll(currentLine, ", ref ", ", ");
-    currentLine = replaceAll(currentLine, ", out ", ", ");
+    currentLine = replaceAll(currentLine, " out ", " ");
+    currentLine = replaceAll(currentLine, " ref ", " ");
+    currentLine = replaceAll(currentLine, " == ", " === ");
+    currentLine = replaceAll(currentLine, " != ", " !== ");
 };
 
 const printOriginalLine = function() {

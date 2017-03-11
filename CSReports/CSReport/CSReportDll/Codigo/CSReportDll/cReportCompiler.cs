@@ -145,7 +145,7 @@ namespace CSReportDll
 
         public void initVariable(cReportFormula formula)
         {
-            cReportVariable var = null;
+            cReportVariable variable = null;
             cReportFormulaInt fint = null;
             cStructTime st = null;
 
@@ -154,9 +154,9 @@ namespace CSReportDll
                 fint = formula.getFormulasInt().item(_i);
                 for (int _j = 0; _j < fint.getVariables().count(); _j++)
                 {
-                    var = fint.getVariables().item(_j);
+                    variable = fint.getVariables().item(_j);
 
-                    System.TypeCode typeCode = System.Type.GetTypeCode(var.getValue().GetType());
+                    System.TypeCode typeCode = System.Type.GetTypeCode(variable.getValue().GetType());
                     switch (typeCode)
                     {
 
@@ -175,16 +175,16 @@ namespace CSReportDll
                         case System.TypeCode.SByte:
                         case System.TypeCode.DateTime:
                         case System.TypeCode.Boolean:
-                            var.setValue(0);
+                            variable.setValue(0);
                             break;
                         case System.TypeCode.Char:
                         case System.TypeCode.String:
-                            var.setValue("");
+                            variable.setValue("");
                             break;
                         case System.TypeCode.Object:
-                            if (var.getValue() is cStructTime)
+                            if (variable.getValue() is cStructTime)
                             {
-                                st = (cStructTime)var.getValue();
+                                st = (cStructTime)variable.getValue();
                                 st.setHour(0);
                                 st.setMinute(0);
                                 st.setSecond(0);
@@ -349,10 +349,10 @@ namespace CSReportDll
                     value = cUtil.val(m_report.getValueFromRs(columnIndex).ToString());
                 }
 
-                cReportVariable var = fint.getVariables().item(C_GROUPPERCENTT);
-                total = cUtil.val(var.getValue().ToString());
+                cReportVariable variable = fint.getVariables().item(C_GROUPPERCENTT);
+                total = cUtil.val(variable.getValue().ToString());
                 value = cUtil.divideByZero(value, total);
-                var.setValue(value);
+                variable.setValue(value);
 
             }
 
@@ -831,7 +831,7 @@ namespace CSReportDll
             return code.Substring(pos, i - pos);
         }
 
-        private String pGetParameter(String parameters, int paramIndex, String function)
+        private String pGetParameter(String parameters, int paramIndex, String funName)
         {
             String param = "";
             String[] vParam = null;
@@ -845,7 +845,7 @@ namespace CSReportDll
                     cReportError.errGetDescript(
                                     csRptErrors.CSRPTERRMISSINGPARAM,
                                     paramIndex.ToString(),
-                                    function));
+                                    funName));
             }
             else
             {
