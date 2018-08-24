@@ -55,7 +55,7 @@ namespace CSReportWebServer
 
         private void safePreview(JObject request)
         {
-            var pathAndFile = @"\\vmware-host\Shared Folders\Documents\CrowSoft\Reportes\temp\" + request["message"]["data"]["file"];
+            var pathAndFile = @"C:\proyectos\CSReportes\CSReportes\Informes\Reportes\" + request["message"]["data"]["file"];
             var report = new Report();
             report.init(request);
             if (report.openDocument(pathAndFile))
