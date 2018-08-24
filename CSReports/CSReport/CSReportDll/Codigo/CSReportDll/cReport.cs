@@ -4906,9 +4906,10 @@ namespace CSReportDll
                     return false;
                 }
 
+                vRows = rs;
+
                 if (rs.Rows.Count == 0)
                 {
-                    vRows = null;
                     if (createIndexVector)
                     {
                         m_vRowsIndex = new int[0];
@@ -4916,8 +4917,7 @@ namespace CSReportDll
                     }
                 }
                 else
-                {
-                    vRows = rs;
+                {                    
                     if (createIndexVector)
                     {
                         m_vRowsIndex = new int[vRows.Rows.Count];
