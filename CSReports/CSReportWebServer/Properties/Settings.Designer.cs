@@ -25,7 +25,7 @@ namespace CSReportWebServer.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("knldjmfmopnpolahpmmgbagdohdnhkik")]
+        [global::System.Configuration.DefaultSettingValueAttribute("gfladhgjbflfogopjcjkmokdddcboika")]
         public string ExtensionId {
             get {
                 return ((string)(this["ExtensionId"]));

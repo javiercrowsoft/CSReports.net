@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="ExtensionId" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">knldjmfmopnpolahpmmgbagdohdnhkik</Value>
+      <Value Profile="(Default)">gfladhgjbflfogopjcjkmokdddcboika</Value>
     </Setting>
     <Setting Name="ExtensionKey" Type="System.String" Scope="User">
       <Value Profile="(Default)">MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDcBHwzDvyBQ6bDppkIs9MP4ksKqCMyXQ/A52JivHZKh4YO/9vJsT3oaYhSpDCE9RPocOEQvwsHsFReW2nUEc6OLLyoCFFxIb7KkLGsmfakkut/fFdNJYh0xOTbSN8YvLWcqph09XAY2Y/f0AL7vfO1cuCqtkMt8hFrBGWxDdf9CQIDAQAB</Value>

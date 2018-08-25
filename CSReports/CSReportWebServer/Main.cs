@@ -28,12 +28,19 @@ namespace CSReportWebServer
             log.Info("application started");
             log.DebugFormat("command line : \"{0}\"", string.Join("\", \"", args));
 
+            log.Info("new version");
+            log.DebugFormat("command line 0 : \"{0}\"", args[0]);
+            log.DebugFormat("command line 0 : \"{0}\"", args[1]);
+
             // started with no arguments?
             if (args.Length == 0) Usage();
 
             // started by chrome?
-            else if (args[args.Length - 1].StartsWith("chrome-extension://")) RunNativeMessagingHost(args, f);
-
+            else if (args[0].StartsWith("chrome-extension://"))
+            {
+                log.Info("starting RunNativeMessagingHost");
+                RunNativeMessagingHost(args, f);
+            }
             // register command?
             else if (args[args.Length - 1] == "register") RegisterNativeMessagingHost(args);
 

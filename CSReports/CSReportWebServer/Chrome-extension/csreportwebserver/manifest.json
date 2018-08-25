@@ -32,7 +32,7 @@
     "matches": [
       "https://*.google.com/*",
       "*://*.chromium.org/*",
-      "http://cairowebtest.dev/"
+      "http://cairodigital.com.ar/"
     ]
   }
 }
