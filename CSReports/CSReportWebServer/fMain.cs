@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
+using System.Net;
+using System.IO;
 
 namespace CSReportWebServer
 {
@@ -55,7 +57,11 @@ namespace CSReportWebServer
 
         private void safePreview(JObject request)
         {
-            var pathAndFile = @"C:\proyectos\CSReportes\CSReportes\Informes\Reportes\" + request["message"]["data"]["file"];
+            var fileName = request["message"]["data"]["file"];
+            var reportType = request["message"]["data"]["type"];
+            var pathAndFile = Path.GetTempPath() + fileName;
+            getReportFromWebServer("http://www.cairodigital.com.ar/client/cairo/reports/" + reportType + "/" + fileName, pathAndFile);
+                        
             var report = new Report();
             report.init(request);
             if (report.openDocument(pathAndFile))
@@ -89,6 +95,22 @@ namespace CSReportWebServer
         private void fMain_Load(object sender, EventArgs e)
         {
             Main.Init(m_args, this);
+        }
+
+        private string DownloadString(string address)
+        {
+            string text;
+            using (var client = new WebClient())
+            {
+                text = client.DownloadString(address);
+            }
+            return text;
+        }
+
+        private void getReportFromWebServer(string url, string fileName)
+        {
+            var xml = DownloadString(url);
+            File.WriteAllText(fileName, xml);
         }
     }
 }
