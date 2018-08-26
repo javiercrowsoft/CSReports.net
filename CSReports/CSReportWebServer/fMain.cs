@@ -58,9 +58,10 @@ namespace CSReportWebServer
         private void safePreview(JObject request)
         {
             var fileName = request["message"]["data"]["file"];
-            var reportType = request["message"]["data"]["type"];
+            var reportType = request["message"]["data"]["type"].ToString();
+            var url = request["message"]["data"]["url"].ToString();
             var pathAndFile = Path.GetTempPath() + fileName;
-            getReportFromWebServer("http://www.cairodigital.com.ar/client/cairo/reports/" + reportType + "/" + fileName, pathAndFile);
+            getReportFromWebServer(url + reportType + "/" + fileName, pathAndFile);
                         
             var report = new Report();
             report.init(request);
