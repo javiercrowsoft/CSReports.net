@@ -64,10 +64,27 @@ namespace CSReportWebServer
             getReportFromWebServer(url + reportType + "/" + fileName, pathAndFile);
                         
             var report = new Report();
-            report.init(request);
+            report.init(request, this.printDlg);
             if (report.openDocument(pathAndFile))
             {
                 report.preview();
+            }
+            m_reports.Add(report.reportId, report);
+        }
+
+        private void safePrint(JObject request)
+        {
+            var fileName = request["message"]["data"]["file"];
+            var reportType = request["message"]["data"]["type"].ToString();
+            var url = request["message"]["data"]["url"].ToString();
+            var pathAndFile = Path.GetTempPath() + fileName;
+            getReportFromWebServer(url + reportType + "/" + fileName, pathAndFile);
+
+            var report = new Report();
+            report.init(request, this.printDlg);
+            if (report.openDocument(pathAndFile))
+            {
+                report.printReport();
             }
             m_reports.Add(report.reportId, report);
         }
@@ -84,6 +101,12 @@ namespace CSReportWebServer
         public void preview(JObject request)
         {
             ReportActionCallback d = new ReportActionCallback(safePreview);
+            this.Invoke(d, new object[] { request });
+        }
+
+        public void printReport(JObject request)
+        {
+            ReportActionCallback d = new ReportActionCallback(safePrint);
             this.Invoke(d, new object[] { request });
         }
 

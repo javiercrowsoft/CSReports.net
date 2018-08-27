@@ -173,6 +173,9 @@ namespace CSReportWebServer
                     case "preview":
                         previewReport(request);
                         break;
+                    case "print":
+                        printReport(request);
+                        break;
                     case "moveToPage":
                         moveToPage(request);
                         break;
@@ -185,6 +188,11 @@ namespace CSReportWebServer
         private void previewReport(JObject request)
         {
             m_f.preview(request);
+        }
+
+        private void printReport(JObject request)
+        {
+            m_f.printReport(request);
         }
 
         private void moveToPage(JObject request)
