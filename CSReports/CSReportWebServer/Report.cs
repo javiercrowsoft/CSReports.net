@@ -102,7 +102,6 @@ namespace CSReportWebServer
             launchReport();
 
             JObject message = JObject.Parse("{ messageType: 'REPORT_PRINT_DONE', reportId: '" + m_reportId + "', webReportId: '" + m_webReportId + "' }");
-            message["page"] = getPage(1);
             Main.sendMessage(message);
         }
 

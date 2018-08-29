@@ -69,7 +69,14 @@ namespace CSReportWebServer
             {
                 report.preview();
             }
-            m_reports.Add(report.reportId, report);
+            if (m_reports.ContainsKey(report.reportId))
+            {
+                m_reports[report.reportId] = report;
+            }
+            else
+            {
+                m_reports.Add(report.reportId, report);
+            }
         }
 
         private void safePrint(JObject request)
@@ -86,7 +93,6 @@ namespace CSReportWebServer
             {
                 report.printReport();
             }
-            m_reports.Add(report.reportId, report);
         }
 
         private void safeMoveToPage(JObject request)
