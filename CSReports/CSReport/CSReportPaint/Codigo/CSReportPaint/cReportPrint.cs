@@ -36,8 +36,6 @@ namespace CSReportPaint
 
         private Font[] m_fnt;
 
-        private int m_hDC = 0;
-
         private int m_x = 0;
         private int m_y = 0;
 
@@ -68,6 +66,21 @@ namespace CSReportPaint
         private float m_oldScaleY = 0;
         private float m_oldScaleX = 0;
         private float m_oldScaleFont = 0;
+        
+        public cReportPrint()
+        {
+            try
+            {
+                m_scaleX = 1;
+                m_scaleY = 1;
+
+                cGlobals.redim(ref m_fnt, 0);
+            }
+            catch (Exception ex)
+            {
+                cError.mngError(ex, "constructor", C_MODULE, "");
+            }
+        }
 
         //---------------------------------------------------------------------------
         //

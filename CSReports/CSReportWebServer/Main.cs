@@ -22,6 +22,11 @@ namespace CSReportWebServer
 
         public static int Init(string[] args, fMain f)
         {
+
+            // it is the first thing we need to do
+            //
+            CSKernelClient.cUtil.setSepDecimal();
+
             // configure log4net
             log4net.Config.XmlConfigurator.Configure();
 
