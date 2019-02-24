@@ -4330,7 +4330,7 @@ namespace CSReportDll
 
                 if (pIsGroupFormula((int)fint.getFormulaType()))
                 {
-                    if (fint.getFormulaType() == csRptFormulaType.CSRPTGROUPPERCENT)
+                    if (fint.getFormulaType() == csRptFormulaType.CSRPTF_GROUP_PERCENT)
                     {
                         formula.setIdxGroup2(0);
                         indexGroup = cUtil.valAsInt(fint.getParameters().item(2).getValue());
@@ -4379,13 +4379,13 @@ namespace CSReportDll
         {
             switch (formulaType)
             {
-                case (int)csRptFormulaType.CSRPTGROUPTOTAL:
-                case (int)csRptFormulaType.CSRPTGROUPMAX:
-                case (int)csRptFormulaType.CSRPTGROUPMIN:
-                case (int)csRptFormulaType.CSRPTGROUPAVERAGE:
-                case (int)csRptFormulaType.CSRPTGROUPPERCENT:
-                case (int)csRptFormulaType.CSRPTGROUPCOUNT:
-                case (int)csRptFormulaType.CSRPTGROUPLINENUMBER:
+                case (int)csRptFormulaType.CSRPTF_GROUP_TOTAL:
+                case (int)csRptFormulaType.CSRPTF_GROUP_MAX:
+                case (int)csRptFormulaType.CSRPTF_GROUP_MIN:
+                case (int)csRptFormulaType.CSRPTF_GROUP_AVERAGE:
+                case (int)csRptFormulaType.CSRPTF_GROUP_PERCENT:
+                case (int)csRptFormulaType.CSRPTF_GROUP_COUNT:
+                case (int)csRptFormulaType.CSRPTF_GROUP_LINE_NUMBER:
 
                     return true;
 
@@ -5546,7 +5546,7 @@ namespace CSReportDll
                         colName = fint.getParameters().item(0).getValue();
                         pSetColIndexInGroupFormulaAux(rs, fint, colName, cReportGlobals.C_KEYINDEXCOL);
 
-                        if (fint.getFormulaType() == csRptFormulaType.CSRPTGROUPPERCENT)
+                        if (fint.getFormulaType() == csRptFormulaType.CSRPTF_GROUP_PERCENT)
                         {
                             colName = fint.getParameters().item(1).getValue();
                             pSetColIndexInGroupFormulaAux(rs, fint, colName, cReportGlobals.C_KEYINDEXCOL2);
