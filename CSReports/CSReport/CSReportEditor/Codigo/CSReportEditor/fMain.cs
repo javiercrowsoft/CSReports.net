@@ -1149,5 +1149,23 @@ namespace CSReportEditor
         {
             printReport();
         }
+
+        private void cmCtrlBringFront_Click(object sender, EventArgs e)
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.bringToFront();
+            }
+        }
+
+        private void cmCtrlSendBack_Click(object sender, EventArgs e)
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.sendToBack();
+            }
+        }
     }
 }
