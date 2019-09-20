@@ -31,7 +31,7 @@ namespace CSReportWebServer
         {
             get
             {
-                return m_webReportId;
+                return m_reportId;
             }
         }
 

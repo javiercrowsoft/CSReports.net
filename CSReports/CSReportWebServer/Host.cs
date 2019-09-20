@@ -168,6 +168,9 @@ namespace CSReportWebServer
                 {
                     request["message"]["data"] = JObject.Parse((m_partialMessages[id] + request["message"]["data"]).ToString());
                 }
+                else {
+                    request["message"]["data"] = JObject.Parse(request["message"]["data"].ToString());
+                }
                 switch (action)
                 {
                     case "preview":

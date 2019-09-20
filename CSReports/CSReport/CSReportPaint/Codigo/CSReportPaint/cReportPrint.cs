@@ -1906,7 +1906,7 @@ namespace CSReportPaint
         {
             if (m_paint != null)
             {
-                if(m_currPage == page -1) printPage(page, true);
+                if(m_currPage != page -1) printPage(page, true);
 
                 Bitmap bmp = new Bitmap((int)m_realWidth, (int)m_realHeight);
                 Graphics bmpGraphics = Graphics.FromImage(bmp);

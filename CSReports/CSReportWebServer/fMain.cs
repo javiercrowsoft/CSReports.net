@@ -61,10 +61,12 @@ namespace CSReportWebServer
             var reportType = request["message"]["data"]["type"].ToString();
             var url = request["message"]["data"]["url"].ToString();
             var pathAndFile = Path.GetTempPath() + fileName;
+
             getReportFromWebServer(url + reportType + "/" + fileName, pathAndFile);
                         
             var report = new Report();
             report.init(request, this.printDlg);
+
             if (report.openDocument(pathAndFile))
             {
                 report.preview();

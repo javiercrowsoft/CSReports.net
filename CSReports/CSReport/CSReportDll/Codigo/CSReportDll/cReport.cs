@@ -191,10 +191,6 @@ namespace CSReportDll
         private int[] m_lastRowPreEvalued = null;
         private int[] m_lastRowPostEvalued = null;
 
-        // to print groups in a new page when a group changes
-        //
-        private int m_idxGroupToPrintNP = -1;
-
         // flag to know if there are group headers to re-print in a new page
         // if it is false we can print a footer as the first line in a new page
         //
@@ -202,6 +198,10 @@ namespace CSReportDll
         private bool m_bHaveToRePrintGroup;
 
         private const int NO_GROUP_INDEX = 0;
+
+        // to print groups in a new page when a group changes
+        //
+        private int m_idxGroupToPrintNP = NO_GROUP_INDEX;
 
         // index of the current group header
         //
@@ -947,7 +947,7 @@ namespace CSReportDll
             // o
             // - which need to be re-printed because we are in a new page
             //
-            if (m_idxGroupToPrintNP > -1 || m_bHaveToRePrintGroup)
+            if (m_idxGroupToPrintNP > 0 || m_bHaveToRePrintGroup)
             {
                 return csRptGetLineResult.CSRPTGLVIRTUALH;
             }
@@ -1066,7 +1066,7 @@ namespace CSReportDll
 
             // if we need to print the group in a new page
             //
-            if (m_idxGroupToPrintNP > -1)
+            if (m_idxGroupToPrintNP > 0)
             {
                 pGetLineAuxPrintGroupInNP();
             }
