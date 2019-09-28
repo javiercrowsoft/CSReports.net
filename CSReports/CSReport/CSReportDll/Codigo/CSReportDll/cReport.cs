@@ -1116,7 +1116,7 @@ namespace CSReportDll
         {
             // if we have finished return csRptGLEnd
             //
-            if (m_rows == null || m_iRow > m_recordCount)
+            if (m_rows == null || m_iRow > m_recordCount -1)
             {
                 // if there are not pending footers we have finished
                 // 
@@ -1244,7 +1244,7 @@ namespace CSReportDll
 
                         // we need to close the footer of the group which contains it
                         //
-                        m_vGroups[m_idxGroupFooter - 1].footerMustBeClosed = true;
+                        m_vGroups[i -1].footerMustBeClosed = true;
                     }
                     m_bCloseFooter = true;
                     break;
