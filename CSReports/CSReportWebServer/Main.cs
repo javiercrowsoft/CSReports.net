@@ -22,15 +22,23 @@ namespace CSReportWebServer
 
         public static int Init(string[] args, fMain f)
         {
+
+            // it is the first thing we need to do
+            //
+            CSKernelClient.cUtil.setSepDecimal();
+
             // configure log4net
             log4net.Config.XmlConfigurator.Configure();
 
             log.Info("application started");
             log.DebugFormat("command line : \"{0}\"", string.Join("\", \"", args));
 
-            log.Info("new version");
-            log.DebugFormat("command line 0 : \"{0}\"", args[0]);
-            log.DebugFormat("command line 0 : \"{0}\"", args[1]);
+            if (args.Length >= 2)
+            {
+                log.Info("new version");
+                log.DebugFormat("command line 0 : \"{0}\"", args[0]);
+                log.DebugFormat("command line 0 : \"{0}\"", args[1]);
+            }
 
             // started with no arguments?
             if (args.Length == 0) Usage();

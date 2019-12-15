@@ -191,27 +191,29 @@ namespace CSReportDll
         private int[] m_lastRowPreEvalued = null;
         private int[] m_lastRowPostEvalued = null;
 
-        // to print groups in a new page when a group changes
-        //
-        private int m_idxGroupToPrintNP = -1;
-
         // flag to know if there are group headers to re-print in a new page
         // if it is false we can print a footer as the first line in a new page
         //
         private bool m_bExistsGrpToRePrintInNP;
         private bool m_bHaveToRePrintGroup;
 
+        private const int NO_GROUP_INDEX = 0;
+
+        // to print groups in a new page when a group changes
+        //
+        private int m_idxGroupToPrintNP = NO_GROUP_INDEX;
+
         // index of the current group header
         //
-        private int m_idxGroupHeader = -1;
+        private int m_idxGroupHeader = NO_GROUP_INDEX;
 
         // index of the current group footer
         //
-        private int m_idxGroupFooter = -1;
+        private int m_idxGroupFooter = NO_GROUP_INDEX;
 
         private bool m_bPrintFooter;
         private bool m_bLastFootersWasPrinted;
-        private int m_groupIndexChange = 0;
+        private int m_groupIndexChange = NO_GROUP_INDEX;
 
         private bool m_bEvalPreGroups;
         private bool m_bCloseFooter;
@@ -609,7 +611,7 @@ namespace CSReportDll
             {
                 if (m_vGroups[i].reprintHeader)
                 {
-                    m_idxGroupHeader = i;
+                    m_idxGroupHeader = i + 1;
                     m_bOpenHeader = true;
                     return true;
                 }
@@ -664,10 +666,10 @@ namespace CSReportDll
         {
             // if it took place in a re-print
             //
-            if (m_vGroups[m_idxGroupHeader].reprintHeader)
+            if (m_vGroups[m_idxGroupHeader - 1].reprintHeader)
             {
 
-                m_vGroups[m_idxGroupHeader].reprintHeader = false;
+                m_vGroups[m_idxGroupHeader - 1].reprintHeader = false;
 
                 // every time we print a group
                 // because was mark as needed to re-print
@@ -684,7 +686,7 @@ namespace CSReportDll
                 // initialize it and then mark it as printed
                 //
             }
-            else if (m_vGroups[m_idxGroupHeader].changed)
+            else if (m_vGroups[m_idxGroupHeader - 1].changed)
             {
                 pMarkGroupHeaderPrintedAux();
             }
@@ -699,17 +701,17 @@ namespace CSReportDll
             // if we have printed the group we need to set off
             // the flag which tell us the group has changed
             //
-            m_vGroups[m_idxGroupHeader].changed = false;
+            m_vGroups[m_idxGroupHeader - 1].changed = false;
 
             // if it was a group which has to be printed in a new page
             // we set off the flag because the group has been printed
             //
             if (m_idxGroupToPrintNP == m_idxGroupHeader)
             {
-                m_idxGroupToPrintNP = -1;
+                m_idxGroupToPrintNP = NO_GROUP_INDEX;
             }
 
-            headerSec = m_groups.item(m_idxGroupHeader).getHeader();
+            headerSec = m_groups.item(m_idxGroupHeader - 1).getHeader();
 
             // we need to initialize the variables of every formula
             // in every control located in the header section of the group
@@ -741,9 +743,9 @@ namespace CSReportDll
             // if the group has been printed we set off the flag
             // used to know if it must be closed
             //
-            m_vGroups[m_idxGroupFooter].footerMustBeClosed = false;
+            m_vGroups[m_idxGroupFooter - 1].footerMustBeClosed = false;
 
-            footerSec = m_groups.item(m_idxGroupFooter).getFooter();
+            footerSec = m_groups.item(m_idxGroupFooter - 1).getFooter();
 
             // we need to initialize the variables of every formula
             // in the controls of every section lines in the footer group
@@ -779,7 +781,7 @@ namespace CSReportDll
 
         public void evalPreGroupHeader()
         {
-            if (m_idxGroupHeader != 0)
+            if (m_idxGroupHeader != NO_GROUP_INDEX)
             {
                 evalFunctions(m_idxGroupHeader, csRptWhenEval.CSRPTEVALPRE);
             }
@@ -787,9 +789,9 @@ namespace CSReportDll
 
         public void evalPreGroupFooter()
         {
-            if (m_idxGroupHeader != 0)
+            if (m_idxGroupHeader != NO_GROUP_INDEX)
             {
-                int idxChildGroupFooter = 0;
+                int idxChildGroupFooter = NO_GROUP_INDEX;
 
                 idxChildGroupFooter = pGetChildGroupFooterToClose(m_idxGroupHeader);
 
@@ -809,13 +811,13 @@ namespace CSReportDll
 
         public void evalPostGroupHeader()
         {
-            if (m_idxGroupHeader == -1) { return; }
+            if (m_idxGroupHeader == NO_GROUP_INDEX) { return; }
             evalFunctions(m_idxGroupHeader, csRptWhenEval.CSRPTEVALPOST);
         }
 
         public void evalPostGroupFooter()
         {
-            if (m_idxGroupHeader != -1)
+            if (m_idxGroupHeader != NO_GROUP_INDEX)
             {
 
                 int idxChildGroupFooter = 0;
@@ -839,11 +841,11 @@ namespace CSReportDll
         private int pGetChildGroupFooterToClose(int idxGroupFather)
         {
             int groupIndex = 0;
-            for (int j = idxGroupFather; j < m_groupCount; j++)
+            for (int j = idxGroupFather - 1; j < m_groupCount; j++)
             {
                 if (m_vGroups[j].footerMustBeClosed)
                 {
-                    groupIndex = j;
+                    groupIndex = j + 1;
                 }
             }
             return groupIndex;
@@ -913,9 +915,9 @@ namespace CSReportDll
         {
             // if there are groups footers which need to be printed
             //
-            if (m_idxGroupFooter > -1)
+            if (m_idxGroupFooter != NO_GROUP_INDEX)
             {
-                if (m_vGroups[m_idxGroupFooter].footerMustBeClosed)
+                if (m_vGroups[m_idxGroupFooter - 1].footerMustBeClosed)
                 {
                     return csRptGetLineResult.CSRPTGLGROUPFOOTER;
                 }
@@ -923,9 +925,9 @@ namespace CSReportDll
 
             // if there are groups headers which need to be printed
             //
-            if (m_idxGroupHeader > -1)
+            if (m_idxGroupHeader != NO_GROUP_INDEX)
             {
-                if (m_vGroups[m_idxGroupHeader].changed)
+                if (m_vGroups[m_idxGroupHeader - 1].changed)
                 {
                     return csRptGetLineResult.CSRPTGLGROUPHEADER;
                 }
@@ -945,7 +947,7 @@ namespace CSReportDll
             // o
             // - which need to be re-printed because we are in a new page
             //
-            if (m_idxGroupToPrintNP > -1 || m_bHaveToRePrintGroup)
+            if (m_idxGroupToPrintNP > 0 || m_bHaveToRePrintGroup)
             {
                 return csRptGetLineResult.CSRPTGLVIRTUALH;
             }
@@ -1064,7 +1066,7 @@ namespace CSReportDll
 
             // if we need to print the group in a new page
             //
-            if (m_idxGroupToPrintNP > -1)
+            if (m_idxGroupToPrintNP > 0)
             {
                 pGetLineAuxPrintGroupInNP();
             }
@@ -1106,7 +1108,7 @@ namespace CSReportDll
         private void pGetLineAuxPrintGroupInNP()
         {
             m_idxGroupHeader = m_idxGroupToPrintNP;
-            m_idxGroupToPrintNP = -1;
+            m_idxGroupToPrintNP = NO_GROUP_INDEX;
             m_bOpenHeader = true;
         }
 
@@ -1114,7 +1116,7 @@ namespace CSReportDll
         {
             // if we have finished return csRptGLEnd
             //
-            if (m_rows == null || m_iRow > m_recordCount)
+            if (m_rows == null || m_iRow > m_recordCount -1)
             {
                 // if there are not pending footers we have finished
                 // 
@@ -1165,7 +1167,7 @@ namespace CSReportDll
                             // we force a change in the first group to force
                             // the close of every group footer
                             //
-                            m_groupIndexChange = 0;
+                            m_groupIndexChange = 1;
 
                             // set the flag of the last group on to force this call to
                             // print it and the next footers will be printed in sucesive
@@ -1232,7 +1234,7 @@ namespace CSReportDll
             {
                 if (m_vGroups[i].footerMustBeClosed)
                 {
-                    m_idxGroupFooter = i;
+                    m_idxGroupFooter = i + 1;
 
                     // we have to check only the footer or the group which has
                     // changed and its subgroups
@@ -1242,7 +1244,7 @@ namespace CSReportDll
 
                         // we need to close the footer of the group which contains it
                         //
-                        m_vGroups[m_idxGroupFooter - 1].footerMustBeClosed = true;
+                        m_vGroups[i -1].footerMustBeClosed = true;
                     }
                     m_bCloseFooter = true;
                     break;
@@ -1408,7 +1410,7 @@ namespace CSReportDll
 
                     if (m_vGroups[i].changed)
                     {
-                        m_idxGroupHeader = i;
+                        m_idxGroupHeader = i + 1;
 
                         // if it is the first time we are printing groups
                         //
@@ -1432,16 +1434,16 @@ namespace CSReportDll
         {
             // save the index of the outer footer we need to close
             //
-            m_groupIndexChange = i;
+            m_groupIndexChange = i + 1;
 
             m_bCloseFooter = true;
-            m_idxGroupFooter = m_groupCount - 1;
+            m_idxGroupFooter = m_groupCount;
 
             // when a group changes we need to close from the
             // most inner group to the most outer group 
             // which is changing (m_GroupIndexChange)
             //
-            for (int j = m_groupIndexChange; j < m_idxGroupFooter; j++)
+            for (int j = m_groupIndexChange - 1; j < m_idxGroupFooter; j++)
             {
                 m_vGroups[j].footerMustBeClosed = true;
             }
@@ -1453,7 +1455,7 @@ namespace CSReportDll
             //
             m_bLastFootersWasPrinted = false;
             m_vGroups[i].changed = false;
-            m_idxGroupHeader = i;
+            m_idxGroupHeader = i + 1;
 
             // set this flag on to know we need to close
             // the next group in a future call to getLine()
@@ -1559,28 +1561,28 @@ namespace CSReportDll
 
         private void pGroupChanged(int i, ref bool bGetNewPage)
         { // TODO: Use of ByRef founded Private Sub pGroupChanged(ByVal i As Integer, ByRef bGetNewPage As Boolean)
-            m_idxGroupHeader = i;
+            m_idxGroupHeader = i + 1;
             pGroupChangedAux(i);
 
             bGetNewPage = m_groups.item(i).getPrintInNewPage() && !m_firstGroup;
             
             // TODO: remove me
             //
-            // m_idxGroupHeader = i;
+            // m_idxGroupHeader = i + 1;
 
             if (bGetNewPage)
             {
                 // setting it to any value but zero we mean that this group
                 // must be printed in a new page
                 //
-                m_idxGroupToPrintNP = i;
+                m_idxGroupToPrintNP = i + 1;
             }
             else
             {
-                m_idxGroupToPrintNP = -1;
+                m_idxGroupToPrintNP = NO_GROUP_INDEX;
             }
 
-            // set this flag on to open this group in a future
+            // set this flag ON to open this group in a future
             // call to getLine(). only if there are more groups
             //
             if (i < m_groupCount - 1)
@@ -1631,7 +1633,7 @@ namespace CSReportDll
                 //
                 m_bEvalPreGroups = true;
 
-                footerSec = m_groups.item(m_idxGroupFooter).getFooter();
+                footerSec = m_groups.item(m_idxGroupFooter - 1).getFooter();
 
                 getLineAux(footerSec, fields);
 
@@ -1683,7 +1685,7 @@ namespace CSReportDll
                     // to force the next call to getLine() to return CSRPTGLVIRTUALF
                     //
                     m_bEvalPreGroups = true;
-                    headerSec = m_groups.item(m_idxGroupHeader).getHeader();
+                    headerSec = m_groups.item(m_idxGroupHeader - 1).getHeader();
                     getLineAux(headerSec, fields);
 
                     // set this flag on to indicate we have footers to close
@@ -2011,7 +2013,7 @@ namespace CSReportDll
                 //
                 m_bPrintFooter = false;
                 m_bLastFootersWasPrinted = false;
-                m_groupIndexChange = 0;
+                m_groupIndexChange = NO_GROUP_INDEX;
                 m_iRow2 = 0;
                 m_iRowFormula = 0;
                 pSetGroupFormulaHeaders();
@@ -3990,11 +3992,11 @@ namespace CSReportDll
                         //
                         if (idxGroup < 0)
                         {
-                            bHaveToEvalRow = m_vGroups[idxGroup * -1].lastFPreRowEvalued < m_iRowFormula;
+                            bHaveToEvalRow = m_vGroups[(idxGroup * -1) - 1].lastFPreRowEvalued < m_iRowFormula;
                         }
                         else
                         {
-                            bHaveToEvalRow = m_vGroups[idxGroup].lastHPreRowEvalued < m_iRowFormula;
+                            bHaveToEvalRow = m_vGroups[idxGroup - 1].lastHPreRowEvalued < m_iRowFormula;
                         }
                     }
                     else
@@ -4013,11 +4015,11 @@ namespace CSReportDll
                         //
                         if (idxGroup < 0)
                         {
-                            bHaveToEvalRow = m_vGroups[idxGroup * -1].lastFPostRowEvalued < m_iRowFormula;
+                            bHaveToEvalRow = m_vGroups[(idxGroup * -1) - 1].lastFPostRowEvalued < m_iRowFormula;
                         }
                         else
                         {
-                            bHaveToEvalRow = m_vGroups[idxGroup].lastHPostRowEvalued < m_iRowFormula;
+                            bHaveToEvalRow = m_vGroups[idxGroup - 1].lastHPostRowEvalued < m_iRowFormula;
                         }
                     }
                     else
@@ -4071,11 +4073,11 @@ namespace CSReportDll
                             //
                             if (idxGroup < 0)
                             {
-                                m_vGroups[idxGroup * -1].lastFPreRowEvalued = m_iRowFormula;
+                                m_vGroups[(idxGroup * -1) - 1].lastFPreRowEvalued = m_iRowFormula;
                             }
                             else
                             {
-                                m_vGroups[idxGroup].lastHPreRowEvalued = m_iRowFormula;
+                                m_vGroups[idxGroup - 1].lastHPreRowEvalued = m_iRowFormula;
                             }
                         }
                         else
@@ -4093,11 +4095,11 @@ namespace CSReportDll
                             //
                             if (idxGroup < 0)
                             {
-                                m_vGroups[idxGroup * -1].lastFPostRowEvalued = m_iRowFormula;
+                                m_vGroups[(idxGroup * -1) - 1].lastFPostRowEvalued = m_iRowFormula;
                             }
                             else
                             {
-                                m_vGroups[idxGroup].lastHPostRowEvalued = m_iRowFormula;
+                                m_vGroups[idxGroup - 1].lastHPostRowEvalued = m_iRowFormula;
                             }
                         }
                         else
@@ -4328,14 +4330,14 @@ namespace CSReportDll
 
                 if (pIsGroupFormula((int)fint.getFormulaType()))
                 {
-                    if (fint.getFormulaType() == csRptFormulaType.CSRPTGROUPPERCENT)
+                    if (fint.getFormulaType() == csRptFormulaType.CSRPTF_GROUP_PERCENT)
                     {
                         formula.setIdxGroup2(0);
-                        indexGroup = cUtil.valAsInt(fint.getParameters().item(3).getValue());
+                        indexGroup = cUtil.valAsInt(fint.getParameters().item(2).getValue());
                     }
                     else
                     {
-                        indexGroup = cUtil.valAsInt(fint.getParameters().item(2).getValue());
+                        indexGroup = cUtil.valAsInt(fint.getParameters().item(1).getValue());
                     }
                     if (fint.getParameters().item(cReportGlobals.C_KEYINDEXGROUP) == null)
                     {
@@ -4377,13 +4379,13 @@ namespace CSReportDll
         {
             switch (formulaType)
             {
-                case (int)csRptFormulaType.CSRPTGROUPTOTAL:
-                case (int)csRptFormulaType.CSRPTGROUPMAX:
-                case (int)csRptFormulaType.CSRPTGROUPMIN:
-                case (int)csRptFormulaType.CSRPTGROUPAVERAGE:
-                case (int)csRptFormulaType.CSRPTGROUPPERCENT:
-                case (int)csRptFormulaType.CSRPTGROUPCOUNT:
-                case (int)csRptFormulaType.CSRPTGROUPLINENUMBER:
+                case (int)csRptFormulaType.CSRPTF_GROUP_TOTAL:
+                case (int)csRptFormulaType.CSRPTF_GROUP_MAX:
+                case (int)csRptFormulaType.CSRPTF_GROUP_MIN:
+                case (int)csRptFormulaType.CSRPTF_GROUP_AVERAGE:
+                case (int)csRptFormulaType.CSRPTF_GROUP_PERCENT:
+                case (int)csRptFormulaType.CSRPTF_GROUP_COUNT:
+                case (int)csRptFormulaType.CSRPTF_GROUP_LINE_NUMBER:
 
                     return true;
 
@@ -4977,8 +4979,8 @@ namespace CSReportDll
                 m_recordCount = 0;
             }
             m_iRow = 0;
-            m_idxGroupHeader = -1;
-            m_idxGroupFooter = -1;
+            m_idxGroupHeader = NO_GROUP_INDEX;
+            m_idxGroupFooter = NO_GROUP_INDEX;
 
             return true;
         }
@@ -5544,7 +5546,7 @@ namespace CSReportDll
                         colName = fint.getParameters().item(0).getValue();
                         pSetColIndexInGroupFormulaAux(rs, fint, colName, cReportGlobals.C_KEYINDEXCOL);
 
-                        if (fint.getFormulaType() == csRptFormulaType.CSRPTGROUPPERCENT)
+                        if (fint.getFormulaType() == csRptFormulaType.CSRPTF_GROUP_PERCENT)
                         {
                             colName = fint.getParameters().item(1).getValue();
                             pSetColIndexInGroupFormulaAux(rs, fint, colName, cReportGlobals.C_KEYINDEXCOL2);

@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
+using System.Net;
+using System.IO;
 
 namespace CSReportWebServer
 {
@@ -55,14 +57,44 @@ namespace CSReportWebServer
 
         private void safePreview(JObject request)
         {
-            var pathAndFile = @"C:\proyectos\CSReportes\CSReportes\Informes\Reportes\" + request["message"]["data"]["file"];
+            var fileName = request["message"]["data"]["file"];
+            var reportType = request["message"]["data"]["type"].ToString();
+            var url = request["message"]["data"]["url"].ToString();
+            var pathAndFile = Path.GetTempPath() + fileName;
+
+            getReportFromWebServer(url + reportType + "/" + fileName, pathAndFile);
+                        
             var report = new Report();
-            report.init(request);
+            report.init(request, this.printDlg);
+
             if (report.openDocument(pathAndFile))
             {
                 report.preview();
             }
-            m_reports.Add(report.reportId, report);
+            if (m_reports.ContainsKey(report.reportId))
+            {
+                m_reports[report.reportId] = report;
+            }
+            else
+            {
+                m_reports.Add(report.reportId, report);
+            }
+        }
+
+        private void safePrint(JObject request)
+        {
+            var fileName = request["message"]["data"]["file"];
+            var reportType = request["message"]["data"]["type"].ToString();
+            var url = request["message"]["data"]["url"].ToString();
+            var pathAndFile = Path.GetTempPath() + fileName;
+            getReportFromWebServer(url + reportType + "/" + fileName, pathAndFile);
+
+            var report = new Report();
+            report.init(request, this.printDlg);
+            if (report.openDocument(pathAndFile))
+            {
+                report.printReport();
+            }
         }
 
         private void safeMoveToPage(JObject request)
@@ -80,6 +112,12 @@ namespace CSReportWebServer
             this.Invoke(d, new object[] { request });
         }
 
+        public void printReport(JObject request)
+        {
+            ReportActionCallback d = new ReportActionCallback(safePrint);
+            this.Invoke(d, new object[] { request });
+        }
+
         public void moveToPage(JObject request)
         {
             ReportActionCallback d = new ReportActionCallback(safeMoveToPage);
@@ -89,6 +127,22 @@ namespace CSReportWebServer
         private void fMain_Load(object sender, EventArgs e)
         {
             Main.Init(m_args, this);
+        }
+
+        private string DownloadString(string address)
+        {
+            string text;
+            using (var client = new WebClient())
+            {
+                text = client.DownloadString(address);
+            }
+            return text;
+        }
+
+        private void getReportFromWebServer(string url, string fileName)
+        {
+            var xml = DownloadString(url);
+            File.WriteAllText(fileName, xml);
         }
     }
 }

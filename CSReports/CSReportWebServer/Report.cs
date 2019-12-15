@@ -31,13 +31,13 @@ namespace CSReportWebServer
         {
             get
             {
-                return m_webReportId;
+                return m_reportId;
             }
         }
 
         // we modify the report data source so it uses the CSReportWebServer instead of a real sql engine (SqlServer, PostgreSQL or Oracle)
         //
-        public void init(JObject request)
+        public void init(JObject request, PrintDialog printDialog)
         {
             m_webReportId = request["message"]["webReportId"].ToString();
             m_reportId = Guid.NewGuid().ToString();
@@ -51,7 +51,7 @@ namespace CSReportWebServer
 
             cReportLaunchInfo oLaunchInfo = new cReportLaunchInfo();
 
-            oLaunchInfo.setPrinter(cPrintAPI.getcPrinterFromDefaultPrinter(null));
+            oLaunchInfo.setPrinter(cPrintAPI.getcPrinterFromDefaultPrinter(printDialog));
 
             registerDataSource(request);
 
@@ -93,6 +93,15 @@ namespace CSReportWebServer
 
             JObject message = JObject.Parse("{ messageType: 'REPORT_PREVIEW_DONE', reportId: '" + m_reportId + "', webReportId: '" + m_webReportId + "' }");
             message["page"] = getPage(1);
+            Main.sendMessage(message);
+        }
+
+        public void printReport()
+        {
+            m_report.getLaunchInfo().setAction(csRptLaunchAction.CSRPTLAUNCHPRINTER);
+            launchReport();
+
+            JObject message = JObject.Parse("{ messageType: 'REPORT_PRINT_DONE', reportId: '" + m_reportId + "', webReportId: '" + m_webReportId + "' }");
             Main.sendMessage(message);
         }
 

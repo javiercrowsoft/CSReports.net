@@ -57,7 +57,7 @@ namespace CSKernelNumberToString
             rtn = rtn + pSpanishGetNumber(Math.Truncate(iNumber), false);
             rtn = rtn + pSpanishGetDecimal(iNumber);
 
-            return rtn.Substring(0, 1).ToUpper() + rtn.Substring(2).ToLower();
+            return rtn.Substring(0, 1).ToUpper() + rtn.Substring(1).ToLower();
         }
 
         public String frenchNumberToString(double iNumber)

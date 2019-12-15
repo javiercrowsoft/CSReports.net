@@ -22,6 +22,7 @@ namespace CSReportWebServer
 
         private fMain m_f;
         private SizeQueue<JObject> m_messageQueue;
+        private Dictionary<String, String> m_partialMessages = new Dictionary<string, string>();
 
         private const string C_EXTENSION_NAME = "CSReportWebServer.Echo";
 
@@ -148,22 +149,53 @@ namespace CSReportWebServer
         private void executeMessage(JObject request)
         {
             var action = request["message"]["action"].ToString();
-            switch (action)
+
+            var id = request["id"].ToString();
+
+            if (action.StartsWith("__PARTIAL_MESSAGE__"))
             {
-                case "preview":
-                    previewReport(request);
-                    break;
-                case "moveToPage":
-                    moveToPage(request);
-                    break;
-                case "debugger":
-                    break;
+                var p = "";
+                if (m_partialMessages.ContainsKey(id))
+                {
+                    p = m_partialMessages[id];
+                }
+                p += request["message"]["data"];
+                m_partialMessages[id] = p;
+            }
+            else
+            {
+                if (m_partialMessages.ContainsKey(id))
+                {
+                    request["message"]["data"] = JObject.Parse((m_partialMessages[id] + request["message"]["data"]).ToString());
+                }
+                else {
+                    request["message"]["data"] = JObject.Parse(request["message"]["data"].ToString());
+                }
+                switch (action)
+                {
+                    case "preview":
+                        previewReport(request);
+                        break;
+                    case "print":
+                        printReport(request);
+                        break;
+                    case "moveToPage":
+                        moveToPage(request);
+                        break;
+                    case "debugger":
+                        break;
+                }
             }
         }
 
         private void previewReport(JObject request)
         {
             m_f.preview(request);
+        }
+
+        private void printReport(JObject request)
+        {
+            m_f.printReport(request);
         }
 
         private void moveToPage(JObject request)
