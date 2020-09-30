@@ -356,9 +356,11 @@ const isFuncDeclare = function() {
     }
 };
 
-const getPrefix = function(privateRegex) {
+const getPrefix = function(privateRegex, isFunction) {
     if(privateRegex.test(currentLine) || isLocalVarDeclare()) {
-        return "var ";
+        if(isFunction) 
+	     return "const ";
+	else return "let ";
     }
     else {
         return "self."
@@ -371,7 +373,7 @@ const extractFunctionName = function(text) {
 };
 
 const funcDeclareTranslator = function() {
-    var prefix = getPrefix(privateFuncDeclare);
+    var prefix = getPrefix(privateFuncDeclare, true);
     var words = currentLine.trim().split(" ");
     var spaces = currentLine.search(/\S/);
     var indent = currentLine.substr(0, spaces);

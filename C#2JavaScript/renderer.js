@@ -14,8 +14,8 @@ const transpiler = require('./transpiler');
 
 const file = require('./file');
 
-var outputFolder = "/home/javier/Work/CrowSoft/proyectos.c#/CSReports.net/JavaScript/CSReports";
-var sourceFolder = "/home/javier/Work/CrowSoft/proyectos.c#/CSReports.net/CSReports";
+var outputFolder = "/home/javier/Work/CrowSoft/CSReports.net/JavaScript/CSReports";
+var sourceFolder = "/home/javier/Work/CrowSoft/CSReports.net/CSReports";
 var sourceFolderLength = 0;
 var csfiles = [];
 
