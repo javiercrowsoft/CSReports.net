@@ -4758,6 +4758,8 @@ namespace CSReportEditor
                                     cReportSection secToMove,
                                     bool isNew)
         {
+            if (m_bNoMove) { return; }
+
             float oldHeight = 0;
 
             m_dataHasChanged = true;
@@ -5432,7 +5434,7 @@ namespace CSReportEditor
 
         private void pMoveAll(float x, float y) {
             cReportAspect rptCtrlAspect = null;
-           cReportPaintObject paintObj = null;
+            cReportPaintObject paintObj = null;
 
             m_dataHasChanged = true;
 

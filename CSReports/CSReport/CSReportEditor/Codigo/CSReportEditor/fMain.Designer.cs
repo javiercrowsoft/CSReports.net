@@ -471,7 +471,7 @@
             this.toolStripSeparator13,
             this.sizeOfMoveStepWithKeyboardToolStripMenuItem});
             this.mnuEditMove.Name = "mnuEditMove";
-            this.mnuEditMove.Size = new System.Drawing.Size(149, 22);
+            this.mnuEditMove.Size = new System.Drawing.Size(152, 22);
             this.mnuEditMove.Text = "Move";
             // 
             // horizontalToolStripMenuItem
@@ -497,6 +497,8 @@
             // 
             // allDirectionsToolStripMenuItem
             // 
+            this.allDirectionsToolStripMenuItem.Checked = true;
+            this.allDirectionsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.allDirectionsToolStripMenuItem.Name = "allDirectionsToolStripMenuItem";
             this.allDirectionsToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
             this.allDirectionsToolStripMenuItem.Text = "All Directions";

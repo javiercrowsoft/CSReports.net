@@ -1174,6 +1174,15 @@ namespace CSReportEditor
             if (editor != null)
             {
                 editor.moveNoMove();
+                lockToolStripMenuItem.Checked = !lockToolStripMenuItem.Checked;
+                if (lockToolStripMenuItem.Checked)
+                {
+                    lockToolStripMenuItem.Text = "Unlock";
+                }
+                else
+                {
+                    lockToolStripMenuItem.Text = "Unlock";
+                }                
             }
         }
 
@@ -1183,6 +1192,9 @@ namespace CSReportEditor
             if (editor != null)
             {
                 editor.moveVertical();
+                horizontalToolStripMenuItem.Checked = false;
+                verticalToolStripMenuItem.Checked = true;
+                allDirectionsToolStripMenuItem.Checked = false;
             }
         }
 
@@ -1192,6 +1204,9 @@ namespace CSReportEditor
             if (editor != null)
             {
                 editor.moveHorizontal();
+                horizontalToolStripMenuItem.Checked = true;
+                verticalToolStripMenuItem.Checked = false;
+                allDirectionsToolStripMenuItem.Checked = false;
             }
         }
 
@@ -1201,6 +1216,9 @@ namespace CSReportEditor
             if (editor != null)
             {
                 editor.moveAll();
+                horizontalToolStripMenuItem.Checked = false;
+                verticalToolStripMenuItem.Checked = false;
+                allDirectionsToolStripMenuItem.Checked = true;
             }
         }
 
