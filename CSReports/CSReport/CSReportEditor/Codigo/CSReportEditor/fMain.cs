@@ -1167,5 +1167,131 @@ namespace CSReportEditor
                 editor.sendToBack();
             }
         }
+
+        private void lockToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.moveNoMove();
+            }
+        }
+
+        private void verticalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.moveVertical();
+            }
+        }
+
+        private void horizontalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.moveHorizontal();
+            }
+        }
+
+        private void allDirectionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.moveAll();
+            }
+        }
+
+        private void tsbCtrlAlignLeft_Click(object sender, EventArgs e)
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.controlsAlign(csECtlAlignConst.csECtlAlignLeft);
+            }
+        }
+
+        private void tsbCtrlAlignRight_Click(object sender, EventArgs e)
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.controlsAlign(csECtlAlignConst.csECtlAlignRight);
+            }
+        }
+
+        private void tsbCtrlAlignTop_Click(object sender, EventArgs e)
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.controlsAlign(csECtlAlignConst.csECtlAlignTop);
+            }
+        }
+
+        private void tsbCtrlAlignBottom_Click(object sender, EventArgs e)
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.controlsAlign(csECtlAlignConst.csECtlAlignBottom);
+            }
+        }
+
+        private void tsbCtrlSameHeight_Click(object sender, EventArgs e)
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.controlsAlign(csECtlAlignConst.csECtlAlignHeight);
+            }
+        }
+
+        private void tsbCtrlSameWidth_Click(object sender, EventArgs e)
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.controlsAlign(csECtlAlignConst.csECtlAlignWidth);
+            }
+        }
+
+        private void tsbCtrlSameLeft_Click(object sender, EventArgs e)
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.controlsAlign(csECtlAlignConst.csECtlAlignHorizontal);
+            }
+        }
+
+        private void tsbCtrlSameTop_Click(object sender, EventArgs e)
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.controlsAlign(csECtlAlignConst.csECtlAlignVertical);
+            }
+        }
+
+        private void fMain_KeyUp(object sender, KeyEventArgs e)
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.keyUp(sender, e);
+            }
+        }
+
+        private void fMain_KeyDown(object sender, KeyEventArgs e)
+        {
+            cEditor editor = cMainEditor.getDocActive();
+            if (editor != null)
+            {
+                editor.keyDown(sender, e);
+            }
+        }
     }
 }

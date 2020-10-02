@@ -117,6 +117,15 @@
             this.tsbBold = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbSearch = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator24 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsbCtrlAlignLeft = new System.Windows.Forms.ToolStripButton();
+            this.tsbCtrlAlignRight = new System.Windows.Forms.ToolStripButton();
+            this.tsbCtrlAlignTop = new System.Windows.Forms.ToolStripButton();
+            this.tsbCtrlAlignBottom = new System.Windows.Forms.ToolStripButton();
+            this.tsbCtrlSameHeight = new System.Windows.Forms.ToolStripButton();
+            this.tsbCtrlSameWidth = new System.Windows.Forms.ToolStripButton();
+            this.tsbCtrlSameLeft = new System.Windows.Forms.ToolStripButton();
+            this.tsbCtrlSameTop = new System.Windows.Forms.ToolStripButton();
             this.sbMain = new System.Windows.Forms.StatusStrip();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -470,24 +479,28 @@
             this.horizontalToolStripMenuItem.Name = "horizontalToolStripMenuItem";
             this.horizontalToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
             this.horizontalToolStripMenuItem.Text = "Horizontal";
+            this.horizontalToolStripMenuItem.Click += new System.EventHandler(this.horizontalToolStripMenuItem_Click);
             // 
             // verticalToolStripMenuItem
             // 
             this.verticalToolStripMenuItem.Name = "verticalToolStripMenuItem";
             this.verticalToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
             this.verticalToolStripMenuItem.Text = "Vertical";
+            this.verticalToolStripMenuItem.Click += new System.EventHandler(this.verticalToolStripMenuItem_Click);
             // 
             // lockToolStripMenuItem
             // 
             this.lockToolStripMenuItem.Name = "lockToolStripMenuItem";
             this.lockToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
             this.lockToolStripMenuItem.Text = "Lock";
+            this.lockToolStripMenuItem.Click += new System.EventHandler(this.lockToolStripMenuItem_Click);
             // 
             // allDirectionsToolStripMenuItem
             // 
             this.allDirectionsToolStripMenuItem.Name = "allDirectionsToolStripMenuItem";
             this.allDirectionsToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
             this.allDirectionsToolStripMenuItem.Text = "All Directions";
+            this.allDirectionsToolStripMenuItem.Click += new System.EventHandler(this.allDirectionsToolStripMenuItem_Click);
             // 
             // toolStripSeparator13
             // 
@@ -715,7 +728,16 @@
             this.toolStripSeparator5,
             this.tsbBold,
             this.toolStripSeparator6,
-            this.tsbSearch});
+            this.tsbSearch,
+            this.toolStripSeparator24,
+            this.tsbCtrlAlignLeft,
+            this.tsbCtrlAlignRight,
+            this.tsbCtrlAlignTop,
+            this.tsbCtrlAlignBottom,
+            this.tsbCtrlSameHeight,
+            this.tsbCtrlSameWidth,
+            this.tsbCtrlSameLeft,
+            this.tsbCtrlSameTop});
             this.tbMain.Location = new System.Drawing.Point(0, 24);
             this.tbMain.Name = "tbMain";
             this.tbMain.Size = new System.Drawing.Size(682, 25);
@@ -892,6 +914,91 @@
             this.tsbSearch.Text = "Search a text in this report";
             this.tsbSearch.Click += new System.EventHandler(this.tsbSearch_Click);
             // 
+            // toolStripSeparator24
+            // 
+            this.toolStripSeparator24.Name = "toolStripSeparator24";
+            this.toolStripSeparator24.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tsbCtrlAlignLeft
+            // 
+            this.tsbCtrlAlignLeft.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbCtrlAlignLeft.Image = ((System.Drawing.Image)(resources.GetObject("tsbCtrlAlignLeft.Image")));
+            this.tsbCtrlAlignLeft.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbCtrlAlignLeft.Name = "tsbCtrlAlignLeft";
+            this.tsbCtrlAlignLeft.Size = new System.Drawing.Size(23, 22);
+            this.tsbCtrlAlignLeft.Text = "toolStripButton1";
+            this.tsbCtrlAlignLeft.Click += new System.EventHandler(this.tsbCtrlAlignLeft_Click);
+            // 
+            // tsbCtrlAlignRight
+            // 
+            this.tsbCtrlAlignRight.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbCtrlAlignRight.Image = ((System.Drawing.Image)(resources.GetObject("tsbCtrlAlignRight.Image")));
+            this.tsbCtrlAlignRight.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbCtrlAlignRight.Name = "tsbCtrlAlignRight";
+            this.tsbCtrlAlignRight.Size = new System.Drawing.Size(23, 22);
+            this.tsbCtrlAlignRight.Text = "toolStripButton2";
+            this.tsbCtrlAlignRight.Click += new System.EventHandler(this.tsbCtrlAlignRight_Click);
+            // 
+            // tsbCtrlAlignTop
+            // 
+            this.tsbCtrlAlignTop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbCtrlAlignTop.Image = ((System.Drawing.Image)(resources.GetObject("tsbCtrlAlignTop.Image")));
+            this.tsbCtrlAlignTop.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbCtrlAlignTop.Name = "tsbCtrlAlignTop";
+            this.tsbCtrlAlignTop.Size = new System.Drawing.Size(23, 22);
+            this.tsbCtrlAlignTop.Text = "toolStripButton3";
+            this.tsbCtrlAlignTop.Click += new System.EventHandler(this.tsbCtrlAlignTop_Click);
+            // 
+            // tsbCtrlAlignBottom
+            // 
+            this.tsbCtrlAlignBottom.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbCtrlAlignBottom.Image = ((System.Drawing.Image)(resources.GetObject("tsbCtrlAlignBottom.Image")));
+            this.tsbCtrlAlignBottom.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbCtrlAlignBottom.Name = "tsbCtrlAlignBottom";
+            this.tsbCtrlAlignBottom.Size = new System.Drawing.Size(23, 22);
+            this.tsbCtrlAlignBottom.Text = "toolStripButton4";
+            this.tsbCtrlAlignBottom.Click += new System.EventHandler(this.tsbCtrlAlignBottom_Click);
+            // 
+            // tsbCtrlSameHeight
+            // 
+            this.tsbCtrlSameHeight.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbCtrlSameHeight.Image = ((System.Drawing.Image)(resources.GetObject("tsbCtrlSameHeight.Image")));
+            this.tsbCtrlSameHeight.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbCtrlSameHeight.Name = "tsbCtrlSameHeight";
+            this.tsbCtrlSameHeight.Size = new System.Drawing.Size(23, 22);
+            this.tsbCtrlSameHeight.Text = "toolStripButton1";
+            this.tsbCtrlSameHeight.Click += new System.EventHandler(this.tsbCtrlSameHeight_Click);
+            // 
+            // tsbCtrlSameWidth
+            // 
+            this.tsbCtrlSameWidth.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbCtrlSameWidth.Image = ((System.Drawing.Image)(resources.GetObject("tsbCtrlSameWidth.Image")));
+            this.tsbCtrlSameWidth.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbCtrlSameWidth.Name = "tsbCtrlSameWidth";
+            this.tsbCtrlSameWidth.Size = new System.Drawing.Size(23, 22);
+            this.tsbCtrlSameWidth.Text = "toolStripButton2";
+            this.tsbCtrlSameWidth.Click += new System.EventHandler(this.tsbCtrlSameWidth_Click);
+            // 
+            // tsbCtrlSameLeft
+            // 
+            this.tsbCtrlSameLeft.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbCtrlSameLeft.Image = ((System.Drawing.Image)(resources.GetObject("tsbCtrlSameLeft.Image")));
+            this.tsbCtrlSameLeft.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbCtrlSameLeft.Name = "tsbCtrlSameLeft";
+            this.tsbCtrlSameLeft.Size = new System.Drawing.Size(23, 22);
+            this.tsbCtrlSameLeft.Text = "toolStripButton3";
+            this.tsbCtrlSameLeft.Click += new System.EventHandler(this.tsbCtrlSameLeft_Click);
+            // 
+            // tsbCtrlSameTop
+            // 
+            this.tsbCtrlSameTop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbCtrlSameTop.Image = ((System.Drawing.Image)(resources.GetObject("tsbCtrlSameTop.Image")));
+            this.tsbCtrlSameTop.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbCtrlSameTop.Name = "tsbCtrlSameTop";
+            this.tsbCtrlSameTop.Size = new System.Drawing.Size(23, 22);
+            this.tsbCtrlSameTop.Text = "toolStripButton4";
+            this.tsbCtrlSameTop.Click += new System.EventHandler(this.tsbCtrlSameTop_Click);
+            // 
             // sbMain
             // 
             this.sbMain.Location = new System.Drawing.Point(0, 310);
@@ -982,7 +1089,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(218, 230);
+            this.tabPage3.Size = new System.Drawing.Size(218, 235);
             this.tabPage3.TabIndex = 0;
             this.tabPage3.Text = "Controls";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -995,7 +1102,7 @@
             this.lv_controls.FullRowSelect = true;
             this.lv_controls.Location = new System.Drawing.Point(3, 3);
             this.lv_controls.Name = "lv_controls";
-            this.lv_controls.Size = new System.Drawing.Size(212, 224);
+            this.lv_controls.Size = new System.Drawing.Size(212, 229);
             this.lv_controls.SmallImageList = this.imageList;
             this.lv_controls.TabIndex = 0;
             this.lv_controls.UseCompatibleStateImageBehavior = false;
@@ -1023,7 +1130,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(218, 230);
+            this.tabPage4.Size = new System.Drawing.Size(218, 235);
             this.tabPage4.TabIndex = 1;
             this.tabPage4.Text = "Database";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -1036,7 +1143,7 @@
             this.lv_fields.FullRowSelect = true;
             this.lv_fields.Location = new System.Drawing.Point(3, 3);
             this.lv_fields.Name = "lv_fields";
-            this.lv_fields.Size = new System.Drawing.Size(212, 224);
+            this.lv_fields.Size = new System.Drawing.Size(212, 229);
             this.lv_fields.SmallImageList = this.imageList;
             this.lv_fields.TabIndex = 0;
             this.lv_fields.UseCompatibleStateImageBehavior = false;
@@ -1052,7 +1159,7 @@
             this.tabPage1.Controls.Add(this.lv_properties);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Size = new System.Drawing.Size(218, 230);
+            this.tabPage1.Size = new System.Drawing.Size(218, 235);
             this.tabPage1.TabIndex = 3;
             this.tabPage1.Text = "Properties";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -1066,7 +1173,7 @@
             this.lv_properties.FullRowSelect = true;
             this.lv_properties.Location = new System.Drawing.Point(0, 0);
             this.lv_properties.Name = "lv_properties";
-            this.lv_properties.Size = new System.Drawing.Size(218, 230);
+            this.lv_properties.Size = new System.Drawing.Size(218, 235);
             this.lv_properties.SmallImageList = this.imageListTree;
             this.lv_properties.TabIndex = 1;
             this.lv_properties.UseCompatibleStateImageBehavior = false;
@@ -1149,80 +1256,80 @@
             this.toolStripSeparator19,
             this.cmCtrlProperties});
             this.cmnControl.Name = "cmnControl";
-            this.cmnControl.Size = new System.Drawing.Size(153, 226);
+            this.cmnControl.Size = new System.Drawing.Size(142, 204);
             // 
             // cmCtrlCopy
             // 
             this.cmCtrlCopy.Name = "cmCtrlCopy";
-            this.cmCtrlCopy.Size = new System.Drawing.Size(152, 22);
+            this.cmCtrlCopy.Size = new System.Drawing.Size(141, 22);
             this.cmCtrlCopy.Text = "Copy";
             this.cmCtrlCopy.Click += new System.EventHandler(this.cmCtrlCopy_Click);
             // 
             // cmCtrlPaste
             // 
             this.cmCtrlPaste.Name = "cmCtrlPaste";
-            this.cmCtrlPaste.Size = new System.Drawing.Size(152, 22);
+            this.cmCtrlPaste.Size = new System.Drawing.Size(141, 22);
             this.cmCtrlPaste.Text = "Paste";
             this.cmCtrlPaste.Click += new System.EventHandler(this.cmCtrlPaste_Click);
             // 
             // cmCtrlPasteEx
             // 
             this.cmCtrlPasteEx.Name = "cmCtrlPasteEx";
-            this.cmCtrlPasteEx.Size = new System.Drawing.Size(152, 22);
+            this.cmCtrlPasteEx.Size = new System.Drawing.Size(141, 22);
             this.cmCtrlPasteEx.Text = "Paste special";
             this.cmCtrlPasteEx.Click += new System.EventHandler(this.cmCtrlPasteEx_Click);
             // 
             // toolStripSeparator17
             // 
             this.toolStripSeparator17.Name = "toolStripSeparator17";
-            this.toolStripSeparator17.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator17.Size = new System.Drawing.Size(138, 6);
             // 
             // cmCtrlDelete
             // 
             this.cmCtrlDelete.Name = "cmCtrlDelete";
-            this.cmCtrlDelete.Size = new System.Drawing.Size(152, 22);
+            this.cmCtrlDelete.Size = new System.Drawing.Size(141, 22);
             this.cmCtrlDelete.Text = "Delete";
             this.cmCtrlDelete.Click += new System.EventHandler(this.cmCtrlDelete_Click);
             // 
             // toolStripSeparator18
             // 
             this.toolStripSeparator18.Name = "toolStripSeparator18";
-            this.toolStripSeparator18.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator18.Size = new System.Drawing.Size(138, 6);
             // 
             // cmCtrlEditText
             // 
             this.cmCtrlEditText.Name = "cmCtrlEditText";
-            this.cmCtrlEditText.Size = new System.Drawing.Size(152, 22);
+            this.cmCtrlEditText.Size = new System.Drawing.Size(141, 22);
             this.cmCtrlEditText.Text = "Edit text";
             // 
             // toolStripSeparator20
             // 
             this.toolStripSeparator20.Name = "toolStripSeparator20";
-            this.toolStripSeparator20.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator20.Size = new System.Drawing.Size(138, 6);
             // 
             // cmCtrlSendBack
             // 
             this.cmCtrlSendBack.Name = "cmCtrlSendBack";
-            this.cmCtrlSendBack.Size = new System.Drawing.Size(152, 22);
+            this.cmCtrlSendBack.Size = new System.Drawing.Size(141, 22);
             this.cmCtrlSendBack.Text = "Send back";
             this.cmCtrlSendBack.Click += new System.EventHandler(this.cmCtrlSendBack_Click);
             // 
             // cmCtrlBringFront
             // 
             this.cmCtrlBringFront.Name = "cmCtrlBringFront";
-            this.cmCtrlBringFront.Size = new System.Drawing.Size(152, 22);
+            this.cmCtrlBringFront.Size = new System.Drawing.Size(141, 22);
             this.cmCtrlBringFront.Text = "Bring front";
             this.cmCtrlBringFront.Click += new System.EventHandler(this.cmCtrlBringFront_Click);
             // 
             // toolStripSeparator19
             // 
             this.toolStripSeparator19.Name = "toolStripSeparator19";
-            this.toolStripSeparator19.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator19.Size = new System.Drawing.Size(138, 6);
             // 
             // cmCtrlProperties
             // 
             this.cmCtrlProperties.Name = "cmCtrlProperties";
-            this.cmCtrlProperties.Size = new System.Drawing.Size(152, 22);
+            this.cmCtrlProperties.Size = new System.Drawing.Size(141, 22);
             this.cmCtrlProperties.Text = "Properties";
             this.cmCtrlProperties.Click += new System.EventHandler(this.cmCtrlProperties_Click);
             // 
@@ -1319,10 +1426,13 @@
             this.Controls.Add(this.sbMain);
             this.Controls.Add(this.tbMain);
             this.Controls.Add(this.mnMain);
+            this.KeyPreview = true;
             this.MainMenuStrip = this.mnMain;
             this.Name = "fMain";
             this.Text = "CrowSoft Report Editor";
             this.Load += new System.EventHandler(this.fMain_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.fMain_KeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.fMain_KeyUp);
             this.mnMain.ResumeLayout(false);
             this.mnMain.PerformLayout();
             this.tbMain.ResumeLayout(false);
@@ -1488,6 +1598,15 @@
         private System.Windows.Forms.ImageList imageListTree;
         private System.Windows.Forms.ToolStripMenuItem mnuPasteSpecial;
         private System.Windows.Forms.PrintDialog printDlg;
+        private System.Windows.Forms.ToolStripButton tsbCtrlAlignLeft;
+        private System.Windows.Forms.ToolStripButton tsbCtrlAlignRight;
+        private System.Windows.Forms.ToolStripButton tsbCtrlAlignTop;
+        private System.Windows.Forms.ToolStripButton tsbCtrlAlignBottom;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator24;
+        private System.Windows.Forms.ToolStripButton tsbCtrlSameHeight;
+        private System.Windows.Forms.ToolStripButton tsbCtrlSameWidth;
+        private System.Windows.Forms.ToolStripButton tsbCtrlSameLeft;
+        private System.Windows.Forms.ToolStripButton tsbCtrlSameTop;
     }
 }
 
