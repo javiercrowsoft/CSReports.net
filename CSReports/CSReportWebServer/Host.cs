@@ -103,8 +103,8 @@ namespace CSReportWebServer
                 catch (Exception ex)
                 {
                     log.Error("message processing caused an exception", ex);
-                    stop.Set();
-                    throw ex;
+                    //stop.Set();
+                    //throw ex;
                 }
 
                 // process messages from CSReports
