@@ -117,6 +117,15 @@
             this.tsbBold = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbSearch = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator24 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsbCtrlAlignLeft = new System.Windows.Forms.ToolStripButton();
+            this.tsbCtrlAlignRight = new System.Windows.Forms.ToolStripButton();
+            this.tsbCtrlAlignTop = new System.Windows.Forms.ToolStripButton();
+            this.tsbCtrlAlignBottom = new System.Windows.Forms.ToolStripButton();
+            this.tsbCtrlSameHeight = new System.Windows.Forms.ToolStripButton();
+            this.tsbCtrlSameWidth = new System.Windows.Forms.ToolStripButton();
+            this.tsbCtrlSameLeft = new System.Windows.Forms.ToolStripButton();
+            this.tsbCtrlSameTop = new System.Windows.Forms.ToolStripButton();
             this.sbMain = new System.Windows.Forms.StatusStrip();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -166,6 +175,7 @@
             this.cmSectionGroupSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.cmSectionGroupProperties = new System.Windows.Forms.ToolStripMenuItem();
             this.cmSectionMoveGroup = new System.Windows.Forms.ToolStripMenuItem();
+            this.printDlg = new System.Windows.Forms.PrintDialog();
             this.mnMain.SuspendLayout();
             this.tbMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -295,6 +305,7 @@
             this.mnuPrintReport.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
             this.mnuPrintReport.Size = new System.Drawing.Size(180, 22);
             this.mnuPrintReport.Text = "Print";
+            this.mnuPrintReport.Click += new System.EventHandler(this.mnuPrintReport_Click);
             // 
             // toolStripSeparator9
             // 
@@ -330,7 +341,7 @@
             // 
             this.mnuCopy.Name = "mnuCopy";
             this.mnuCopy.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.mnuCopy.Size = new System.Drawing.Size(152, 22);
+            this.mnuCopy.Size = new System.Drawing.Size(149, 22);
             this.mnuCopy.Text = "Copy";
             this.mnuCopy.Click += new System.EventHandler(this.mnuCopy_Click);
             // 
@@ -338,34 +349,34 @@
             // 
             this.mnuPaste.Name = "mnuPaste";
             this.mnuPaste.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.V)));
-            this.mnuPaste.Size = new System.Drawing.Size(152, 22);
+            this.mnuPaste.Size = new System.Drawing.Size(149, 22);
             this.mnuPaste.Text = "Paste";
             this.mnuPaste.Click += new System.EventHandler(this.mnuPaste_Click);
             // 
             // mnuPasteSpecial
             // 
             this.mnuPasteSpecial.Name = "mnuPasteSpecial";
-            this.mnuPasteSpecial.Size = new System.Drawing.Size(152, 22);
+            this.mnuPasteSpecial.Size = new System.Drawing.Size(149, 22);
             this.mnuPasteSpecial.Text = "Paste Special";
             this.mnuPasteSpecial.Click += new System.EventHandler(this.mnuPasteSpecial_Click);
             // 
             // toolStripSeparator10
             // 
             this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator10.Size = new System.Drawing.Size(146, 6);
             // 
             // mnuEditSearch
             // 
             this.mnuEditSearch.Name = "mnuEditSearch";
             this.mnuEditSearch.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.F)));
-            this.mnuEditSearch.Size = new System.Drawing.Size(152, 22);
+            this.mnuEditSearch.Size = new System.Drawing.Size(149, 22);
             this.mnuEditSearch.Text = "Search";
             this.mnuEditSearch.Click += new System.EventHandler(this.mnuEditSearch_Click);
             // 
             // toolStripSeparator11
             // 
             this.toolStripSeparator11.Name = "toolStripSeparator11";
-            this.toolStripSeparator11.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator11.Size = new System.Drawing.Size(146, 6);
             // 
             // mnuEditAddSec
             // 
@@ -374,27 +385,27 @@
             this.mnuEditAddGroup,
             this.mnuEditAddFooter});
             this.mnuEditAddSec.Name = "mnuEditAddSec";
-            this.mnuEditAddSec.Size = new System.Drawing.Size(152, 22);
+            this.mnuEditAddSec.Size = new System.Drawing.Size(149, 22);
             this.mnuEditAddSec.Text = "Sections";
             // 
             // mnuEditAddHeader
             // 
             this.mnuEditAddHeader.Name = "mnuEditAddHeader";
-            this.mnuEditAddHeader.Size = new System.Drawing.Size(152, 22);
+            this.mnuEditAddHeader.Size = new System.Drawing.Size(137, 22);
             this.mnuEditAddHeader.Text = "Add Header";
             this.mnuEditAddHeader.Click += new System.EventHandler(this.mnuEditAddHeader_Click);
             // 
             // mnuEditAddGroup
             // 
             this.mnuEditAddGroup.Name = "mnuEditAddGroup";
-            this.mnuEditAddGroup.Size = new System.Drawing.Size(152, 22);
+            this.mnuEditAddGroup.Size = new System.Drawing.Size(137, 22);
             this.mnuEditAddGroup.Text = "Add Group";
             this.mnuEditAddGroup.Click += new System.EventHandler(this.mnuEditAddGroup_Click);
             // 
             // mnuEditAddFooter
             // 
             this.mnuEditAddFooter.Name = "mnuEditAddFooter";
-            this.mnuEditAddFooter.Size = new System.Drawing.Size(152, 22);
+            this.mnuEditAddFooter.Size = new System.Drawing.Size(137, 22);
             this.mnuEditAddFooter.Text = "Add Footer";
             this.mnuEditAddFooter.Click += new System.EventHandler(this.mnuEditAddFooter_Click);
             // 
@@ -407,7 +418,7 @@
             this.mnuEditAddImage,
             this.mnuEditAddChart});
             this.controlsToolStripMenuItem.Name = "controlsToolStripMenuItem";
-            this.controlsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.controlsToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.controlsToolStripMenuItem.Text = "Controls";
             // 
             // mnuEditAddLabel
@@ -448,7 +459,7 @@
             // toolStripSeparator12
             // 
             this.toolStripSeparator12.Name = "toolStripSeparator12";
-            this.toolStripSeparator12.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator12.Size = new System.Drawing.Size(146, 6);
             // 
             // mnuEditMove
             // 
@@ -468,24 +479,30 @@
             this.horizontalToolStripMenuItem.Name = "horizontalToolStripMenuItem";
             this.horizontalToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
             this.horizontalToolStripMenuItem.Text = "Horizontal";
+            this.horizontalToolStripMenuItem.Click += new System.EventHandler(this.horizontalToolStripMenuItem_Click);
             // 
             // verticalToolStripMenuItem
             // 
             this.verticalToolStripMenuItem.Name = "verticalToolStripMenuItem";
             this.verticalToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
             this.verticalToolStripMenuItem.Text = "Vertical";
+            this.verticalToolStripMenuItem.Click += new System.EventHandler(this.verticalToolStripMenuItem_Click);
             // 
             // lockToolStripMenuItem
             // 
             this.lockToolStripMenuItem.Name = "lockToolStripMenuItem";
             this.lockToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
             this.lockToolStripMenuItem.Text = "Lock";
+            this.lockToolStripMenuItem.Click += new System.EventHandler(this.lockToolStripMenuItem_Click);
             // 
             // allDirectionsToolStripMenuItem
             // 
+            this.allDirectionsToolStripMenuItem.Checked = true;
+            this.allDirectionsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.allDirectionsToolStripMenuItem.Name = "allDirectionsToolStripMenuItem";
             this.allDirectionsToolStripMenuItem.Size = new System.Drawing.Size(246, 22);
             this.allDirectionsToolStripMenuItem.Text = "All Directions";
+            this.allDirectionsToolStripMenuItem.Click += new System.EventHandler(this.allDirectionsToolStripMenuItem_Click);
             // 
             // toolStripSeparator13
             // 
@@ -713,7 +730,16 @@
             this.toolStripSeparator5,
             this.tsbBold,
             this.toolStripSeparator6,
-            this.tsbSearch});
+            this.tsbSearch,
+            this.toolStripSeparator24,
+            this.tsbCtrlAlignLeft,
+            this.tsbCtrlAlignRight,
+            this.tsbCtrlAlignTop,
+            this.tsbCtrlAlignBottom,
+            this.tsbCtrlSameHeight,
+            this.tsbCtrlSameWidth,
+            this.tsbCtrlSameLeft,
+            this.tsbCtrlSameTop});
             this.tbMain.Location = new System.Drawing.Point(0, 24);
             this.tbMain.Name = "tbMain";
             this.tbMain.Size = new System.Drawing.Size(682, 25);
@@ -798,6 +824,7 @@
             this.tsbPrint.Name = "tsbPrint";
             this.tsbPrint.Size = new System.Drawing.Size(23, 22);
             this.tsbPrint.Text = "Print";
+            this.tsbPrint.Click += new System.EventHandler(this.tsbPrint_Click);
             // 
             // toolStripSeparator3
             // 
@@ -888,6 +915,91 @@
             this.tsbSearch.Size = new System.Drawing.Size(23, 22);
             this.tsbSearch.Text = "Search a text in this report";
             this.tsbSearch.Click += new System.EventHandler(this.tsbSearch_Click);
+            // 
+            // toolStripSeparator24
+            // 
+            this.toolStripSeparator24.Name = "toolStripSeparator24";
+            this.toolStripSeparator24.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tsbCtrlAlignLeft
+            // 
+            this.tsbCtrlAlignLeft.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbCtrlAlignLeft.Image = ((System.Drawing.Image)(resources.GetObject("tsbCtrlAlignLeft.Image")));
+            this.tsbCtrlAlignLeft.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbCtrlAlignLeft.Name = "tsbCtrlAlignLeft";
+            this.tsbCtrlAlignLeft.Size = new System.Drawing.Size(23, 22);
+            this.tsbCtrlAlignLeft.Text = "toolStripButton1";
+            this.tsbCtrlAlignLeft.Click += new System.EventHandler(this.tsbCtrlAlignLeft_Click);
+            // 
+            // tsbCtrlAlignRight
+            // 
+            this.tsbCtrlAlignRight.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbCtrlAlignRight.Image = ((System.Drawing.Image)(resources.GetObject("tsbCtrlAlignRight.Image")));
+            this.tsbCtrlAlignRight.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbCtrlAlignRight.Name = "tsbCtrlAlignRight";
+            this.tsbCtrlAlignRight.Size = new System.Drawing.Size(23, 22);
+            this.tsbCtrlAlignRight.Text = "toolStripButton2";
+            this.tsbCtrlAlignRight.Click += new System.EventHandler(this.tsbCtrlAlignRight_Click);
+            // 
+            // tsbCtrlAlignTop
+            // 
+            this.tsbCtrlAlignTop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbCtrlAlignTop.Image = ((System.Drawing.Image)(resources.GetObject("tsbCtrlAlignTop.Image")));
+            this.tsbCtrlAlignTop.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbCtrlAlignTop.Name = "tsbCtrlAlignTop";
+            this.tsbCtrlAlignTop.Size = new System.Drawing.Size(23, 22);
+            this.tsbCtrlAlignTop.Text = "toolStripButton3";
+            this.tsbCtrlAlignTop.Click += new System.EventHandler(this.tsbCtrlAlignTop_Click);
+            // 
+            // tsbCtrlAlignBottom
+            // 
+            this.tsbCtrlAlignBottom.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbCtrlAlignBottom.Image = ((System.Drawing.Image)(resources.GetObject("tsbCtrlAlignBottom.Image")));
+            this.tsbCtrlAlignBottom.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbCtrlAlignBottom.Name = "tsbCtrlAlignBottom";
+            this.tsbCtrlAlignBottom.Size = new System.Drawing.Size(23, 22);
+            this.tsbCtrlAlignBottom.Text = "toolStripButton4";
+            this.tsbCtrlAlignBottom.Click += new System.EventHandler(this.tsbCtrlAlignBottom_Click);
+            // 
+            // tsbCtrlSameHeight
+            // 
+            this.tsbCtrlSameHeight.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbCtrlSameHeight.Image = ((System.Drawing.Image)(resources.GetObject("tsbCtrlSameHeight.Image")));
+            this.tsbCtrlSameHeight.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbCtrlSameHeight.Name = "tsbCtrlSameHeight";
+            this.tsbCtrlSameHeight.Size = new System.Drawing.Size(23, 22);
+            this.tsbCtrlSameHeight.Text = "toolStripButton1";
+            this.tsbCtrlSameHeight.Click += new System.EventHandler(this.tsbCtrlSameHeight_Click);
+            // 
+            // tsbCtrlSameWidth
+            // 
+            this.tsbCtrlSameWidth.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbCtrlSameWidth.Image = ((System.Drawing.Image)(resources.GetObject("tsbCtrlSameWidth.Image")));
+            this.tsbCtrlSameWidth.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbCtrlSameWidth.Name = "tsbCtrlSameWidth";
+            this.tsbCtrlSameWidth.Size = new System.Drawing.Size(23, 22);
+            this.tsbCtrlSameWidth.Text = "toolStripButton2";
+            this.tsbCtrlSameWidth.Click += new System.EventHandler(this.tsbCtrlSameWidth_Click);
+            // 
+            // tsbCtrlSameLeft
+            // 
+            this.tsbCtrlSameLeft.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbCtrlSameLeft.Image = ((System.Drawing.Image)(resources.GetObject("tsbCtrlSameLeft.Image")));
+            this.tsbCtrlSameLeft.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbCtrlSameLeft.Name = "tsbCtrlSameLeft";
+            this.tsbCtrlSameLeft.Size = new System.Drawing.Size(23, 22);
+            this.tsbCtrlSameLeft.Text = "toolStripButton3";
+            this.tsbCtrlSameLeft.Click += new System.EventHandler(this.tsbCtrlSameLeft_Click);
+            // 
+            // tsbCtrlSameTop
+            // 
+            this.tsbCtrlSameTop.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsbCtrlSameTop.Image = ((System.Drawing.Image)(resources.GetObject("tsbCtrlSameTop.Image")));
+            this.tsbCtrlSameTop.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbCtrlSameTop.Name = "tsbCtrlSameTop";
+            this.tsbCtrlSameTop.Size = new System.Drawing.Size(23, 22);
+            this.tsbCtrlSameTop.Text = "toolStripButton4";
+            this.tsbCtrlSameTop.Click += new System.EventHandler(this.tsbCtrlSameTop_Click);
             // 
             // sbMain
             // 
@@ -1146,7 +1258,7 @@
             this.toolStripSeparator19,
             this.cmCtrlProperties});
             this.cmnControl.Name = "cmnControl";
-            this.cmnControl.Size = new System.Drawing.Size(153, 226);
+            this.cmnControl.Size = new System.Drawing.Size(142, 204);
             // 
             // cmCtrlCopy
             // 
@@ -1177,7 +1289,7 @@
             // cmCtrlDelete
             // 
             this.cmCtrlDelete.Name = "cmCtrlDelete";
-            this.cmCtrlDelete.Size = new System.Drawing.Size(152, 22);
+            this.cmCtrlDelete.Size = new System.Drawing.Size(141, 22);
             this.cmCtrlDelete.Text = "Delete";
             this.cmCtrlDelete.Click += new System.EventHandler(this.cmCtrlDelete_Click);
             // 
@@ -1202,12 +1314,14 @@
             this.cmCtrlSendBack.Name = "cmCtrlSendBack";
             this.cmCtrlSendBack.Size = new System.Drawing.Size(141, 22);
             this.cmCtrlSendBack.Text = "Send back";
+            this.cmCtrlSendBack.Click += new System.EventHandler(this.cmCtrlSendBack_Click);
             // 
             // cmCtrlBringFront
             // 
             this.cmCtrlBringFront.Name = "cmCtrlBringFront";
             this.cmCtrlBringFront.Size = new System.Drawing.Size(141, 22);
             this.cmCtrlBringFront.Text = "Bring front";
+            this.cmCtrlBringFront.Click += new System.EventHandler(this.cmCtrlBringFront_Click);
             // 
             // toolStripSeparator19
             // 
@@ -1301,6 +1415,10 @@
             this.cmSectionMoveGroup.Text = "Move group";
             this.cmSectionMoveGroup.Click += new System.EventHandler(this.cmSectionMoveGroup_Click);
             // 
+            // printDlg
+            // 
+            this.printDlg.UseEXDialog = true;
+            // 
             // fMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1310,10 +1428,13 @@
             this.Controls.Add(this.sbMain);
             this.Controls.Add(this.tbMain);
             this.Controls.Add(this.mnMain);
+            this.KeyPreview = true;
             this.MainMenuStrip = this.mnMain;
             this.Name = "fMain";
             this.Text = "CrowSoft Report Editor";
             this.Load += new System.EventHandler(this.fMain_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.fMain_KeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.fMain_KeyUp);
             this.mnMain.ResumeLayout(false);
             this.mnMain.PerformLayout();
             this.tbMain.ResumeLayout(false);
@@ -1478,6 +1599,16 @@
         private System.Windows.Forms.ColumnHeader columnHeader4;
         private System.Windows.Forms.ImageList imageListTree;
         private System.Windows.Forms.ToolStripMenuItem mnuPasteSpecial;
+        private System.Windows.Forms.PrintDialog printDlg;
+        private System.Windows.Forms.ToolStripButton tsbCtrlAlignLeft;
+        private System.Windows.Forms.ToolStripButton tsbCtrlAlignRight;
+        private System.Windows.Forms.ToolStripButton tsbCtrlAlignTop;
+        private System.Windows.Forms.ToolStripButton tsbCtrlAlignBottom;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator24;
+        private System.Windows.Forms.ToolStripButton tsbCtrlSameHeight;
+        private System.Windows.Forms.ToolStripButton tsbCtrlSameWidth;
+        private System.Windows.Forms.ToolStripButton tsbCtrlSameLeft;
+        private System.Windows.Forms.ToolStripButton tsbCtrlSameTop;
     }
 }
 

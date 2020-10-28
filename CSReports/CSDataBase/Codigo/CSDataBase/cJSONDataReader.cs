@@ -17,6 +17,7 @@ namespace CSDataBase
         private int m_resultIndex = 0;
         private int m_rowIndex = -1;
         private bool m_closed = false;
+        private DateTime m_start = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
         public cJSONDataReader(cJSONDataSource dataSource)
         {
@@ -642,6 +643,10 @@ namespace CSDataBase
         {
             return m_cols[i]["columnType"].ToString() == "bytea";
         }
+        private bool isTimestamptz(int i)
+        {
+            return m_cols[i]["columnType"].ToString() == "timestamptz";
+        }
         //
         // Summary:
         //     Gets the value of the specified column in its native format.
@@ -658,6 +663,17 @@ namespace CSDataBase
             if (isByteA(i))
             {
                 value = Convert.FromBase64String(value.ToString());
+            }
+            else if (isTimestamptz(i))
+            {
+                if (value.ToString().Trim().Length == 0)
+                {
+                    value = m_start;
+                }
+                else
+                {
+                    value = m_start.AddMilliseconds(Convert.ToInt64(value.ToString())).ToLocalTime();
+                }                
             }
             return value;
         }

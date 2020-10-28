@@ -30,9 +30,10 @@
     // Match patterns for web pages. Does not affect content scripts.
     // If this field is not specified, no webpages can connect.
     "matches": [
-      "https://*.google.com/*",
-      "*://*.chromium.org/*",
-      "http://cairowebtest.dev/"
+      "http://cairowebtest.dev/",
+      "http://cairodigital.com.ar/",
+      "https://cairodigital.com.ar/"
+
     ]
   }
 }

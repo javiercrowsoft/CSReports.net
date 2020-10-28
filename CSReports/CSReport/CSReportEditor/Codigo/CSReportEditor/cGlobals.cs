@@ -66,8 +66,6 @@ namespace CSReportEditor
 		// TODO: refactor
 		public const int ShiftMask = 1;
 
-        private static cEditor m_editor = null;
-
         public static void setStatus()
         { 
         

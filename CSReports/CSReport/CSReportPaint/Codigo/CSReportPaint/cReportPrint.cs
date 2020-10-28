@@ -12,6 +12,7 @@ using CSReportExport;
 using CSReportPreview;
 using System.IO;
 using System.Drawing.Imaging;
+using System.Drawing.Printing;
 
 namespace CSReportPaint
 {
@@ -35,8 +36,6 @@ namespace CSReportPaint
 
         private Font[] m_fnt;
 
-        private int m_hDC = 0;
-
         private int m_x = 0;
         private int m_y = 0;
 
@@ -58,6 +57,30 @@ namespace CSReportPaint
         private csPDFQuality m_pDFQuality;
 
         private String m_exportFileName = "";
+
+        private cIPrintClient m_objClientToPrint;
+        private int[] m_pagesToPrint = null;
+        private int m_pageToPrint = -1;
+
+        private int m_oldZoom = 0;
+        private float m_oldScaleY = 0;
+        private float m_oldScaleX = 0;
+        private float m_oldScaleFont = 0;
+        
+        public cReportPrint()
+        {
+            try
+            {
+                m_scaleX = 1;
+                m_scaleY = 1;
+
+                cGlobals.redim(ref m_fnt, 0);
+            }
+            catch (Exception ex)
+            {
+                cError.mngError(ex, "constructor", C_MODULE, "");
+            }
+        }
 
         //---------------------------------------------------------------------------
         //
@@ -525,7 +548,7 @@ namespace CSReportPaint
                 //
                 if (m_report.getLaunchInfo().getPrinter() == null)
                 {
-                    printer = cPrintAPI.getcPrinterFromDefaultPrinter();
+                    printer = cPrintAPI.getcPrinterFromDefaultPrinter(null);
                 }
                 // we use the printer asigned by the caller
                 //
@@ -618,54 +641,35 @@ namespace CSReportPaint
 
         private bool printPagesToPrinter(cPrinter printer, cIPrintClient objClient)
         {
-            int oldZoom = 0;
-            float oldScaleY = 0;
-            float oldScaleX = 0;
-            float oldScaleFont = 0;
             try
             {
-                int i = 0;
-                int[] vPages = null;
-                float dpiX = 0;
-                float dpiY = 0;
+                PrintDocument printDoc = new PrintDocument();
 
-                CSReportDll.cReportPaperInfo w_paperInfo = m_report.getPaperInfo();
-                if (!printer.starDoc(m_report.getName(),
+                cReportPaperInfo w_paperInfo = m_report.getPaperInfo();
+                if (!printer.starDoc(printDoc,
+                                        m_report.getName(),
                                         w_paperInfo.getPaperSize(),
                                         w_paperInfo.getOrientation()))
                 {
                     return false;
                 }
 
-                vPages = pGetPagesToPrint(printer.getPaperInfo().getPagesToPrint());
+                printDoc.PrintPage += new PrintPageEventHandler(printPage);
+                printDoc.PrinterSettings.PrinterName = printer.getDeviceName();
 
-                oldScaleX = m_paint.getScaleX();
-                oldScaleY = m_paint.getScaleY();
-                oldScaleFont = m_scaleFont;
-                oldZoom = m_paint.getZoom();
+                //PrintDialog printDialog = new PrintDialog();
+                //printDialog.Document = printDoc;
 
-                dpiX = printer.getGraph().DpiX;
-                dpiY = printer.getGraph().DpiY;
+                //DialogResult dialogResult = printDialog.ShowDialog();
+                //if (dialogResult == DialogResult.OK)
+                //{
+                    m_pageToPrint = -1;
+                    m_pagesToPrint = pGetPagesToPrint(printer.getPaperInfo().getPagesToPrint());
+                    m_objClientToPrint = objClient;
+                    printDoc.Print();
+                //}
 
-                m_scaleX = dpiX / 100;
-                m_scaleY = dpiY / 100;
-
-                float twipsPerPixelX = 1440f / dpiX;
-                int dPI = 0;
-                dPI = (int)(1440f / twipsPerPixelX);
-
-                if (dPI != 96 && dPI > 0)
-                {
-                    m_scaleX = m_scaleX * (96 / dPI);
-                    m_scaleY = m_scaleY * (96 / dPI);
-                }
-
-                m_paint.setScaleX(m_scaleX);
-                m_paint.setScaleY(m_scaleY);
-
-                m_paint.setZoom(100);
-                m_scaleFont = 1;
-
+                /*
                 for (i = 0; i < m_report.getPages().count(); i++)
                 {
                     if (pHaveToPrintThisPage(i, vPages))
@@ -704,7 +708,7 @@ namespace CSReportPaint
                                               "Ocurrio un error al imprimir el reporte."
                                               );
                 }
-
+                */
                 return true;
 
             }
@@ -713,16 +717,103 @@ namespace CSReportPaint
                 cError.mngError(ex, "printPagePrinter", C_MODULE, "");
                 return false;
             }
-            finally
+        }
+
+        private void printPage(object sender, PrintPageEventArgs e)
+        {
+            /*
+            if (!printer.starPage())
             {
-                printer.endDoc();
-                m_paint.setZoom(oldZoom);
-                m_scaleX = oldScaleX;
-                m_scaleY = oldScaleY;
-                m_paint.setScaleX(oldScaleX);
-                m_paint.setScaleY(oldScaleY);
-                m_scaleFont = oldScaleFont;
+                throw new ReportPaintException(csRptPaintErrors.CSRPT_PAINT_ERR_PRINTING,
+                                          C_MODULE,
+                                          "Ocurrio un error al imprimir el reporte."
+                                          );
             }
+            */
+
+            /*
+            TODO: after some testing we must remove ScaleX and ScaleY
+            */
+
+            if (m_pageToPrint == -1) {
+
+                float dpiX = 0;
+                float dpiY = 0;
+
+                m_oldScaleX = m_paint.getScaleX();
+                m_oldScaleY = m_paint.getScaleY();
+                m_oldScaleFont = m_scaleFont;
+                m_oldZoom = m_paint.getZoom();
+
+                var graph = e.Graphics;
+                dpiX = graph.DpiX;
+                dpiY = graph.DpiY;
+
+                m_scaleX = dpiX / 100;
+                m_scaleY = dpiY / 100;
+
+                float twipsPerPixelX = 1440f / dpiX;
+                int dPI = 0;
+                dPI = (int)(1440f / twipsPerPixelX);
+
+                if (dPI != 96 && dPI > 0)
+                {
+                    m_scaleX = m_scaleX * (96f / dPI);
+                    m_scaleY = m_scaleY * (96f / dPI);
+                }
+
+                // we are not using scaleX and scaleY
+                m_scaleX = 1;
+                m_scaleY = 1;
+
+                m_paint.setScaleX(m_scaleX);
+                m_paint.setScaleY(m_scaleY);
+
+                m_paint.setZoom(100);
+                m_scaleFont = 1;
+            }
+
+            m_pageToPrint += 1;
+
+            while (m_pageToPrint < m_report.getPages().count())
+            {
+                if (pHaveToPrintThisPage(m_pageToPrint+1, m_pagesToPrint))
+                {
+                    printPage(m_pageToPrint+1, true);
+                    var graph = e.Graphics;
+
+                    if (!drawPage(graph, true))
+                    {
+                        throw new ReportPaintException(csRptPaintErrors.CSRPT_PAINT_ERR_PRINTING,
+                                                  C_MODULE,
+                                                  "Ocurrio un error al imprimir el reporte."
+                                                  );
+                    }
+                    
+                    if (!pRefreshObjClient(m_pageToPrint, m_objClientToPrint))
+                    {
+                        throw new ReportPaintException(csRptPaintErrors.CSRPT_PAINT_ERR_PRINTING,
+                                                  C_MODULE,
+                                                  "Ocurrio un error al imprimir el reporte."
+                                                  );
+                    }
+
+                    e.HasMorePages = (m_pageToPrint+1 < m_pagesToPrint.Last());
+                    return;
+                }
+                else {
+                    m_pageToPrint += 1;
+                }
+            }
+
+            m_paint.setZoom(m_oldZoom);
+            m_scaleX = m_oldScaleX;
+            m_scaleY = m_oldScaleY;
+            m_paint.setScaleX(m_oldScaleX);
+            m_paint.setScaleY(m_oldScaleY);
+            m_scaleFont = m_oldScaleFont;
+
+            e.HasMorePages = false;
         }
 
         private bool pRefreshObjClient(int iPage, cIPrintClient objClient)
@@ -1554,7 +1645,7 @@ namespace CSReportPaint
         {
             if (m_paint != null)
             {
-                drawPage(e.Graphics);
+                drawPage(e.Graphics, false);
             }
         }
 
@@ -1744,24 +1835,24 @@ namespace CSReportPaint
             //If Not m_Report.SaveData(m_rpwPrint.cmFileSaveDialog) Then Exit Sub
         }
 
-        private bool drawPage(object graph)
+        private bool drawPage(Graphics graph, bool isPrinter)
         {
             int i = 0;
 
             if (m_rePaintObject)
             {
-                if (graph.GetType() == typeof(cPrinter))
+                if (isPrinter)
                 {
-                    m_paint.clearPage(graph);
+                    m_paint.createBackgroundBitmap(graph);
 
                     for (i = 0; i < m_paint.getPaintObjects().count(); i++)
                     {
-                        if (!m_paint.drawObject(m_paint.getPaintObjects().getNextKeyForZOrder(i), (graph as cPrinter).getGraph())) { return false; }
+                        if (!m_paint.drawObject(m_paint.getPaintObjects().getNextKeyForZOrder(i), graph)) { return false; }
                     }
 
                     for (i = 0; i < m_paint.getPaintSections().count(); i++)
                     {
-                        if (!m_paint.drawSection(m_paint.getPaintSections().getNextKeyForZOrder(i), (graph as cPrinter).getGraph())) { return false; }
+                        if (!m_paint.drawSection(m_paint.getPaintSections().getNextKeyForZOrder(i), graph)) { return false; }
                     }
                 }
                 else
@@ -1770,12 +1861,12 @@ namespace CSReportPaint
 
                     m_rePaintObject = false;
 
-                    m_paint.paintPicture(graph as Graphics, false);
+                    m_paint.paintPicture(graph, false);
                 }
             }
             else
             {
-                m_paint.paintPicture(graph as Graphics, false);
+                m_paint.paintPicture(graph, false);
             }
             return true;
         }
@@ -1814,12 +1905,11 @@ namespace CSReportPaint
             if (m_paint != null)
             {
                 if(m_currPage != page -1) printPage(page, true);
-
 				pageIndex = m_currPage + 1;
 
                 Bitmap bmp = new Bitmap((int)m_realWidth, (int)m_realHeight);
                 Graphics bmpGraphics = Graphics.FromImage(bmp);
-                drawPage(bmpGraphics);
+                drawPage(bmpGraphics, false);
                 MemoryStream memoryStream = new MemoryStream();
                 m_paint.getBitmap().Save(memoryStream, ImageFormat.Png);
                 var pngData = memoryStream.ToArray();

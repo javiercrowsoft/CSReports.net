@@ -761,10 +761,6 @@ namespace CSReportPaint
         // Drawing
         public void clearPage(object graph)
         {
-            if (graph.GetType() == typeof(cPrinter))
-            {
-                return;
-            }
             refreshBackgroundPicture(graph as Graphics, Color.White.ToArgb());
         }
 
@@ -1331,6 +1327,11 @@ namespace CSReportPaint
             refreshBackgroundPicture(graph, 0);
         }
 
+        public void createBackgroundBitmap(Graphics graph)
+        {
+            m_bitmap = new Bitmap((int)graph.VisibleClipBounds.Width + 1, (int)graph.VisibleClipBounds.Height + 3); // TODO check why 56 ???
+        }
+
         private void refreshBackgroundPicture(Graphics graph, int color)
         {
             /*
@@ -1376,7 +1377,7 @@ namespace CSReportPaint
                 m_bitmap.Dispose();
             }
 
-            m_bitmap = new Bitmap((int)graph.VisibleClipBounds.Width + 1, (int)graph.VisibleClipBounds.Height + 3); // TODO check why 56 ???
+            createBackgroundBitmap(graph);
 
             Graphics bitmapGraphic = Graphics.FromImage(m_bitmap);
 

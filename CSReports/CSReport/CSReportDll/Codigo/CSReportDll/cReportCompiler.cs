@@ -34,15 +34,16 @@ namespace CSReportDll
 
         private const String C_MACRO_CTRL = "@@";
 
-        private const String C_AVERAGESUM = "AverageSum";
-        private const String C_AVERAGECOUNT = "AverageCount";
+        private const String C_AVERAGE_SUM = "AverageSum";
+        private const String C_AVERAGE_COUNT = "AverageCount";
         private const String C_SUM = "Sum";
-        private const String C_SUMTIME = "SumTime";
+        private const String C_SUM_TIME = "SumTime";
         private const String C_MAX = "Max";
         private const String C_MIN = "Min";
         private const String C_COUNT = "Count";
-        private const String C_NUMBERTOSTRING = "NumberToString";
-        private const String C_GETDATAFROMRSAD = "GetDataFromRsAd";
+        private const String C_NUMBER_TO_STRING = "NumberToString";
+        private const String C_GET_BARCODE = "GetBarcode";
+        private const String C_GET_DATA_FROM_RS_AD = "GetDataFromRsAd";
 
         private const String C_ISEQUAL = "IsEqual";
         private const String C_ISNOTEQUAL = "IsNotEqual";
@@ -209,31 +210,31 @@ namespace CSReportDll
 
                 switch (fint.getFormulaType())
                 {
-                    case csRptFormulaType.CSRPTGROUPTOTAL:
+                    case csRptFormulaType.CSRPTF_GROUP_TOTAL:
                         evalGroupTotal(fint);
 
                         break;
-                    case csRptFormulaType.CSRPTGROUPMAX:
+                    case csRptFormulaType.CSRPTF_GROUP_MAX:
                         evalGroupMax(fint);
 
                         break;
-                    case csRptFormulaType.CSRPTGROUPMIN:
+                    case csRptFormulaType.CSRPTF_GROUP_MIN:
                         evalGroupMin(fint);
 
                         break;
-                    case csRptFormulaType.CSRPTGROUPAVERAGE:
+                    case csRptFormulaType.CSRPTF_GROUP_AVERAGE:
                         evalGroupAverage(fint);
 
                         break;
-                    case csRptFormulaType.CSRPTGROUPPERCENT:
+                    case csRptFormulaType.CSRPTF_GROUP_PERCENT:
                         evalGroupPercent(fint);
 
                         break;
-                    case csRptFormulaType.CSRPTGROUPCOUNT:
+                    case csRptFormulaType.CSRPTF_GROUP_COUNT:
                         evalGroupCount(fint);
 
                         break;
-                    case csRptFormulaType.CSRPTGROUPLINENUMBER:
+                    case csRptFormulaType.CSRPTF_GROUP_LINE_NUMBER:
                         evalGroupLineNumber(fint);
 
                         break;
@@ -454,83 +455,87 @@ namespace CSReportDll
         {
             switch (fint.getFormulaType())
             {
-                case csRptFormulaType.CSRPTFAVERAGE:
+                case csRptFormulaType.CSRPTF_AVERAGE:
                     evalAverage(fint);
                     break;
 
-                case csRptFormulaType.CSRPTFSUM:
+                case csRptFormulaType.CSRPTF_SUM:
                     evalSum(fint);
                     break;
 
-                case csRptFormulaType.CSRPTFSUMTIME:
+                case csRptFormulaType.CSRPTF_SUM_TIME:
                     evalSumTime(fint);
                     break;
 
-                case csRptFormulaType.CSRPTMAX:
+                case csRptFormulaType.CSRPTF_MAX:
                     evalMax(fint);
                     break;
 
-                case csRptFormulaType.CSRPTMIN:
+                case csRptFormulaType.CSRPTF_MIN:
                     evalMin(fint);
                     break;
 
-                case csRptFormulaType.CSRPTCOUNT:
+                case csRptFormulaType.CSRPTF_COUNT:
                     evalCount(fint);
                     break;
 
-                case csRptFormulaType.CSRPTFNUMBERTOSTRING:
+                case csRptFormulaType.CSRPTF_NUMBER_TO_STRING:
                     evalNumberToString(fint);
                     break;
 
-                case csRptFormulaType.CSRPTISEQUAL:
+                case csRptFormulaType.CSRPTF_IS_EQUAL:
                     evalIsEqual(fint);
                     break;
 
-                case csRptFormulaType.CSRPTISNOTEQUAL:
+                case csRptFormulaType.CSRPTF_IS_NOT_EQUAL:
                     evalIsNotEqual(fint);
                     break;
 
-                case csRptFormulaType.CSRPTISGREATERTHAN:
+                case csRptFormulaType.CSRPTF_IS_GREATER_THAN:
                     evalIsGreaterThan(fint);
                     break;
 
-                case csRptFormulaType.CSRPTISLESSTHAN:
+                case csRptFormulaType.CSRPTF_IS_LESS_THAN:
                     evalIsLessThan(fint);
                     break;
 
-                case csRptFormulaType.CSRPTFCALCULO:
+                case csRptFormulaType.CSRPTF_CALCULO:
                     // nothing to do
                     break;
 
-                case csRptFormulaType.CSRPTDECLAREVAR:
+                case csRptFormulaType.CSRPTF_DECLARE_VAR:
                     evalDeclareVar(fint);
                     break;
 
-                case csRptFormulaType.CSRPTGETVAR:
+                case csRptFormulaType.CSRPTF_GET_VAR:
                     // nothing to do
                     break;
 
-                case csRptFormulaType.CSRPTGETPARAM:
+                case csRptFormulaType.CSRPTF_GET_PARAM:
                     // nothing to do
                     break;
 
-                case csRptFormulaType.CSRPTSETVAR:
+                case csRptFormulaType.CSRPTF_SET_VAR:
                     evalSetVar(fint);
                     break;
 
-                case csRptFormulaType.CSRPTADDTOVAR:
+                case csRptFormulaType.CSRPTF_GET_BARCODE:
+                    evalGetBarcode(fint);
+                    break;
+
+                case csRptFormulaType.CSRPTF_ADD_TO_VAR:
                     evalAddToVar(fint);
                     break;
 
-                case csRptFormulaType.CSRPTGETDATAFROMRSAD:
+                case csRptFormulaType.CSRPTF_GET_DATA_FROM_RS_AD:
                     evalGetDataFromRsAd(fint);
                     break;
 
-                case csRptFormulaType.CSRPTGETDATAFROMRS:
+                case csRptFormulaType.CSRPTF_GET_DATA_FROM_RS:
                     evalGetDataFromRs(fint);
                     break;
 
-                case csRptFormulaType.CSRPTISINRS:
+                case csRptFormulaType.CSRPTF_IS_IN_RS:
                     evalIsInRs(fint);
                     break;
             }
@@ -540,107 +545,110 @@ namespace CSReportDll
         {
             switch (fint.getFormulaType())
             {
-                case csRptFormulaType.CSRPTFAVERAGE:
+                case csRptFormulaType.CSRPTF_AVERAGE:
                     return resultAverage(fint);
 
-                case csRptFormulaType.CSRPTFSUM:
+                case csRptFormulaType.CSRPTF_SUM:
                     return resultSum(fint);
 
-                case csRptFormulaType.CSRPTFGETSTRING:
+                case csRptFormulaType.CSRPTF_GET_STRING:
                     return resultGetString(fint);
 
-                case csRptFormulaType.CSRPTFSUMTIME:
+                case csRptFormulaType.CSRPTF_SUM_TIME:
                     return resultSumTime(fint);
 
-                case csRptFormulaType.CSRPTMAX:
+                case csRptFormulaType.CSRPTF_MAX:
                     return resultMax(fint);
 
-                case csRptFormulaType.CSRPTMIN:
+                case csRptFormulaType.CSRPTF_MIN:
                     return resultMin(fint);
 
-                case csRptFormulaType.CSRPTCOUNT:
+                case csRptFormulaType.CSRPTF_COUNT:
                     return resultCount(fint);
 
-                case csRptFormulaType.CSRPTFNUMBERTOSTRING:
+                case csRptFormulaType.CSRPTF_NUMBER_TO_STRING:
                     return resultNumberToString(fint);
 
-                case csRptFormulaType.CSRPTISEQUAL:
+                case csRptFormulaType.CSRPTF_IS_EQUAL:
                     return resultIsEqual(fint);
 
-                case csRptFormulaType.CSRPTISNOTEQUAL:
+                case csRptFormulaType.CSRPTF_IS_NOT_EQUAL:
                     return resultIsNotEqual(fint);
 
-                case csRptFormulaType.CSRPTISGREATERTHAN:
+                case csRptFormulaType.CSRPTF_IS_GREATER_THAN:
                     return resultIsGreaterThan(fint);
 
-                case csRptFormulaType.CSRPTISLESSTHAN:
+                case csRptFormulaType.CSRPTF_IS_LESS_THAN:
                     return resultIsLessThan(fint);
 
-                case csRptFormulaType.CSRPTFPAGENUMBER:
+                case csRptFormulaType.CSRPTF_PAGE_NUMBER:
                     return resultPageNumber();
 
-                case csRptFormulaType.CSRPTFTOTALPAGES:
+                case csRptFormulaType.CSRPTF_TOTAL_PAGES:
                     return resultTotalPages();
 
-                case csRptFormulaType.CSRPTFVAL:
+                case csRptFormulaType.CSRPTF_VAL:
                     return resultValue(fint);
 
-                case csRptFormulaType.CSRPTLENGTH:
+                case csRptFormulaType.CSRPTF_LENGTH:
                     return resultLength(fint);
 
-                case csRptFormulaType.CSRPTTEXTREPLACE:
+                case csRptFormulaType.CSRPTF_TEXT_REPLACE:
                     return resultTextReplace(fint);
 
-                case csRptFormulaType.CSRPTFCALCULO:
+                case csRptFormulaType.CSRPTF_CALCULO:
                     return resultCalculo(fint);
 
-                case csRptFormulaType.CSRPTDECLAREVAR:
+                case csRptFormulaType.CSRPTF_DECLARE_VAR:
                     // nothing to do
                     break;
 
-                case csRptFormulaType.CSRPTGETVAR:
+                case csRptFormulaType.CSRPTF_GET_VAR:
                     return resultGetVar(fint);
 
-                case csRptFormulaType.CSRPTGETPARAM:
+                case csRptFormulaType.CSRPTF_GET_PARAM:
                     return resultGetParam(fint);
 
-                case csRptFormulaType.CSRPTSETVAR:
+                case csRptFormulaType.CSRPTF_SET_VAR:
                     // nothing to do
                     break;
 
-                case csRptFormulaType.CSRPTADDTOVAR:
+                case csRptFormulaType.CSRPTF_ADD_TO_VAR:
                     // nothing to do
                     break;
 
-                case csRptFormulaType.CSRPTGETDATAFROMRSAD:
+                case csRptFormulaType.CSRPTF_GET_DATA_FROM_RS_AD:
                     return resultGetDataFromRsAd(fint);
 
-                case csRptFormulaType.CSRPTGETDATAFROMRS:
+                case csRptFormulaType.CSRPTF_GET_DATA_FROM_RS:
                     return resultGetDataFromRs(fint);
 
-                case csRptFormulaType.CSRPTGROUPTOTAL:
+                case csRptFormulaType.CSRPTF_GROUP_TOTAL:
                     return resultGroupTotal(fint);
 
-                case csRptFormulaType.CSRPTGROUPMAX:
+                case csRptFormulaType.CSRPTF_GROUP_MAX:
                     return resultGroupMax(fint);
 
-                case csRptFormulaType.CSRPTGROUPMIN:
+                case csRptFormulaType.CSRPTF_GROUP_MIN:
                     return resultGroupMin(fint);
 
-                case csRptFormulaType.CSRPTGROUPAVERAGE:
+                case csRptFormulaType.CSRPTF_GROUP_AVERAGE:
                     return resultGroupAverage(fint);
 
-                case csRptFormulaType.CSRPTGROUPPERCENT:
+                case csRptFormulaType.CSRPTF_GROUP_PERCENT:
                     return resultGroupPercent(fint);
 
-                case csRptFormulaType.CSRPTGROUPCOUNT:
+                case csRptFormulaType.CSRPTF_GROUP_COUNT:
                     return resultGroupCount(fint);
 
-                case csRptFormulaType.CSRPTGROUPLINENUMBER:
+                case csRptFormulaType.CSRPTF_GROUP_LINE_NUMBER:
                     return resultGroupLineNumber(fint);
 
-                case csRptFormulaType.CSRPTISINRS:
+                case csRptFormulaType.CSRPTF_IS_IN_RS:
                     return resultIsInRs(fint);
+
+                case csRptFormulaType.CSRPTF_GET_BARCODE:
+                    return resultGetBarcode(fint);
             }
             return null;
         }
@@ -890,7 +898,7 @@ namespace CSReportDll
             switch (idFunction)
             {
 
-                case csRptFormulaType.CSRPTFPAGENUMBER:
+                case csRptFormulaType.CSRPTF_PAGE_NUMBER:
 
                     // in compiling time we need to return a value which is consistent
                     // with the return type of the internal function
@@ -904,23 +912,23 @@ namespace CSReportDll
                         return m_report.getCurrenPage();
                     }
 
-                case csRptFormulaType.CSRPTTEXTREPLACE:
+                case csRptFormulaType.CSRPTF_TEXT_REPLACE:
                     // in compiling time we need to return a value which is consistent
                     // with the return type of the internal function
                     //
                     return "";
 
-                case csRptFormulaType.CSRPTFTOTALPAGES:
+                case csRptFormulaType.CSRPTF_TOTAL_PAGES:
                     return m_report.getTotalPages();
 
                 // all this functions have the same amount of parameters
                 //
-                case csRptFormulaType.CSRPTFAVERAGE:
-                case csRptFormulaType.CSRPTFSUM:
-                case csRptFormulaType.CSRPTMAX:
-                case csRptFormulaType.CSRPTMIN:
-                case csRptFormulaType.CSRPTLENGTH:
-                case csRptFormulaType.CSRPTFVAL:
+                case csRptFormulaType.CSRPTF_AVERAGE:
+                case csRptFormulaType.CSRPTF_SUM:
+                case csRptFormulaType.CSRPTF_MAX:
+                case csRptFormulaType.CSRPTF_MIN:
+                case csRptFormulaType.CSRPTF_LENGTH:
+                case csRptFormulaType.CSRPTF_VAL:
                     // in this evaluation we load the parameters of the function
                     //
                     pCheckParameters(1, parameters, name);
@@ -929,10 +937,10 @@ namespace CSReportDll
                     //
                     return 0;
 
-                case csRptFormulaType.CSRPTGROUPTOTAL:
-                case csRptFormulaType.CSRPTGROUPMAX:
-                case csRptFormulaType.CSRPTGROUPMIN:
-                case csRptFormulaType.CSRPTGROUPAVERAGE:
+                case csRptFormulaType.CSRPTF_GROUP_TOTAL:
+                case csRptFormulaType.CSRPTF_GROUP_MAX:
+                case csRptFormulaType.CSRPTF_GROUP_MIN:
+                case csRptFormulaType.CSRPTF_GROUP_AVERAGE:
                     // in this evaluation we load the parameters of the function
                     //
                     pCheckParameters(2, parameters, name);
@@ -943,8 +951,8 @@ namespace CSReportDll
 
                 // all this functions have the same amount of parameters
                 //
-                case csRptFormulaType.CSRPTGROUPCOUNT:
-                case csRptFormulaType.CSRPTGROUPPERCENT:
+                case csRptFormulaType.CSRPTF_GROUP_COUNT:
+                case csRptFormulaType.CSRPTF_GROUP_PERCENT:
                     // in this evaluation we load the parameters of the function
                     //
                     pCheckParameters(3, parameters, name);
@@ -953,7 +961,7 @@ namespace CSReportDll
                     //
                     return 0;
 
-                case csRptFormulaType.CSRPTFGETSTRING:
+                case csRptFormulaType.CSRPTF_GET_STRING:
                     // in this evaluation we load the parameters of the function
                     //
                     pCheckParameters(1, parameters, name);
@@ -962,7 +970,7 @@ namespace CSReportDll
                     //
                     return "\"\"";
 
-                case csRptFormulaType.CSRPTFSUMTIME:
+                case csRptFormulaType.CSRPTF_SUM_TIME:
                     // in this evaluation we load the parameters of the function
                     //
                     pCheckParameters(2, parameters, name);
@@ -971,13 +979,13 @@ namespace CSReportDll
                     //
                     return 0;
 
-                case csRptFormulaType.CSRPTCOUNT:
+                case csRptFormulaType.CSRPTF_COUNT:
                     // in compiling time we need to return a value which is consistent
                     // with the return type of the internal function
                     //
                     return 0;
 
-                case csRptFormulaType.CSRPTFNUMBERTOSTRING:
+                case csRptFormulaType.CSRPTF_NUMBER_TO_STRING:
                     // in this evaluation we load the parameters of the function
                     //
                     pCheckParameters(2, parameters, name);
@@ -988,11 +996,11 @@ namespace CSReportDll
 
                 // all this functions have the same amount of parameters
                 //
-                case csRptFormulaType.CSRPTISEQUAL:
-                case csRptFormulaType.CSRPTISNOTEQUAL:
-                case csRptFormulaType.CSRPTISGREATERTHAN:
-                case csRptFormulaType.CSRPTISLESSTHAN:
-                case csRptFormulaType.CSRPTISINRS:
+                case csRptFormulaType.CSRPTF_IS_EQUAL:
+                case csRptFormulaType.CSRPTF_IS_NOT_EQUAL:
+                case csRptFormulaType.CSRPTF_IS_GREATER_THAN:
+                case csRptFormulaType.CSRPTF_IS_LESS_THAN:
+                case csRptFormulaType.CSRPTF_IS_IN_RS:
                     // in this evaluation we load the parameters of the function
                     //
                     pCheckParameters(2, parameters, name);
@@ -1003,9 +1011,9 @@ namespace CSReportDll
 
                 // all this functions have the same amount of parameters
                 //
-                case csRptFormulaType.CSRPTFCALCULO:
-                case csRptFormulaType.CSRPTGETDATAFROMRSAD:
-                case csRptFormulaType.CSRPTGETDATAFROMRS:
+                case csRptFormulaType.CSRPTF_CALCULO:
+                case csRptFormulaType.CSRPTF_GET_DATA_FROM_RS_AD:
+                case csRptFormulaType.CSRPTF_GET_DATA_FROM_RS:
                     // in this evaluation we load the parameters of the function
                     //
                     pCheckParameters(4, parameters, name);
@@ -1016,8 +1024,8 @@ namespace CSReportDll
 
                 // all this functions have the same amount of parameters
                 //
-                case csRptFormulaType.CSRPTDECLAREVAR:
-                case csRptFormulaType.CSRPTGETVAR:
+                case csRptFormulaType.CSRPTF_DECLARE_VAR:
+                case csRptFormulaType.CSRPTF_GET_VAR:
                     // in this evaluation we load the parameters of the function
                     //
                     pCheckParameters(1, parameters, name);
@@ -1026,7 +1034,7 @@ namespace CSReportDll
                     //
                     return 0;
 
-                case csRptFormulaType.CSRPTGETPARAM:
+                case csRptFormulaType.CSRPTF_GET_PARAM:
                     // in this evaluation we load the parameters of the function
                     //
                     pCheckParameters(1, parameters, name);
@@ -1037,8 +1045,8 @@ namespace CSReportDll
 
                 // all this functions have the same amount of parameters
                 //
-                case csRptFormulaType.CSRPTADDTOVAR:
-                case csRptFormulaType.CSRPTSETVAR:
+                case csRptFormulaType.CSRPTF_ADD_TO_VAR:
+                case csRptFormulaType.CSRPTF_SET_VAR:
                     // in this evaluation we load the parameters of the function
                     //
                     pCheckParameters(2, parameters, name);
@@ -1046,6 +1054,15 @@ namespace CSReportDll
                     // with the return type of the internal function
                     //
                     return 0;
+
+                case csRptFormulaType.CSRPTF_GET_BARCODE:
+                    // in this evaluation we load the parameters of the function
+                    //
+                    pCheckParameters(1, parameters, name);
+                    // in compiling time we need to return a value which is consistent
+                    // with the return type of the internal function
+                    //
+                    return "\"\"";
 
                 default:
                     throw new ReportNotDefinedFunctionException(
@@ -1084,7 +1101,7 @@ namespace CSReportDll
                 return ""; 
             }
             cStructTime st = null;
-            st = (cStructTime)fint.getVariables().item(C_SUMTIME).getValue();
+            st = (cStructTime)fint.getVariables().item(C_SUM_TIME).getValue();
             if (cUtil.val(fint.getParameters().item(1).getValue()) != 0)
             {
                 return cReportGlobals.format(st.getHour(), "00")
@@ -1181,7 +1198,19 @@ namespace CSReportDll
         {
             if (fint.getVariables().count() > 0)
             {
-                return fint.getVariables().item(C_NUMBERTOSTRING).getValue();
+                return fint.getVariables().item(C_NUMBER_TO_STRING).getValue();
+            }
+            else
+            {
+                return "";
+            }
+        }
+
+        private object resultGetBarcode(cReportFormulaInt fint)
+        {
+            if (fint.getVariables().count() > 0)
+            {
+                return fint.getVariables().item(C_GET_BARCODE).getValue();
             }
             else
             {
@@ -1243,8 +1272,8 @@ namespace CSReportDll
             { 
                 return 0; 
             }
-            double sum = (double)fint.getVariables().item(C_AVERAGESUM).getValue();
-            double count = (double)fint.getVariables().item(C_AVERAGECOUNT).getValue();
+            double sum = (double)fint.getVariables().item(C_AVERAGE_SUM).getValue();
+            double count = (double)fint.getVariables().item(C_AVERAGE_COUNT).getValue();
             return sum / count;
         }
 
@@ -1478,22 +1507,22 @@ namespace CSReportDll
 
         private void evalAverage(cReportFormulaInt fint)
         {
-            if (fint.getVariables().item(C_AVERAGESUM) == null)
+            if (fint.getVariables().item(C_AVERAGE_SUM) == null)
             {
-                fint.getVariables().add(null, C_AVERAGESUM);
-                fint.getVariables().add(null, C_AVERAGECOUNT);
+                fint.getVariables().add(null, C_AVERAGE_SUM);
+                fint.getVariables().add(null, C_AVERAGE_COUNT);
             }
 
-            cReportVariable w_item = fint.getVariables().item(C_AVERAGESUM);
+            cReportVariable item = fint.getVariables().item(C_AVERAGE_SUM);
             // the average function is for numbers
             //
-            w_item.setValue((double)w_item.getValue()
+            item.setValue((double)item.getValue()
                 + pGetNumber(m_report.getValue(fint.getParameters().item(0).getValue(), true)));
 
-            w_item = fint.getVariables().item(C_AVERAGECOUNT);
+            item = fint.getVariables().item(C_AVERAGE_COUNT);
             // the average function is for numbers
             //
-            w_item.setValue((double)w_item.getValue() + 1);
+            item.setValue((double)item.getValue() + 1);
         }
 
         private double pGetNumber(object number)
@@ -1523,10 +1552,10 @@ namespace CSReportDll
                 fint.getVariables().add(null, C_SUM).setValue(0);
             }
 
-            cReportVariable w_item = fint.getVariables().item(C_SUM);
+            cReportVariable item = fint.getVariables().item(C_SUM);
             // the sum function is for numbers
             //
-            w_item.setValue(Convert.ToDouble(w_item.getValue())
+            item.setValue(Convert.ToDouble(item.getValue())
                 + pGetNumber(m_report.getValue(fint.getParameters().item(0).getValue(), true)));
         }
 
@@ -1558,8 +1587,8 @@ namespace CSReportDll
                                     "_setVar"));
             }
 
-            cReportVariable w_item = m_variables.item(varName);
-            w_item.setValue(fint.getParameters().item(1).getValue());
+            cReportVariable item = m_variables.item(varName);
+            item.setValue(fint.getParameters().item(1).getValue());
         }
 
         private void evalGetDataFromRsAd(cReportFormulaInt fint)
@@ -1588,24 +1617,24 @@ namespace CSReportDll
                                     "_evalAddToVar"));
             }
 
-            cReportVariable w_item = m_variables.item(varName);
+            cReportVariable item = m_variables.item(varName);
             // the EvalAddToVar function is for numbers
             //
-            w_item.setValue((double)w_item.getValue() 
+            item.setValue((double)item.getValue() 
                                 + pGetNumber(fint.getParameters().item(1).getValue()));
         }
 
         private void evalSumTime(cReportFormulaInt fint)
         {
-            if (fint.getVariables().item(C_SUMTIME) == null)
+            if (fint.getVariables().item(C_SUM_TIME) == null)
             {
-                fint.getVariables().add(null, C_SUMTIME).setValue(new cStructTime());
+                fint.getVariables().add(null, C_SUM_TIME).setValue(new cStructTime());
             }
 
-            cReportVariable w_item = fint.getVariables().item(C_SUMTIME);
+            cReportVariable item = fint.getVariables().item(C_SUM_TIME);
             // the SumTime if for dates
             //
-            pSumTimes((cStructTime)w_item.getValue(),
+            pSumTimes((cStructTime)item.getValue(),
                         DateTime.Parse(m_report.getValue(fint.getParameters().item(0).getValue(), true).ToString()));
         }
 
@@ -1618,25 +1647,25 @@ namespace CSReportDll
                 fint.getVariables().add(null, C_MAX);
             }
 
-            cReportVariable w_item = fint.getVariables().item(C_MAX);
+            cReportVariable item = fint.getVariables().item(C_MAX);
             // the Max function if for numbers and strings
             //
             value = m_report.getValue(fint.getParameters().item(0).getValue());
 
             if (value.GetType() == typeof(String))
             {
-                if (String.Compare(w_item.getValue().ToString(), 
+                if (String.Compare(item.getValue().ToString(), 
                                     value.ToString(), 
                                     StringComparison.CurrentCulture) < 0)
                 {
-                    w_item.setValue(value);
+                    item.setValue(value);
                 }
             }
             else
             {
-                if ((double)w_item.getValue() < (double)value)
+                if ((double)item.getValue() < (double)value)
                 {
-                    w_item.setValue(value);
+                    item.setValue(value);
                 }
             }
         }
@@ -1650,25 +1679,25 @@ namespace CSReportDll
                 fint.getVariables().add(null, C_MIN);
             }
 
-            cReportVariable w_item = fint.getVariables().item(C_MIN);
+            cReportVariable item = fint.getVariables().item(C_MIN);
             // The Min function is for numbers and strings
             //
             value = m_report.getValue(fint.getParameters().item(0).getValue());
 
             if (value.GetType() == typeof(String))
             {
-                if (String.Compare(w_item.getValue().ToString(),
+                if (String.Compare(item.getValue().ToString(),
                                     value.ToString(),
                                     StringComparison.CurrentCulture) > 0)
                 {
-                    w_item.setValue(value);
+                    item.setValue(value);
                 }
             }
             else
             {
-                if ((double)w_item.getValue() > (double)value)
+                if ((double)item.getValue() > (double)value)
                 {
-                    w_item.setValue(value);
+                    item.setValue(value);
                 }
             }
         }
@@ -1680,20 +1709,20 @@ namespace CSReportDll
                 fint.getVariables().add(null, C_COUNT);
             }
 
-            cReportVariable w_item = fint.getVariables().item(C_COUNT);
+            cReportVariable item = fint.getVariables().item(C_COUNT);
             // the Count functio is for numbers
             //
-            w_item.setValue((double)w_item.getValue() + 1);
+            item.setValue((double)item.getValue() + 1);
         }
 
         private void evalNumberToString(cReportFormulaInt fint)
         {
-            if (fint.getVariables().item(C_NUMBERTOSTRING) == null)
+            if (fint.getVariables().item(C_NUMBER_TO_STRING) == null)
             {
-                fint.getVariables().add(null, C_NUMBERTOSTRING);
+                fint.getVariables().add(null, C_NUMBER_TO_STRING);
             }
 
-            cReportVariable w_item = fint.getVariables().item(C_NUMBERTOSTRING);
+            cReportVariable item = fint.getVariables().item(C_NUMBER_TO_STRING);
             // the NumberToString funciton is for numbres
             //
             double iNumber = 0;
@@ -1707,13 +1736,13 @@ namespace CSReportDll
             switch (iLenguage)
             {
                 case C_SPANISH:
-                    w_item.setValue(ntos.spanishNumberToString(iNumber));
+                    item.setValue(ntos.spanishNumberToString(iNumber));
                     break;
                 case C_ENGLISH:
-                    w_item.setValue(ntos.englishNumberToString(iNumber));
+                    item.setValue(ntos.englishNumberToString(iNumber));
                     break;
                 case C_FRENCH:
-                    w_item.setValue(ntos.frenchNumberToString(iNumber));
+                    item.setValue(ntos.frenchNumberToString(iNumber));
                     break;
             }
         }
@@ -1725,7 +1754,7 @@ namespace CSReportDll
                 fint.getVariables().add(null, C_ISEQUAL);
             }
 
-            cReportVariable w_item = fint.getVariables().item(C_ISEQUAL);
+            cReportVariable item = fint.getVariables().item(C_ISEQUAL);
             // the IsEqual function is for numbers
             //
             String strValue = "";
@@ -1734,7 +1763,7 @@ namespace CSReportDll
             strValue = m_report.getValue(fint.getParameters().item(0).getValue(), true).ToString();
             strConstValue = fint.getParameters().item(1).getValue();
 
-            w_item.setValue(strValue == strConstValue);
+            item.setValue(strValue == strConstValue);
         }
 
         private void evalIsNotEqual(cReportFormulaInt fint)
@@ -1744,7 +1773,7 @@ namespace CSReportDll
                 fint.getVariables().add(null, C_ISNOTEQUAL);
             }
 
-            cReportVariable w_item = fint.getVariables().item(C_ISNOTEQUAL);
+            cReportVariable item = fint.getVariables().item(C_ISNOTEQUAL);
             // the IsNotEqual function is for numbers
             //
             String strValue = "";
@@ -1753,7 +1782,7 @@ namespace CSReportDll
             strValue = (String)m_report.getValue(fint.getParameters().item(0).getValue(), true);
             strConstValue = fint.getParameters().item(1).getValue();
 
-            w_item.setValue(strValue != strConstValue);
+            item.setValue(strValue != strConstValue);
         }
 
         private void evalIsGreaterThan(cReportFormulaInt fint)
@@ -1763,7 +1792,7 @@ namespace CSReportDll
                 fint.getVariables().add(null, C_ISGREATERTHAN);
             }
 
-            cReportVariable w_item = fint.getVariables().item(C_ISGREATERTHAN);
+            cReportVariable item = fint.getVariables().item(C_ISGREATERTHAN);
             // the IsGreaterThan function is for numbers
             //
             object value = m_report.getValue(fint.getParameters().item(0).getValue(), true);
@@ -1778,22 +1807,22 @@ namespace CSReportDll
                                     strConstValue.ToString(),
                                     StringComparison.CurrentCulture) > 0)
                 {
-                    w_item.setValue(true);
+                    item.setValue(true);
                 }
                 else
                 {
-                    w_item.setValue(false);
+                    item.setValue(false);
                 }
             }
             else
             {
                 if ((double)value > (double)constValue)
                 {
-                    w_item.setValue(true);
+                    item.setValue(true);
                 }
                 else 
                 {
-                    w_item.setValue(false);
+                    item.setValue(false);
                 }
             }
         }
@@ -1805,7 +1834,7 @@ namespace CSReportDll
                 fint.getVariables().add(null, C_ISLESSTHAN);
             }
 
-            cReportVariable w_item = fint.getVariables().item(C_ISLESSTHAN);
+            cReportVariable item = fint.getVariables().item(C_ISLESSTHAN);
             // the IsLessThan function is for numbers
             //
             object value = m_report.getValue(fint.getParameters().item(0).getValue(), true);
@@ -1820,22 +1849,22 @@ namespace CSReportDll
                                     strConstValue.ToString(),
                                     StringComparison.CurrentCulture) < 0)
                 {
-                    w_item.setValue(true);
+                    item.setValue(true);
                 }
                 else
                 {
-                    w_item.setValue(false);
+                    item.setValue(false);
                 }
             }
             else
             {
                 if ((double)value < (double)constValue)
                 {
-                    w_item.setValue(true);
+                    item.setValue(true);
                 }
                 else
                 {
-                    w_item.setValue(false);
+                    item.setValue(false);
                 }
             }
         }
@@ -1847,7 +1876,7 @@ namespace CSReportDll
                 fint.getVariables().add(null, C_GROUPTOTAL);
             }
 
-            cReportVariable w_item = fint.getVariables().item(C_GROUPTOTAL);
+            cReportVariable item = fint.getVariables().item(C_GROUPTOTAL);
             // the Total function is for numbres
 
             // if param1 doesn't contain an index column is because we haven't
@@ -1863,11 +1892,11 @@ namespace CSReportDll
             //
             if (fint.getParameters().item(cReportGlobals.C_KEYINDEXCOL) == null)
             {
-                w_item.setValue(0);
+                item.setValue(0);
             }
             else
             {
-                w_item.setValue(
+                item.setValue(
                     m_report.getGroupTotal(
                         int.Parse(fint.getParameters().item(cReportGlobals.C_KEYINDEXCOL).getValue()),
                         int.Parse(fint.getParameters().item(cReportGlobals.C_KEYINDEXGROUP).getValue())));
@@ -1881,7 +1910,7 @@ namespace CSReportDll
                 fint.getVariables().add(null, C_GROUPMAX);
             }
 
-            cReportVariable w_item = fint.getVariables().item(C_GROUPMAX);
+            cReportVariable item = fint.getVariables().item(C_GROUPMAX);
             // the Group Max function is for numbers and strings
 
             // if param1 doesn't contain an index column is because we haven't
@@ -1897,11 +1926,11 @@ namespace CSReportDll
             //
             if (fint.getParameters().item(cReportGlobals.C_KEYINDEXCOL) == null)
             {
-                w_item.setValue(0);
+                item.setValue(0);
             }
             else
             {
-                w_item.setValue(
+                item.setValue(
                     m_report.getGroupMax(
                                 int.Parse(fint.getParameters().item(cReportGlobals.C_KEYINDEXCOL).getValue()),
                                 int.Parse(fint.getParameters().item(cReportGlobals.C_KEYINDEXGROUP).getValue())));
@@ -1915,7 +1944,7 @@ namespace CSReportDll
                 fint.getVariables().add(null, C_GROUPMIN);
             }
 
-            cReportVariable w_item = fint.getVariables().item(C_GROUPMIN);
+            cReportVariable item = fint.getVariables().item(C_GROUPMIN);
             // the Group Min function is for numbers and strings
 
             // if param1 doesn't contain an index column is because we haven't
@@ -1931,11 +1960,11 @@ namespace CSReportDll
             //
             if (fint.getParameters().item(cReportGlobals.C_KEYINDEXCOL) == null)
             {
-                w_item.setValue(0);
+                item.setValue(0);
             }
             else
             {
-                w_item.setValue(
+                item.setValue(
                     m_report.getGroupMin(
                         int.Parse(fint.getParameters().item(cReportGlobals.C_KEYINDEXCOL).getValue()),
                         int.Parse(fint.getParameters().item(cReportGlobals.C_KEYINDEXGROUP).getValue())));
@@ -1949,7 +1978,7 @@ namespace CSReportDll
                 fint.getVariables().add(null, C_GROUPAVERAGE);
             }
 
-            cReportVariable w_item = fint.getVariables().item(C_GROUPAVERAGE);
+            cReportVariable item = fint.getVariables().item(C_GROUPAVERAGE);
             // the Average function is for numbers
 
             // if param1 doesn't contain an index column is because we haven't
@@ -1965,11 +1994,11 @@ namespace CSReportDll
             //
             if (fint.getParameters().item(cReportGlobals.C_KEYINDEXCOL) == null)
             {
-                w_item.setValue(0);
+                item.setValue(0);
             }
             else
             {
-                w_item.setValue(
+                item.setValue(
                     m_report.getGroupAverage(
                         int.Parse(fint.getParameters().item(cReportGlobals.C_KEYINDEXCOL).getValue()),
                         int.Parse(fint.getParameters().item(cReportGlobals.C_KEYINDEXGROUP).getValue())));
@@ -1991,7 +2020,7 @@ namespace CSReportDll
                 fint.getVariables().add(null, C_GROUPPERCENT);
             }
 
-            cReportVariable w_item = fint.getVariables().item(C_GROUPPERCENTT);
+            cReportVariable item = fint.getVariables().item(C_GROUPPERCENTT);
             // the Percent function is for numbers
 
             // if param1 doesn't contain an index column is because we haven't
@@ -2007,11 +2036,11 @@ namespace CSReportDll
             //
             if (fint.getParameters().item(cReportGlobals.C_KEYINDEXCOL) == null)
             {
-                w_item.setValue(0);
+                item.setValue(0);
             }
             else
             {
-                w_item.setValue(
+                item.setValue(
                     m_report.getGroupTotal(
                         int.Parse(fint.getParameters().item(cReportGlobals.C_KEYINDEXCOL).getValue()), 
                         int.Parse(fint.getParameters().item(cReportGlobals.C_KEYINDEXGROUP).getValue())));
@@ -2026,7 +2055,7 @@ namespace CSReportDll
                 fint.getVariables().add(null, C_GROUPCOUNT);
             }
 
-            cReportVariable w_item = fint.getVariables().item(C_GROUPCOUNT);
+            cReportVariable item = fint.getVariables().item(C_GROUPCOUNT);
             // the Count function is for numbers
 
             // if param1 doesn't contain an index column is because we haven't
@@ -2042,11 +2071,11 @@ namespace CSReportDll
             //
             if (fint.getParameters().item(cReportGlobals.C_KEYINDEXCOL) == null)
             {
-                w_item.setValue(0);
+                item.setValue(0);
             }
             else
             {
-                w_item.setValue(
+                item.setValue(
                     m_report.getGroupCount(
                         int.Parse(fint.getParameters().item(cReportGlobals.C_KEYINDEXCOL).getValue()),
                         int.Parse(fint.getParameters().item(cReportGlobals.C_KEYINDEXGROUP).getValue())));
@@ -2060,9 +2089,9 @@ namespace CSReportDll
                 fint.getVariables().add(null, C_GROUPLINENUMBER);
             }
 
-            cReportVariable w_item = fint.getVariables().item(C_GROUPLINENUMBER);
+            cReportVariable item = fint.getVariables().item(C_GROUPLINENUMBER);
             // the LineNumber function is for numbers
-            w_item.setValue(
+            item.setValue(
                 m_report.getGroupLineNumber(
                     int.Parse(fint.getParameters().item(cReportGlobals.C_KEYINDEXGROUP).getValue())));
         }
@@ -2074,10 +2103,28 @@ namespace CSReportDll
                 fint.getVariables().add(null, C_ISINRS);
             }
 
-            cReportVariable w_item = fint.getVariables().item(C_ISINRS);
+            cReportVariable item = fint.getVariables().item(C_ISINRS);
             // TODO: finish coding evalIsInRs
             //
-            w_item.setValue(true);
+            item.setValue(true);
+        }
+
+        private void evalGetBarcode(cReportFormulaInt fint)
+        {
+            if (fint.getVariables().item(C_GET_BARCODE) == null)
+            {
+                fint.getVariables().add(null, C_GET_BARCODE);
+            }
+
+            cReportVariable item = fint.getVariables().item(C_GET_BARCODE);
+
+            var barcodeGen = new CSReportBarcode.cReportBarcode();
+            var value = fint.getParameters().item(0).getValue();
+            var barcode = barcodeGen.encodeTo128(value);
+
+            if (barcode.Contains("Ã‚")) barcode = barcodeGen.code128a(value);
+
+            item.setValue(barcode);
         }
 
         ////////////////////////////////////////////////////////////////////////////////////////////////////

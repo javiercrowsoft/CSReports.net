@@ -4,6 +4,7 @@
   "path": "C:\\Program Files\\My Application\\chrome_native_messaging_host.exe",
   "type": "stdio",
   "allowed_origins": [
-    "chrome-extension://knldjmfmopnpolahpmmgbagdohdnhkik/"
+    "chrome-extension://knldjmfmopnpolahpmmgbagdohdnhkik/",
+    "chrome-extension://gfladhgjbflfogopjcjkmokdddcboika/"
   ]
 }

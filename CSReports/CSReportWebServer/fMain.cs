@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using Newtonsoft.Json.Linq;
-using log4net;
+using System.Collections.Generic;
+using System.Net;
+using System.IO;
 
 namespace CSReportWebServer
 {
@@ -50,16 +52,44 @@ namespace CSReportWebServer
 
         private void safePreview(JObject request)
         {
-			var pathAndFile = "/Users/javier/Documents/CrowSoft/Reportes/temp/" + request["message"]["data"]["file"];
+            var fileName = request["message"]["data"]["file"];
+            var reportType = request["message"]["data"]["type"].ToString();
+            var url = request["message"]["data"]["url"].ToString();
+            var pathAndFile = Path.GetTempPath() + fileName;
+
+            getReportFromWebServer(url + reportType + "/" + fileName, pathAndFile);
+                        
             var report = new Report();
-            report.init(request);
+            report.init(request, this.printDlg);
+
             if (report.openDocument(pathAndFile))
             {
                 report.preview();
             }
-			m_log.Info("Adding report to m_reports " + report.reportId);
-            m_reports.Add(report.reportId, report);
-			this.WindowState = FormWindowState.Minimized;
+            if (m_reports.ContainsKey(report.reportId))
+            {
+                m_reports[report.reportId] = report;
+            }
+            else
+            {
+                m_reports.Add(report.reportId, report);
+            }
+        }
+
+        private void safePrint(JObject request)
+        {
+            var fileName = request["message"]["data"]["file"];
+            var reportType = request["message"]["data"]["type"].ToString();
+            var url = request["message"]["data"]["url"].ToString();
+            var pathAndFile = Path.GetTempPath() + fileName;
+            getReportFromWebServer(url + reportType + "/" + fileName, pathAndFile);
+
+            var report = new Report();
+            report.init(request, this.printDlg);
+            if (report.openDocument(pathAndFile))
+            {
+                report.printReport();
+            }
         }
 
         private void safeMoveToPage(JObject request)
@@ -79,6 +109,12 @@ namespace CSReportWebServer
             this.Invoke(d, new object[] { request });
         }
 
+        public void printReport(JObject request)
+        {
+            ReportActionCallback d = new ReportActionCallback(safePrint);
+            this.Invoke(d, new object[] { request });
+        }
+
         public void moveToPage(JObject request)
         {
             ReportActionCallback d = new ReportActionCallback(safeMoveToPage);
@@ -89,6 +125,22 @@ namespace CSReportWebServer
         {
             Main.Init(m_args, this);
 			this.Height = 120;
+        }
+
+        private string DownloadString(string address)
+        {
+            string text;
+            using (var client = new WebClient())
+            {
+                text = client.DownloadString(address);
+            }
+            return text;
+        }
+
+        private void getReportFromWebServer(string url, string fileName)
+        {
+            var xml = DownloadString(url);
+            File.WriteAllText(fileName, xml);
         }
     }
 }

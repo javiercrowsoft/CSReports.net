@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 
 namespace CSReportDll
 {
@@ -75,6 +76,21 @@ namespace CSReportDll
             return BitConverter.ToInt16(int16InBytes, 0);
         }
 
+        internal static Image deSerialiseBitmap(byte[] bytes) {
+            try
+            {
+                Bitmap bmp;
+                using (var ms = new MemoryStream(bytes))
+                {
+                    bmp = new Bitmap(ms);
+                }
+                return bmp;
+            }
+            catch {
+                return null;
+            }
+        }
+        /*
         internal static Image deSerialiseBitmap(byte[] bytes) 
         {
             GDIBitmap gdiBitmap = new GDIBitmap();
@@ -108,7 +124,7 @@ namespace CSReportDll
                     return safeBitmap;
                 }
             }
-        }
+        }*/
 
         internal static void serialiseBitmap(object image, object bytes) { }
     }

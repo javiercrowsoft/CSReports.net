@@ -44,12 +44,6 @@ namespace CSReportEditor
             m_picReport.MouseUp += new MouseEventHandler(m_picReport_MouseUp);
             m_picReport.MouseMove += new MouseEventHandler(m_picReport_MouseMove);
 
-            // mouse well
-            //
-            // se me cae un lagrimon :(
-            //
-            m_picReport.Click += (s, e) => { editor.Focus(); };
-
             // tab
             //
             m_editorTab = editorTab;
@@ -87,7 +81,6 @@ namespace CSReportEditor
         private String m_keyMoving = "";
         private csRptEditorMoveType m_moveType;
         private String m_keySizing = "";
-        private bool m_mouseButtonPress = false;
         private float m_offX = 0;
         private float m_offY = 0;
         private String m_keyObj = "";
@@ -148,11 +141,11 @@ namespace CSReportEditor
         private int m_y = 0;
         private bool m_keyboardMove = false;
 
-        private int m_keyboardMoveStep = 0;
+        private int m_keyboardMoveStep = 5;
 
         private bool m_inMouseDown = false;
 
-        private csETypeGrid m_typeGrid;
+        private csETypeGrid m_typeGrid = csETypeGrid.CSEGRIDPOINTS;
 
         public TabPage getEditorTab() {
             return m_editorTab;
@@ -282,23 +275,19 @@ namespace CSReportEditor
         }
 
         public void moveVertical() {
-            // TODO: reimplement
-            //form_KeyUp(Keys.F11, false);
+            formKeyUp(Keys.F11, false);
         }
 
         public void moveHorizontal() {
-            // TODO: reimplement
-            //form_KeyUp(Keys.F12, false);
+            formKeyUp(Keys.F12, false);
         }
 
         public void moveNoMove() {
-            // TODO: reimplement
-            //form_KeyUp(Keys.F9, false);
+            formKeyUp(Keys.F9, false);
         }
 
         public void moveAll() {
-            // TODO: reimplement
-            //form_KeyUp(Keys.F8, false);
+            formKeyUp(Keys.F8, false);
         }
 
         public void showGrid(csETypeGrid typeGrid) {
@@ -334,71 +323,81 @@ namespace CSReportEditor
         private void pAddConnectAuxToListView(cReportConnect connect) {
             m_fConnectsAux.addConnect(connect.getDataSource(), connect.getStrConnect());
         }
-        // TODO: reimplement
-        /*
-        private void form_KeyUp(Keys keyCode, bool ctrlKey) {
+
+        public void keyUp(object sender, KeyEventArgs e) {
+            e.Handled = formKeyUp(e.KeyCode, e.Control);
+
+            if (m_keyboardMove)
+            {
+                m_keyboardMove = false;
+                m_picReport_MouseUp(this, new MouseEventArgs(MouseButtons.Left, 0, m_x, m_y, 0));
+                e.Handled = true;
+            }
+        }
+
+        private bool formKeyUp(Keys keyCode, bool ctrlKey) {
             // if we are in edit mode we do nothing
             //
-            if (TxEdit.Visible) { return; }
+            // if (TxEdit.Visible) { return; }
 
             switch (keyCode) {
 
                 case Keys.F2:
                     editText();
-
                     break;
+
                 case Keys.Delete:
-                    deleteObj();
-
+                    deleteObj(false);
                     break;
+
                 case Keys.Escape:
                     endDraging();
-
                     break;
+
                 case Keys.F11:
                     m_bMoveVertical = true;
                     m_bMoveHorizontal = false;
                     cGlobals.setStatus();
-
                     break;
+
                 case Keys.F12:
                     m_bMoveHorizontal = true;
                     m_bMoveVertical = false;
                     cGlobals.setStatus();
-
                     break;
+
                 case Keys.F8:
                     m_bMoveHorizontal = false;
                     m_bMoveVertical = false;
                     cGlobals.setStatus();
-
                     break;
+
                 case Keys.F9:
                     m_bNoMove = !m_bNoMove;
                     cGlobals.setStatus();
-
                     break;
+
                 case Keys.F4:
                     showProperties();
-
                     break;
+
                 case Keys.C:
                     if (ctrlKey) {
                         copy();
                     }
-
                     break;
+
                 case Keys.V:
                     if (ctrlKey) {
                         paste(false);
                     }
-
                     break;
-            }
 
-            Application.DoEvents();
+                default:
+                    return false;
+            }
+            return true;
         }
-        */
 
         // TODO: this functionality must to be moved to fConnectsAux
         //
@@ -932,23 +931,27 @@ namespace CSReportEditor
             }
         }
 
-        private void m_picReport_KeyDown(int keyCode, int shift) {
+        public void keyDown(object sender, KeyEventArgs e) {
+            Keys keyCode = e.KeyCode;
+            bool shift = e.Shift;
             cReportAspect aspect = null;
             try {
 
                 // only process arrow keys
                 switch (keyCode) {
-                case (int)Keys.Up:
+                case Keys.Up:
                         break;
-                case (int)Keys.Down:
+                case Keys.Down:
                         break;
-                case (int)Keys.Left:
+                case Keys.Left:
                         break;
-                case (int)Keys.Right:
+                case Keys.Right:
                         break;
                 default:
                         return;
                 }
+
+                e.Handled = true;
 
                 int x = 0;
                 int y = 0;
@@ -956,7 +959,7 @@ namespace CSReportEditor
                 if (m_vSelectedKeys.Length < 1) { return; }
 
                 if (!m_keyboardMove) {
-                    aspect = m_paint.getPaintObject(m_vSelectedKeys[1]).getAspect();
+                    aspect = m_paint.getPaintObject(m_vSelectedKeys[0]).getAspect();
                     y = Convert.ToInt32(aspect.getTop());
                     x = Convert.ToInt32(aspect.getLeft());
                 }
@@ -967,33 +970,33 @@ namespace CSReportEditor
 
                 // resize
                 //
-                if (Control.ModifierKeys == Keys.Shift) {
+                if (shift) {
 
                     if (m_keySizing == "") {
-                        m_keySizing = m_paint.getPaintObject(m_vSelectedKeys[1]).getKey();
+                        m_keySizing = m_paint.getPaintObject(m_vSelectedKeys[0]).getKey();
                     }
 
                     if (!m_keyboardMove) {
 
-                        aspect = m_paint.getPaintObject(m_vSelectedKeys[1]).getAspect();
+                        aspect = m_paint.getPaintObject(m_vSelectedKeys[0]).getAspect();
                         y += Convert.ToInt32(aspect.getHeight());
                         x += Convert.ToInt32(aspect.getWidth());
 
                         pSetMovingFromKeyboard(x, y);
 
                         if (m_keySizing == "") {
-                            m_keySizing = m_paint.getPaintObject(m_vSelectedKeys[1]).getKey();
+                            m_keySizing = m_paint.getPaintObject(m_vSelectedKeys[0]).getKey();
                         }
 
                         switch (keyCode) {
 
-                        case (int)Keys.Down:
-                        case (int)Keys.Up:
+                        case Keys.Down:
+                        case Keys.Up:
                                 m_keyMoving = "";
                                 m_moveType = csRptEditorMoveType.CSRPTEDMOVDOWN;
                                 break;
-                        case (int)Keys.Right:
-                        case (int)Keys.Left:
+                        case Keys.Right:
+                        case Keys.Left:
                                 m_keyMoving = "";
                                 m_moveType = csRptEditorMoveType.CSRPTEDMOVRIGHT;
                                 break;
@@ -1001,16 +1004,16 @@ namespace CSReportEditor
                     }
 
                     switch (keyCode) {
-                    case (int)Keys.Up:
+                    case Keys.Up:
                             y = y - m_keyboardMoveStep;
                             break;
-                    case (int)Keys.Down:
+                    case Keys.Down:
                             y = y + m_keyboardMoveStep;
                             break;
-                    case (int)Keys.Left:
+                    case Keys.Left:
                             x = x - m_keyboardMoveStep;
                             break;
-                    case (int)Keys.Right:
+                    case Keys.Right:
                             x = x + m_keyboardMoveStep;
                             break;
                     }
@@ -1025,20 +1028,20 @@ namespace CSReportEditor
                     }
 
                     if (m_keyMoving == "") {
-                        m_keyMoving = m_paint.getPaintObject(m_vSelectedKeys[1]).getKey();
+                        m_keyMoving = m_paint.getPaintObject(m_vSelectedKeys[0]).getKey();
                     }
 
                     switch (keyCode) {
-                    case (int)Keys.Up:
+                    case Keys.Up:
                             y = y - m_keyboardMoveStep;
                             break;
-                    case (int)Keys.Down:
+                    case Keys.Down:
                             y = y + m_keyboardMoveStep;
                             break;
-                    case (int)Keys.Left:
+                    case Keys.Left:
                             x = x - m_keyboardMoveStep;
                             break;
-                    case (int)Keys.Right:
+                    case Keys.Right:
                             x = x + m_keyboardMoveStep;
                             break;
                     }
@@ -1107,13 +1110,6 @@ namespace CSReportEditor
             pSetEditAlignValue();
             pSetFontBoldValue();
 
-        }
-
-        private void m_picReport_KeyUp(int keyCode, bool ctrlKey) {
-            if (m_keyboardMove) {
-                m_keyboardMove = false;
-                m_picReport_MouseUp(this, new MouseEventArgs(MouseButtons.Left, 0, m_x, m_y, 0));
-            }
         }
 
         private void m_picReport_MouseDown(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -1428,7 +1424,7 @@ namespace CSReportEditor
                 case csECtlAlignConst.csECtlAlignHeight:
                 case csECtlAlignConst.csECtlAlignWidth:
 
-                    aspect = m_paint.getPaintObject(m_vSelectedKeys[1]).getAspect();
+                    aspect = m_paint.getPaintObject(m_vSelectedKeys[0]).getAspect();
                     height = aspect.getHeight();
                     width = aspect.getWidth();
                     break;
@@ -1436,7 +1432,7 @@ namespace CSReportEditor
                 case csECtlAlignConst.csECtlAlignVertical:
                 case csECtlAlignConst.csECtlAlignHorizontal:
 
-                    aspect = m_paint.getPaintObject(m_vSelectedKeys[1]).getAspect();
+                    aspect = m_paint.getPaintObject(m_vSelectedKeys[0]).getAspect();
                     newTop = aspect.getTop();
                     newLeft = aspect.getLeft();
                     break;
@@ -4762,6 +4758,8 @@ namespace CSReportEditor
                                     cReportSection secToMove,
                                     bool isNew)
         {
+            if (m_bNoMove) { return; }
+
             float oldHeight = 0;
 
             m_dataHasChanged = true;
@@ -5436,7 +5434,7 @@ namespace CSReportEditor
 
         private void pMoveAll(float x, float y) {
             cReportAspect rptCtrlAspect = null;
-           cReportPaintObject paintObj = null;
+            cReportPaintObject paintObj = null;
 
             m_dataHasChanged = true;
 
@@ -6456,15 +6454,6 @@ namespace CSReportEditor
             }
         }
 
-        private void form_Load() {
-            G.redim(ref m_vSelectedKeys, 0);
-            G.redim(ref m_vCopyKeys, 0);
-            m_copyControls = false;
-            m_copyControlsFromOtherReport = false;
-            m_typeGrid = csETypeGrid.CSEGRIDPOINTS;
-            m_keyboardMoveStep = 50;
-        }
-
         /* TODO: implement me
         private void form_QueryUnload(int cancel, int unloadMode) {
             cancel = !saveChanges();
@@ -6519,7 +6508,7 @@ namespace CSReportEditor
             m_report.getPaperInfo().setPaperSize(m_fmain.getPaperSize());
             m_report.getPaperInfo().setOrientation(m_fmain.getOrientation());
 
-            oLaunchInfo.setPrinter(cPrintAPI.getcPrinterFromDefaultPrinter());
+            oLaunchInfo.setPrinter(cPrintAPI.getcPrinterFromDefaultPrinter(m_fmain.printDialog));
             oLaunchInfo.setObjPaint(new cReportPrint());
             if (!m_report.init(oLaunchInfo)) { return; }
 

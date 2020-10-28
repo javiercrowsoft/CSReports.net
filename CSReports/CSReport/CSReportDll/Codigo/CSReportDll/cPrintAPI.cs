@@ -5,14 +5,42 @@ using System.Text;
 using System.Drawing.Printing;
 using CSKernelClient;
 using CSReportGlobals;
+using System.Windows.Forms;
 
 namespace CSReportDll
 {
     public class cPrintAPI
     {
-        internal static bool showPrintDialog(string m_deviceName, string m_driverName, string m_port, csReportPaperType paperSize, int orientation, int fromPage, int toPage, int m_copies, int paperBin)
+        internal static bool showPrintDialog(
+            PrintDialog printDialog,
+            ref string deviceName,
+            ref string driverName,
+            ref string port,
+            ref csReportPaperType paperSize,
+            ref int orientation,
+            ref int fromPage,
+            ref int toPage,
+            ref int copies,
+            ref int paperBin)
         {
-            throw new NotImplementedException();
+            printDialog.AllowSomePages = true;
+            var settings = printDialog.PrinterSettings;
+            settings.PrinterName = deviceName;
+            settings.FromPage = fromPage;
+            settings.ToPage = toPage;
+            settings.Copies = (short)copies;
+            if (printDialog.ShowDialog() == DialogResult.OK)
+            {
+                deviceName = settings.PrinterName;
+                fromPage = settings.FromPage;
+                toPage = settings.ToPage;
+                copies = settings.Copies;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         internal static void printerSetPaperBin(string m_deviceName, int m_oldPaperBin)
@@ -25,9 +53,17 @@ namespace CSReportDll
             throw new NotImplementedException();
         }
 
-        internal static cPrinter getcPrint(string deviceName, string driverName, string port, int orientation, int paperSize, int width, int height)
+        internal static cPrinter getcPrint(
+            PrintDialog printDialog,
+            string deviceName, 
+            string driverName, 
+            string port, 
+            int orientation, 
+            int paperSize, 
+            int width, 
+            int height)
         {
-            cPrinter o = new cPrinter();
+            cPrinter o = new cPrinter(printDialog);
 
             o.setDeviceName(deviceName);
             o.setDriverName(driverName);
@@ -48,7 +84,7 @@ namespace CSReportDll
             return o;
         }
 
-        internal static cPrinter getcPrint(string deviceName, string driverName, string port)
+        internal static cPrinter getcPrint(PrintDialog printDialog, string deviceName, string driverName, string port)
         {
             object printerConfigInfo = cPrintWMI.getPrinterConfigInfoFromWMI(deviceName);
 
@@ -58,10 +94,10 @@ namespace CSReportDll
             int width = (int)cPrintWMI.getPrinterConfigInfoValueFromWMI("PaperWidth", printerConfigInfo, 210);
             int height = (int)cPrintWMI.getPrinterConfigInfoValueFromWMI("PaperLength", printerConfigInfo, 297);
 
-            return getcPrint(deviceName, driverName, port, orientation, paperSize, width, height);
+            return getcPrint(printDialog, deviceName, driverName, port, orientation, paperSize, width, height);
         }
 
-        public static cPrinter getcPrinterFromDefaultPrinter()
+        public static cPrinter getcPrinterFromDefaultPrinter(PrintDialog printDialog)
         {
             String deviceName = "";
             String driverName = "";
@@ -75,7 +111,7 @@ namespace CSReportDll
 
             if (deviceName != "")
             {
-                return getcPrint(deviceName, driverName, port, orientation, paperSize, width, height);
+                return getcPrint(printDialog, deviceName, driverName, port, orientation, paperSize, width, height);
             }
             else
             {

@@ -1,6 +1,12 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.IO;
+using System.Resources;
+using Microsoft.Win32;
 using log4net;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Threading;
 
@@ -12,21 +18,37 @@ namespace CSReportWebServer
         private static Options options = new Options();
         private static Properties.Settings settings = Properties.Settings.Default;
 
-		private const int MAX_MESSAGE_QUEUE_SIZE = 10;
-
-        private static SizeQueue<JObject> m_messageQueue = new SizeQueue<JObject>(MAX_MESSAGE_QUEUE_SIZE); // no more than one message for now
+        private static SizeQueue<JObject> m_messageQueue = new SizeQueue<JObject>(2); // no more than one message for now
 
         public static int Init(string[] args, fMain f)
         {
+
+            // it is the first thing we need to do
+            //
+            CSKernelClient.cUtil.setSepDecimal();
+
+            // configure log4net
+            log4net.Config.XmlConfigurator.Configure();
+
             log.Info("application started");
             log.DebugFormat("command line : \"{0}\"", string.Join("\", \"", args));
+
+            if (args.Length >= 2)
+            {
+                log.Info("new version");
+                log.DebugFormat("command line 0 : \"{0}\"", args[0]);
+                log.DebugFormat("command line 0 : \"{0}\"", args[1]);
+            }
 
             // started with no arguments?
             if (args.Length == 0) Usage();
 
             // started by chrome?
-            else if (args[args.Length - 1].StartsWith("chrome-extension://")) RunNativeMessagingHost(args, f);
-
+            else if (args[0].StartsWith("chrome-extension://"))
+            {
+                log.Info("starting RunNativeMessagingHost");
+                RunNativeMessagingHost(args, f);
+            }
             // register command?
             else if (args[args.Length - 1] == "register") RegisterNativeMessagingHost(args);
 

@@ -2,6 +2,13 @@
 C#2JavaScript/.idea/
 bin/
 obj/
+
 JavaScript/
 node_modules/
 npm-debug.log
+
+*.pem
+.idea/
+CSReports/.vs/
+
+

@@ -138,6 +138,10 @@
       <Project>{33EB467A-CDEF-426E-AFA3-0E2CA9E2E8AA}</Project>
       <Name>CSIReportPrint</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\CSReportBarcode\Codigo\CSReportBarcode\CSReportBarcode.csproj">
+      <Project>{546ec7f1-3b9b-4c3a-92b5-556a504cca9b}</Project>
+      <Name>CSReportBarcode</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\CSReportGlobals\Codigo\CSReportGlobals\CSReportGlobals.csproj">
       <Project>{6018C911-1404-462B-9FA7-31904D56813A}</Project>
       <Name>CSReportGlobals</Name>

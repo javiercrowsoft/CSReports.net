@@ -234,7 +234,7 @@ namespace CSAssocFile
         private String getTempFile(String extension)
         {
             String strFile;
-            strFile = Path.GetTempPath() + "\\_Aux_Asoc_." + extension;
+            strFile = Path.GetTempPath() + "_Aux_Asoc_." + extension;
             try
             {
                 StreamWriter writer = new StreamWriter(strFile);
