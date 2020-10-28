@@ -2683,6 +2683,17 @@ namespace CSReportDll
             return true;
         }
 
+        private bool compareColumnName(String columnName, String fieldName) {
+            if (columnName == fieldName)
+            {
+                return true;
+            }
+            else
+            {
+                return columnName == fieldName.Replace(" ", "_").Replace(".","");
+            }
+        }
+
         private bool pInitCtrls(cReportControl ctrl, out int idx, List<object[]> recordsets, String fieldName)
         {
             bool found = false;
@@ -2705,7 +2716,7 @@ namespace CSReportDll
 
                     for (j = 0; j < rs.Columns.Count; j++)
                     {
-                        if (rs.Columns[j].ColumnName.ToUpper() == cReportGlobals.getRealName(fieldName).ToUpper())
+                        if (compareColumnName(rs.Columns[j].ColumnName.ToUpper(), cReportGlobals.getRealName(fieldName).ToUpper()))
                         {
                             // TODO: we need to check what is the value of rs.Columns[j].DataType
                             //       when the column contains a binary field (tipicaly used for images)
@@ -3564,7 +3575,7 @@ namespace CSReportDll
                 {
                     for (j = 0; j < rs.Columns.Count; j++)
                     {
-                        if (rs.Columns[j].ColumnName.ToUpper() == fieldName)
+                        if (compareColumnName(rs.Columns[j].ColumnName.ToUpper(), fieldName))
                         {
                             found = true;
                             break;

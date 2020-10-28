@@ -63,8 +63,15 @@ namespace CSDataBase
 
         private void callBack(IAsyncResult ar)
         {
-            m_ors = m_invoke.EndInvoke(ar);
-            m_done = true;
+            try
+            {
+                m_ors = m_invoke.EndInvoke(ar);
+                m_done = true;
+            }
+            catch (Exception ex)
+            {
+                cError.mngError(ex, "callBack", c_module, "");
+            }
         }
 
         public cOpenRsCommand()

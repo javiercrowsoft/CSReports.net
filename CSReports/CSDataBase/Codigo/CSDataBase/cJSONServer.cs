@@ -10,11 +10,11 @@ namespace CSDataBase
 
         public static void registerDataSource(cJSONDataSource dataSource, string name)
         {
-            m_dataSources.add(dataSource, name);
+            m_dataSources.add(dataSource, name.ToLower());
         }
 
         public static cJSONDataSource getDataSource(string name) {
-            return m_dataSources.item(name);
+            return m_dataSources.item(name.ToLower());
         }
     }
 

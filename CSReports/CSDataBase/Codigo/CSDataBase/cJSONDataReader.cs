@@ -666,7 +666,14 @@ namespace CSDataBase
             }
             else if (isTimestamptz(i))
             {
-                value = m_start.AddMilliseconds(Convert.ToInt64(value.ToString())).ToLocalTime();
+                if (value.ToString().Trim().Length == 0)
+                {
+                    value = m_start;
+                }
+                else
+                {
+                    value = m_start.AddMilliseconds(Convert.ToInt64(value.ToString())).ToLocalTime();
+                }                
             }
             return value;
         }
