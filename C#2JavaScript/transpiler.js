@@ -288,7 +288,7 @@ const classDeclareTranslator = function() {
         prefix = "globalObject." + namespace + ".";
     }
     else if(privateClassDeclare.test(currentLine) || internalClassDeclare.test(currentLine)) {
-        prefix = "var ";
+        prefix = "const ";
     }
     else {
         prefix = "self."
@@ -326,7 +326,7 @@ const constructorTranslator = function() {
     var words = currentLine.trim().split(" ");
     var spaces = currentLine.search(/\S/);
     var indent = currentLine.substr(0, spaces);
-    currentLine = createFunctionSentence(indent + "var " + extractFunctionName(words[1]), getParams(currentLine), isMultiline());
+    currentLine = createFunctionSentence(indent + "const " + extractFunctionName(words[1]), getParams(currentLine), isMultiline());
 };
 
 const isConstDeclare = function() {
@@ -338,7 +338,7 @@ const constDeclareTranslator = function() {
     var words = currentLine.trim().split(" ");
     var spaces = currentLine.search(/\S/);
     var indent = currentLine.substr(0, spaces);
-    currentLine = createSentence(indent + prefix + getExpression(words, getIdentifierIndex(words)));
+    currentLine = createSentence(indent + prefix + getExpression(words, getIdentifierIndex(words), getTypeIndex(words)));
 };
 
 const isFuncDeclare = function() {
@@ -358,9 +358,9 @@ const isFuncDeclare = function() {
 
 const getPrefix = function(privateRegex, isFunction) {
     if(privateRegex.test(currentLine) || isLocalVarDeclare()) {
-        if(isFunction) 
-	     return "const ";
-	else return "let ";
+        if(isFunction || isConstDeclare())
+	        return "const ";
+	    else return "let ";
     }
     else {
         return "self."
@@ -472,7 +472,7 @@ const varDeclareTranslator = function() {
     var words = removeGenerics(currentLine.trim()).split(" ");
     var spaces = currentLine.search(/\S/);
     var indent = currentLine.substr(0, spaces);
-    currentLine = createSentence(indent + prefix + getExpression(words, getIdentifierIndex(words)));
+    currentLine = createSentence(indent + prefix + getExpression(words, getIdentifierIndex(words), getTypeIndex(words)));
 };
 
 const getIdentifierIndex = function(words) {
@@ -489,16 +489,42 @@ const getIdentifierIndex = function(words) {
     }
 };
 
-const getExpression = function(words, index) {
-    if(words.indexOf("=") === -1) {
-        for(var i = 0; i < words.length; i++) {
-            if(words[i].indexOf(";") !== -1) {
-                words[i] = words[i].replace(";", " = null;");
-                break;
-            }
+const getTypeIndex = function(words) {
+    if(words[0] === "private" || words[0] === "public") {
+        if(words[1] === "const") {
+            return 2;
+        }
+        else {
+            return 1;
         }
     }
-    return words.slice(index).join(" ");
+    else {
+        return 0;
+    }
+};
+
+const getTypeName = function(type) {
+    if(type.toLowerCase() === "int") return "number";
+    if(type.toLowerCase() === "long") return "number";
+    if(type.toLowerCase() === "short") return "number";
+    if(type.toLowerCase() === "float") return "number";
+    if(type.toLowerCase() === "real") return "number";
+    if(type.toLowerCase() === "double") return "number";
+    if(type.toLowerCase() === "string") return "string";
+    if(type.toLowerCase() === "boolean") return "boolean";
+    if(type.toLowerCase() === "bool") return "boolean";
+    if(type.toLowerCase() === "object") return "object";
+    return type;
+};
+
+const getExpression = function(words, index, indexType) {
+    var identifier = words[index].replace(";","");
+    var type = words[indexType];
+    var value = "";
+    if(words.indexOf("=") === -1) {
+        value = " = null;"
+    }
+    return identifier + ": " + getTypeName(type) + value + words.slice(index+1).join(" ");
 };
 
 const isAssignment = function() {
@@ -510,7 +536,20 @@ const assignmentTranslator = function() {
     var words = removeGenerics(currentLine.trim()).split(" ");
     var spaces = currentLine.search(/\S/);
     var indent = currentLine.substr(0, spaces);
+    replaceNewSentence(words);
     currentLine = indent + words.join(" ");
+};
+
+const capitalizeFirstLetter = function (string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+};
+
+const replaceNewSentence = function(words) {
+    var index = words.indexOf("new");
+    if(index !== -1) {
+        words[index] = "";
+        words[index+1] = "globalObject.CSReportDll.create" + capitalizeFirstLetter(words[index+1]);
+    }
 };
 
 const isStartComment = function() {
@@ -695,7 +734,7 @@ const unknownTranslator = function() {
 };
 
 const getFileName = function(fileName) {
-    return fileName.substr(0, fileName.length-2)+"js";
+    return fileName.substr(0, fileName.length-2)+"ts";
 };
 
 const writeHeaders = function() {
@@ -758,7 +797,7 @@ const sanitize = function() {
 const printOriginalLine = function() {
     var line = originalLine.trim();
     if(line.length > 0)
-        currentLine += " // " + line;
+        currentLine += " //@@@: " + line;
 };
 
 const transpile = function(sourceFile, outputFolder, next, printOriginalCode) {

@@ -11,7 +11,7 @@ It is written in C#.
 
 It runs in Windows, Mac OSX and Linux.
 
-It support multiple headers, footers and groups.
+It supports multiple headers, footers and groups.
 
 Sections can contain subsections.
 
@@ -48,7 +48,7 @@ I am working a version that can preview reports in mobile devices using Xamarin.
 
 [![video chrome extension](https://cloud.githubusercontent.com/assets/1075455/15987251/5de5ad5e-2ff8-11e6-82ce-3613284056f3.png)](https://www.youtube.com/watch?v=RKWQypj1VqY)
 
-Copyright (C) 2002-2014 Javier Mariano Alvarez
+Copyright (C) 2002 Javier Mariano Alvarez
 
 This program is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
 
