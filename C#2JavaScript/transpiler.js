@@ -8,6 +8,9 @@ const tab = "    ";
 
 var debugString = "while (!pIsEndCallFunction(c, nInner) && nStart < nLenCode);";
 
+var globals;
+var inTranspile;
+
 var currentLine;
 var originalLine;
 var discardLine;
@@ -40,6 +43,7 @@ const replaceAll = function(target, search, replacement) {
 };
 
 const init = function() {
+    inTranspile = false;
     inMainClass = true;
     mainClassName = "";
     openBrackets = 0;
@@ -540,15 +544,28 @@ const assignmentTranslator = function() {
     currentLine = indent + words.join(" ");
 };
 
-const capitalizeFirstLetter = function (string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+const getClassConstructor = function(className) {
+    if(inTranspile) {
+        if (globals) {
+            var j = className.indexOf("(");
+            var clazz = j > -1 ? className.substring(0,j) : className;
+            for (var i = 0, count = globals.length; i < count; i += 1) {
+                if (clazz === globals[i].className) {
+                    return className.replace(clazz, globals[i].constructor);
+                }
+            }
+        }
+        return UNKNOWN + " can't find constructor for class " + className;
+    } else {
+        return className;
+    }
 };
 
 const replaceNewSentence = function(words) {
     var index = words.indexOf("new");
     if(index !== -1) {
-        words[index] = "";
-        words[index+1] = "globalObject.CSReportDll.create" + capitalizeFirstLetter(words[index+1]);
+        words.splice(index, 1);
+        words[index] = getClassConstructor(words[index]);
     }
 };
 
@@ -800,11 +817,15 @@ const printOriginalLine = function() {
         currentLine += " //@@@: " + line;
 };
 
-const transpile = function(sourceFile, outputFolder, next, printOriginalCode) {
+const transpile = function(sourceFile, outputFolder, next, printOriginalCode, _globals) {
     var fd;
     var allDone = false;
 
+    globals = _globals;
+
     init();
+
+    inTranspile = true;
 
     /*
 
@@ -892,10 +913,56 @@ const transpile = function(sourceFile, outputFolder, next, printOriginalCode) {
     output.openWriter(outputFile, outputClient);
 };
 
+const loadGlobals = function(sourceFile, outputFolder, next) {
+
+    var allDone = false;
+    var objects = [];
+
+    init();
+
+    const inputClient = {
+        onReadLine: function(lineData) {
+            setLine(lineData);
+            getSentenceType();
+
+            var className = "";
+            var prefix = "";
+            if(translate === classDeclareTranslator) {
+                if(inMainClass) {
+                    inMainClass = false;
+                    prefix = "globalObject." + namespace + ".";
+                    var words = currentLine.trim().split(" ");
+                    className = words[2] === "class" ? words[3] : words[2];
+                }
+            };
+
+            translate();
+
+            if(translate === classDeclareTranslator && className !== "" && prefix !== "") {
+                objects.push({
+                    className: className,
+                    constructor: prefix + getCreateName(className)
+                });
+            }
+
+            checkParenthesis();
+            sanitize();
+            input.read();
+        },
+        onEOF: function() {
+            allDone = true;
+            next(objects)
+        }
+    };
+
+    input.openReader(sourceFile, inputClient);
+};
+
 // public interface
 //
 var self = {
-    transpile: transpile
+    transpile: transpile,
+    loadGlobals: loadGlobals
 };
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  */

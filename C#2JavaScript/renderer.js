@@ -18,6 +18,7 @@ var outputFolder = "/home/javier/Work/CrowSoft/CSReports.net/JavaScript/CSReport
 var sourceFolder = "/home/javier/Work/CrowSoft/CSReports.net/CSReports";
 var sourceFolderLength = 0;
 var csfiles = [];
+var globals = [];
 
 document.getElementById('output-selected-file').innerHTML = `You selected: ${outputFolder}`;
 document.getElementById('selected-file').innerHTML = `You selected: ${sourceFolder}`;
@@ -58,7 +59,7 @@ transpileBtn.addEventListener('click', function() {
     else {
         csfiles = [];
         readFolder(sourceFolder);
-        readFiles(csfiles);
+        loadGlobalsFromFiles(csfiles,() => readFiles(csfiles));
     }
 });
 
@@ -77,6 +78,26 @@ const readFolder = function(path) {
     }
 };
 
+const loadGlobalsFromFiles = function(files, next) {
+    var index = 0;
+    const nextFile = function(objects) {
+
+        if(objects !== undefined) {
+            globals = globals.concat(objects);
+        }
+
+        if(index < files.length) {
+            loadGlobals(files[index], nextFile);
+            index += 1;
+        }
+        else {
+            document.getElementById('load-objects-complete').style.display = "block";
+            next();
+        }
+    };
+    nextFile();
+};
+
 const readFiles = function(files) {
     var index = 0;
     const nextFile = function() {
@@ -85,26 +106,39 @@ const readFiles = function(files) {
             index += 1;
         }
         else {
-            debugger;
             document.getElementById('work-complete').style.display = "block";
         }
     };
     nextFile();
 };
 
-const translateFile = function(file, next) {
+const updateProgress = function(file) {
     // add to interface
     //
     var li = document.createElement('li');
     li.appendChild(document.createTextNode(file));
     csharpFiles.appendChild(li);
     li.parentNode.parentNode.scrollTop = li.offsetTop;
+}
+
+const loadGlobals = function(file, next) {
+
+    updateProgress(file);
+
+    // load globals from this file the file
+    //
+    transpiler.loadGlobals(file, getOutputFolder(file), next);
+};
+
+const translateFile = function(file, next) {
+
+    updateProgress(file);
 
     const printOriginalCode = document.getElementById('print-original-code').checked;
 
     // transpile the file
     //
-    transpiler.transpile(file, getOutputFolder(file), next, printOriginalCode);
+    transpiler.transpile(file, getOutputFolder(file), next, printOriginalCode, globals);
 };
 
 
