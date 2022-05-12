@@ -39,6 +39,7 @@ selectDirBtn.addEventListener('click', function (event) {
 transpileBtn.addEventListener('click', function() {
 
     document.getElementById('work-complete').style.display = "none";
+    document.getElementById('load-objects-complete').style.display = "none";
 
     sourceFolderLength = sourceFolder.split("/").length;
 
