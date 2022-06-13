@@ -5,6 +5,7 @@ using System.Data.Common;
 using System.Reflection;
 using System.Data;
 using Newtonsoft.Json.Linq;
+using CSKernelClient;
 
 namespace CSDataBase
 {
@@ -672,7 +673,10 @@ namespace CSDataBase
                 }
                 else
                 {
-                    value = m_start.AddMilliseconds(Convert.ToInt64(value.ToString())).ToLocalTime();
+                    if (! cDateUtils.isDate(value.ToString()))
+                    {
+                        value = m_start.AddMilliseconds(Convert.ToInt64(value.ToString())).ToLocalTime();
+                    }
                 }                
             }
             return value;
